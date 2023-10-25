@@ -1,0 +1,9 @@
+[submodule "libs/qt-extensions"]
+	path = libs/qt-extensions
+	url = https://github.com/whs31/qt-extensions.git
+[submodule "libs/qt-extensions-networking"]
+	path = libs/qt-extensions-networking
+	url = https://github.com/whs31/qt-extensions-networking.git
+[submodule "libs/libquasar"]
+	path = libs/libquasar
+	url = https://github.com/whs31/libquasar.git
