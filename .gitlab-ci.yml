@@ -1,0 +1,12 @@
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  GIT_DEPTH: 100
+  PKG_VER: 0.0.0
+
+include:
+  - local: /.gitlab/alse.yml
+  - local: /.gitlab/win64.yml
+  - local: /.gitlab/doxygen.yml
+
+stages:
+  - build
