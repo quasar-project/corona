@@ -31,6 +31,9 @@ add_subdirectory(libs/qt-extensions)
 target_sources(${PROJECT_NAME}
   PRIVATE
     src/c++/main.c++
+
+    src/qml/qml.qrc
+    resources/resources.qrc
 )
 
 target_link_libraries(${PROJECT_NAME}

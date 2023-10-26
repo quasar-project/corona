@@ -8,34 +8,35 @@
 #include <QtQml/QQmlContext>
 #include <QtQuick/QQuickWindow>
 #include <QtQuickControls2/QQuickStyle>
-
-#if defined Q_OS_WINDOWS
-#include <windows.h>
-#endif
+#include <Libra/Windows>
+#include <Libra/WinAPI>
+#include <QtExtensions/QtExtensions>
+#include <QtExtensions/Logging>
+#include <QtExtensionsGeo/Register>
 
 int main(int argc, char** argv)
 {
-  #if defined Q_OS_WINDOWS
-  FreeConsole();
-  #endif
+  Libra::Windows::releaseConsole();
 
   QApplication app(argc, argv);
   QCoreApplication::setApplicationName(PROJECT_NAME);
   QCoreApplication::setApplicationVersion(PROJECT_VERSION);
   QCoreApplication::setOrganizationName(PROJECT_COMPANY);
 
-//  #ifndef Q_OS_WINDOWS
-//  QApplication::setWindowIcon(QIcon(":/icon.png"));
-//  #else
-//  QApplication::setWindowIcon(QIcon(":/icon.ico"));
-//  #endif
+  #ifndef Q_OS_WINDOWS
+  QApplication::setWindowIcon(QIcon(":/icon.png"));
+  #else
+  QApplication::setWindowIcon(QIcon(":/icon.ico"));
+  #endif
 
-  //qInfo().noquote() << QCoreApplication::applicationName() << "version" << QCoreApplication::applicationVersion();
+  llog(Info) "Starting" << QCoreApplication::applicationName() << "version" << QCoreApplication::applicationVersion();
 
   const QUrl qml_entry(QStringLiteral("qrc:/Main.qml"));
 
-  qputenv("QT_QUICK_CONTROLS_MATERIAL_VARIANT", "Dense");
-  QQuickStyle::setStyle("Material");
+  Qtx::registerTypes();
+  Qtx::Geo::registerQml();
+
+  QQuickStyle::setStyle("Universal");
 
   QQmlEngine engine;
   QObject::connect(&engine, &QQmlEngine::quit, qApp, &QCoreApplication::quit);
@@ -46,7 +47,7 @@ int main(int argc, char** argv)
   if(component.isReady())
     component.create();
   else
-    qCritical() << "[QML ERROR]" << component.errorString();
+    llog(Error) component.errorString();
 
   return QApplication::exec();
 }
