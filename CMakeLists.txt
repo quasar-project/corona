@@ -35,15 +35,15 @@ target_sources(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
   PUBLIC
-    Qt5::Core
-    Qt5::Quick
-    Qt5::Widgets
-    Qt5::Location
-    Qt5::Positioning
-    Qt5::QuickControls2
-    Qt5::Concurrent
+    Qt6::Core
+    Qt6::Quick
+    Qt6::Widgets
+    Qt6::Location
+    Qt6::Positioning
+    Qt6::QuickControls2
+    Qt6::Concurrent
 
-    QtEx
+    QtExtensions
 )
 
 target_include_directories(${PROJECT_NAME}
