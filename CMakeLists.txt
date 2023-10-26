@@ -13,8 +13,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 
-find_package(QT NAMES Qt5 COMPONENTS Core)
-find_package(Qt5 COMPONENTS
+find_package(QT NAMES Qt6 COMPONENTS Core)
+find_package(Qt6 COMPONENTS
   Core
   Quick
   Location
