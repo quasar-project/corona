@@ -4,7 +4,7 @@ import QtQuick.Controls
 import QtLocation
 import QtPositioning
 
-import QtEx.Geo 1.0
+import QtExtensions 1.0
 
 ApplicationWindow {
     id: root
@@ -16,7 +16,7 @@ ApplicationWindow {
     height: 800
     visible: true
 
-    QtExGoogleMapsProvider { id: provider }
+    XOsmProvider { id: provider }
 
     Map {
         id: map

@@ -16,12 +16,15 @@
 
 int main(int argc, char** argv)
 {
-  Libra::Windows::releaseConsole();
+  using Qtx::Log;
+
+  //Libra::Windows::releaseConsole();
 
   QApplication app(argc, argv);
   QCoreApplication::setApplicationName(PROJECT_NAME);
   QCoreApplication::setApplicationVersion(PROJECT_VERSION);
-  QCoreApplication::setOrganizationName(PROJECT_COMPANY);
+  QCoreApplication::setOrganizationName("QuaSAR Team");
+  QCoreApplication::setOrganizationDomain(PROJECT_COMPANY);
 
   #ifndef Q_OS_WINDOWS
   QApplication::setWindowIcon(QIcon(":/icon.png"));
@@ -29,12 +32,17 @@ int main(int argc, char** argv)
   QApplication::setWindowIcon(QIcon(":/icon.ico"));
   #endif
 
-  llog(Info) "Starting" << QCoreApplication::applicationName() << "version" << QCoreApplication::applicationVersion();
+  Log::setLoggingPattern();
+  Log::printPlatformInfo();
+  Log::linebreak();
+  Log::printQtInfo();
+  Log::linebreak();
+  Log::printApplicationInfo(&app);
+  Log::linebreak();
 
   const QUrl qml_entry(QStringLiteral("qrc:/Main.qml"));
 
   Qtx::registerTypes();
-  Qtx::Geo::registerQml();
 
   QQuickStyle::setStyle("Universal");
 
