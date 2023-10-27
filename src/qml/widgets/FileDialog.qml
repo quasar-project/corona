@@ -2,8 +2,11 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Controls.Material
+import QtQuick.Controls.Universal
 
 import QtExtensions.Toolkit 1.0
+
+import "qrc:/FileExtensions.js" as FileExtensions
 
 Popup {
     parent: Overlay.overlay
@@ -25,35 +28,26 @@ Popup {
         topInset: 0
         bottomInset: 0
         header: ToolBar {
-
             height: 24
             contentHeight: 24
             RowLayout {
                 spacing: 0
-
-                component InlineSeparator : ToolSeparator {
-                    Layout.preferredHeight: 24
-                    padding: 0
-                }
                 anchors.fill: parent
                 ToolButton {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 24
                     text: "Имя"
                 }
-                InlineSeparator {}
                 ToolButton {
                     Layout.preferredHeight: 24
                     Layout.preferredWidth: 200
                     text: "Дата изменения"
                 }
-                InlineSeparator {}
                 ToolButton {
                     Layout.preferredHeight: 24
                     Layout.preferredWidth: 200
                     text: "Тип"
                 }
-                InlineSeparator {}
                 ToolButton {
                     Layout.preferredHeight: 24
                     Layout.preferredWidth: 200
@@ -63,8 +57,11 @@ Popup {
         }
 
         ListView {
+            id: __view
             anchors.fill: parent
-            model: XFileDialogModel {}
+            model: XFileDialogModel { id: __model }
+            ScrollBar.vertical: ScrollBar { active: true; policy: ScrollBar.AlwaysOn }
+            boundsBehavior: Flickable.StopAtBounds
             delegate: ItemDelegate {
                 required property int index
                 required property bool isDirectory
@@ -73,7 +70,7 @@ Popup {
                 required property date lastChanged
                 required property string extension
 
-                width: parent.width
+                width: __view.width
                 height: 24
 
                 RowLayout {
@@ -91,22 +88,39 @@ Popup {
                     }
 
                     Label {
+                        function convertDate(date)
+                        {
+                            let d = date.toLocaleDateString(Qt.locale("ru_RU"), "dd.MM.yyyy")
+                            let t = date.toLocaleTimeString(Qt.locale("ru_RU"), "hh:mm")
+                            return `${d} ${t}`
+                        }
+
                         Layout.preferredHeight: 24
-                        Layout.preferredWidth: 230
-                        text: lastChanged.toLocaleDateString(Qt.locale("ru_RU"))
+                        Layout.preferredWidth: 200
+                        text: convertDate(lastChanged)
+                    }
+
+                    Label {
+                        function getExtensionName(extension)
+                        {
+                            if(extension.length === 0)
+                                return "Файл"
+                            if(FileExtensions.extensions[extension])
+                                return FileExtensions.extensions[extension]
+                            return "Файл " + extension.toUpperCase()
+                        }
+
+                        Layout.preferredHeight: 24
+                        Layout.preferredWidth: 200
+                        text: isDirectory ? "Папка с файлами" : getExtensionName(extension)
                     }
 
                     Label {
                         Layout.preferredHeight: 24
-                        Layout.preferredWidth: 220
-                        text: isDirectory ? "Папка с файлами"
-                            : "Файл \"" + extension + "\""
-                    }
-
-                    Label {
-                        Layout.preferredHeight: 24
-                        Layout.preferredWidth: 210
+                        Layout.preferredWidth: 180
+                        Layout.rightMargin: 20
                         text: size
+                        horizontalAlignment: Text.AlignRight
                     }
                 }
             }

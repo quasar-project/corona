@@ -36,6 +36,7 @@ target_sources(${PROJECT_NAME}
     src/c++/corona.c++
 
     src/qml/qml.qrc
+    src/js/js.qrc
     resources/resources.qrc
 )
 

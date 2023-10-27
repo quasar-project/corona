@@ -3,7 +3,8 @@
         <file>icon.ico</file>
         <file>icon.png</file>
         <file>fonts/Inconsolata.ttf</file>
-        <file>fonts/NunitoSans.ttf</file>
+        <file>fonts/RobotoFlex.ttf</file>
+        <file>fonts/Overpass.ttf</file>
         <file>osmconfigs/cycle</file>
         <file>osmconfigs/hiking</file>
         <file>osmconfigs/night-transit</file>

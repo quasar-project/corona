@@ -3,6 +3,7 @@ import QtQuick.Window
 import QtQuick.Controls
 import QtLocation
 import QtPositioning
+import QtQuick.Controls.Universal
 
 import QtExtensions 1.0
 import QtExtensions.Toolkit 1.0
@@ -20,12 +21,15 @@ ApplicationWindow {
     visible: true
     font.family: mainfont
 
+    Universal.theme: Universal.Dark
+    Universal.accent: Universal.Violet
+
     XOsmProvider { id: provider }
 
     property string mainfont: __fontmain.name
     property string monofont: __fontmono.name
-    FontLoader { id: __fontmain; source: "qrc:/fonts/NunitoSans.ttf"; }
-    FontLoader { id: __fontmono; source: "qrc:/fonts/Inconsolata.ttf"; }
+    FontLoader { id: __fontmain; source: "qrc:/fonts/Overpass.ttf" }
+    FontLoader { id: __fontmono; source: "qrc:/fonts/Inconsolata.ttf" }
 
     Map {
         property int mapmode: 4; // { 0 - offline, 5 - schema, 4 - hybrid, 1 - satellite }
