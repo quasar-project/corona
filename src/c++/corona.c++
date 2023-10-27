@@ -4,6 +4,7 @@
 
 #include "corona.h"
 #include <QtExtensions/QtExtensions>
+#include <QtExtensionsToolkit/Register>
 
 Corona::Corona(Qt::Object* parent)
   : Qtx::ApplicationBase(parent)
@@ -12,4 +13,5 @@ Corona::Corona(Qt::Object* parent)
 void Corona::start()
 {
   Qtx::registerTypes();
+  Qtx::Toolkit::registerTypes();
 }
