@@ -32,6 +32,8 @@ add_subdirectory(libs/qt-extensions-toolkit)
 target_sources(${PROJECT_NAME}
   PRIVATE
     src/c++/main.c++
+    src/c++/corona.h
+    src/c++/corona.c++
 
     src/qml/qml.qrc
     resources/resources.qrc

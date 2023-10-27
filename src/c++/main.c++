@@ -12,50 +12,18 @@
 #include <Libra/WinAPI>
 #include <QtExtensions/QtExtensions>
 #include <QtExtensions/Logging>
-#include <QtExtensionsGeo/Register>
+#include <QtExtensionsToolkit/Launcher>
+#include "corona.h"
 
 int main(int argc, char** argv)
 {
-  using Qtx::Log;
-
-  //Libra::Windows::releaseConsole();
-
-  QApplication app(argc, argv);
-  QCoreApplication::setApplicationName(PROJECT_NAME);
-  QCoreApplication::setApplicationVersion(PROJECT_VERSION);
-  QCoreApplication::setOrganizationName("QuaSAR Team");
-  QCoreApplication::setOrganizationDomain(PROJECT_COMPANY);
-
-  #ifndef Q_OS_WINDOWS
-  QApplication::setWindowIcon(QIcon(":/icon.png"));
-  #else
-  QApplication::setWindowIcon(QIcon(":/icon.ico"));
-  #endif
-
-  Log::setLoggingPattern();
-  Log::printPlatformInfo();
-  Log::linebreak();
-  Log::printQtInfo();
-  Log::linebreak();
-  Log::printApplicationInfo(&app);
-  Log::linebreak();
-
-  const QUrl qml_entry(QStringLiteral("qrc:/Main.qml"));
-
-  Qtx::registerTypes();
-
-  QQuickStyle::setStyle("Universal");
-
-  QQmlEngine engine;
-  QObject::connect(&engine, &QQmlEngine::quit, qApp, &QCoreApplication::quit);
-
-  QQmlComponent component(&engine);
-  QQuickWindow::setDefaultAlphaBuffer(true);
-  component.loadUrl(qml_entry);
-  if(component.isReady())
-    component.create();
-  else
-    llog(Error) component.errorString();
-
+  Corona corona;
+  Qtx::ApplicationLauncher<QApplication> launcher(argc, argv, &corona);
+  launcher.setProjectInfo(Qtx::ProjectInfo(PROJECT_NAME, PROJECT_VERSION, "Quasar Team", PROJECT_COMPANY));
+  launcher.setQuickParameters({"qrc:/Main.qml", "Universal"});
+  launcher.setIconPath(":/icon");
+  launcher.setDumpPlatformInfo(true);
+  launcher.setFreeConsole(false);
+  launcher.launch();
   return QApplication::exec();
 }

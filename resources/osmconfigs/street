@@ -1,5 +1,5 @@
 {
-    "UrlTemplate": "file:///C:/Users/0/Documents/!release/tiles/%z/%x/%y.png",
+    "UrlTemplate": "https://mt.google.com/vt/lyrs=s&hl=ru&z=%z&x=%x&y=%y",
     "ImageFormat" : "png",
     "QImageFormat" : "Indexed8",
     "MaximumZoomLevel" : 18,
