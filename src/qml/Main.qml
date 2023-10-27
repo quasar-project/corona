@@ -18,8 +18,14 @@ ApplicationWindow {
     width: 1500
     height: 800
     visible: true
+    font.family: mainfont
 
     XOsmProvider { id: provider }
+
+    property string mainfont: __fontmain.name
+    property string monofont: __fontmono.name
+    FontLoader { id: __fontmain; source: "qrc:/fonts/NunitoSans.ttf"; }
+    FontLoader { id: __fontmono; source: "qrc:/fonts/Inconsolata.ttf"; }
 
     Map {
         property int mapmode: 4; // { 0 - offline, 5 - schema, 4 - hybrid, 1 - satellite }
