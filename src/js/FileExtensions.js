@@ -1,18 +1,18 @@
 .pragma library
 
 const extensions = {
-    'aac': 'Файл аудио Windows',
-    'adt': 'Файл аудио Windows',
-    'adts': 'Файл аудио Windows',
+    'aac': 'Аудиофайл',
+    'adt': 'Аудиофайл',
+    'adts': 'Аудиофайл',
     'accdb': 'Файл базы данных Microsoft Access',
     'accde': 'Файл Microsoft Access только для выполнения',
     'accdr': 'База данных Microsoft Access',
     'accdt': 'Шаблон базы данных Microsoft Access',
-    'aif': 'Звуковой файл Audio Interchange File Format',
-    'aifc': 'Звуковой файл Audio Interchange File Format',
-    'aiff': 'Звуковой файл Audio Interchange File Format',
+    'aif': 'Аудиофайл',
+    'aifc': 'Аудиофайл',
+    'aiff': 'Аудиофайл',
     'aspx': 'Файл Active Server Page ASP.NET',
-    'avi': 'Файл аудио или видео Audio Video Interleave',
+    'avi': 'Файл аудио или видео AVI',
 
     'bat': 'Пакетный файл PC',
     'bin': 'Двоичный сжатый файл',
@@ -23,7 +23,7 @@ const extensions = {
     'csv': 'Файл данных с разделителями-запятыми',
 
     'dif': 'Файл таблицы формата DIF',
-    'dll': 'Файл динамической библиотеки',
+    'dll': 'Динамическая библиотека',
     'doc': 'Документ Microsoft Word до Word 2007',
     'docm': 'Документ Microsoft Word с включенной поддержкой макросов',
     'docx': 'Документ Microsoft Word',
@@ -32,11 +32,11 @@ const extensions = {
 
     'eml': 'Файл электронной почты',
     'eps': 'Файл Encapsulated PostScript',
-    'exe': 'Исполняемый файл программы',
+    'exe': 'Исполняемый файл',
 
     'flv': 'Видеофайл совместимый с Flash',
 
-    'gif': 'Файл Graphical Interchange Format',
+    'gif': 'Изображение GIF',
 
     'htm': 'Страница на языке разметки HTML',
     'html': 'Страница на языке разметки HTML',
@@ -45,18 +45,18 @@ const extensions = {
     'iso': 'Образ диска ISO-9660',
 
     'jar': 'Файл архитектуры Java',
-    'jpg': 'Фотография JPEG',
-    'jpeg': 'Фотография JPEG',
+    'jpg': 'Изображение JPEG',
+    'jpeg': 'Изображение JPEG',
 
     'm4a': 'Звуковой файл MPEG-4',
     'mdb': 'База данных Microsoft Access до Access 2007',
     'mid': 'Файл интерфейса Musical Instrument Digital Interface',
     'midi': 'Файл интерфейса Musical Instrument Digital Interface',
 
-    'mov': 'Видеофайл Apple QuickTime',
-    'mp3': 'Аудиофайл MPEG Layer-3',
-    'mp4': 'Видео MPEG 4',
-    'mpeg': 'Видеофайл Moving Picture Experts Group',
+    'mov': 'Видеофайл',
+    'mp3': 'Аудиофайл',
+    'mp4': 'Видеофайл',
+    'mpeg': 'Видеофайл',
     'mpg': 'Поток в формате MPEG 1',
     'msi': 'Файл установщика Microsoft',
     'mui': 'Файл многоязычного пользовательского интерфейса',
@@ -77,18 +77,18 @@ const extensions = {
     'pst': 'Хранилище данных Outlook',
     'pub': 'Файл Microsoft Publisher',
 
-    'rar': 'Сжатый файл архива Roshal',
-    'rtf': 'Текстовый файл в формате Rich Text Format',
+    'rar': 'Архив',
+    'rtf': 'Текстовый файл RTF',
 
     'sldm': 'Слайд Microsoft PowerPoint с включенной поддержкой макросов',
     'sldx': 'Слайд Microsoft PowerPoint',
     'swf': 'Файл Shockwave Flash',
-    'sys': 'Файл системных параметров Windows',
+    'sys': 'Файл системных параметров',
 
     'tif': 'Файл Tagged Image Format',
     'tiff': 'Файл Tagged Image Format',
     'tmp': 'Файл временных данных',
-    'txt': 'Файл неформатированного текста',
+    'txt': 'Текстовый файл',
 
     'vob': 'Файл видеообъекта',
     'vsd': 'Рисунок Microsoft Visio до Visio 2013',
@@ -100,7 +100,7 @@ const extensions = {
     'vstm': 'Шаблон Microsoft Visio с включенными макросами',
     'vstx': 'Шаблон Microsoft Visio',
 
-    'wav': 'Звуковой файл Wave',
+    'wav': 'Аудиофайл',
     'wbk': 'Архивный документ Microsoft Word',
     'wks': 'Файл Microsoft Works',
     'wma': 'Файл Windows Media Audio',
@@ -122,7 +122,7 @@ const extensions = {
     'xltx': 'Шаблон Microsoft Excel после Excel 2007',
     'xps': 'Документ на основе XML',
 
-    'zip': 'Сжатый файл'
+    'zip': 'Архив'
 }
 
 const iconPaths = {
