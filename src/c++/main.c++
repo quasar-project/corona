@@ -3,15 +3,6 @@
 //
 
 #include <QtWidgets/QApplication>
-#include <QtQml/QQmlEngine>
-#include <QtQml/QQmlComponent>
-#include <QtQml/QQmlContext>
-#include <QtQuick/QQuickWindow>
-#include <QtQuickControls2/QQuickStyle>
-#include <Libra/Windows>
-#include <Libra/WinAPI>
-#include <QtExtensions/QtExtensions>
-#include <QtExtensions/Logging>
 #include <QtExtensionsToolkit/Launcher>
 #include "corona.h"
 
