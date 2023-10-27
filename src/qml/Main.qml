@@ -5,6 +5,9 @@ import QtLocation
 import QtPositioning
 
 import QtExtensions 1.0
+import QtExtensions.Toolkit 1.0
+
+import "widgets" as Widgets
 
 ApplicationWindow {
     id: root
@@ -19,7 +22,7 @@ ApplicationWindow {
     XOsmProvider { id: provider }
 
     Map {
-        property int mapmode: 5; // { 0 - offline, 5 - schema, 4 - hybrid, 1 - satellite }
+        property int mapmode: 4; // { 0 - offline, 5 - schema, 4 - hybrid, 1 - satellite }
 
         id: map
         anchors.fill: parent
@@ -41,6 +44,12 @@ ApplicationWindow {
         copyrightsVisible: false
         tilt: 15
         zoomLevel: 14
+
+        Component.onCompleted: {
+            XGlobal.rootWindow = root;
+            XGlobal.root = root;
+            XGlobal.map = map;
+        }
 
         Behavior on center { CoordinateAnimation { duration: 250; easing.type: Easing.InOutQuad; } }
         Behavior on zoomLevel { NumberAnimation { duration: 250; easing.type: Easing.InOutCubic; } }
@@ -66,7 +75,7 @@ ApplicationWindow {
             acceptedDevices: Qt.platform.pluginName === "cocoa" || Qt.platform.pluginName === "wayland"
                 ? PointerDevice.Mouse | PointerDevice.TouchPad
                 : PointerDevice.Mouse
-            rotationScale: 1/120
+            rotationScale: 1/12
             property: "zoomLevel"
         }
         DragHandler {
@@ -93,10 +102,8 @@ ApplicationWindow {
         }
     }
 
-    Button {
+    Widgets.FileDialog {
         anchors.centerIn: parent
-        text: "asdasdasdasd"
-        onPressed: console.error("asdasdasd")
     }
 }
 
