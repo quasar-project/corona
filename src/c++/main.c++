@@ -9,7 +9,7 @@
 int main(int argc, char** argv)
 {
   Qtx::ApplicationLauncher<QApplication, Corona> launcher(argc, argv);
-  launcher.setProjectInfo(Qtx::ProjectInfo(PROJECT_NAME, PROJECT_VERSION, "Quasar Team", PROJECT_COMPANY));
+  launcher.setProjectInfo(Qtx::ProjectInfo(PROJECT_NAME, PROJECT_VERSION, PROJECT_COMPANY, PROJECT_DOMAIN));
   launcher.setQuickParameters({"qrc:/Main.qml", "Universal"});
   launcher.setIconPath(":/icon");
   launcher.setDumpPlatformInfo(true);
