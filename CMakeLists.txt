@@ -7,7 +7,7 @@ project(Corona
   LANGUAGES C CXX
 )
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_AUTORCC ON)
@@ -27,6 +27,7 @@ find_package(Qt6 COMPONENTS
 add_executable(${PROJECT_NAME})
 
 add_subdirectory(libs/qt-extensions)
+add_subdirectory(libs/qt-extensions-toolkit)
 
 target_sources(${PROJECT_NAME}
   PRIVATE
@@ -47,6 +48,7 @@ target_link_libraries(${PROJECT_NAME}
     Qt6::Concurrent
 
     QtExtensions
+    QtExtensionsToolkit
 )
 
 target_include_directories(${PROJECT_NAME}
