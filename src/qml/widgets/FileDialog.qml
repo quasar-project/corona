@@ -73,18 +73,39 @@ Popup {
                 width: __view.width
                 height: 24
 
+                function getIcon(ext, is_dir)
+                {
+                    if(is_dir)
+                        return "qrc:/icons/file-types/folder.svg"
+                    if(FileExtensions.iconPaths[ext])
+                        return FileExtensions.iconPaths[ext]
+                    return "qrc:/icons/file-types/file.svg"
+                }
+
                 RowLayout {
                     anchors.fill: parent
                     spacing: 0
 
+                    Button {
+                        Layout.preferredHeight: 24
+                        Layout.preferredWidth: 30
+                        display: Button.IconOnly
+                        flat: true
+                        //enabled: false
+                        icon {
+                            source: getIcon(extension, isDirectory)
+                        }
+                    }
+
                     Label {
-                        Layout.leftMargin: 50
+                        Layout.leftMargin: 30
                         Layout.fillWidth: true
                         Layout.preferredHeight: 24
                         text: name
                         font {
                             weight: Font.DemiBold
                         }
+                        elide: Text.ElideRight
                     }
 
                     Label {
@@ -98,6 +119,7 @@ Popup {
                         Layout.preferredHeight: 24
                         Layout.preferredWidth: 200
                         text: convertDate(lastChanged)
+                        elide: Text.ElideRight
                     }
 
                     Label {
@@ -113,6 +135,7 @@ Popup {
                         Layout.preferredHeight: 24
                         Layout.preferredWidth: 200
                         text: isDirectory ? "Папка с файлами" : getExtensionName(extension)
+                        elide: Text.ElideRight
                     }
 
                     Label {
@@ -121,6 +144,7 @@ Popup {
                         Layout.rightMargin: 20
                         text: size
                         horizontalAlignment: Text.AlignRight
+                        elide: Text.ElideRight
                     }
                 }
             }

@@ -28,7 +28,7 @@ ApplicationWindow {
 
     property string mainfont: __fontmain.name
     property string monofont: __fontmono.name
-    FontLoader { id: __fontmain; source: "qrc:/fonts/Overpass.ttf" }
+    FontLoader { id: __fontmain; source: "qrc:/fonts/Roboto-Regular.ttf" }
     FontLoader { id: __fontmono; source: "qrc:/fonts/Inconsolata.ttf" }
 
     Map {
