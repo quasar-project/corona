@@ -7,3 +7,6 @@
 [submodule "libs/qt-extensions-networking"]
 	path = libs/qt-extensions-networking
 	url = https://github.com/whs31/qt-extensions-networking.git
+[submodule "libs/qt-extensions-toolkit"]
+	path = libs/qt-extensions-toolkit
+	url = https://github.com/whs31/qt-extensions-toolkit.git
