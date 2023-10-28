@@ -20,11 +20,10 @@ ApplicationWindow {
     visible: true
     font.family: mainfont
 
-    // Material.theme: Theme.darkMode === Theme.Dark ? Material.Dark : Material.Light
-    // Material.background: Theme.io.color(Theme.Base)
-    // Material.foreground: Theme.io.color(Theme.Text)
-    // Material.primary: Theme.io.color(Theme.Teal)
-    // Material.accent: Theme.io.color(Theme.Mauve)
+    Universal.theme: Theme.darkMode === Theme.Dark ? Universal.Dark : Universal.Light
+    Universal.background: Theme.io.color(Theme.Base)
+    Universal.foreground: Theme.io.color(Theme.Text)
+    Universal.accent: Theme.io.color(Theme.Mauve)
 
     XOsmProvider { id: provider }
 
@@ -117,16 +116,6 @@ ApplicationWindow {
 
     QtxFileDialog {
         anchors.centerIn: parent
-    }
-
-    Pane {
-        anchors.centerIn: parent
-
-        ColumnLayout {
-            Button { text: "asdasdasd" }
-            RoundButton { text: "asdasdasd" }
-            CheckBox { text: "asdasdasd" }
-        }
     }
 }
 
