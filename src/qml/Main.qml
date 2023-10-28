@@ -30,7 +30,8 @@ ApplicationWindow {
     FontLoader { id: __fontmono; source: "qrc:/fonts/Inconsolata.ttf" }
 
     Map {
-        property int mapmode: 4; // { 0 - offline, 5 - schema, 4 - hybrid, 1 - satellite }
+        // { 0 - offline, 5 - schema, 4 - hybrid, 1 - satellite }
+        property int mapmode: 4
 
         id: map
         anchors.fill: parent
@@ -54,13 +55,13 @@ ApplicationWindow {
         zoomLevel: 14
 
         Component.onCompleted: {
-            QtxGlobal.rootWindow = root;
-            QtxGlobal.root = root;
-            QtxGlobal.map = map;
+            QtxGlobal.rootWindow = root
+            QtxGlobal.root = root
+            QtxGlobal.map = map
         }
 
-        Behavior on center { CoordinateAnimation { duration: 250; easing.type: Easing.InOutQuad; } }
-        Behavior on zoomLevel { NumberAnimation { duration: 250; easing.type: Easing.InOutCubic; } }
+        Behavior on center { CoordinateAnimation { duration: 250; easing.type: Easing.InOutQuad } }
+        Behavior on zoomLevel { NumberAnimation { duration: 250; easing.type: Easing.InOutCubic } }
 
         PinchHandler {
             id: pinch
