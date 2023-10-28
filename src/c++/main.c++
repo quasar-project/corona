@@ -11,7 +11,7 @@ int main(int argc, char** argv)
   Qtx::ApplicationLauncher<QApplication, Corona> launcher(
       argc, argv,
       { PROJECT_NAME, PROJECT_VERSION, PROJECT_COMPANY, PROJECT_DOMAIN },
-      { "qrc:/Main.qml", "Universal" },
+      { "qrc:/Main.qml", "Material" },
       ":/icon",
       Qtx::StartupMessage::DumpPlatformInfo,
       Qtx::ConsoleBehaviour::KeepConsole

@@ -3,7 +3,7 @@ import QtQuick.Window
 import QtQuick.Controls
 import QtLocation
 import QtPositioning
-import QtQuick.Controls.Universal
+import QtQuick.Controls.Material
 
 import QtExtensions 1.0
 import QtExtensions.Toolkit 1.0
@@ -19,8 +19,8 @@ ApplicationWindow {
     visible: true
     font.family: mainfont
 
-    Universal.theme: Universal.Dark
-    Universal.accent: Universal.Violet
+    Material.theme: Material.Dark
+    //Material.accent: Material.Violet
 
     XOsmProvider { id: provider }
 
