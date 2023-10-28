@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
         <file>Main.qml</file>
-        <file>widgets/FileDialog.qml</file>
     </qresource>
 </RCC>

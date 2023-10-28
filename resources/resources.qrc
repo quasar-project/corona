@@ -12,21 +12,5 @@
         <file>osmconfigs/street</file>
         <file>osmconfigs/terrain</file>
         <file>osmconfigs/transit</file>
-        <file>icons/file-types/archive.svg</file>
-        <file>icons/file-types/audio.svg</file>
-        <file>icons/file-types/bill.svg</file>
-        <file>icons/file-types/bill2.svg</file>
-        <file>icons/file-types/code.svg</file>
-        <file>icons/file-types/file.svg</file>
-        <file>icons/file-types/folder.svg</file>
-        <file>icons/file-types/html.svg</file>
-        <file>icons/file-types/install.svg</file>
-        <file>icons/file-types/md.svg</file>
-        <file>icons/file-types/object.svg</file>
-        <file>icons/file-types/settings.svg</file>
-        <file>icons/file-types/terminal.svg</file>
-        <file>icons/file-types/text.svg</file>
-        <file>icons/file-types/video.svg</file>
-        <file>icons/file-types/image.svg</file>
     </qresource>
 </RCC>

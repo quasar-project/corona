@@ -8,8 +8,6 @@ import QtQuick.Controls.Universal
 import QtExtensions 1.0
 import QtExtensions.Toolkit 1.0
 
-import "widgets" as Widgets
-
 ApplicationWindow {
     id: root
 
@@ -56,9 +54,9 @@ ApplicationWindow {
         zoomLevel: 14
 
         Component.onCompleted: {
-            XGlobal.rootWindow = root;
-            XGlobal.root = root;
-            XGlobal.map = map;
+            QtxGlobal.rootWindow = root;
+            QtxGlobal.root = root;
+            QtxGlobal.map = map;
         }
 
         Behavior on center { CoordinateAnimation { duration: 250; easing.type: Easing.InOutQuad; } }
@@ -112,7 +110,7 @@ ApplicationWindow {
         }
     }
 
-    Widgets.FileDialog {
+    QtxFileDialog {
         anchors.centerIn: parent
     }
 }
