@@ -1,9 +1,10 @@
 import QtQuick
 import QtQuick.Window
 import QtQuick.Controls
+import QtQuick.Controls.Universal
 import QtLocation
 import QtPositioning
-import QtQuick.Controls.Material
+import QtQuick.Layouts
 
 import QtExtensions 1.0
 import QtExtensions.Toolkit 1.0
@@ -19,8 +20,11 @@ ApplicationWindow {
     visible: true
     font.family: mainfont
 
-    Material.theme: Material.Dark
-    //Material.accent: Material.Violet
+    // Material.theme: Theme.darkMode === Theme.Dark ? Material.Dark : Material.Light
+    // Material.background: Theme.io.color(Theme.Base)
+    // Material.foreground: Theme.io.color(Theme.Text)
+    // Material.primary: Theme.io.color(Theme.Teal)
+    // Material.accent: Theme.io.color(Theme.Mauve)
 
     XOsmProvider { id: provider }
 
@@ -113,6 +117,16 @@ ApplicationWindow {
 
     QtxFileDialog {
         anchors.centerIn: parent
+    }
+
+    Pane {
+        anchors.centerIn: parent
+
+        ColumnLayout {
+            Button { text: "asdasdasd" }
+            RoundButton { text: "asdasdasd" }
+            CheckBox { text: "asdasdasd" }
+        }
     }
 }
 
