@@ -119,17 +119,35 @@ ApplicationWindow {
         }
 
         QtxFileDialog {
+            id: __fileDialog
             anchors.centerIn: parent
         }
 
         Pane {
             anchors.fill: parent
             ColumnLayout {
-                Button { text: "asdasdasdasdasdasdasdasdasddasdasdasdasdasasdasdd" }
-                Button {}
-                CheckBox { onPressed: {
+                Button { text: "Тестовая кнопка" }
+                Button { text: "Show dialog"; onPressed: __fileDialog.visible = true }
+                CheckBox { text: "Toggle theme"; onPressed: {
                     themeChanger.toggleTheme(this)
                 }}
+                Pane {
+                    RowLayout {
+                        spacing: 10
+                        RoundButton {}
+                        RoundButton {}
+                        RoundButton {}
+                        RoundButton {}
+                        RoundButton {}
+                        RoundButton {}
+                        RoundButton {}
+                        RoundButton {}
+                        RoundButton {}
+                        RoundButton {}
+                        RoundButton {}
+                        RoundButton { text: "Theme change test" }
+                    }
+                }
             }
         }
     }
