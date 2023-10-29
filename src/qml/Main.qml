@@ -8,6 +8,7 @@ import QtQuick.Layouts
 
 import QtExtensions 1.0
 import QtExtensions.Toolkit 1.0
+import Quasar 1.0
 
 ApplicationWindow {
     id: window_root
@@ -132,20 +133,32 @@ ApplicationWindow {
                     themeChanger.toggleTheme(this)
                 }}
                 Pane {
-                    RowLayout {
-                        spacing: 10
-                        RoundButton {}
-                        RoundButton {}
-                        RoundButton {}
-                        RoundButton {}
-                        RoundButton {}
-                        RoundButton {}
-                        RoundButton {}
-                        RoundButton {}
-                        RoundButton {}
-                        RoundButton {}
-                        RoundButton {}
-                        RoundButton { text: "Theme change test" }
+                    ColumnLayout {
+                        RowLayout {
+                            spacing: 10
+                            RoundButton {}
+                            RoundButton {}
+                            RoundButton {}
+                            RoundButton {}
+                            RoundButton {}
+                            RoundButton {}
+                            RoundButton {}
+                            RoundButton {}
+                            RoundButton {}
+                            RoundButton {}
+                            RoundButton {}
+                            RoundButton { text: "Theme change test" }
+                        }
+                        RowLayout {
+                            RoundButton { text: "Quasar Start"; onPressed: {
+                                Quasar.telemetrySocket.start("127.0.0.1:25565", "127.0.0.1:9955")
+                            }
+                            }
+                            RoundButton { text: "Quasar Stop"; onPressed: {
+                                Quasar.telemetrySocket.stop()
+                            }
+                            }
+                        }
                     }
                 }
             }
