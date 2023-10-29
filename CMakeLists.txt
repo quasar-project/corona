@@ -28,6 +28,7 @@ add_executable(${PROJECT_NAME})
 
 add_subdirectory(libs/qt-extensions)
 add_subdirectory(libs/qt-extensions-toolkit)
+add_subdirectory(libs/quasar-library)
 
 target_sources(${PROJECT_NAME}
   PRIVATE
@@ -52,6 +53,8 @@ target_link_libraries(${PROJECT_NAME}
 
     QtExtensions
     QtExtensionsToolkit
+
+    QuasarLibrary
 )
 
 target_include_directories(${PROJECT_NAME}
