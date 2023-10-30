@@ -8,6 +8,6 @@ import Quasar 1.0
 
 Pane {
     id: panel
-
+    anchors.margins: 10
 
 }

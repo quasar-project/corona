@@ -5,6 +5,7 @@
         <file>fonts/Inconsolata.ttf</file>
         <file>fonts/Roboto-Regular.ttf</file>
         <file>fonts/Overpass.ttf</file>
+        <file>theme/gruvbox.json</file>
         <file>osmconfigs/cycle</file>
         <file>osmconfigs/hiking</file>
         <file>osmconfigs/night-transit</file>
