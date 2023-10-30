@@ -30,7 +30,7 @@ ApplicationWindow {
 
     property string mainfont: __fontmain.name
     property string monofont: __fontmono.name
-    FontLoader { id: __fontmain; source: "qrc:/fonts/Roboto-Regular.ttf" }
+    FontLoader { id: __fontmain; source: "qrc:/fonts/Overpass.ttf" }
     FontLoader { id: __fontmono; source: "qrc:/fonts/Inconsolata.ttf" }
 
     Item {
@@ -127,38 +127,9 @@ ApplicationWindow {
         Pane {
             anchors.fill: parent
             ColumnLayout {
-                FluentSwitch {
+                Switch {
                     text: "Change theme"
                     onPressed: themeChanger.toggleTheme(this)
-                }
-
-                RowLayout {
-                    FluentButton {
-                        text: "asdasdasd"
-                    }
-                    FluentButton {
-                        enabled: false
-                        text: "asdasdasd"
-                    }
-                    FluentSwitch {
-                        text: "asdasdasd"
-                        contentDescription: "asdasda"
-                    }
-
-                    FluentCheckbox {
-                        text: "text"
-                    }
-
-                    FluentCheckbox {
-                        text: "3-state"
-                        indeterminate: true
-                    }
-
-                    FluentSlider { from: 0; to: 100 }
-                    FluentRangeSlider { from: 0; to: 200 }
-
-                    FluentProgressBar { indeterminate: true }
-                    FluentProgressBar { indeterminate: false; value: 0.5; progressVisible: true }
                 }
             }
         }
