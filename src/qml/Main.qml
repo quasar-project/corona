@@ -162,6 +162,10 @@ ApplicationWindow {
                             FUIButton {
                                 text: "asdasdasd"
                             }
+                            FUIButton {
+                                enabled: false
+                                text: "asdasdasd"
+                            }
                         }
                     }
                 }
