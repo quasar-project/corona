@@ -159,6 +159,9 @@ ApplicationWindow {
                                 Quasar.telemetrySocket.stop()
                             }
                             }
+                            FUIButton {
+                                text: "asdasdasd"
+                            }
                         }
                     }
                 }
