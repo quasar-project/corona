@@ -11,7 +11,6 @@ MenuBar {
     padding: 0
     topInset: 0
     bottomInset: 0
-    contentHeight: 20
     Menu {
         Material.background: Theme.io.color(Theme.Mantle)
         padding: 0
