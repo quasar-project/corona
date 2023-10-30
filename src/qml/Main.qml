@@ -14,6 +14,9 @@ import "layouts" as Layouts
 //import "windows" as Windows
 
 ApplicationWindow {
+    property string mainfont: __fontmain.name
+    property string monofont: __fontmono.name
+
     id: window_root
 
     title: "Corona"
@@ -24,6 +27,10 @@ ApplicationWindow {
     visible: true
     font.family: mainfont
 
+    Component.onCompleted: {
+        showMaximized()
+    }
+
     Material.theme: Theme.darkMode === Theme.Dark ? Material.Dark : Material.Light
     Material.background: Theme.io.color(Theme.Base)
     Material.foreground: Theme.io.color(Theme.Text)
@@ -31,8 +38,6 @@ ApplicationWindow {
 
     XOsmProvider { id: provider }
 
-    property string mainfont: __fontmain.name
-    property string monofont: __fontmono.name
     FontLoader { id: __fontmain; source: "qrc:/fonts/Overpass.ttf" }
     FontLoader { id: __fontmono; source: "qrc:/fonts/Inconsolata.ttf" }
 

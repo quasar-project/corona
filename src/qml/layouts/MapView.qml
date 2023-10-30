@@ -11,7 +11,7 @@ import Quasar 1.0
 
 Map {
     // { 0 - offline, 5 - schema, 4 - hybrid, 1 - satellite }
-    property int mapmode: 4
+    property int mapmode: 1
 
     id: map
     anchors.fill: parent
