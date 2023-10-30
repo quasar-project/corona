@@ -150,12 +150,12 @@ ApplicationWindow {
                             RoundButton { text: "Theme change test" }
                         }
                         RowLayout {
-                            RoundButton { text: "Quasar Start"; onPressed: {
+                            RoundButton { text: "QStart"; onPressed: {
                                 Quasar.telemetrySocket.verifyChecksum = false
                                 Quasar.telemetrySocket.start("192.168.0.5:4554", "192.168.0.7:9955")
                             }
                             }
-                            RoundButton { text: "Quasar Stop"; onPressed: {
+                            RoundButton { text: "QStop"; onPressed: {
                                 Quasar.telemetrySocket.stop()
                             }
                             }
