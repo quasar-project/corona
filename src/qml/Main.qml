@@ -155,6 +155,7 @@ ApplicationWindow {
                     }
 
                     FluentSlider { from: 0; to: 100 }
+                    FluentRangeSlider { from: 0; to: 200 }
                 }
             }
         }
