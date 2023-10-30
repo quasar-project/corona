@@ -12,5 +12,9 @@
         <file>osmconfigs/street</file>
         <file>osmconfigs/terrain</file>
         <file>osmconfigs/transit</file>
+        <file>icons/common/block.svg</file>
+        <file>icons/common/cog.svg</file>
+        <file>icons/common/dark.svg</file>
+        <file>icons/common/light.svg</file>
     </qresource>
 </RCC>
