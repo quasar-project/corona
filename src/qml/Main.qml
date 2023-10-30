@@ -127,32 +127,34 @@ ApplicationWindow {
         Pane {
             anchors.fill: parent
             ColumnLayout {
-                FUISwitch {
+                FluentSwitch {
                     text: "Change theme"
                     onPressed: themeChanger.toggleTheme(this)
                 }
 
                 RowLayout {
-                    FUIButton {
+                    FluentButton {
                         text: "asdasdasd"
                     }
-                    FUIButton {
+                    FluentButton {
                         enabled: false
                         text: "asdasdasd"
                     }
-                    FUISwitch {
+                    FluentSwitch {
                         text: "asdasdasd"
                         contentDescription: "asdasda"
                     }
 
-                    FUICheckbox {
+                    FluentCheckbox {
                         text: "text"
                     }
 
-                    FUICheckbox {
+                    FluentCheckbox {
                         text: "3-state"
                         indeterminate: true
                     }
+
+                    FluentSlider { from: 0; to: 100 }
                 }
             }
         }
