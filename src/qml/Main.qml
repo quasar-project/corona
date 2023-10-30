@@ -127,52 +127,31 @@ ApplicationWindow {
         Pane {
             anchors.fill: parent
             ColumnLayout {
-                Button { text: "Тестовая кнопка" }
-                Button { text: "Show dialog"; onPressed: __fileDialog.visible = true }
-                CheckBox { text: "Toggle theme"; onPressed: {
-                    themeChanger.toggleTheme(this)
-                }}
-                Pane {
-                    ColumnLayout {
-                        RowLayout {
-                            spacing: 10
-                            RoundButton {}
-                            RoundButton {}
-                            RoundButton {}
-                            RoundButton {}
-                            RoundButton {}
-                            RoundButton {}
-                            RoundButton {}
-                            RoundButton {}
-                            RoundButton {}
-                            RoundButton {}
-                            RoundButton {}
-                            RoundButton { text: "Theme change test" }
-                        }
-                        RowLayout {
-                            RoundButton { text: "QStart"; onPressed: {
-                                Quasar.telemetrySocket.verifyChecksum = false
-                                Quasar.telemetrySocket.start("192.168.0.5:4554", "192.168.0.7:9955")
-                            }
-                            }
-                            RoundButton { text: "QStop"; onPressed: {
-                                Quasar.telemetrySocket.stop()
-                            }
-                            }
-                        }
-                        RowLayout {
-                            FUIButton {
-                                text: "asdasdasd"
-                            }
-                            FUIButton {
-                                enabled: false
-                                text: "asdasdasd"
-                            }
-                            FUISwitch {
-                                text: "asdasdasd"
-                                contentDescription: "asdasda"
-                            }
-                        }
+                FUISwitch {
+                    text: "Change theme"
+                    onPressed: themeChanger.toggleTheme(this)
+                }
+
+                RowLayout {
+                    FUIButton {
+                        text: "asdasdasd"
+                    }
+                    FUIButton {
+                        enabled: false
+                        text: "asdasdasd"
+                    }
+                    FUISwitch {
+                        text: "asdasdasd"
+                        contentDescription: "asdasda"
+                    }
+
+                    FUICheckbox {
+                        text: "text"
+                    }
+
+                    FUICheckbox {
+                        text: "3-state"
+                        indeterminate: true
                     }
                 }
             }
