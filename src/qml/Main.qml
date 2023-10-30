@@ -156,6 +156,9 @@ ApplicationWindow {
 
                     FluentSlider { from: 0; to: 100 }
                     FluentRangeSlider { from: 0; to: 200 }
+
+                    FluentProgressBar { indeterminate: true }
+                    FluentProgressBar { indeterminate: false; value: 0.5; progressVisible: true }
                 }
             }
         }
