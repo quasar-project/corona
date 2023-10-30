@@ -159,12 +159,18 @@ ApplicationWindow {
                                 Quasar.telemetrySocket.stop()
                             }
                             }
+                        }
+                        RowLayout {
                             FUIButton {
                                 text: "asdasdasd"
                             }
                             FUIButton {
                                 enabled: false
                                 text: "asdasdasd"
+                            }
+                            FUISwitch {
+                                text: "asdasdasd"
+                                contentDescription: "asdasda"
                             }
                         }
                     }
