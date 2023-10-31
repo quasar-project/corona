@@ -4,6 +4,7 @@
 
 #include "corona.h"
 #include <QtExtensions/QtExtensions>
+#include <QtExtensions/Utility>
 #include <QtExtensionsToolkit/Register>
 #include <QtExtensionsToolkit/FontProvider>
 #include <QtExtensionsToolkit/Theme>
@@ -19,7 +20,7 @@ void Corona::start()
   Qtx::Toolkit::registerTypes();
   //Qtx::FontProvider::setApplicationFont(":/qtx/fonts/Overpass.ttf");
   auto theme = Qtx::Theme::get();
-  //theme->setFallback(":/theme/gruvbox.json");
-  //theme->setName("Gruvbox");
+  Qtx::Utility::emplaceFile(theme->folder() + "/gruvbox.json", ":/theme/gruvbox.json", Qtx::Utility::EmplaceMode::OnlyIfMissing);
+  theme->setName("Gruvbox");
   Quasar::registerTypes();
 }
