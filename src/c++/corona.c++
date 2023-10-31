@@ -19,7 +19,7 @@ void Corona::start()
   Qtx::Toolkit::registerTypes();
   //Qtx::FontProvider::setApplicationFont(":/qtx/fonts/Overpass.ttf");
   auto theme = Qtx::Theme::get();
-  theme->setFallback(":/theme/gruvbox.json");
-  theme->setName("Gruvbox");
+  //theme->setFallback(":/theme/gruvbox.json");
+  //theme->setName("Gruvbox");
   Quasar::registerTypes();
 }
