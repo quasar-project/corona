@@ -27,6 +27,9 @@ find_package(Qt6 COMPONENTS
 set(QOL_QT_TYPEDEFS ON)
 add_subdirectory(libs/qol)
 
+add_subdirectory(libs/yaml-cpp)
+add_library(yaml::yaml_cpp ALIAS yaml-cpp)
+
 add_executable(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME}
@@ -54,6 +57,7 @@ target_link_libraries(${PROJECT_NAME}
     Qt6::Concurrent
 
     qol::qol
+    yaml::yaml_cpp
 )
 
 target_include_directories(${PROJECT_NAME}
