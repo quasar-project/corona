@@ -40,6 +40,10 @@ target_sources(${PROJECT_NAME}
     src/c++/launcher/qapplication_selector.h
     src/c++/launcher/application_base.h
     src/c++/launcher/launcher_base.h
+    src/c++/gui/theme/theme.h
+    src/c++/gui/theme/theme.c++
+    src/c++/gui/theme/circular_reveal.h
+    src/c++/gui/theme/circular_reveal.c++
 
     src/qml/qml.qrc
     src/js/js.qrc
