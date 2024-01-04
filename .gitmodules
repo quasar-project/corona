@@ -1,0 +1,3 @@
+[submodule "libs/qol"]
+	path = libs/qol
+	url = https://github.com/quasar-project/qol.git

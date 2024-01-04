@@ -24,6 +24,8 @@ find_package(Qt6 COMPONENTS
   Concurrent
 )
 
+add_subdirectory(libs/qol)
+
 add_executable(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME}
@@ -46,6 +48,8 @@ target_link_libraries(${PROJECT_NAME}
     Qt6::Positioning
     Qt6::QuickControls2
     Qt6::Concurrent
+
+    qol
 )
 
 target_include_directories(${PROJECT_NAME}
