@@ -2,19 +2,17 @@
 // Created by whs31 on 25.10.2023.
 //
 
-#include <QtWidgets/QApplication>
-#include <QtExtensionsToolkit/Launcher>
-#include "corona.h"
+#include <corona.h>
+#include <launcher/launcher_base.h>
 
 int main(int argc, char** argv)
 {
-  Qtx::ApplicationLauncher<QApplication, Corona> launcher(
+  launcher::ApplicationLauncher<QApplication, Corona> app_launcher(
       argc, argv,
       { PROJECT_NAME, PROJECT_VERSION, PROJECT_COMPANY, PROJECT_DOMAIN },
       { "qrc:/Main.qml", "Material" },
       ":/icon",
-      Qtx::StartupMessage::DumpPlatformInfo,
-      Qtx::ConsoleBehaviour::KeepConsole
+      launcher::ConsoleBehaviour::KeepConsole // todo add cli arg
   );
-  return launcher.launch();
+  return app_launcher.launch();
 }

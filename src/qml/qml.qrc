@@ -2,7 +2,5 @@
     <qresource prefix="/">
         <file>Main.qml</file>
         <file>layouts/MapView.qml</file>
-        <file>layouts/DebugNetworkPanel.qml</file>
-        <file>layouts/MenuApplicationBar.qml</file>
     </qresource>
 </RCC>

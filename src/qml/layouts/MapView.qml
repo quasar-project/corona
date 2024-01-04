@@ -5,10 +5,6 @@ import QtLocation
 import QtPositioning
 import QtQuick.Layouts
 
-import QtExtensions 1.0
-import QtExtensions.Toolkit 1.0
-import Quasar 1.0
-
 Map {
     // { 0 - offline, 5 - schema, 4 - hybrid, 1 - satellite }
     property int mapmode: 1
@@ -33,12 +29,6 @@ Map {
     copyrightsVisible: false
     tilt: 15
     zoomLevel: 14
-
-    Component.onCompleted: {
-        QtxGlobal.rootWindow = window_root
-        QtxGlobal.root = root
-        QtxGlobal.map = map
-    }
 
     Behavior on center { CoordinateAnimation { duration: 250; easing.type: Easing.InOutQuad } }
     Behavior on zoomLevel { NumberAnimation { duration: 250; easing.type: Easing.InOutCubic } }

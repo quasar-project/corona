@@ -4,16 +4,18 @@
 
 #pragma once
 
-#include <QtExtensionsToolkit/ApplicationBase>
+#include <launcher/application_base.h>
 
-class Corona : public Qtx::ApplicationBase
+// ReSharper disable once CppClassCanBeFinal
+class Corona : public launcher::ApplicationBase
 {
   Q_OBJECT
 
   public:
     explicit Corona(Qt::Object* parent = nullptr);
 
-    void start() override;
+    virtual void start() override;
+    virtual void register_types() override;
 };
 
 
