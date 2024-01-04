@@ -6,12 +6,7 @@ import QtLocation
 import QtPositioning
 import QtQuick.Layouts
 
-import QtExtensions 1.0
-import QtExtensions.Toolkit 1.0
-import Quasar 1.0
-
 import "layouts" as Layouts
-//import "windows" as Windows
 
 ApplicationWindow {
     property string mainfont: __fontmain.name
@@ -36,12 +31,12 @@ ApplicationWindow {
     Material.foreground: Theme.io.color(Theme.Text)
     Material.accent: Theme.io.color(Theme.Mauve)
 
-    XOsmProvider { id: provider }
+    // XOsmProvider { id: provider }
 
     FontLoader { id: __fontmain; source: "qrc:/fonts/Overpass.ttf" }
     FontLoader { id: __fontmono; source: "qrc:/fonts/Inconsolata.ttf" }
 
-    menuBar: Layouts.MenuApplicationBar {}
+    // menuBar: Layouts.MenuApplicationBar {}
 
     ToolButton {
         anchors.right: parent.right
@@ -70,14 +65,6 @@ ApplicationWindow {
         }
     }
 
-    Layouts.DebugNetworkPanel {
-        id: debugNetworkPanel
-        anchors {
-            top: parent.top
-            left: parent.left
-        }
-    }
-
-    QtxThemeChanger { id: themeChanger; z: 65535; rootItem: root }
+    // QtxThemeChanger { id: themeChanger; z: 65535; rootItem: root }
 }
 

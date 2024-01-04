@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.25)
 project(Corona
   VERSION 1.0.0
   DESCRIPTION "Front-end for QuaSAR hardware"
-  HOMEPAGE_URL "io.github.whs31"
+  HOMEPAGE_URL "io.github.quasar-team"
   LANGUAGES C CXX
 )
 
@@ -26,11 +26,6 @@ find_package(Qt6 COMPONENTS
 
 add_executable(${PROJECT_NAME})
 
-add_subdirectory(libs/qt-extensions)
-add_subdirectory(libs/qt-extensions-toolkit)
-add_subdirectory(libs/qt-extensions-networking)
-add_subdirectory(libs/quasar-library)
-
 target_sources(${PROJECT_NAME}
   PRIVATE
     src/c++/main.c++
@@ -51,17 +46,10 @@ target_link_libraries(${PROJECT_NAME}
     Qt6::Positioning
     Qt6::QuickControls2
     Qt6::Concurrent
-
-    QtExtensions
-    QtExtensionsToolkit
-    QtExtensionsNetworking
-
-    QuasarLibrary
 )
 
 target_include_directories(${PROJECT_NAME}
-  PUBLIC
-    include
+  PRIVATE
     src/c++
 )
 
