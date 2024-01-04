@@ -24,6 +24,7 @@ find_package(Qt6 COMPONENTS
   Concurrent
 )
 
+set(QOL_QT_TYPEDEFS ON)
 add_subdirectory(libs/qol)
 
 add_executable(${PROJECT_NAME})
@@ -49,7 +50,7 @@ target_link_libraries(${PROJECT_NAME}
     Qt6::QuickControls2
     Qt6::Concurrent
 
-    qol
+    qol::qol
 )
 
 target_include_directories(${PROJECT_NAME}
