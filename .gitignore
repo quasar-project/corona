@@ -1,20 +1,31 @@
+# CLion folders
 .idea
-cmake-build-*
 
+# Build artifacts
+cmake-build-*
 build*/
+
+# Misc
 logs*/
 doc/html
 doc/doxy.log
+
+# Qt artifacts
 *.user
 *.autosave
 settings/userSettings.json
 settings/*.cfg
 moc_*
 ui_*
-*.o
 *.moc
+*.o
 *.prl
 
+# Doxygen generated
 src/html/
 src/latex/
+
+# Conan (deps folder must have separate .gitignore)
+CMakeUserPresets.json
+
 

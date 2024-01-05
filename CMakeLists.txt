@@ -13,6 +13,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 
+find_package(spdlog REQUIRED)
+
 find_package(QT NAMES Qt6 COMPONENTS Core)
 find_package(Qt6 COMPONENTS
   Core
@@ -24,11 +26,10 @@ find_package(Qt6 COMPONENTS
   Concurrent
 )
 
-set(QOL_QT_TYPEDEFS ON)
-add_subdirectory(libs/qol)
+#set(QOL_QT_TYPEDEFS ON)
+#add_subdirectory(libs/qol)
 
-add_subdirectory(libs/yaml-cpp)
-add_library(yaml::yaml_cpp ALIAS yaml-cpp)
+# add_library(yaml::yaml_cpp ALIAS yaml-cpp)
 
 add_executable(${PROJECT_NAME})
 
@@ -60,8 +61,9 @@ target_link_libraries(${PROJECT_NAME}
     Qt6::QuickControls2
     Qt6::Concurrent
 
-    qol::qol
-    yaml::yaml_cpp
+#    qol::qol
+    spdlog::spdlog
+    #yaml::yaml_cpp
 )
 
 target_include_directories(${PROJECT_NAME}
