@@ -50,6 +50,7 @@ target_sources(${PROJECT_NAME}
     src/c++/launcher/launcher.h
     src/c++/launcher/project_info.h
     src/c++/launcher/qtquickoptions.h
+    src/c++/launcher/qtlogginghandler.h
 
     src/qml/qml.qrc
     src/js/js.qrc

@@ -17,6 +17,7 @@
 #include <QtWidgets/QApplication>
 #include "project_info.h"
 #include "qtquickoptions.h"
+#include "qtlogginghandler.h"
 
 namespace launcher
 {
@@ -75,21 +76,20 @@ namespace launcher
         App::setOrganizationDomain(m_project_info.homepage.data());
         App::setWindowIcon(platform_dependent_icon(m_icon_path));
 
-        // const auto style = qt::String::fromStdString(to_string(m_quick_options.style));
-
         if(this->m_quick_options.style == QtQuickStyle::Material)
           qputenv("QT_QUICK_CONTROLS_MATERIAL_VARIANT", "Dense");
 
         this->m_app->register_types();
         this->m_app->start();
+        qInstallMessageHandler(logging_handler);
 
+        qt::QuickStyle::setStyle(qt::String::fromStdString(to_string(m_quick_options.style)));
         this->m_engine = std::make_unique<qt::QmlEngine>();
         qt::Object::connect(m_engine.get(), &qt::QmlEngine::quit, qApp, &qt::CoreApplication::quit);
         this->m_component = std::make_unique<qt::QmlComponent>(m_engine.get(), qml_entry_from_clean_path(m_quick_options.entry));
         qt::QuickWindow::setDefaultAlphaBuffer(true);
         this->m_component->loadUrl(qml_entry_from_clean_path(m_quick_options.entry));
 
-        // todo: make log redirect
         if(this->m_component->isReady())
           this->m_component->create();
         else
