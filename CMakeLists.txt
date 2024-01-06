@@ -9,7 +9,7 @@ project(Corona
   LANGUAGES C CXX
 )
 
-set(CMAKE_CXX_EXTENSIONS OFF)
+#set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED OFF)
 set(CMAKE_CXX_SCAN_FOR_MODULES ON)
@@ -40,6 +40,7 @@ target_sources(${PROJECT_NAME}
     src/c++/launcher/qtlogginghandler.ixx
     src/c++/launcher/qtquickoptions.ixx
     src/c++/launcher/projectinfo.ixx
+    src/c++/launcher/logconfig.ixx
     src/c++/launcher/launcher.ixx
 )
 
@@ -56,7 +57,7 @@ target_sources(${PROJECT_NAME}
     src/c++/application/corona.h
     src/c++/application/corona.c++
     src/c++/application/base.h
-  
+
     src/qml/qml.qrc
     src/js/js.qrc
     resources/resources.qrc

@@ -13,7 +13,12 @@ int main(int argc, char** argv)
       argc, argv,
       { PROJECT_NAME, PROJECT_VERSION, PROJECT_COMPANY, PROJECT_DOMAIN },
       { "Main", launcher::QtQuickStyle::Material },
-      ":/icon"
+      ":/icon",
+      {
+        "logs/log.1",
+        1024 * 1024 * 1024,
+        1
+      }
   );
   return app_launcher.launch();
 }

@@ -10,9 +10,11 @@ module;
 #include <QtWidgets/QApplication>
 
 export module launcher;
-export import launcher.qtlog;
 export import launcher.qtquickoptions;
 export import launcher.projectinfo;
+
+import launcher.qtlog;
+import launcher.logconfig;
 
 using namespace std;
 
@@ -49,14 +51,17 @@ namespace launcher
                char** argv,
                ProjectInfo project_info,
                QtQuickOptions quick_options,
-               const string_view icon_path)
+               const string_view icon_path,
+               const LogFileConfiguration& log_config)
         : m_app(std::make_unique<App>(argc, argv)),
           m_argc(argc),
           m_argv(argv),
           m_project_info(std::move(project_info)),
           m_quick_options(std::move(quick_options)),
           m_icon_path(icon_path)
-      {}
+      {
+        log_config.init();
+      }
 
       [[nodiscard]] auto launch() -> int
       {
@@ -79,7 +84,7 @@ namespace launcher
 
         qt::QuickStyle::setStyle(qt::String::fromStdString(to_string(m_quick_options.style)));
         this->m_engine = std::make_unique<qt::QmlEngine>();
-        qt::Object::connect(m_engine.get(), &qt::QmlEngine::quit, qApp, &qt::CoreApplication::quit);
+        qt::Object::connect(m_engine.get(), &qt::QmlEngine::quit, qApp, &qt::CoreApplication::quit);        // NOLINT(*-pro-type-static-cast-downcast)
         this->m_component = std::make_unique<qt::QmlComponent>(m_engine.get(), qml_entry_from_clean_path(m_quick_options.entry));
         qt::QuickWindow::setDefaultAlphaBuffer(true);
         this->m_component->loadUrl(qml_entry_from_clean_path(m_quick_options.entry));
