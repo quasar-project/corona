@@ -43,6 +43,7 @@ target_sources(${PROJECT_NAME}
   CXX_MODULES
   FILES
     src/c++/launcher/qtlogginghandler.ixx
+    src/c++/launcher/qtquickoptions.ixx
 )
 
 target_sources(${PROJECT_NAME}
@@ -61,7 +62,6 @@ target_sources(${PROJECT_NAME}
 
     src/c++/launcher/launcher.h
     src/c++/launcher/project_info.h
-    src/c++/launcher/qtquickoptions.h
 
     src/qml/qml.qrc
     src/js/js.qrc

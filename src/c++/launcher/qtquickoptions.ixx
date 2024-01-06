@@ -1,16 +1,14 @@
-//
-// Created by user on 06.01.2024.
-//
-
-#pragma once
+module;
 
 #include <string>
 
+export module launcher.qtquickoptions;
+
+using namespace std;
+
 namespace launcher
 {
-  using std::string;
-
-  enum class QtQuickStyle
+  export enum class QtQuickStyle
   {
     Default,
     Material,
@@ -18,7 +16,7 @@ namespace launcher
     Fusion
   };
 
-  inline auto to_string(const QtQuickStyle style) -> string
+  export inline auto to_string(const QtQuickStyle style) -> string
   {
     switch(style)
     {
@@ -30,7 +28,7 @@ namespace launcher
     }
   }
 
-  struct QtQuickOptions
+  export struct QtQuickOptions
   {
     string entry;
     QtQuickStyle style;

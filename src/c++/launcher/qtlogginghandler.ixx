@@ -3,7 +3,7 @@ module;
 #include <afx>
 #include <QtCore/QDebug>
 
-export module launcher.qt;
+export module launcher.qtlog;
 
 namespace launcher
 {

@@ -16,9 +16,9 @@
 #include <QtQuickControls2/QQuickStyle>
 #include <QtWidgets/QApplication>
 #include "project_info.h"
-#include "qtquickoptions.h"
 
-import launcher.qt;
+import launcher.qtlog;
+import launcher.qtquickoptions;
 
 namespace launcher
 {
@@ -37,7 +37,7 @@ namespace launcher
   [[nodiscard]] inline auto qml_entry_from_clean_path(const string_view path) -> qt::Url
   {
     const auto full_path = std::format("qrc:/{}.qml", path);
-    return qt::Url(qt::String::fromStdString(full_path));
+    return { qt::String::fromStdString(full_path) };
   }
 
   template<typename T>
@@ -54,8 +54,8 @@ namespace launcher
     public:
       Launcher(int argc,
                char** argv,
-               ProjectInfo  project_info,
-               QtQuickOptions  quick_options,
+               ProjectInfo project_info,
+               QtQuickOptions quick_options,
                const string_view icon_path)
         : m_app(std::make_unique<App>(argc, argv)),
           m_argc(argc),
