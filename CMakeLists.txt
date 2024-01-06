@@ -42,6 +42,8 @@ target_sources(${PROJECT_NAME}
     src/c++/launcher/projectinfo.ixx
     src/c++/launcher/logconfig.ixx
     src/c++/launcher/launcher.ixx
+
+    src/c++/map/provider/provider.ixx
 )
 
 target_sources(${PROJECT_NAME}
