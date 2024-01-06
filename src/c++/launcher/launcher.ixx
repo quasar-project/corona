@@ -1,13 +1,6 @@
-//
-// Created by user on 06.01.2024.
-//
-
-#pragma once
+module;
 
 #include <afx>
-#include <format>
-#include <memory>
-#include <utility>
 #include <application/base.h>
 #include <QtQml/QQmlComponent>
 #include <QtQml/QQmlContext>
@@ -15,16 +8,16 @@
 #include <QtQuick/QQuickWindow>
 #include <QtQuickControls2/QQuickStyle>
 #include <QtWidgets/QApplication>
-#include "project_info.h"
 
-import launcher.qtlog;
-import launcher.qtquickoptions;
+export module launcher;
+export import launcher.qtlog;
+export import launcher.qtquickoptions;
+export import launcher.projectinfo;
+
+using namespace std;
 
 namespace launcher
 {
-  using std::unique_ptr;
-  using std::string_view;
-
   [[nodiscard]] inline auto platform_dependent_icon(const string_view stem) -> qt::Icon
   {
     #if defined(Q_OS_WIN)
@@ -46,7 +39,7 @@ namespace launcher
   template<typename T>
   concept IsQtCoreApplication = std::is_base_of_v<qt::CoreApplication, T>;
 
-  template<typename App>
+  export template<typename App>
   requires
     IsApplicationBase<App> and IsQtCoreApplication<App>
   class Launcher

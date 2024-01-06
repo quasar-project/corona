@@ -30,11 +30,6 @@ find_package(Qt6 COMPONENTS
   Concurrent
 )
 
-#set(QOL_QT_TYPEDEFS ON)
-#add_subdirectory(libs/qol)
-
-# add_library(yaml::yaml_cpp ALIAS yaml-cpp)
-
 qt_add_executable(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME}
@@ -44,6 +39,8 @@ target_sources(${PROJECT_NAME}
   FILES
     src/c++/launcher/qtlogginghandler.ixx
     src/c++/launcher/qtquickoptions.ixx
+    src/c++/launcher/projectinfo.ixx
+    src/c++/launcher/launcher.ixx
 )
 
 target_sources(${PROJECT_NAME}
@@ -59,10 +56,7 @@ target_sources(${PROJECT_NAME}
     src/c++/application/corona.h
     src/c++/application/corona.c++
     src/c++/application/base.h
-
-    src/c++/launcher/launcher.h
-    src/c++/launcher/project_info.h
-
+  
     src/qml/qml.qrc
     src/js/js.qrc
     resources/resources.qrc

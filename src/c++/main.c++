@@ -3,7 +3,8 @@
 //
 
 #include <corona>
-#include <launcher/launcher.h>
+
+import launcher;
 
 // ReSharper disable once CppParameterMayBeConst
 int main(int argc, char** argv)

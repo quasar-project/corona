@@ -1,16 +1,14 @@
-//
-// Created by user on 06.01.2024.
-//
-
-#pragma once
+module;
 
 #include <string>
 
+export module launcher.projectinfo;
+
+using namespace std;
+
 namespace launcher
 {
-  using std::string;
-
-  struct ProjectInfo
+  export struct ProjectInfo
   {
     string name;
     string version;
