@@ -53,14 +53,14 @@ namespace launcher
     public:
       Launcher(int argc,
                char** argv,
-               const ProjectInfo& project_info,
-               const QtQuickOptions& quick_options,
+               ProjectInfo  project_info,
+               QtQuickOptions  quick_options,
                const string_view icon_path)
         : m_app(std::make_unique<App>(argc, argv)),
           m_argc(argc),
           m_argv(argv),
-          m_project_info(project_info),
-          m_quick_options(quick_options),
+          m_project_info(std::move(project_info)),
+          m_quick_options(std::move(quick_options)),
           m_icon_path(icon_path)
       {}
 
