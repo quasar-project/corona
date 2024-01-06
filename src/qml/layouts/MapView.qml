@@ -5,17 +5,20 @@ import QtLocation
 import QtPositioning
 import QtQuick.Layouts
 
+import Corona.Map.Provider 1.0
+
 Map {
     // { 0 - offline, 5 - schema, 4 - hybrid, 1 - satellite }
     property int mapmode: 1
 
+    OpenStreetMapProvider { id: provider }
     id: map
     anchors.fill: parent
     plugin: Plugin {
         name: "osm"
         PluginParameter {
             name: "osm.mapping.providersrepository.address"
-            value: "file:///" + provider.path
+            value: "file:///" + provider.directory
         }
     }
 

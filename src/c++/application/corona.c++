@@ -3,6 +3,8 @@
 //
 
 #include "corona.h"
+#include <QtQml/QmlTypeAndRevisionsRegistration>
+#include <map/provider/providerqml.h>
 
 namespace application
 {
@@ -11,8 +13,7 @@ namespace application
 
   Corona::Corona(int argc, char** argv)
     : qt::Application(argc, argv)
-  {
-  }
+  {}
 
   void Corona::start()
   {
@@ -20,5 +21,7 @@ namespace application
 
   void Corona::register_types()
   {
+    qmlRegisterModule("Corona.Map.Provider", 1, 0);
+    qmlRegisterType<map::provider::OpenStreetMapProviderQML>("Corona.Map.Provider", 1, 0, "OpenStreetMapProvider");
   }
 }

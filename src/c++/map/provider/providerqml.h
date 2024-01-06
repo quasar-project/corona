@@ -5,9 +5,12 @@
 #pragma once
 
 #include <afx>
+#include <memory>
 #include <QtCore/QObject>
 
+#ifndef Q_MOC_RUN
 import map.provider;
+#endif
 
 namespace map::provider
 {
@@ -19,10 +22,11 @@ namespace map::provider
 
     public:
       explicit OpenStreetMapProviderQML(qt::Object* parent = nullptr);
+      virtual ~OpenStreetMapProviderQML() override;
 
       [[nodiscard]] QString directory() const;
 
     private:
-      OpenStreetMapProvider m_provider;
+      std::unique_ptr<OpenStreetMapProvider> m_provider;
   };
 }

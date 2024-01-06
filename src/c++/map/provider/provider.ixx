@@ -13,7 +13,10 @@ module;
 
 export module map.provider;
 
-using namespace std;
+using std::unordered_map;
+using std::string;
+using std::string_view;
+using std::vector;
 using namespace qt;
 
 namespace map::provider
@@ -115,15 +118,17 @@ namespace map::provider
       explicit OpenStreetMapProvider(
         const OpenStreetMapConfigurationFiles& cfg,
         const string_view directory,
-        const DirectoryFormat format
+        const DirectoryFormat format,
+        const bool overwrite
       )
       {
         this->m_directory = format == DirectoryFormat::Relative ?
           String::fromStdString(std::format("{}/{}", CoreApplication::applicationDirPath().toStdString(), directory))
         : String::fromStdString(string(directory));
 
-        for(const auto& file : cfg)
-          file.write_to_file(this->m_directory.toStdString().data());
+        if(overwrite)
+          for(const auto& file : cfg)
+            file.write_to_file(this->m_directory.toStdString());
       }
 
       [[nodiscard]] auto directory() const -> String { return m_directory; }
