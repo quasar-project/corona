@@ -1,15 +1,13 @@
-//
-// Created by user on 06.01.2024.
-//
-
-#pragma once
+module;
 
 #include <afx>
 #include <QtCore/QDebug>
 
+export module launcher.qt;
+
 namespace launcher
 {
-  inline void logging_handler(QtMsgType type, const QMessageLogContext&, const QString& msg)
+  export inline void logging_handler(QtMsgType type, const QMessageLogContext&, const QString& msg)
   {
     switch(type)
     {

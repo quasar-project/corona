@@ -5,8 +5,8 @@ def run_conan(build_type):
     subprocess.run(
         (
             'conan', 'install', '.',
-            # '--profile', 'conan/profiles/mingw_windows_x86_64',
-            '--profile', 'conan/profiles/msvc_windows_x86_64',
+            '--profile', 'conan/profiles/mingw_windows_x86_64',
+            # '--profile', 'conan/profiles/msvc_windows_x86_64',
             '--build', 'missing',
             '--output-folder=./dependencies',
             f'--settings=build_type={build_type}'

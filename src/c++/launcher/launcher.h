@@ -17,7 +17,8 @@
 #include <QtWidgets/QApplication>
 #include "project_info.h"
 #include "qtquickoptions.h"
-#include "qtlogginghandler.h"
+
+import launcher.qt;
 
 namespace launcher
 {

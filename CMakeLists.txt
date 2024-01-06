@@ -1,4 +1,6 @@
-cmake_minimum_required(VERSION 3.25)
+# This project uses C++20 named modules. Update CMake to at least 3.28.
+cmake_minimum_required(VERSION 3.28 FATAL_ERROR)
+cmake_policy(SET CMP0155 NEW)
 
 project(Corona
   VERSION 1.0.0
@@ -7,8 +9,10 @@ project(Corona
   LANGUAGES C CXX
 )
 
+set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD_REQUIRED OFF)
+set(CMAKE_CXX_SCAN_FOR_MODULES ON)
 
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
@@ -34,6 +38,14 @@ find_package(Qt6 COMPONENTS
 qt_add_executable(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME}
+  PUBLIC
+  FILE_SET
+  CXX_MODULES
+  FILES
+    src/c++/launcher/qtlogginghandler.ixx
+)
+
+target_sources(${PROJECT_NAME}
   PRIVATE
     src/c++/main.c++
     src/c++/afx
@@ -50,7 +62,6 @@ target_sources(${PROJECT_NAME}
     src/c++/launcher/launcher.h
     src/c++/launcher/project_info.h
     src/c++/launcher/qtquickoptions.h
-    src/c++/launcher/qtlogginghandler.h
 
     src/qml/qml.qrc
     src/js/js.qrc
