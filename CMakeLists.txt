@@ -35,6 +35,7 @@ add_executable(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME}
   PRIVATE
+    src/c++/def.h
     src/c++/main.c++
     src/c++/corona.h
     src/c++/corona.c++

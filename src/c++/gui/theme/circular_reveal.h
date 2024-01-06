@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <qol/qol>
+#include <def.h>
 #include <QtCore/QPropertyAnimation>
 #include <QtGui/QPainter>
 #include <QtQuick/QQuickPaintedItem>

@@ -8,17 +8,17 @@
 
 #pragma once
 
-#include <qol/qol>
+#include <def.h>
 #include <QtCore/QObject>
 
 namespace launcher
 {
-  class ApplicationBase : public Qt::Object
+  class ApplicationBase : public qt::Object
   {
     Q_OBJECT
 
     public:
-      explicit ApplicationBase(Qt::Object* parent = nullptr);
+      explicit ApplicationBase(qt::Object* parent = nullptr);
       virtual void register_types() = 0;
       virtual void start() = 0;
   };
@@ -26,7 +26,7 @@ namespace launcher
 
 namespace launcher
 {
-  inline ApplicationBase::ApplicationBase(Qt::Object* parent)
-    : Qt::Object(parent)
+  inline ApplicationBase::ApplicationBase(qt::Object* parent)
+    : qt::Object(parent)
   {}
 } // QtEx
