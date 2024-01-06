@@ -2,17 +2,17 @@
 // Created by whs31 on 25.10.2023.
 //
 
-#include <corona.h>
-#include <launcher/launcher_base.h>
+#include <corona>
+#include <launcher/launcher.h>
 
+// ReSharper disable once CppParameterMayBeConst
 int main(int argc, char** argv)
 {
-  launcher::ApplicationLauncher<QApplication, Corona> app_launcher(
+  launcher::Launcher<application::Corona> app_launcher(
       argc, argv,
       { PROJECT_NAME, PROJECT_VERSION, PROJECT_COMPANY, PROJECT_DOMAIN },
-      { "qrc:/Main.qml", "Material" },
-      ":/icon",
-      launcher::ConsoleBehaviour::KeepConsole // todo add cli arg
+      { "Main", launcher::QtQuickStyle::Material },
+      ":/icon"
   );
   return app_launcher.launch();
 }
