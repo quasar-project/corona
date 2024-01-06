@@ -11,7 +11,7 @@ module;
 #include <QtCore/QJsonObject>
 #include <QtCore/QFile>
 
-export module provider;
+export module map.provider;
 
 using namespace std;
 using namespace qt;

@@ -60,6 +60,9 @@ target_sources(${PROJECT_NAME}
     src/c++/application/corona.c++
     src/c++/application/base.h
 
+    src/c++/map/provider/providerqml.h
+    src/c++/map/provider/providerqml.c++
+
     src/qml/qml.qrc
     src/js/js.qrc
     resources/resources.qrc
