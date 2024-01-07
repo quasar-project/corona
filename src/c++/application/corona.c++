@@ -6,17 +6,27 @@
 #include <QtGui/QFontDatabase>
 #include <QtQml/QmlTypeAndRevisionsRegistration>
 #include <config/config.h>
+#include <config/configqmlwrapper.h>
 #include <map/provider/providerqml.h>
 
 namespace application
 {
+  using std::string;
+
   auto Corona::instance() -> Corona* { return dynamic_cast<Corona*>(qt::Application::instance()); }
   auto Corona::ref() -> Corona& { return *instance(); }
 
   Corona::Corona(int argc, char** argv)
     : qt::Application(argc, argv),
-      //m_config(std::make_unique<::config::Config>())
-  {}
+      m_config_wrapper(std::make_unique<::config::ConfigQMLWrapper>(this)),
+      m_config(std::make_unique<::config::Config>([this](const string& cat, const string& name)
+      {
+        this->m_config_wrapper->value_changed_callback(cat, name);
+      },
+      config::ConfigQMLWrapper::create_default_config_callback))
+  {
+    this->m_config_wrapper->set_source_ptr(this->m_config.get());
+  }
 
   Corona::~Corona() = default;
 
@@ -30,6 +40,9 @@ namespace application
 
   void Corona::register_types()
   {
+    qmlRegisterModule("Corona.Config", 1, 0);
+    qmlRegisterSingletonInstance<::config::ConfigQMLWrapper>("Corona.Config", 1, 0, "Config", this->m_config_wrapper.get());
+
     qmlRegisterModule("Corona.Map.Provider", 1, 0);
     qmlRegisterType<map::provider::OpenStreetMapProviderQML>("Corona.Map.Provider", 1, 0, "OpenStreetMapProvider");
   }

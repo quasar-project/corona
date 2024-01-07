@@ -6,6 +6,8 @@ import QtLocation
 import QtPositioning
 import QtQuick.Layouts
 
+import Corona.Config
+
 import "layouts" as Layouts
 
 ApplicationWindow {
@@ -21,6 +23,7 @@ ApplicationWindow {
 
     Component.onCompleted: {
         showMaximized()
+        console.info(Config.value("ip", "de10"))
     }
 
     Material.theme: Theme.darkMode === Theme.Dark ? Material.Dark : Material.Light

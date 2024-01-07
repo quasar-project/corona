@@ -12,7 +12,15 @@ namespace config
 {
   Config::Config(ValueChangedCB cb, CreateDefaultConfigFunction cdcf)
     : m_value_changed_cb(cb),
+      m_create_default_config_function(cdcf),
       m_root(make_unique<YAML::Node>())
+  {
+    this->load();
+  }
+
+  Config::~Config() = default;
+
+  void Config::load() const
   {
     const auto file_path = fmt::format("{}/{}/{}",
       filesystem::current_path().string(),
@@ -24,7 +32,7 @@ namespace config
     {
       logging::debug("config file is missing from {}", file_path);
       logging::trace("calling create default config function");
-      if(auto res = cdcf(file_path))
+      if(auto res = this->m_create_default_config_function(file_path))
         logging::debug("default config created");
       else
         logging::error("failed to create default config");
@@ -37,9 +45,20 @@ namespace config
     *(this->m_root) = Clone(YAML::Load(contents));
   }
 
-  Config::~Config() = default;
+  void Config::save() const
+  {
+    const auto path = fmt::format("{}/{}/{}",
+      filesystem::current_path().string(),
+      CONFIG_DIRECTORY_NAME,
+      CONFIG_FILENAME
+    );
 
-  auto Config::get_node(const string_view category, const string_view key) const -> YAML::Node
+    ofstream stream(path);
+    stream << YAML::Dump(*(this->m_root));
+    stream.close();
+  }
+
+  auto Config::get_node_unchecked(const string_view category, const string_view key) const -> YAML::Node
   {
     return (*this->m_root)[category][key];
   }

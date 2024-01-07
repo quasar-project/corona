@@ -64,9 +64,6 @@ else()
       src/c++/launcher/logconfig.c++
       src/c++/launcher/launcher.h
 
-      src/c++/config/config.h
-      src/c++/config/config.c++
-
       src/c++/map/provider/openstreetmapprovider.h
       src/c++/map/provider/openstreetmapprovider.c++
   )
@@ -79,6 +76,11 @@ target_sources(${PROJECT_NAME}
     src/c++/main.c++
     src/c++/afx
     src/c++/corona
+
+    src/c++/config/config.h
+    src/c++/config/config.c++
+    src/c++/config/configqmlwrapper.h
+    src/c++/config/configqmlwrapper.c++
 
     src/c++/global/definitions.h
     src/c++/global/type_aliases.h
@@ -99,12 +101,12 @@ target_sources(${PROJECT_NAME}
     resources/resources.qrc
 )
 
-qt_add_qml_module(${PROJECT_NAME}
-  URI Application
-  VERSION 1.0
-  QML_FILES
-    src/qml/Main.qml
-)
+#qt_add_qml_module(${PROJECT_NAME}
+#  URI Application
+#  VERSION 1.0
+#  QML_FILES
+#    src/qml/Main.qml
+#)
 
 target_link_libraries(${PROJECT_NAME}
   PUBLIC

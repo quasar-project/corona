@@ -13,6 +13,7 @@
 namespace config
 {
   class Config;
+  class ConfigQMLWrapper;
 }
 
 namespace application
@@ -38,5 +39,6 @@ namespace application
 
     private:
       unique_ptr<::config::Config> m_config;
+      unique_ptr<::config::ConfigQMLWrapper> m_config_wrapper;
   };
 }

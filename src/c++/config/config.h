@@ -18,24 +18,28 @@ namespace config
   class Config final
   {
     public:
-      using ValueChangedCB = std::function<void (string)>;
+      using ValueChangedCB = std::function<void (string, string)>;
       using CreateDefaultConfigFunction = std::function<bool (string_view)>;
 
       explicit Config(ValueChangedCB, CreateDefaultConfigFunction);
       ~Config();
 
-      [[nodiscard]] auto get_node(string_view category, string_view key) const -> YAML::Node;
+      void load() const;
+      void save() const;
+
+      [[nodiscard]] auto get_node_unchecked(string_view category, string_view key) const -> YAML::Node;
 
       template<typename T>
-      [[nodiscard]] auto get(string_view category, string_view key) const -> T;
+      [[nodiscard]] auto get_unchecked(string_view category, string_view key) const -> T;
 
     private:
       ValueChangedCB m_value_changed_cb;
+      CreateDefaultConfigFunction m_create_default_config_function;
       unique_ptr<YAML::Node> m_root;
   };
 
-  template<typename T> auto Config::get(const string_view category, const string_view key) const -> T
+  template<typename T> auto Config::get_unchecked(const string_view category, const string_view key) const -> T
   {
-    return this->get_node(category, key).as<T>();
+    return this->get_node_unchecked(category, key).as<T>();
   }
 }

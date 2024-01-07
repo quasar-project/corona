@@ -106,9 +106,9 @@ namespace launcher
     if(this->m_quick_options.style == QtQuickStyle::Material)
       qputenv("QT_QUICK_CONTROLS_MATERIAL_VARIANT", "Dense");
 
+    qInstallMessageHandler(logging_handler);
     this->m_app->register_types();
     this->m_app->start();
-    qInstallMessageHandler(logging_handler);
 
     qt::QuickStyle::setStyle(qt::String::fromStdString(to_string(m_quick_options.style)));
     this->m_engine = std::make_unique<qt::QmlEngine>();

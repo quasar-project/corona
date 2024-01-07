@@ -1,16 +1,31 @@
-//
-// Created by user on 07.01.2024.
-//
+#pragma once
 
-#ifndef CONFIGQMLWRAPPER_H
-#define CONFIGQMLWRAPPER_H
+#include <afx>
+#include <QtCore/QObject>
+#include "config.h"
 
-namespace config {
+namespace config
+{
+  // ReSharper disable once CppClassCanBeFinal
+  class ConfigQMLWrapper : public qt::Object
+  {
+    Q_OBJECT
 
-class ConfigQMLWrapper {
+    public:
+      explicit ConfigQMLWrapper(qt::Object* parent);
 
-};
+      invokable QVariant value(const QString& category, const QString& name) const;
 
-} // config
+      void set_source_ptr(Config* ptr);
+      void value_changed_callback(const string& category, const string& name);
 
-#endif //CONFIGQMLWRAPPER_H
+      static bool create_default_config_callback(string_view path);
+
+      signals:
+        void valueChanged(qt::String category, qt::String name);
+
+    private:
+      Config* m_ptr;
+  };
+}
+
