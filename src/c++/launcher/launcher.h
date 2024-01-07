@@ -103,6 +103,8 @@ namespace launcher
     App::setOrganizationDomain(m_project_info.homepage.data());
     App::setWindowIcon(platform_dependent_icon(m_icon_path));
 
+    logging::info("project {} version {} started", this->m_project_info.name, this->m_project_info.version);
+
     if(this->m_quick_options.style == QtQuickStyle::Material)
       qputenv("QT_QUICK_CONTROLS_MATERIAL_VARIANT", "Dense");
 
@@ -126,7 +128,6 @@ namespace launcher
       return 2;
     }
     logging::debug("launcher finished its task");
-    logging::info("project {} version {} started", this->m_project_info.name, this->m_project_info.version);
 
     return App::exec();
   }
