@@ -24,6 +24,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 
 find_package(spdlog REQUIRED)
+find_package(yaml-cpp REQUIRED)
 
 find_package(QT NAMES Qt6 COMPONENTS Core)
 find_package(Qt6 COMPONENTS
@@ -63,6 +64,9 @@ else()
       src/c++/launcher/logconfig.c++
       src/c++/launcher/launcher.h
 
+      src/c++/config/config.h
+      src/c++/config/config.c++
+
       src/c++/map/provider/openstreetmapprovider.h
       src/c++/map/provider/openstreetmapprovider.c++
   )
@@ -87,6 +91,9 @@ target_sources(${PROJECT_NAME}
     src/c++/map/provider/providerqml.h
     src/c++/map/provider/providerqml.c++
 
+    src/c++/gui/theme/circular_reveal.h
+    src/c++/gui/theme/circular_reveal.c++
+
     src/qml/qml.qrc
     src/js/js.qrc
     resources/resources.qrc
@@ -109,9 +116,8 @@ target_link_libraries(${PROJECT_NAME}
     Qt6::QuickControls2
     Qt6::Concurrent
 
-#    qol::qol
     spdlog::spdlog
-    #yaml::yaml_cpp
+    yaml-cpp
 )
 
 target_include_directories(${PROJECT_NAME}

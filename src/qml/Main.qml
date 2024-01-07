@@ -9,9 +9,6 @@ import QtQuick.Layouts
 import "layouts" as Layouts
 
 ApplicationWindow {
-    property string mainfont: __fontmain.name
-    property string monofont: __fontmono.name
-
     id: window_root
 
     title: "Corona"
@@ -37,8 +34,8 @@ ApplicationWindow {
         anchors.right: parent.right
         parent: window_root.menuBar
         icon {
-            source: Theme.darkMode == Theme.Dark ? "qrc:/icons/common/light.svg"
-                                                 : "qrc:/icons/common/dark.svg"
+            source: Theme.darkMode === Theme.Dark ? "qrc:/icons/common/light.svg"
+                                                  : "qrc:/icons/common/dark.svg"
         }
         flat: true
         onPressed: themeChanger.toggleTheme(this)

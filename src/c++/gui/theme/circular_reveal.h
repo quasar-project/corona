@@ -4,13 +4,14 @@
 
 #pragma once
 
-#include <def.h>
+#include <afx>
 #include <QtCore/QPropertyAnimation>
 #include <QtGui/QPainter>
 #include <QtQuick/QQuickPaintedItem>
 
 namespace gui::theme
 {
+  // ReSharper disable once CppClassCanBeFinal
   class CircularReveal : public QQuickPaintedItem
   {
     Q_OBJECT
@@ -26,7 +27,7 @@ namespace gui::theme
       virtual void paint(QPainter* painter) override;
 
       invokable void start(int w, int h, const QPoint& center, int radius) noexcept;
-      connectable_slot void handleGrabResult();
+      qt_slot void handleGrabResult();
 
       signals:
         void targetChanged();

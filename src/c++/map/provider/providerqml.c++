@@ -4,9 +4,9 @@
 
 #include "providerqml.h"
 #include <array>
-#include <string>
 #include <ranges>
-#include <QtCore/QDir>
+#include <string>
+#include <config/config.h>
 
 using namespace std;
 
@@ -27,7 +27,7 @@ namespace map::provider
     };
     assert(names.size() == urls.size());
 
-    auto path = "config/osm";
+    auto path = fmt::format("{}/osm", config::CONFIG_DIRECTORY_NAME);
     auto cfg = OpenStreetMapConfiguration {
       .image_format = OpenStreetMapConfiguration::ImageFormat::Png,
       .qt_image_format = OpenStreetMapConfiguration::QtImageFormat::Indexed8,
