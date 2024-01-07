@@ -9,7 +9,7 @@ import Corona.Map.Provider 1.0
 
 Map {
     // { 0 - offline, 5 - schema, 4 - hybrid, 1 - satellite }
-    property int mapmode: 1
+    property int mapmode: provider.getMapMode(OpenStreetMapProvider.Satellite)
 
     OpenStreetMapProvider { id: provider }
     id: map
@@ -27,6 +27,7 @@ Map {
         smooth: true
         samples: 8
     }
+    Component.onCompleted: console.log(mapmode)
     center: QtPositioning.coordinate(60, 39.7)
     activeMapType: map.supportedMapTypes[mapmode]
     copyrightsVisible: false

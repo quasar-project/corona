@@ -55,4 +55,16 @@ namespace map::provider
   OpenStreetMapProviderQML::~OpenStreetMapProviderQML() = default;
 
   QString OpenStreetMapProviderQML::directory() const { return this->m_provider.get()->directory(); }
+
+  int OpenStreetMapProviderQML::getMapMode(const MapMode mode)
+  {
+    switch(mode)
+    {
+      case MapMode::Offline: return 5;
+      case MapMode::Scheme: return 0;
+      case MapMode::Satellite: return 1;
+      case MapMode::Hybrid: return 4;
+      default: return -1;
+    }
+  }
 }
