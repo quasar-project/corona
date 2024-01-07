@@ -6,13 +6,6 @@
         <file>fonts/Roboto-Regular.ttf</file>
         <file>fonts/Overpass.ttf</file>
         <file>theme/gruvbox.json</file>
-        <file>osmconfigs/cycle</file>
-        <file>osmconfigs/hiking</file>
-        <file>osmconfigs/night-transit</file>
-        <file>osmconfigs/satellite</file>
-        <file>osmconfigs/street</file>
-        <file>osmconfigs/terrain</file>
-        <file>osmconfigs/transit</file>
         <file>icons/common/block.svg</file>
         <file>icons/common/cog.svg</file>
         <file>icons/common/dark.svg</file>

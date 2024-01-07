@@ -3,24 +3,31 @@
 //
 
 #include "logconfig.h"
+#include <vector>
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/rotating_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace launcher
 {
+  using std::vector;
+  using std::shared_ptr;
   using std::string_view;
 
   constexpr string_view DEFAULT_LOGGER_NAME = "logger";
 
   void LogFileConfiguration::init() const
   {
-    auto logger = spdlog::rotating_logger_mt(
-        DEFAULT_LOGGER_NAME.data(),
-        string(this->filename),
-        this->max_size,
-        this->max_files
-      );
-    spdlog::set_default_logger(std::move(logger));
+    vector<spdlog::sink_ptr> sinks;
+    sinks.push_back(std::make_shared<spdlog::sinks::stdout_color_sink_st>());
+    sinks.push_back(std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
+      string(this->filename),
+      this->max_size,
+      this->max_files
+    ));
+    auto combined_logger = std::make_shared<spdlog::logger>(DEFAULT_LOGGER_NAME.data(), std::begin(sinks), std::end(sinks));
+
+    spdlog::set_default_logger(std::move(combined_logger));
     spdlog::set_level(spdlog::level::trace);
     spdlog::flush_on(spdlog::level::debug);
   }
