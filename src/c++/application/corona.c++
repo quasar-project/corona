@@ -36,6 +36,8 @@ namespace application
     auto font_list = qt::FontDatabase::applicationFontFamilies(font_id);
     const auto family = font_list.first();
     qt::GuiApplication::setFont(qt::Font(family));
+
+    this->m_config->load();
   }
 
   void Corona::register_types()

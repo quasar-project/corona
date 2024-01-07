@@ -15,7 +15,7 @@ namespace config
       m_create_default_config_function(cdcf),
       m_root(make_unique<YAML::Node>())
   {
-    this->load();
+    // this->load();
   }
 
   Config::~Config() = default;
@@ -43,6 +43,7 @@ namespace config
     ifstream stream(file_path);
     const string contents((istreambuf_iterator(stream)), istreambuf_iterator<char>());
     *(this->m_root) = Clone(YAML::Load(contents));
+    logging::debug("config loaded");
   }
 
   void Config::save() const
