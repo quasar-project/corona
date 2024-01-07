@@ -20,9 +20,9 @@ int main(int argc, char** argv)
       { "Main", launcher::QtQuickStyle::Material },
       ":/icon",
       {
-        "logs/log.1",
-        1024 * 1024 * 1024,
-        1
+        .filename = "logs/log.1",
+        .max_size = 1024 * 1024 * 1024,
+        .max_files = 1
       }
   );
   return app_launcher.launch();
