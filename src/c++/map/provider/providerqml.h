@@ -8,12 +8,18 @@
 #include <memory>
 #include <QtCore/QObject>
 
+#if defined CXX20_MODULES_DISABLED
+#include "openstreetmapprovider.h"
+#else
 #ifndef Q_MOC_RUN
 import map.provider;
+#endif
 #endif
 
 namespace map::provider
 {
+  using std::unique_ptr;
+
   // ReSharper disable once CppClassCanBeFinal
   class OpenStreetMapProviderQML : public qt::Object
   {
@@ -27,6 +33,6 @@ namespace map::provider
       [[nodiscard]] QString directory() const;
 
     private:
-      std::unique_ptr<OpenStreetMapProvider> m_provider;
+      unique_ptr<OpenStreetMapProvider> m_provider;
   };
 }

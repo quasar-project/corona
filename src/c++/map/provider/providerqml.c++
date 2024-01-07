@@ -45,18 +45,10 @@ namespace map::provider
       files.emplace_back(configuration, name);
     }
 
-    // todo: move to module
-    qt::Dir dir(qt::String::fromStdString(path));
-    const auto exists = dir.exists();
-    const auto empty = dir.isEmpty();
-    if(not exists)
-     (void)dir.mkpath(dir.path());
-
     this->m_provider.reset(new OpenStreetMapProvider(
       files,
       path,
-      OpenStreetMapProvider::DirectoryFormat::Relative,
-      empty
+      OpenStreetMapProvider::DirectoryFormat::Relative
     ));
   }
 

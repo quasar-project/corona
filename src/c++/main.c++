@@ -4,7 +4,12 @@
 
 #include <corona>
 
+
+#if defined CXX20_MODULES_DISABLED
+#include <launcher/launcher.h>
+#else
 import launcher;
+#endif
 
 // ReSharper disable once CppParameterMayBeConst
 int main(int argc, char** argv)

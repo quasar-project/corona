@@ -1,5 +1,5 @@
 # This project uses C++20 named modules. Update CMake to at least 3.28.
-cmake_minimum_required(VERSION 3.28 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.28)
 cmake_policy(SET CMP0155 NEW)
 
 project(Corona
@@ -9,10 +9,16 @@ project(Corona
   LANGUAGES C CXX
 )
 
-#set(CMAKE_CXX_EXTENSIONS OFF)
+option(ALLOW_MODULES "Allow modules" OFF)
+
+# set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED OFF)
-set(CMAKE_CXX_SCAN_FOR_MODULES ON)
+
+if(ALLOW_MODULES)
+  set(CMAKE_CXX_SCAN_FOR_MODULES ON)
+  set(CMAKE_CXX_MODULE_COMPILE ON)
+endif()
 
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
@@ -32,19 +38,37 @@ find_package(Qt6 COMPONENTS
 
 qt_add_executable(${PROJECT_NAME})
 
-target_sources(${PROJECT_NAME}
-  PUBLIC
-  FILE_SET
-  CXX_MODULES
-  FILES
-    src/c++/launcher/qtlogginghandler.ixx
-    src/c++/launcher/qtquickoptions.ixx
-    src/c++/launcher/projectinfo.ixx
-    src/c++/launcher/logconfig.ixx
-    src/c++/launcher/launcher.ixx
+if(ALLOW_MODULES)
+  target_sources(${PROJECT_NAME}
+    PUBLIC
+    FILE_SET
+    CXX_MODULES
+    FILES
+      src/c++/launcher/qtlogginghandler.ixx
+      src/c++/launcher/qtquickoptions.ixx
+      src/c++/launcher/projectinfo.ixx
+      src/c++/launcher/logconfig.ixx
+      src/c++/launcher/launcher.ixx
 
-    src/c++/map/provider/provider.ixx
-)
+      src/c++/map/provider/provider.ixx
+  )
+else()
+  target_sources(${PROJECT_NAME}
+    PRIVATE
+      src/c++/launcher/qtlogginghandler.h
+      src/c++/launcher/qtlogginghandler.c++
+      src/c++/launcher/qtquickoptions.h
+      src/c++/launcher/projectinfo.h
+      src/c++/launcher/logconfig.h
+      src/c++/launcher/logconfig.c++
+      src/c++/launcher/launcher.h
+
+      src/c++/map/provider/openstreetmapprovider.h
+      src/c++/map/provider/openstreetmapprovider.c++
+  )
+  message(STATUS "${PROJECT_NAME} C++20 modules disabled")
+  target_compile_definitions(${PROJECT_NAME} PRIVATE CXX20_MODULES_DISABLED=1)
+endif()
 
 target_sources(${PROJECT_NAME}
   PRIVATE
@@ -109,3 +133,5 @@ qt_generate_deploy_app_script(
   NO_UNSUPPORTED_PLATFORM_ERROR
 )
 install(SCRIPT ${deploy_script})
+
+unset(ALLOW_MODULES)
