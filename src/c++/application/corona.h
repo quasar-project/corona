@@ -6,11 +6,19 @@
 #pragma once
 
 #include <afx>
+#include <memory>
 #include <QtWidgets/QApplication>
 #include "base.h"
 
+namespace config
+{
+  class Config;
+}
+
 namespace application
 {
+  using std::unique_ptr;
+
   class Corona : public qt::Application,
                  public Base
   {
@@ -21,8 +29,14 @@ namespace application
       [[nodiscard]] static auto ref() -> Corona&;
 
       explicit Corona(int argc, char** argv);
+      virtual ~Corona() override;
 
       virtual void start() override;
       virtual void register_types() override;
+
+      [[nodiscard]] auto config() const -> config::Config&;
+
+    private:
+      unique_ptr<::config::Config> m_config;
   };
 }

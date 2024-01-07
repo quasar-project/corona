@@ -5,6 +5,7 @@
 #include "corona.h"
 #include <QtGui/QFontDatabase>
 #include <QtQml/QmlTypeAndRevisionsRegistration>
+#include <config/config.h>
 #include <map/provider/providerqml.h>
 
 namespace application
@@ -13,8 +14,11 @@ namespace application
   auto Corona::ref() -> Corona& { return *instance(); }
 
   Corona::Corona(int argc, char** argv)
-    : qt::Application(argc, argv)
+    : qt::Application(argc, argv),
+      //m_config(std::make_unique<::config::Config>())
   {}
+
+  Corona::~Corona() = default;
 
   void Corona::start()
   {
@@ -29,4 +33,6 @@ namespace application
     qmlRegisterModule("Corona.Map.Provider", 1, 0);
     qmlRegisterType<map::provider::OpenStreetMapProviderQML>("Corona.Map.Provider", 1, 0, "OpenStreetMapProvider");
   }
+
+  auto Corona::config() const -> config::Config& { return *m_config; }
 }
