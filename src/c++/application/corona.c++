@@ -3,6 +3,7 @@
 //
 
 #include "corona.h"
+#include <QtGui/QFontDatabase>
 #include <QtQml/QmlTypeAndRevisionsRegistration>
 #include <map/provider/providerqml.h>
 
@@ -17,6 +18,10 @@ namespace application
 
   void Corona::start()
   {
+    const auto font_id = qt::FontDatabase::addApplicationFont(":/fonts/Overpass.ttf");
+    auto font_list = qt::FontDatabase::applicationFontFamilies(font_id);
+    const auto family = font_list.first();
+    qt::GuiApplication::setFont(qt::Font(family));
   }
 
   void Corona::register_types()

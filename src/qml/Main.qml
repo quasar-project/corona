@@ -31,11 +31,6 @@ ApplicationWindow {
     Material.foreground: Theme.io.color(Theme.Text)
     Material.accent: Theme.io.color(Theme.Mauve)
 
-    // XOsmProvider { id: provider }
-
-    FontLoader { id: __fontmain; source: "qrc:/fonts/Overpass.ttf" }
-    FontLoader { id: __fontmono; source: "qrc:/fonts/Inconsolata.ttf" }
-
     // menuBar: Layouts.MenuApplicationBar {}
 
     ToolButton {
