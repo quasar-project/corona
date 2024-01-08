@@ -55,4 +55,7 @@
   windeployqt .
   ```
 
-  
+  TODO: 
+
+  - replace hardcoded profiles in build.py with args
+  - add rust part in description
