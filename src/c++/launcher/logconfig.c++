@@ -14,7 +14,7 @@ namespace launcher
   using std::shared_ptr;
   using std::string_view;
 
-  constexpr string_view DEFAULT_LOGGER_NAME = "logger";
+  constexpr string_view DEFAULT_LOGGER_NAME = "";
 
   void LogFileConfiguration::init() const
   {

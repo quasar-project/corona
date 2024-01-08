@@ -3,7 +3,12 @@
 #include <afx>
 
 class QMessageLogContext;
+
+#if !defined(Q_CC_MINGW)
 enum QtMsgType : int;
+#else
+enum QtMsgType;
+#endif
 
 namespace launcher
 {

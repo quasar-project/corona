@@ -1,6 +1,9 @@
 # This project uses C++20 named modules. Update CMake to at least 3.28.
-cmake_minimum_required(VERSION 3.28)
-cmake_policy(SET CMP0155 NEW)
+cmake_minimum_required(VERSION 3.25)
+
+if(POLICY CMP0155)
+  cmake_policy(SET CMP0155 NEW)
+endif()
 
 project(Corona
   VERSION 1.0.0
@@ -67,7 +70,7 @@ else()
       src/c++/map/provider/openstreetmapprovider.h
       src/c++/map/provider/openstreetmapprovider.c++
   )
-  message(STATUS "${PROJECT_NAME} C++20 modules disabled")
+  message(STATUS "[${PROJECT_NAME}] C++20 modules disabled")
   target_compile_definitions(${PROJECT_NAME} PRIVATE CXX20_MODULES_DISABLED=1)
 endif()
 
