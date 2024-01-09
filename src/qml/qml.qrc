@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>Main.qml</file>
         <file>layouts/MapView.qml</file>
+        <file>utils/ThemeCircularPaletteReveal.qml</file>
     </qresource>
 </RCC>

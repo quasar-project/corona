@@ -8,7 +8,7 @@
 
 - CMake 3.25 or higher
 
-- MinGW toolchain v. 11 or higher. You can use MSVC toolchain if you wish, in that case, uncomment conan profile path in `build.py` and comment old profile path
+- MinGW toolchain v. 11 or higher. You can use MSVC toolchain if you wish, but don't forget to pass `--compiler=msvc` to file *build.py*
 
 - Qt version 6.5.0 or higher with this optional modules:
 
@@ -37,13 +37,13 @@
 - Run build script to install all Conan dependencies:
 
   ```sh
-  python build.py
+  python build.py --compiler mingw # or msvc
   ```
 
 - Run CMake with this options:
 
   ```cmake
-  -DCMAKE_PREFIX_PATH=C:\Qt\6.7.0\mingw_64 --preset "conan-release"
+  --preset "conan-release" -DCMAKE_PREFIX_PATH=C:\Qt\6.7.0\mingw_64 
   ```
 
 > Replace `CMAKE_PREFIX_PATH` with actual path to Qt Library. If you are building with Qt Creator or have Qt installed in `PATH`, you can skip this step.
@@ -55,7 +55,5 @@
   windeployqt .
   ```
 
-  TODO: 
-
-  - replace hardcoded profiles in build.py with args
+  TODO:
   - add rust part in description

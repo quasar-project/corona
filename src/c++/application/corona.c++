@@ -10,6 +10,7 @@
 #include <map/provider/providerqml.h>
 #include <gui/theme/themeprovider.h>
 #include <gui/theme/themeqmlwrapper.h>
+#include <gui/theme/circular_reveal.h>
 
 namespace application
 {
@@ -79,6 +80,7 @@ namespace application
 
     qmlRegisterModule("Corona.Gui.Theme", 1, 0);
     qmlRegisterSingletonInstance<::gui::theme::ThemeQMLWrapper>("Corona.Gui.Theme", 1, 0, "Theme", theme);
+    qmlRegisterType<::gui::theme::CircularReveal>("Corona.Gui.Theme", 1, 0, "ThemeCircularPaletteRevealInternal");
   }
 
   auto Corona::config() const -> config::Config& { return *m_config; }

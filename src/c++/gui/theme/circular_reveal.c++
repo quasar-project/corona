@@ -27,7 +27,7 @@ namespace gui::theme
     });
   }
 
-  QQuickItem* CircularReveal::target() const { return m_target; }\
+  auto CircularReveal::target() const -> QQuickItem* { return m_target; }\
   void CircularReveal::setTarget(QQuickItem* x) {
     m_target = x;
     emit targetChanged();
@@ -62,6 +62,9 @@ namespace gui::theme
 
   void CircularReveal::handleGrabResult()
   {
+    if(this->m_grab_result.data() == nullptr)
+      return;
+
     m_grab_result.data()->image().swap(m_source);
     this->update();
     this->setVisible(true);

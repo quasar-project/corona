@@ -1,6 +1,6 @@
-//
-// Created by whs31 on 28.10.2023.
-//
+/*
+ * @BUG: Segfaults sometimes in QQuickItemGrabResult::render() method
+ */
 
 #pragma once
 

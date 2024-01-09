@@ -1,6 +1,7 @@
 #pragma once
 
 #include <afx>
+#include <iostream>
 #include <application/base.h>
 #include <QtQml/QQmlComponent>
 #include <QtQml/QQmlContext>
@@ -125,6 +126,8 @@ namespace launcher
     else
     {
       llerror("{}", this->m_component->errorString());
+      std::cout << "press any key to exit" << std::endl;
+      std::getchar();
       return 2;
     }
     lldebug("launcher finished its task");

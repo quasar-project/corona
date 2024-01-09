@@ -10,6 +10,7 @@ import Corona.Config
 import Corona.Gui.Theme
 
 import "layouts" as Layouts
+import "utils" as Utils
 
 ApplicationWindow {
     id: window_root
@@ -34,6 +35,25 @@ ApplicationWindow {
 
     // menuBar: Layouts.MenuApplicationBar {}
 
+
+
+    Rectangle {
+        id: root
+        anchors.fill: parent
+        color: Theme.io.color("crust")
+
+        // Layouts.MapView {
+        //     id: map
+        //
+        //     anchors {
+        //         top: parent.top
+        //         left: parent.left
+        //         right: parent.right
+        //         bottom: parent.bottom
+        //     }
+        // }
+    }
+
     ToolButton {
         //anchors.right: parent.right
         //parent: window_root.menuBar
@@ -41,26 +61,10 @@ ApplicationWindow {
         icon {
             source: Theme.mode === Theme.Dark ? "qrc:/icons/common/light.svg" : "qrc:/icons/common/dark.svg"
         }
-        flat: true
-        onPressed: themeChanger.toggleTheme(this)
+        //flat: true
+        onPressed: themeChanger.toggle(this)
     }
 
-    // Item {
-    //     id: root
-    //     anchors.fill: parent
-    //
-    //     Layouts.MapView {
-    //         id: map
-    //
-    //         anchors {
-    //             top: parent.top
-    //             left: parent.left
-    //             right: parent.right
-    //             bottom: parent.bottom
-    //         }
-    //     }
-    // }
-
-    // QtxThemeChanger { id: themeChanger; z: 65535; rootItem: root }
+    Utils.ThemeCircularPaletteReveal { id: themeChanger; z: 65535; rootItem: root }
 }
 

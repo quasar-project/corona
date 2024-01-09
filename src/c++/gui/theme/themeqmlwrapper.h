@@ -47,6 +47,8 @@ namespace gui::theme
     public:
       explicit ThemeQMLWrapper(ThemeProvider* ptr, qt::Object* parent = nullptr);
 
+      invokable void toggle();
+
       [[nodiscard]] PaletteType mode() const;
       void setMode(PaletteType mode);
 

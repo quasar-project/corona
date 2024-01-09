@@ -49,10 +49,20 @@ namespace gui::theme
     });
   }
 
+  void ThemeQMLWrapper::toggle()
+  {
+    lltrace("toggling theme");
+    if(this->mode() == PaletteType::Light)
+      this->setMode(PaletteType::Dark);
+    else
+      this->setMode(PaletteType::Light);
+  }
+
   auto ThemeQMLWrapper::mode() const -> PaletteType { return static_cast<PaletteType>(m_ptr->palette_type()); }
   void ThemeQMLWrapper::setMode(PaletteType mode)
   {
     m_ptr->set_palette_type(static_cast<gui::theme::ThemeProvider::PaletteType>(mode));
+    emit ioChanged();
     emit modeChanged();
   }
 
