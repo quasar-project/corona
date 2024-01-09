@@ -7,6 +7,7 @@ import QtPositioning
 import QtQuick.Layouts
 
 import Corona.Config
+import Corona.Gui.Theme
 
 import "layouts" as Layouts
 
@@ -19,45 +20,46 @@ ApplicationWindow {
     width: 1500
     height: 800
     visible: true
-    font.family: mainfont
+    color: Theme.io.color("crust")
 
     Component.onCompleted: {
         showMaximized()
     }
 
-    Material.theme: Theme.darkMode === Theme.Dark ? Material.Dark : Material.Light
-    Material.background: Theme.io.color(Theme.Base)
-    Material.foreground: Theme.io.color(Theme.Text)
-    Material.accent: Theme.io.color(Theme.Mauve)
+    Material.theme: Theme.mode === Theme.Dark ? Material.Dark : Material.Light
+    Material.background: Theme.io.color("background")
+    Material.foreground: Theme.io.color("foreground")
+    Material.accent: Theme.io.color("accent")
+    Material.primary: Theme.io.color("main")
 
     // menuBar: Layouts.MenuApplicationBar {}
 
     ToolButton {
-        anchors.right: parent.right
-        parent: window_root.menuBar
+        //anchors.right: parent.right
+        //parent: window_root.menuBar
+        anchors.centerIn: parent
         icon {
-            source: Theme.darkMode === Theme.Dark ? "qrc:/icons/common/light.svg"
-                                                  : "qrc:/icons/common/dark.svg"
+            source: Theme.mode === Theme.Dark ? "qrc:/icons/common/light.svg" : "qrc:/icons/common/dark.svg"
         }
         flat: true
         onPressed: themeChanger.toggleTheme(this)
     }
 
-    Item {
-        id: root
-        anchors.fill: parent
-
-        Layouts.MapView {
-            id: map
-
-            anchors {
-                top: parent.top
-                left: parent.left
-                right: parent.right
-                bottom: parent.bottom
-            }
-        }
-    }
+    // Item {
+    //     id: root
+    //     anchors.fill: parent
+    //
+    //     Layouts.MapView {
+    //         id: map
+    //
+    //         anchors {
+    //             top: parent.top
+    //             left: parent.left
+    //             right: parent.right
+    //             bottom: parent.bottom
+    //         }
+    //     }
+    // }
 
     // QtxThemeChanger { id: themeChanger; z: 65535; rootItem: root }
 }
