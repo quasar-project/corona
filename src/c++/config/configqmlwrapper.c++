@@ -62,15 +62,18 @@ namespace config
     }
   }
 
+  void ConfigQMLWrapper::save() const { this->m_ptr->save(); }
+  void ConfigQMLWrapper::load() const { this->m_ptr->load(); }
+
   void ConfigQMLWrapper::set_source_ptr(Config* ptr)
   {
     if(ptr != nullptr)
     {
-      spdlog::trace("config qml wrapper received ptr");
+      lltrace("config qml wrapper received ptr");
       this->m_ptr = ptr;
     }
     else
-      spdlog::error("invalid ptr received");
+      llcritical("invalid ptr received");
   }
 
   void ConfigQMLWrapper::value_changed_callback(const string& category, const string& name)
@@ -78,7 +81,7 @@ namespace config
     emit valueChanged(qt::String::fromStdString(category), qt::String::fromStdString(name));
   }
 
-  bool ConfigQMLWrapper::create_default_config_callback(const string_view path)
+  auto ConfigQMLWrapper::create_default_config_callback(const string_view path) -> bool
   {
     return qt::File::copy(":/configuration/config.yaml", path.data());
   }

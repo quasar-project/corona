@@ -4,18 +4,26 @@
 
 #include <corona>
 
-
 #if defined CXX20_MODULES_DISABLED
 #include <launcher/launcher.h>
 #else
 import launcher;
 #endif
 
-#include <iostream>
-#include <ranges>
+/*
+ * @ TODO LIST:
+ * - Make provider offline path from config
+ */
 
+/**
+ * Main function that launches the application.
+ *
+ * @param argc The number of command line arguments.
+ * @param argv An array of command line arguments.
+ * @return The exit code of the application.
+ */
 // ReSharper disable once CppParameterMayBeConst
-int main(int argc, char** argv)
+auto main(int argc, char** argv) -> int
 {
   launcher::Launcher<application::Corona> app_launcher(
       argc, argv,
