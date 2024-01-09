@@ -36,27 +36,27 @@ namespace config
 
     if(not filesystem::exists(file_path))
     {
-      logging::debug("config file is missing from {}", file_path);
-      logging::trace("calling create default config function");
+      lldebug("config file is missing from {}", file_path);
+      lltrace("calling create default config function");
       if(auto res = this->m_create_default_config_function(file_path))
-        logging::debug("default config created");
+        lldebug("default config created");
       else
-        logging::error("failed to create default config");
+        llerror("failed to create default config");
     }
     else
-      logging::debug("found existing config file at {}", file_path);
+      lldebug("found existing config file at {}", file_path);
 
     call_once(of, [file_path](){ set_permissions(file_path); });
 
     ifstream stream(file_path);
     const string contents((istreambuf_iterator(stream)), istreambuf_iterator<char>());
     *(this->m_root) = Clone(YAML::Load(contents));
-    logging::debug("config loaded");
+    lldebug("config loaded");
   }
 
   void Config::save() const
   {
-    logging::debug("saving config file");
+    lldebug("saving config file");
     const auto path = fmt::format("{}/{}/{}",
       filesystem::current_path().string(),
       CONFIG_DIRECTORY_NAME,

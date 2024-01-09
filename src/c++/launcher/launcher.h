@@ -103,7 +103,7 @@ namespace launcher
     App::setOrganizationDomain(m_project_info.homepage.data());
     App::setWindowIcon(platform_dependent_icon(m_icon_path));
 
-    logging::info("project {} version {} started", this->m_project_info.name, this->m_project_info.version);
+    llinfo("project {} version {} started", this->m_project_info.name, this->m_project_info.version);
 
     if(this->m_quick_options.style == QtQuickStyle::Material)
       qputenv("QT_QUICK_CONTROLS_MATERIAL_VARIANT", "Dense");
@@ -119,15 +119,15 @@ namespace launcher
     qt::QuickWindow::setDefaultAlphaBuffer(true);
     this->m_component->loadUrl(qml_entry_from_clean_path(m_quick_options.entry));
 
-    logging::trace("trying to create qml engine...");
+    lltrace("trying to create qml engine...");
     if(this->m_component->isReady())
       this->m_component->create();
     else
     {
-      logging::error("{}", this->m_component->errorString());
+      llerror("{}", this->m_component->errorString());
       return 2;
     }
-    logging::debug("launcher finished its task");
+    lldebug("launcher finished its task");
 
     return App::exec();
   }

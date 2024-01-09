@@ -29,6 +29,7 @@ namespace launcher
 
     spdlog::set_default_logger(std::move(combined_logger));
     spdlog::set_level(spdlog::level::trace);
+    spdlog::set_pattern("[%=5o] %^[%=7l] %-20s:%-3#: %v %$");
     spdlog::flush_on(spdlog::level::debug);
   }
 }

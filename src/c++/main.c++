@@ -11,6 +11,9 @@
 import launcher;
 #endif
 
+#include <iostream>
+#include <ranges>
+
 // ReSharper disable once CppParameterMayBeConst
 int main(int argc, char** argv)
 {

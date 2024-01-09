@@ -28,6 +28,7 @@ set(CMAKE_AUTOMOC ON)
 
 find_package(spdlog REQUIRED)
 find_package(yaml-cpp REQUIRED)
+find_package(tl-expected REQUIRED)
 
 find_package(QT NAMES Qt6 COMPONENTS Core)
 find_package(Qt6 COMPONENTS

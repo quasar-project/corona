@@ -93,7 +93,7 @@ namespace launcher
           this->m_component->create();
         else
         {
-          logging::error("{}", this->m_component->errorString());
+          llerror("{}", this->m_component->errorString());
           return 1;
         }
 

@@ -11,11 +11,11 @@ namespace launcher
   {
     switch(type)
     {
-      case QtDebugMsg: logging::debug("{}", msg); break;
-      case QtInfoMsg: logging::info("{}", msg); break;
-      case QtWarningMsg: logging::warn("{}", msg); break;
-      case QtCriticalMsg: logging::critical("{}", msg); break;
-      case QtFatalMsg: logging::error("{}", msg); break;
+      case QtDebugMsg: lldebug("{}", msg); break;
+      case QtInfoMsg: llinfo("{}", msg); break;
+      case QtWarningMsg: llwarn("{}", msg); break;
+      case QtCriticalMsg: llcritical("{}", msg); break;
+      case QtFatalMsg: llerror("{}", msg); break;
       default: break;
     }
   }

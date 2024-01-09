@@ -30,7 +30,7 @@ namespace application
       this->m_config_wrapper.get(),
       &config::ConfigQMLWrapper::valueChanged,
       this,
-      [](const qt::String& cat, const qt::String& name) { logging::info("config value changed: {}/{}", cat, name); }
+      [](const qt::String& cat, const qt::String& name) { llinfo("config value changed: {}/{}", cat, name); }
     );
   }
 
