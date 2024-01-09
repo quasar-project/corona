@@ -16,9 +16,14 @@ namespace config
   QVariant ConfigQMLWrapper::value(const QString& category, const QString& name) const
   {
     ensure_or(this->m_ptr != nullptr, "nullptr in config wrapper", {});
-    // todo: replace with checked
-    const auto str = this->m_ptr->get_unchecked<string>(category.toStdString(), name.toStdString());
-    return qt::Variant(qt::String::fromStdString(str));
+
+    const auto str = this->m_ptr->get<string>(category.toStdString(), name.toStdString());;
+    if(not str.has_value())
+    {
+      llerror("getting {}/{} failed, reason: {}", category, name, str.error());
+      return {};
+    }
+    return qt::Variant(qt::String::fromStdString(str.value()));
   }
 
   template<typename T>

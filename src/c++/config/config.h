@@ -52,11 +52,15 @@ namespace config
   }
 
   template <typename T>
-  auto Config::get(string_view category, string_view key) const -> expected<T, string>
+  auto Config::get(const string_view category, const string_view key) const -> expected<T, string>
   {
     return this->get_node(category, key)
-      .and_then([&](const YAML::Node& node) {
-        return node.as<T>();
+      .and_then([&](const YAML::Node& node) -> expected<T, string> {
+        try { return node.as<T>(); }
+        catch(const YAML::BadConversion& e)
+        {
+          return unexpected(string("no such key or invalid conversion (yaml::bad_conversion)"));
+        }
       });
   }
 
