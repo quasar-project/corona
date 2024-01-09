@@ -38,6 +38,7 @@ namespace config
     {
       lldebug("config file is missing from {}", file_path);
       lltrace("calling create default config function");
+      filesystem::create_directories(filesystem::path(file_path).parent_path());
       if(auto res = this->m_create_default_config_function(file_path))
         lldebug("default config created");
       else
@@ -63,6 +64,7 @@ namespace config
       CONFIG_FILENAME
     );
 
+    filesystem::create_directories(filesystem::path(path).parent_path());
     call_once(of, [path](){ set_permissions(path); });
 
     if(filesystem::exists(path))
@@ -76,5 +78,11 @@ namespace config
   auto Config::get_node_unchecked(const string_view category, const string_view key) const -> YAML::Node
   {
     return (*this->m_root)[category][key];
+  }
+
+  auto Config::get_node(string_view category, string_view key) const -> expected<YAML::Node, string>
+  {
+    try { return this->get_node_unchecked(category, key); }
+    catch(const exception& e) { return unexpected(e.what()); }
   }
 } // config

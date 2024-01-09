@@ -29,6 +29,7 @@ set(CMAKE_AUTOMOC ON)
 find_package(spdlog REQUIRED)
 find_package(yaml-cpp REQUIRED)
 find_package(tl-expected REQUIRED)
+find_package(range-v3 REQUIRED)
 
 find_package(QT NAMES Qt6 COMPONENTS Core)
 find_package(Qt6 COMPONENTS
@@ -89,6 +90,7 @@ target_sources(${PROJECT_NAME}
     src/c++/global/definitions.h
     src/c++/global/type_aliases.h
     src/c++/global/log.h
+    src/c++/global/expected.h
 
     src/c++/application/corona.h
     src/c++/application/corona.c++
@@ -122,6 +124,8 @@ target_link_libraries(${PROJECT_NAME}
     Qt6::QuickControls2
     Qt6::Concurrent
 
+    tl::expected
+    range-v3::range-v3
     spdlog::spdlog
     yaml-cpp
 )

@@ -114,7 +114,7 @@ namespace launcher
 
     qt::QuickStyle::setStyle(qt::String::fromStdString(to_string(m_quick_options.style)));
     this->m_engine = std::make_unique<qt::QmlEngine>();
-    qt::Object::connect(m_engine.get(), &qt::QmlEngine::quit, qApp, &qt::CoreApplication::quit);        // NOLINT(*-pro-type-static-cast-downcast)
+    qt::Object::connect(m_engine.get(), &qt::QmlEngine::quit, qApp, &qt::CoreApplication::quit);         // NOLINT(*-pro-type-static-cast-downcast)
     this->m_component = std::make_unique<qt::QmlComponent>(m_engine.get(), qml_entry_from_clean_path(m_quick_options.entry));
     qt::QuickWindow::setDefaultAlphaBuffer(true);
     this->m_component->loadUrl(qml_entry_from_clean_path(m_quick_options.entry));

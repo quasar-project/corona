@@ -28,9 +28,13 @@ namespace config
       void save() const;
 
       [[nodiscard]] auto get_node_unchecked(string_view category, string_view key) const -> YAML::Node;
+      [[nodiscard]] auto get_node(string_view category, string_view key) const -> expected<YAML::Node, string>;
 
       template<typename T>
       [[nodiscard]] auto get_unchecked(string_view category, string_view key) const -> T;
+
+      template<typename T>
+      [[nodiscard]] auto get(string_view category, string_view key) const -> expected<T, string>;
 
       template<typename T>
       void set(string_view category, string_view key, T value);
@@ -45,6 +49,15 @@ namespace config
   auto Config::get_unchecked(const string_view category, const string_view key) const -> T
   {
     return this->get_node_unchecked(category, key).as<T>();
+  }
+
+  template <typename T>
+  auto Config::get(string_view category, string_view key) const -> expected<T, string>
+  {
+    return this->get_node(category, key)
+      .and_then([&](const YAML::Node& node) {
+        return node.as<T>();
+      });
   }
 
   template <typename T>

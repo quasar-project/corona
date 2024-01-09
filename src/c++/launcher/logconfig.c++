@@ -14,7 +14,7 @@ namespace launcher
   using std::shared_ptr;
   using std::string_view;
 
-  constexpr string_view DEFAULT_LOGGER_NAME = "";
+  constexpr string_view DEFAULT_LOGGER_NAME = ""; // NOLINT(*-redundant-string-init)
 
   void LogFileConfiguration::init() const
   {
@@ -29,7 +29,7 @@ namespace launcher
 
     spdlog::set_default_logger(std::move(combined_logger));
     spdlog::set_level(spdlog::level::trace);
-    spdlog::set_pattern("[%=5o] %^[%=7l] %-20s:%-3#: %v %$");
+    spdlog::set_pattern("[%=5!o] %^[%=7!l] %-20!s:%-3!#: %v %$");
     spdlog::flush_on(spdlog::level::debug);
   }
 }

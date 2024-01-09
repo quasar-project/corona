@@ -13,6 +13,7 @@ class Corona(ConanFile):
         self.requires("spdlog/1.11.0")
         self.requires("yaml-cpp/0.8.0")
         self.requires("tl-expected/1.0.0")
+        self.requires("range-v3/0.12.0")
 
 
         # self.default_options = {
