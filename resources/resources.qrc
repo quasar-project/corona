@@ -4,9 +4,8 @@
         <file>icon.png</file>
         <file>configuration/config.yaml</file>
         <file>fonts/Inconsolata.ttf</file>
-        <file>fonts/Roboto-Regular.ttf</file>
         <file>fonts/Overpass.ttf</file>
-        <file>theme/gruvbox.json</file>
+        <file>theme/gruvbox.toml</file>
         <file>icons/common/block.svg</file>
         <file>icons/common/cog.svg</file>
         <file>icons/common/dark.svg</file>

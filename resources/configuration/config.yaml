@@ -1,3 +1,8 @@
 ip:
   de10: "192.168.1.47"
   jetson: "192.168.1.48"
+
+theme:
+  folder: "themes"
+  theme_name: "Gruvbox"
+  palette_type: "dark"

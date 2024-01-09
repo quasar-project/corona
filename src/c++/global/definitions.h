@@ -6,5 +6,5 @@
 
 #define invokable Q_INVOKABLE
 #define qt_slot Q_SLOT
-#define ensure(expr, msg) if(!(expr)) { spdlog::error(msg); return; }
-#define ensure_or(expr, msg, retval) if(!(expr)) { spdlog::error(msg); return retval; }
+#define ensure(expr, msg) if(!(expr)) { llerror(msg); return; }
+#define ensure_or(expr, msg, retval) if(!(expr)) { llerror(msg); return retval; }

@@ -16,6 +16,14 @@ namespace config
   class ConfigQMLWrapper;
 }
 
+namespace gui
+{
+  namespace theme
+  {
+    class ThemeProvider;
+  }
+}
+
 namespace application
 {
   using std::unique_ptr;
@@ -40,5 +48,6 @@ namespace application
     private:
       unique_ptr<::config::Config> m_config;
       unique_ptr<::config::ConfigQMLWrapper> m_config_wrapper;
+      unique_ptr<::gui::theme::ThemeProvider> m_theme_provider;
   };
 }

@@ -14,7 +14,7 @@ class Corona(ConanFile):
         self.requires("yaml-cpp/0.8.0")
         self.requires("tl-expected/1.0.0")
         self.requires("range-v3/0.12.0")
-
+        self.requires("tomlplusplus/3.4.0")
 
         # self.default_options = {
         #     "qt:shared": False,

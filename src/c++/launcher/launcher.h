@@ -80,14 +80,14 @@ namespace launcher
       const string_view icon_path,
       const LogFileConfiguration& log_config
     )
-      : m_app(std::make_unique<App>(argc, argv)),
-      m_argc(argc),
-      m_argv(argv),
-      m_project_info(std::move(project_info)),
-      m_quick_options(std::move(quick_options)),
-      m_icon_path(icon_path)
+      : m_argc(argc),
+        m_argv(argv),
+        m_project_info(std::move(project_info)),
+        m_quick_options(std::move(quick_options)),
+        m_icon_path(icon_path)
   {
     log_config.init();
+    this->m_app.reset(new App(argc, argv));
   }
 
   template<typename App> requires IsApplicationBase<App> && IsQtCoreApplication<App>
@@ -104,11 +104,11 @@ namespace launcher
     App::setWindowIcon(platform_dependent_icon(m_icon_path));
 
     llinfo("project {} version {} started", this->m_project_info.name, this->m_project_info.version);
+    qInstallMessageHandler(logging_handler);
 
     if(this->m_quick_options.style == QtQuickStyle::Material)
       qputenv("QT_QUICK_CONTROLS_MATERIAL_VARIANT", "Dense");
 
-    qInstallMessageHandler(logging_handler);
     this->m_app->register_types();
     this->m_app->start();
 

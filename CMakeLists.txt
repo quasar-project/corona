@@ -30,7 +30,7 @@ find_package(spdlog REQUIRED)
 find_package(yaml-cpp REQUIRED)
 find_package(tl-expected REQUIRED)
 find_package(range-v3 REQUIRED)
-
+find_package(tomlplusplus REQUIRED)
 find_package(QT NAMES Qt6 COMPONENTS Core)
 find_package(Qt6 COMPONENTS
   Core
@@ -101,6 +101,10 @@ target_sources(${PROJECT_NAME}
 
     src/c++/gui/theme/circular_reveal.h
     src/c++/gui/theme/circular_reveal.c++
+    src/c++/gui/theme/themeprovider.h
+    src/c++/gui/theme/themeprovider.c++
+    src/c++/gui/theme/themeqmlwrapper.h
+    src/c++/gui/theme/themeqmlwrapper.c++
 
     src/qml/qml.qrc
     src/js/js.qrc
@@ -127,7 +131,8 @@ target_link_libraries(${PROJECT_NAME}
     tl::expected
     range-v3::range-v3
     spdlog::spdlog
-    yaml-cpp
+    yaml-cpp::yaml-cpp
+    tomlplusplus::tomlplusplus
 )
 
 target_include_directories(${PROJECT_NAME}

@@ -23,8 +23,6 @@ ApplicationWindow {
 
     Component.onCompleted: {
         showMaximized()
-        console.error(Config.value("ip", "jetson"))
-        console.error(Config.value("ip", "asd"))
     }
 
     Material.theme: Theme.darkMode === Theme.Dark ? Material.Dark : Material.Light

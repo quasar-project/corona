@@ -8,10 +8,18 @@
 #include <config/config.h>
 #include <config/configqmlwrapper.h>
 #include <map/provider/providerqml.h>
+#include <gui/theme/themeprovider.h>
+#include <gui/theme/themeqmlwrapper.h>
 
 namespace application
 {
   using std::string;
+  using std::string_view;
+  using namespace std::string_view_literals;
+
+  constexpr auto DEFAULT_THEME_FOLDER = "themes"sv;
+  constexpr auto DEFAULT_THEME_NAME = "Gruvbox"sv;
+  constexpr auto DEFAULT_PALETTE_TYPE = "dark"sv;
 
   auto Corona::instance() -> Corona* { return dynamic_cast<Corona*>(qt::Application::instance()); }
   auto Corona::ref() -> Corona& { return *instance(); }
@@ -23,7 +31,17 @@ namespace application
       {
         this->m_config_wrapper->value_changed_callback(cat, name);
       },
-      config::ConfigQMLWrapper::create_default_config_callback))
+      config::ConfigQMLWrapper::create_default_config_callback)),
+      m_theme_provider(std::make_unique<::gui::theme::ThemeProvider>(
+        m_config->get<string>("theme", "folder")
+          .value_or(string(DEFAULT_THEME_FOLDER)),
+        m_config->get<string>("theme", "name")
+          .value_or(string(DEFAULT_THEME_NAME)),
+          gui::theme::ThemeProvider::palette_from_string_view(
+            m_config->get<string>("theme", "palette")
+              .value_or(string(DEFAULT_PALETTE_TYPE))
+            )
+      ))
   {
     this->m_config_wrapper->set_source_ptr(this->m_config.get());
     qt::Object::connect(
@@ -32,6 +50,9 @@ namespace application
       this,
       [](const qt::String& cat, const qt::String& name) { llinfo("config value changed: {}/{}", cat, name); }
     );
+
+    // this is in constructor because it will be needed by other classes earlier than start()
+    this->m_config->load();
   }
 
   Corona::~Corona() = default;
@@ -43,11 +64,13 @@ namespace application
     const auto family = font_list.first();
     qt::GuiApplication::setFont(qt::Font(family));
 
-    this->m_config->load();
+    this->m_theme_provider->load();
   }
 
   void Corona::register_types()
   {
+    auto theme = new ::gui::theme::ThemeQMLWrapper(m_theme_provider.get(), this);
+
     qmlRegisterModule("Corona.Config", 1, 0);
     qmlRegisterSingletonInstance<::config::ConfigQMLWrapper>("Corona.Config", 1, 0, "Config", this->m_config_wrapper.get());
 
