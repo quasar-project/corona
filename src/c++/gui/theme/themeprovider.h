@@ -42,7 +42,7 @@ namespace gui::theme
       using PaletteSet = unordered_map<PaletteType, Palette>;
 
       [[nodiscard]] static auto find_theme_names(string_view folder) -> expected<unordered_map<string, string>, string>;
-      [[nodiscard]] static auto load_palette_from_file(string_view folder, string_view theme_name) -> expected<PaletteSet, string>;
+      [[nodiscard]] auto load_palette_from_file(string_view folder, string_view theme_name) const -> expected<PaletteSet, string>;
 
     private:
       string m_folder;

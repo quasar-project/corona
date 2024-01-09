@@ -3,12 +3,49 @@
 //
 
 #include "themeprovider.h"
+#include <array>
 #include <filesystem>
 #include <fstream>
 #include <ranges>
 #include <toml++/toml.h>
 
 using namespace std;
+
+constexpr array<string_view, 26> ThemeTOMLColorKeys = {
+  "rosewater",
+  "flamingo",
+  "pink",
+  "mauve",
+  "red",
+  "maroon",
+  "peach",
+  "yellow",
+  "green",
+  "teal",
+  "sky",
+  "sapphire",
+  "blue",
+  "lavender",
+  "text",
+  "subtext1",
+  "subtext0",
+  "overlay2",
+  "overlay1",
+  "overlay0",
+  "surface2",
+  "surface1",
+  "surface0",
+  "base",
+  "mantle",
+  "crust"
+};
+
+constexpr array<string_view, 4> ThemeTOMLConfigurationKeys = {
+  "foreground",
+  "background",
+  "accent",
+  "main"
+};
 
 namespace gui::theme
 {
@@ -48,14 +85,17 @@ namespace gui::theme
       llwarn("defaulting to '{}'", this->m_names.begin()->first);
       this->set_theme_name(this->m_names.begin()->first);
     }
-    m_palette.clear();
-    //m_palette = load_palette_from_file(m_folder, m_theme_name);
+    this->m_palette.clear();
+    this->m_palette = load_palette_from_file(m_folder, m_theme_name)
+      .map_error([](const string& err) { llerror("theme provider error: {}", err); })
+      .value_or(unordered_map<PaletteType, unordered_map<string, string>>{});
+    ensure(not this->m_palette.empty(), "parse failure");
   }
 
   void ThemeProvider::load() { this->refresh(); }
 
   auto ThemeProvider::theme_name() const -> string_view { return this->m_theme_name; }
-  void ThemeProvider::set_theme_name(string_view theme_name)
+  void ThemeProvider::set_theme_name(const string_view theme_name)
   {
     if(this->m_theme_name != theme_name)
     {
@@ -109,8 +149,57 @@ namespace gui::theme
     return result;
   }
 
-  auto ThemeProvider::load_palette_from_file(string_view folder, string_view theme_name) -> expected<ThemeProvider::PaletteSet, string>
+  auto ThemeProvider::load_palette_from_file(const string_view folder, const string_view theme_name) const -> expected<ThemeProvider::PaletteSet, string>
   {
+    if(not this->m_names.contains(string(theme_name)))
+      return unexpected(string("theme not found"));
 
+    PaletteSet result;
+    const auto path = fmt::format("{}/{}", string(folder), this->m_names.at(string(theme_name)));
+    ifstream stream(path);
+    const string contents((istreambuf_iterator(stream)), istreambuf_iterator<char>());
+    toml::parse_result table;
+    try { table = toml::parse(contents); }
+    catch(const toml::parse_error& err)
+    {
+      llwarn("failed to parse theme file {}, reason: {}", filesystem::path(path).filename().string(), err.what());
+      return unexpected(string("failed to parse theme file"));
+    }
+
+    for(const auto& key : ThemeTOMLColorKeys)
+    {
+      const auto dark = table["dark"][key].value<string>();
+      const auto light = table["light"][key].value<string>();
+      if(not dark.has_value() or not light.has_value())
+      {
+        llwarn("failed to get color '{}' from theme file {}", key, filesystem::path(path).filename().string());
+        continue;
+      }
+      result[PaletteType::Dark][string(key)] = dark.value();
+      result[PaletteType::Light][string(key)] = light.value();
+    }
+
+    for(const auto& key : ThemeTOMLConfigurationKeys)
+    {
+      const auto value = table["primary"][key].value<string>();
+      if(not value.has_value())
+      {
+        llwarn("failed to get color '{}' from theme file {}", key, filesystem::path(path).filename().string());
+        continue;
+      }
+      const auto& name = value.value();
+      for(auto& palette : result | views::values)
+      {
+        if(not palette.contains(string(name)))
+        {
+          llwarn("failed to get primary color '{}' from theme file {}", key, filesystem::path(path).filename().string());
+          continue;
+        }
+        palette[string(key)] = palette[string(name)];
+      }
+    }
+
+    lldebug("searhing for color keys in theme file {}: done", filesystem::path(path).filename().string());
+    return result;
   }
 }
