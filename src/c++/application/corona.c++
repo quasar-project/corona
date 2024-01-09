@@ -26,6 +26,12 @@ namespace application
       config::ConfigQMLWrapper::create_default_config_callback))
   {
     this->m_config_wrapper->set_source_ptr(this->m_config.get());
+    qt::Object::connect(
+      this->m_config_wrapper.get(),
+      &config::ConfigQMLWrapper::valueChanged,
+      this,
+      [](const qt::String& cat, const qt::String& name) { logging::info("config value changed: {}/{}", cat, name); }
+    );
   }
 
   Corona::~Corona() = default;

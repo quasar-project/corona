@@ -6,6 +6,8 @@
 
 namespace config
 {
+  class ConfigQMLWrapper;
+
   // ReSharper disable once CppClassCanBeFinal
   class ConfigQMLWrapper : public qt::Object
   {
@@ -15,6 +17,7 @@ namespace config
       explicit ConfigQMLWrapper(qt::Object* parent);
 
       invokable QVariant value(const QString& category, const QString& name) const;
+      invokable void setValue(const QString& category, const QString& name, const QVariant& value);
 
       void set_source_ptr(Config* ptr);
       void value_changed_callback(const string& category, const string& name);

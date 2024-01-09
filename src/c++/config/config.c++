@@ -20,6 +20,12 @@ namespace config
 
   Config::~Config() = default;
 
+  once_flag of;
+  void set_permissions(string_view file_path)
+  {
+    filesystem::permissions(file_path, filesystem::perms::owner_read | filesystem::perms::owner_write);
+  }
+
   void Config::load() const
   {
     const auto file_path = fmt::format("{}/{}/{}",
@@ -40,6 +46,8 @@ namespace config
     else
       logging::debug("found existing config file at {}", file_path);
 
+    call_once(of, [file_path](){ set_permissions(file_path); });
+
     ifstream stream(file_path);
     const string contents((istreambuf_iterator(stream)), istreambuf_iterator<char>());
     *(this->m_root) = Clone(YAML::Load(contents));
@@ -48,11 +56,17 @@ namespace config
 
   void Config::save() const
   {
+    logging::debug("saving config file");
     const auto path = fmt::format("{}/{}/{}",
       filesystem::current_path().string(),
       CONFIG_DIRECTORY_NAME,
       CONFIG_FILENAME
     );
+
+    call_once(of, [path](){ set_permissions(path); });
+
+    if(filesystem::exists(path))
+      filesystem::remove(path);
 
     ofstream stream(path);
     stream << YAML::Dump(*(this->m_root));

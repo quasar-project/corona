@@ -32,14 +32,25 @@ namespace config
       template<typename T>
       [[nodiscard]] auto get_unchecked(string_view category, string_view key) const -> T;
 
+      template<typename T>
+      void set(string_view category, string_view key, T value);
+
     private:
       ValueChangedCB m_value_changed_cb;
       CreateDefaultConfigFunction m_create_default_config_function;
       unique_ptr<YAML::Node> m_root;
   };
 
-  template<typename T> auto Config::get_unchecked(const string_view category, const string_view key) const -> T
+  template<typename T>
+  auto Config::get_unchecked(const string_view category, const string_view key) const -> T
   {
     return this->get_node_unchecked(category, key).as<T>();
+  }
+
+  template <typename T>
+  void Config::set(const string_view category, const string_view key, T value)
+  {
+    (*this->m_root)[category][key] = value;
+    this->m_value_changed_cb(string(category), string(key));
   }
 }

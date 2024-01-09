@@ -23,7 +23,6 @@ ApplicationWindow {
 
     Component.onCompleted: {
         showMaximized()
-        console.info(Config.value("ip", "de10"))
     }
 
     Material.theme: Theme.darkMode === Theme.Dark ? Material.Dark : Material.Light

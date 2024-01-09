@@ -24,21 +24,27 @@ using f64 = double;
 
 qt_incapsulate_class(Object)
 qt_incapsulate_class(String)
+qt_incapsulate_class(Variant)
 
 qt_incapsulate_class(CoreApplication)
 qt_incapsulate_class(GuiApplication)
 qt_incapsulate_class(Application)
+
 qt_incapsulate_class(Url)
 qt_incapsulate_class(Icon)
+qt_incapsulate_class(Font)
+qt_incapsulate_class(FontDatabase)
+qt_incapsulate_class(Locale)
+
 qt_incapsulate_class(QmlEngine)
 qt_incapsulate_class(QmlComponent)
 qt_incapsulate_class(QuickWindow)
 qt_incapsulate_class(QuickStyle)
+
 qt_incapsulate_class(File)
 qt_incapsulate_class(Dir)
+
 qt_incapsulate_class(JsonDocument)
 qt_incapsulate_class(JsonObject)
 qt_incapsulate_class(IODevice)
-qt_incapsulate_class(FontDatabase)
-qt_incapsulate_class(Font)
-qt_incapsulate_class(Variant)
+
