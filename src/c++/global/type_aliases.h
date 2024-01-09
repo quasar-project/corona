@@ -25,6 +25,7 @@ using f64 = double;
 qt_incapsulate_class(Object)
 qt_incapsulate_class(String)
 qt_incapsulate_class(Variant)
+qt_incapsulate_class(Color)
 
 qt_incapsulate_class(CoreApplication)
 qt_incapsulate_class(GuiApplication)

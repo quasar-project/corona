@@ -116,6 +116,15 @@ namespace gui::theme
     }
   }
 
+  auto ThemeProvider::color(const string_view name) const -> expected<string, string>
+  {
+    if(not this->m_palette.contains(this->m_palette_type))
+      return unexpected(string("palette not found"));
+    if(not this->m_palette.at(this->m_palette_type).contains(string(name)))
+      return unexpected(string("color not found: ") + string(name));
+    return this->m_palette.at(this->m_palette_type).at(string(name));
+  }
+
   auto ThemeProvider::find_theme_names(string_view folder) -> expected<unordered_map<string, string>, string>
   {
     lldebug("finding theme names in ...{}", folder.substr(folder.find_last_of("\\/") + 1));

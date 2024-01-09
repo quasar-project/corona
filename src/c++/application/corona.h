@@ -44,6 +44,7 @@ namespace application
       virtual void register_types() override;
 
       [[nodiscard]] auto config() const -> config::Config&;
+      [[nodiscard]] auto config_wrapper() const -> config::ConfigQMLWrapper&;
 
     private:
       unique_ptr<::config::Config> m_config;

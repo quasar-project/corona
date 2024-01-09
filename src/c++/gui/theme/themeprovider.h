@@ -35,7 +35,7 @@ namespace gui::theme
       [[nodiscard]] auto folder() const -> string_view;
       void set_folder(string_view folder);
 
-      [[nodiscard]] auto color(string_view name) const -> string_view;
+      [[nodiscard]] auto color(string_view name) const -> expected<string, string>;
 
     private:
       using Palette = unordered_map<string, string>;

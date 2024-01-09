@@ -76,7 +76,11 @@ namespace application
 
     qmlRegisterModule("Corona.Map.Provider", 1, 0);
     qmlRegisterType<map::provider::OpenStreetMapProviderQML>("Corona.Map.Provider", 1, 0, "OpenStreetMapProvider");
+
+    qmlRegisterModule("Corona.Gui.Theme", 1, 0);
+    qmlRegisterSingletonInstance<::gui::theme::ThemeQMLWrapper>("Corona.Gui.Theme", 1, 0, "Theme", theme);
   }
 
   auto Corona::config() const -> config::Config& { return *m_config; }
+  auto Corona::config_wrapper() const -> config::ConfigQMLWrapper& { return *m_config_wrapper; }
 }

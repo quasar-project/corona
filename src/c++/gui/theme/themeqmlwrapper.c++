@@ -6,17 +6,64 @@
 #include "themeprovider.h"
 #include <corona>
 #include <config/config.h>
+#include <config/configqmlwrapper.h>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 
+constexpr std::string_view ERROR_COLOR = "#b162d8";
+
 namespace gui::theme
 {
-  ThemeQMLWrapper::ThemeQMLWrapper(ThemeProvider* ptr, qt::Object* parent)
+  ThemeQMLWrapperInternal::ThemeQMLWrapperInternal(ThemeProvider* ptr, qt::Object* parent)
     : qt::Object(parent),
       m_ptr(ptr)
+  {}
+
+  auto ThemeQMLWrapperInternal::color(const qt::String& name) const -> qt::Color
+  {
+    return qt::Color(
+      qt::String::fromStdString(
+        string(
+          m_ptr->color(name.toStdString())
+            .map_error([name](const string& err){ llerror("failed to get theme color {} from wrapper, reason: {}",
+              name,
+              err
+            );})
+            .value_or(string(ERROR_COLOR))
+        )
+      )
+    );
+  }
+
+  ThemeQMLWrapper::ThemeQMLWrapper(ThemeProvider* ptr, qt::Object* parent)
+    : qt::Object(parent),
+      m_ptr(ptr),
+      m_internal(new ThemeQMLWrapperInternal(ptr, this))
   {
     ThemeQMLWrapper::emplace();
+    qt::Object::connect(&application::Corona::ref().config_wrapper(), &config::ConfigQMLWrapper::valueChanged,
+      this, [this](const qt::String& cat, const qt::String& name)
+    {
+      if(cat == "theme" and name == "theme_name")
+        this->updateIO();
+    });
   }
+
+  auto ThemeQMLWrapper::mode() const -> PaletteType { return static_cast<PaletteType>(m_ptr->palette_type()); }
+  void ThemeQMLWrapper::setMode(PaletteType mode)
+  {
+    m_ptr->set_palette_type(static_cast<gui::theme::ThemeProvider::PaletteType>(mode));
+    emit modeChanged();
+  }
+
+  auto ThemeQMLWrapper::io() const -> ThemeQMLWrapperInternal* { return this->m_internal; }
+  void ThemeQMLWrapper::setIO(ThemeQMLWrapperInternal* io)
+  {
+    this->m_internal = io;
+    emit ioChanged();
+  }
+
+  void ThemeQMLWrapper::updateIO() { emit ioChanged(); }
 
   void ThemeQMLWrapper::emplace()
   {
