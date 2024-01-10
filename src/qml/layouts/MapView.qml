@@ -5,13 +5,13 @@ import QtLocation
 import QtPositioning
 import QtQuick.Layouts
 
-import Corona.Map.Provider 1.0
+import Corona.Map.Provider 1.0 as CoronaMapProvider
+
+import "map" as MapGroup
 
 Map {
-    // { 0 - offline, 5 - schema, 4 - hybrid, 1 - satellite }
     property int mapmode: provider.getMapMode(OpenStreetMapProvider.Satellite)
 
-    OpenStreetMapProvider { id: provider }
     id: map
     anchors.fill: parent
     plugin: Plugin {
@@ -34,8 +34,15 @@ Map {
     tilt: 15
     zoomLevel: 14
 
+
     Behavior on center { CoordinateAnimation { duration: 250; easing.type: Easing.InOutQuad } }
     Behavior on zoomLevel { NumberAnimation { duration: 250; easing.type: Easing.InOutCubic } }
+
+    CoronaMapProvider.OpenStreetMapProvider { id: provider }
+
+    MapGroup.StateMachine {
+        id: mapStateMachine
+    }
 
     PinchHandler {
         id: pinch
@@ -53,6 +60,7 @@ Map {
         }
         grabPermissions: PointerHandler.TakeOverForbidden
     }
+
     WheelHandler {
         id: wheel
         acceptedDevices: Qt.platform.pluginName === "cocoa" || Qt.platform.pluginName === "wayland"
@@ -61,16 +69,19 @@ Map {
         rotationScale: 1/12
         property: "zoomLevel"
     }
+
     DragHandler {
         id: drag
         target: null
         onTranslationChanged: (delta) => map.pan(-delta.x, -delta.y)
     }
+
     Shortcut {
         enabled: map.zoomLevel < map.maximumZoomLevel
         sequence: StandardKey.ZoomIn
         onActivated: map.zoomLevel = Math.round(map.zoomLevel + 1)
     }
+
     Shortcut {
         enabled: map.zoomLevel > map.minimumZoomLevel
         sequence: StandardKey.ZoomOut
