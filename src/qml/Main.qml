@@ -50,16 +50,16 @@ ApplicationWindow {
         anchors.fill: parent
         color: Theme.io.color("crust")
 
-        // Layouts.MapView {
-        //     id: map
-        //
-        //     anchors {
-        //         top: parent.top
-        //         left: parent.left
-        //         right: parent.right
-        //         bottom: parent.bottom
-        //     }
-        // }
+        Layouts.MapView {
+            id: map
+
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
+            }
+        }
     }
 
     Utils.ThemeCircularPaletteReveal { id: themeChanger; z: 65535; rootItem: root }

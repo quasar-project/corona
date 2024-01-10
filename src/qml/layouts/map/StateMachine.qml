@@ -5,6 +5,8 @@ import QtQml.StateMachine as QtStateMachine
 QtStateMachine.StateMachine {
     property Button rulerButton
 
+    property string state: "idle"
+
     id: stateMachine
     initialState: idle
     running: true
@@ -13,21 +15,29 @@ QtStateMachine.StateMachine {
         id: idle
 
         QtStateMachine.SignalTransition {
-            target: rulerActive
+            targetState: rulerActive
             signal: rulerButton.pressed
         }
 
-        onEntered: console.log("state machine: idle")
+        onEntered:
+        {
+            state = "idle"
+            console.log("state machine: " + state)
+        }
     }
 
     QtStateMachine.State {
         id: rulerActive
 
         QtStateMachine.SignalTransition {
-            target: idle
+            targetState: idle
             signal: rulerButton.pressed
         }
 
-        onEntered: console.log("state machine: rulerActive")
+        onEntered:
+        {
+            state = "rulerActive"
+            console.log("state machine: " + state)
+        }
     }
 }

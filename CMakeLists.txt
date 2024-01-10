@@ -40,6 +40,7 @@ find_package(Qt6 COMPONENTS
   Widgets
   QuickControls2
   Concurrent
+  StateMachine
 )
 
 qt_add_executable(${PROJECT_NAME})
@@ -131,6 +132,7 @@ target_link_libraries(${PROJECT_NAME}
     Qt6::Positioning
     Qt6::QuickControls2
     Qt6::Concurrent
+    Qt6::StateMachine
 
     tl::expected
     range-v3::range-v3
