@@ -11,5 +11,6 @@
         <file>icons/common/dark.svg</file>
         <file>icons/common/light.svg</file>
         <file>icons/toolbar/ruler.svg</file>
+        <file>icons/toolbar/grid.svg</file>
     </qresource>
 </RCC>

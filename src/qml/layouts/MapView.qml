@@ -43,6 +43,7 @@ Map {
     MapGroup.StateMachine {
         id: mapStateMachine
         rulerButton: mapToolbar.rulerButton
+        tileLoaderButton: mapToolbar.tileLoaderButton
     }
 
     PinchHandler {
