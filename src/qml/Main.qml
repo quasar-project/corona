@@ -33,9 +33,17 @@ ApplicationWindow {
     Material.accent: Theme.io.color("accent")
     Material.primary: Theme.io.color("main")
 
-    // menuBar: Layouts.MenuApplicationBar {}
+    menuBar: Layouts.MenuApplicationBar {}
 
-
+    ToolButton {
+        anchors.right: parent.right
+        parent: window_root.menuBar
+        icon {
+            source: Theme.mode === Theme.Dark ? "qrc:/icons/common/light.svg" : "qrc:/icons/common/dark.svg"
+        }
+        flat: true
+        onPressed: themeChanger.toggle(this)
+    }
 
     Rectangle {
         id: root
@@ -52,17 +60,6 @@ ApplicationWindow {
         //         bottom: parent.bottom
         //     }
         // }
-    }
-
-    ToolButton {
-        //anchors.right: parent.right
-        //parent: window_root.menuBar
-        anchors.centerIn: parent
-        icon {
-            source: Theme.mode === Theme.Dark ? "qrc:/icons/common/light.svg" : "qrc:/icons/common/dark.svg"
-        }
-        //flat: true
-        onPressed: themeChanger.toggle(this)
     }
 
     Utils.ThemeCircularPaletteReveal { id: themeChanger; z: 65535; rootItem: root }

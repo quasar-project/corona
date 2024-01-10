@@ -25,7 +25,18 @@ using f64 = double;
 qt_incapsulate_class(Object)
 qt_incapsulate_class(String)
 qt_incapsulate_class(Variant)
+
 qt_incapsulate_class(Color)
+qt_incapsulate_class(Point)
+qt_incapsulate_class(PointF)
+
+template<typename T>
+class QList;
+namespace qt
+{
+  template<typename T>
+  using List = QList<T>;
+}
 
 qt_incapsulate_class(CoreApplication)
 qt_incapsulate_class(GuiApplication)
@@ -48,4 +59,6 @@ qt_incapsulate_class(Dir)
 qt_incapsulate_class(JsonDocument)
 qt_incapsulate_class(JsonObject)
 qt_incapsulate_class(IODevice)
+
+qt_incapsulate_class(GeoCoordinate)
 

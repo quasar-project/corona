@@ -9,6 +9,7 @@
 #define ensure(expr, msg) if(!(expr)) { llerror(msg); return; }
 #define ensure_or(expr, msg, retval) if(!(expr)) { llerror(msg); return retval; }
 #define qt_registered_enum Q_ENUM
+
 // bug: MOC doesn't work with redefined Q_OBJECT macro
 // #define qt_registered_object Q_OBJECT
 #define qt_property Q_PROPERTY

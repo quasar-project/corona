@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>Main.qml</file>
+        <file>layouts/MenuApplicationBar.qml</file>
         <file>layouts/MapView.qml</file>
         <file>utils/ThemeCircularPaletteReveal.qml</file>
     </qresource>

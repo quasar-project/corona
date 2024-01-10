@@ -98,6 +98,10 @@ target_sources(${PROJECT_NAME}
 
     src/c++/map/provider/providerqml.h
     src/c++/map/provider/providerqml.c++
+    src/c++/map/utils/geomath.h
+    src/c++/map/utils/geomath.c++
+    src/c++/map/utils/orthodrom.h
+    src/c++/map/utils/orthodrom.c++
 
     src/c++/gui/theme/circular_reveal.h
     src/c++/gui/theme/circular_reveal.c++
