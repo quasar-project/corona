@@ -42,6 +42,7 @@ Map {
 
     MapGroup.StateMachine {
         id: mapStateMachine
+        rulerButton: mapToolbar.rulerButton
     }
 
     PinchHandler {
@@ -93,5 +94,14 @@ Map {
         hoverEnabled: true
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
+    }
+
+    MapGroup.ToolBar {
+        id: mapToolbar
+        anchors {
+            top: parent.top
+            left: parent.left
+            margins: 15
+        }
     }
 }

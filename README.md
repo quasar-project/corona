@@ -12,8 +12,9 @@
 
 - Qt version 6.5.0 or higher with this optional modules:
 
-  - Qt Location
-  - Qt Positioning
+  - **Qt Location**
+  - **Qt Positioning**
+  - **Qt State Machine**
 
 - Internet connection
 

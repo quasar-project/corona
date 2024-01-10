@@ -32,6 +32,7 @@ ApplicationWindow {
     Material.foreground: Theme.io.color("foreground")
     Material.accent: Theme.io.color("accent")
     Material.primary: Theme.io.color("main")
+    Material.roundedScale: Material.ExtraSmallScale
 
     menuBar: Layouts.MenuApplicationBar {}
 

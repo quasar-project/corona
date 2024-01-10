@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQml.StateMachine as QtStateMachine
 
 QtStateMachine.StateMachine {
-    property Button rulerButton
+    required property RoundButton rulerButton
 
     property string state: "idle"
 
@@ -16,7 +16,7 @@ QtStateMachine.StateMachine {
 
         QtStateMachine.SignalTransition {
             targetState: rulerActive
-            signal: rulerButton.pressed
+            signal: rulerButton.clicked
         }
 
         onEntered:
@@ -31,7 +31,7 @@ QtStateMachine.StateMachine {
 
         QtStateMachine.SignalTransition {
             targetState: idle
-            signal: rulerButton.pressed
+            signal: rulerButton.clicked
         }
 
         onEntered:
