@@ -5,12 +5,15 @@ import QtLocation
 import QtPositioning
 import QtQuick.Layouts
 
+import Corona.Gui.Theme
 import Corona.Map.Provider as CoronaMapProvider
 
 import "map" as MapGroup
 
 Map {
-    property int mapmode: provider.getMapMode(CoronaMapProvider.OpenStreetMapProvider.Satellite)
+    property int mapmode: Theme.mode === Theme.Dark ?
+          provider.getMapMode(CoronaMapProvider.OpenStreetMapProvider.Satellite)
+        : provider.getMapMode(CoronaMapProvider.OpenStreetMapProvider.Scheme)
 
     id: map
     anchors.fill: parent

@@ -21,7 +21,8 @@ namespace map::provider
       "https://mt.google.com/vt/lyrs=r&hl=ru&z=%z&x=%x&y=%y",
       "https://mt.google.com/vt/lyrs=y&hl=ru&z=%z&x=%x&y=%y",
       "https://mt.google.com/vt/lyrs=s&hl=ru&z=%z&x=%x&y=%y",
-      "file:///C:/Users/0/Documents/!release/tiles/%z/%x/%y.png", //todo: from config
+      "https://mt.google.com/vt/lyrs=r&hl=ru&z=%z&x=%x&y=%y",
+      //"file:///C:/Users/0/Documents/!release/tiles/%z/%x/%y.png", //todo: from config
       "https://mt.google.com/vt/lyrs=p&hl=ru&z=%z&x=%x&y=%y",
       "https://mt.google.com/vt/lyrs=y&hl=ru&z=%z&x=%x&y=%y"
     };
