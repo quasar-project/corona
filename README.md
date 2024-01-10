@@ -15,17 +15,23 @@
   - **Qt Location**
   - **Qt Positioning**
   - **Qt State Machine**
-
+- Rust v1.68 or higher
+- Rustup toolchain for destination compiler (e.g. `x86_64-pc-windows-gnu` or `x86_64-pc-windows-msvc`)
 - Internet connection
 
   
 
 ##### Build steps:
 
+- Install Rust toolchain, if not present:
+  ```shell
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  ``` 
+  then reload shell, then: 
+  ```shell
+  rustup target add --toolchain stable-x86_64-pc-windows-msvc x86_64-pc-windows-gnu
+  ```
 - Install Conan:
-
-  
-
   ```sh
   pip install conan
   ```
@@ -47,7 +53,7 @@
   --preset "conan-release" -DCMAKE_PREFIX_PATH=C:\Qt\6.7.0\mingw_64 
   ```
 
-> Replace `CMAKE_PREFIX_PATH` with actual path to Qt Library. If you are building with Qt Creator or have Qt installed in `PATH`, you can skip this step.
+  > Replace `CMAKE_PREFIX_PATH` with actual path to Qt Library. If you are building with Qt Creator or have Qt installed in `PATH`, you can skip this step.
 
 - Run `windeployqt` to install all required `.dll`s or place them manually:
 

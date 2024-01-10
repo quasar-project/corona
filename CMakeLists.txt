@@ -42,6 +42,7 @@ find_package(Qt6 COMPONENTS
   Concurrent
   StateMachine
 )
+add_subdirectory(libs/corrosion)
 
 qt_add_executable(${PROJECT_NAME})
 

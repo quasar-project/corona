@@ -11,9 +11,17 @@ import Corona.Map.Provider as CoronaMapProvider
 import "map" as MapGroup
 
 Map {
+    property bool overrideMapMode: false
     property int mapmode: Theme.mode === Theme.Dark ?
           provider.getMapMode(CoronaMapProvider.OpenStreetMapProvider.Satellite)
         : provider.getMapMode(CoronaMapProvider.OpenStreetMapProvider.Scheme)
+    function setMapMode(mode) {
+        if(overrideMapMode) {
+            mapmode = mode
+            console.log("map mode changed to: " + mapmode)
+        }
+        else console.warn("setMapMode is not allowed: overrideMapMode is false")
+    }
 
     id: map
     anchors.fill: parent
