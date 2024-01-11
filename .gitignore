@@ -29,3 +29,7 @@ src/latex/
 CMakeUserPresets.json
 conan_provider.cmake
 dependencies
+
+# Rust
+Cargo.lock
+target
