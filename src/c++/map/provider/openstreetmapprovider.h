@@ -1,9 +1,12 @@
 #pragma once
 
-#include <afx>
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <leaf/global.h>
+#include <QtCore/QString>
+
+class QJsonDocument;
 
 namespace map::provider
 {
@@ -11,6 +14,7 @@ namespace map::provider
   using std::string_view;
   using std::unordered_map;
   using std::vector;
+  using namespace leaf::types;
 
   struct OpenStreetMapConfiguration
   {
@@ -42,8 +46,8 @@ namespace map::provider
   {
     OpenStreetMapConfigurationFile(const OpenStreetMapConfiguration&, string_view name);
 
-    [[nodiscard]] auto to_json_document() const -> qt::JsonDocument;
-    [[nodiscard]] auto to_json_string() const -> qt::String;
+    [[nodiscard]] auto to_json_document() const -> QJsonDocument;
+    [[nodiscard]] auto to_json_string() const -> QString;
 
     void write_to_file(string_view directory) const;
 
@@ -68,10 +72,10 @@ namespace map::provider
         const DirectoryFormat format
       );
 
-      [[nodiscard]] auto directory() const -> qt::String;
+      [[nodiscard]] auto directory() const -> QString;
 
     private:
-      qt::String m_directory;
+      QString m_directory;
   };
 }
 

@@ -2,7 +2,7 @@
 // Created by user on 06.01.2024.
 //
 
-#include "corona.h"
+#include <leaf/global.h>
 #include <QtGui/QFontDatabase>
 #include <QtQml/QmlTypeAndRevisionsRegistration>
 #include <config/config.h>
@@ -11,22 +11,33 @@
 #include <gui/theme/themeprovider.h>
 #include <gui/theme/themeqmlwrapper.h>
 #include <gui/theme/circular_reveal.h>
+#include <application/corona.h>
+
+template<>
+struct fmt::formatter<QString> : fmt::formatter<std::string>
+{
+  auto format(const QString& str, format_context& ctx) -> decltype(ctx.out())
+  {
+    return fmt::format_to(ctx.out(), "{}", str.toStdString());
+  }
+};
 
 namespace application
 {
   using std::string;
   using std::string_view;
   using namespace std::string_view_literals;
+  using namespace leaf::types;
 
   constexpr auto DEFAULT_THEME_FOLDER = "themes"sv;
   constexpr auto DEFAULT_THEME_NAME = "Gruvbox"sv;
   constexpr auto DEFAULT_PALETTE_TYPE = "dark"sv;
 
-  auto Corona::instance() -> Corona* { return dynamic_cast<Corona*>(qt::Application::instance()); }
+  auto Corona::instance() -> Corona* { return dynamic_cast<Corona*>(QApplication::instance()); }
   auto Corona::ref() -> Corona& { return *instance(); }
 
   Corona::Corona(int argc, char** argv)
-    : qt::Application(argc, argv),
+    : QApplication(argc, argv),
       m_config_wrapper(std::make_unique<::config::ConfigQMLWrapper>(this)),
       m_config(std::make_unique<::config::Config>([this](const string& cat, const string& name)
       {
@@ -45,11 +56,11 @@ namespace application
       ))
   {
     this->m_config_wrapper->set_source_ptr(this->m_config.get());
-    qt::Object::connect(
+    QObject::connect(
       this->m_config_wrapper.get(),
       &config::ConfigQMLWrapper::valueChanged,
       this,
-      [](const qt::String& cat, const qt::String& name) { llinfo("config value changed: {}/{}", cat, name); }
+      [](const QString& cat, const QString& name) { llog::info("config value changed: {}/{}", cat, name); }
     );
 
     // this is in constructor because it will be needed by other classes earlier than start()
@@ -58,17 +69,17 @@ namespace application
 
   Corona::~Corona() = default;
 
-  void Corona::start()
+  auto Corona::start() -> void
   {
-    const auto font_id = qt::FontDatabase::addApplicationFont(":/fonts/Overpass.ttf");
-    auto font_list = qt::FontDatabase::applicationFontFamilies(font_id);
+    const auto font_id = QFontDatabase::addApplicationFont(":/fonts/Overpass.ttf");
+    auto font_list = QFontDatabase::applicationFontFamilies(font_id);
     const auto family = font_list.first();
-    qt::GuiApplication::setFont(qt::Font(family));
+    QGuiApplication::setFont(QFont(family));
 
     this->m_theme_provider->load();
   }
 
-  void Corona::register_types()
+  auto Corona::register_types() -> void
   {
     auto theme = new ::gui::theme::ThemeQMLWrapper(m_theme_provider.get(), this);
 

@@ -45,23 +45,23 @@ namespace map::provider
     this->name = string(name);
   }
 
-  auto OpenStreetMapConfigurationFile::to_json_document() const -> qt::JsonDocument
+  auto OpenStreetMapConfigurationFile::to_json_document() const -> QJsonDocument
   {
-    qt::JsonObject object;
+    QJsonObject object;
     for(const auto& [key, value] : this->dictionary)
-      object.insert(qt::String::fromStdString(key), qt::String::fromStdString(value));
-    return qt::JsonDocument(object);
+      object.insert(QString::fromStdString(key), QString::fromStdString(value));
+    return QJsonDocument(object);
   }
 
-  auto OpenStreetMapConfigurationFile::to_json_string() const -> qt::String
+  auto OpenStreetMapConfigurationFile::to_json_string() const -> QString
   {
-    return this->to_json_document().toJson(qt::JsonDocument::Indented);
+    return this->to_json_document().toJson(QJsonDocument::Indented);
   }
 
   void OpenStreetMapConfigurationFile::write_to_file(string_view directory) const
   {
-    qt::File file(qt::String::fromStdString(std::format("{}/{}", directory, this->name)));
-    file.open(qt::IODevice::WriteOnly);
+    QFile file(QString::fromStdString(std::format("{}/{}", directory, this->name)));
+    file.open(QIODevice::WriteOnly);
     file.write(this->to_json_string().toUtf8());
   }
 
@@ -69,10 +69,10 @@ namespace map::provider
     const DirectoryFormat format)
   {
     this->m_directory = format == DirectoryFormat::Relative ?
-          qt::String::fromStdString(std::format("{}/{}", qt::CoreApplication::applicationDirPath().toStdString(), directory))
-        : qt::String::fromStdString(string(directory));
+          QString::fromStdString(std::format("{}/{}", QCoreApplication::applicationDirPath().toStdString(), directory))
+        : QString::fromStdString(string(directory));
 
-    const qt::Dir dir(m_directory);
+    const QDir dir(m_directory);
     if(not dir.exists())
       (void)dir.mkpath(dir.path());
 
@@ -81,5 +81,5 @@ namespace map::provider
         file.write_to_file(this->m_directory.toStdString());
   }
 
-  auto OpenStreetMapProvider::directory() const -> qt::String { return m_directory; }
+  auto OpenStreetMapProvider::directory() const -> QString { return m_directory; }
 }

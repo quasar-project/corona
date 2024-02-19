@@ -1,19 +1,21 @@
 #pragma once
 
-#include <afx>
+#include <leaf/global.h>
 #include <QtCore/QVariantList>
 #include <QtPositioning/QGeoCoordinate>
 
 namespace map::utils
 {
+  using namespace leaf::types;
+
   class Orthodrom
   {
     public:
       Orthodrom();
-      Orthodrom(const qt::GeoCoordinate& first, const qt::GeoCoordinate& second);
+      Orthodrom(const QGeoCoordinate& first, const QGeoCoordinate& second);
 
-      [[nodiscard]] auto get() const noexcept -> qt::List<qt::Variant>;
-      void set(const qt::GeoCoordinate& first, const qt::GeoCoordinate& second) noexcept;
+      [[nodiscard]] auto get() const noexcept -> QList<QVariant>;
+      void set(const QGeoCoordinate& first, const QGeoCoordinate& second) noexcept;
 
       [[nodiscard]] auto latitude_at(f64 longitude) const noexcept -> f64;
 
@@ -24,9 +26,9 @@ namespace map::utils
     private:
       f64 a{};
       f64 b{};
-      qt::GeoCoordinate first;
-      qt::GeoCoordinate second;
-      qt::List<qt::Variant> path;
+      QGeoCoordinate first;
+      QGeoCoordinate second;
+      QList<QVariant> path;
   };
 }
 

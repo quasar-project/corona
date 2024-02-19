@@ -5,7 +5,6 @@
 // ReSharper disable CppClassCanBeFinal
 #pragma once
 
-#include <afx>
 #include <memory>
 #include <QtWidgets/QApplication>
 #include "base.h"
@@ -28,7 +27,7 @@ namespace application
 {
   using std::unique_ptr;
 
-  class Corona : public qt::Application,
+  class Corona : public QApplication,
                  public Base
   {
     Q_OBJECT
@@ -40,8 +39,8 @@ namespace application
       explicit Corona(int argc, char** argv);
       virtual ~Corona() override;
 
-      virtual void start() override;
-      virtual void register_types() override;
+      virtual auto start() -> void override;
+      virtual auto register_types() -> void override;
 
       [[nodiscard]] auto config() const -> config::Config&;
       [[nodiscard]] auto config_wrapper() const -> config::ConfigQMLWrapper&;

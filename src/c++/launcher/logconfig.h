@@ -1,11 +1,12 @@
 #pragma once
 
-#include <afx>
 #include <string>
+#include <leaf/global.h>
 
 namespace launcher
 {
   using std::string;
+  using namespace leaf::types;
 
   struct LogFileConfiguration
   {

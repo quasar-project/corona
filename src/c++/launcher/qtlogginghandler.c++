@@ -2,20 +2,31 @@
 // Created by user on 07.01.2024.
 //
 
-#include "qtlogginghandler.h"
+#include <leaf/global.h>
 #include <QtCore/QDebug>
+#include "qtlogginghandler.h"
+
+// todo: move to leaf or smth
+template<>
+struct fmt::formatter<QString> : fmt::formatter<std::string>
+{
+  auto format(const QString& str, format_context& ctx) -> decltype(ctx.out())
+  {
+    return fmt::format_to(ctx.out(), "{}", str.toStdString());
+  }
+};
 
 namespace launcher
 {
-  void logging_handler(QtMsgType type, const QMessageLogContext&, const qt::String& msg)
+  void logging_handler(QtMsgType type, const QMessageLogContext&, const QString& msg)
   {
     switch(type)
     {
-      case QtDebugMsg: lldebug("{}", msg); break;
-      case QtInfoMsg: llinfo("{}", msg); break;
-      case QtWarningMsg: llwarn("{}", msg); break;
-      case QtCriticalMsg: llcritical("{}", msg); break;
-      case QtFatalMsg: llerror("{}", msg); break;
+      case QtDebugMsg: llog::debug("{}", msg); break;
+      case QtInfoMsg: llog::info("{}", msg); break;
+      case QtWarningMsg: llog::warn("{}", msg); break;
+      case QtCriticalMsg: llog::critical("{}", msg); break;
+      case QtFatalMsg: llog::error("{}", msg); break;
       default: break;
     }
   }

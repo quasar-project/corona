@@ -5,6 +5,7 @@
 #include "orthodrom.h"
 
 using namespace std;
+using namespace leaf::types;
 
 constexpr f64 TO_RADIANS = numbers::pi / 180.0;
 constexpr f64 TO_DEGREES = 180.0 / numbers::pi;
@@ -21,19 +22,19 @@ namespace map::utils
     , second({0.0, 0.0})
   {}
 
-  Orthodrom::Orthodrom(const qt::GeoCoordinate& first, const qt::GeoCoordinate& second)
+  Orthodrom::Orthodrom(const QGeoCoordinate& first, const QGeoCoordinate& second)
   {
     this->set(first, second);
   }
 
-  auto Orthodrom::get() const noexcept -> qt::List<qt::Variant>
+  auto Orthodrom::get() const noexcept -> QList<QVariant>
   {
     if(sin(first.longitude() - second.longitude()))
       return path;
-    return { qt::Variant::fromValue(first), qt::Variant::fromValue(second) };
+    return { QVariant::fromValue(first), QVariant::fromValue(second) };
   }
 
-  void Orthodrom::set(const qt::GeoCoordinate& first, const qt::GeoCoordinate& second) noexcept
+  void Orthodrom::set(const QGeoCoordinate& first, const QGeoCoordinate& second) noexcept
   {
     this->first = first;
     this->second = second;
@@ -51,24 +52,24 @@ namespace map::utils
 
   void Orthodrom::distribute() noexcept
   {
-    ensure(not isnan(a), "nan in orthodrom (a)");
-    ensure(not isnan(b), "nan in orthodrom (b)");
+    // ensure(not isnan(a), "nan in orthodrom (a)");
+    // ensure(not isnan(b), "nan in orthodrom (b)");
 
     path.clear();
-    path << qt::Variant::fromValue(second);
+    path << QVariant::fromValue(second);
     const auto az = first.azimuthTo(second);
     auto d = this->distance();
     while(d - SPACING > 0)
     {
       const auto tmp = first.atDistanceAndAzimuth(d * 1000, az);
-      path << qt::Variant::fromValue(qt::GeoCoordinate(this->latitude_at(tmp.longitude()), tmp.longitude(), 0));
+      path << QVariant::fromValue(QGeoCoordinate(this->latitude_at(tmp.longitude()), tmp.longitude(), 0));
       d -= SPACING;
     }
 
     if(const auto tmp = first.atDistanceAndAzimuth(d, az); tmp.longitude() - second.longitude() != 0)
-      path << qt::Variant::fromValue(qt::GeoCoordinate(this->latitude_at(tmp.longitude()), tmp.longitude(), 0));
+      path << QVariant::fromValue(QGeoCoordinate(this->latitude_at(tmp.longitude()), tmp.longitude(), 0));
     else
-      path << qt::Variant::fromValue(tmp);
+      path << QVariant::fromValue(tmp);
   }
 
   auto Orthodrom::distance() const noexcept -> f64

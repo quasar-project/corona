@@ -4,8 +4,6 @@
 
 #pragma once
 
-#include <afx>
-
 namespace application
 {
   class Base

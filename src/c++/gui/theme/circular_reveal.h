@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <afx>
 #include <QtCore/QPropertyAnimation>
 #include <QtGui/QPainter>
 #include <QtQuick/QQuickPaintedItem>
@@ -26,8 +25,8 @@ namespace gui::theme
 
       virtual void paint(QPainter* painter) override;
 
-      invokable void start(int w, int h, const QPoint& center, int radius) noexcept;
-      qt_slot void handleGrabResult();
+      Q_INVOKABLE void start(int w, int h, const QPoint& center, int radius) noexcept;
+      Q_SLOT void handleGrabResult();
 
       signals:
         void targetChanged();

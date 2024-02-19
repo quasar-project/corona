@@ -2,12 +2,12 @@
 // Created by whs31 on 09.01.2024.
 //
 
-#include "themeprovider.h"
 #include <array>
 #include <filesystem>
 #include <fstream>
 #include <ranges>
 #include <toml++/toml.h>
+#include <gui/theme/themeprovider.h>
 
 using namespace std;
 
@@ -60,7 +60,7 @@ namespace gui::theme
       return PaletteType::Light;
     if(str == "dark")
       return PaletteType::Dark;
-    llwarn("invalid palette type: {}", str);
+    llog::warn("invalid palette type: {}", str);
     return PaletteType::Light;
   }
 
@@ -72,24 +72,37 @@ namespace gui::theme
 
   void ThemeProvider::refresh()
   {
-    ensure(verify_path(this->folder()), "theme folder does not exist");
-    ensure(not this->theme_name().empty(), "theme name is empty");
+    if(not verify_path(this->folder())) {
+      llog::error("theme folder does not exist: {}", this->folder());
+      return;
+    }
+    if(this->theme_name().empty()) {
+      llog::error("theme name is empty");
+      return;
+    }
     this->m_names = find_theme_names(m_folder)
-      .map_error([](const string& err) { llerror("theme provider error: {}", err); })
+      .map_error([](const string& err) { llog::error("theme provider error: {}", err); })
       .value_or(unordered_map<string, string>());
-    ensure(not this->m_names.empty(), "no valid themes found");
+    if(this->m_names.empty()) {
+      llog::error("no valid themes found");
+      return;
+    }
     if(not this->m_names.contains(string(this->theme_name())))
     {
-      llwarn("theme '{}' not found in folder '{}'", this->theme_name(), this->folder());
-      llwarn("themes available: {}", fmt::join(this->m_names | ranges::views::values, ", "));
-      llwarn("defaulting to '{}'", this->m_names.begin()->first);
+      llog::warn("theme '{}' not found in folder '{}'", this->theme_name(), this->folder());
+      llog::warn("themes available: {}", fmt::join(this->m_names | ranges::views::values, ", "));
+      llog::warn("defaulting to '{}'", this->m_names.begin()->first);
       this->set_theme_name(this->m_names.begin()->first);
     }
     this->m_palette.clear();
     this->m_palette = load_palette_from_file(m_folder, m_theme_name)
-      .map_error([](const string& err) { llerror("theme provider error: {}", err); })
+      .map_error([](const string& err) { llog::error("theme provider error: {}", err); })
       .value_or(unordered_map<PaletteType, unordered_map<string, string>>{});
-    ensure(not this->m_palette.empty(), "parse failure");
+    if(this->m_palette.empty())
+    {
+      llog::error("failed to load palette");
+      return;
+    }
   }
 
   void ThemeProvider::load() { this->refresh(); }
@@ -119,15 +132,15 @@ namespace gui::theme
   auto ThemeProvider::color(const string_view name) const -> expected<string, string>
   {
     if(not this->m_palette.contains(this->m_palette_type))
-      return unexpected(string("palette not found"));
+      return leaf::Err(string("palette not found"));
     if(not this->m_palette.at(this->m_palette_type).contains(string(name)))
-      return unexpected(string("color not found: ") + string(name));
+      return leaf::Err(string("color not found: ") + string(name));
     return this->m_palette.at(this->m_palette_type).at(string(name));
   }
 
   auto ThemeProvider::find_theme_names(string_view folder) -> expected<unordered_map<string, string>, string>
   {
-    lldebug("finding theme names in ...{}", folder.substr(folder.find_last_of("\\/") + 1));
+    llog::debug("finding theme names in ...{}", folder.substr(folder.find_last_of("\\/") + 1));
     unordered_map<string, string> result;
     for(const auto& file : filesystem::directory_iterator(folder))
     {
@@ -139,29 +152,29 @@ namespace gui::theme
       try { table = toml::parse(contents); }
       catch(const toml::parse_error& err)
       {
-        llwarn("failed to parse theme file {}, reason: {}", file.path().filename().string(), err.what());
+        llog::warn("failed to parse theme file {}, reason: {}", file.path().filename().string(), err.what());
         continue;
       }
       const auto name = table["meta"]["name"].value<string>();
       if(not name.has_value())
       {
-        llwarn("failed to get name from theme file {}", file.path().filename().string());
+        llog::warn("failed to get name from theme file {}", file.path().filename().string());
         continue;
       }
 
       result.emplace(name.value(), file.path().filename().string());
     }
     if(result.empty())
-      return unexpected<string>("no themes found in folder");
+      return leaf::Err<string>("no themes found in folder");
     for(const auto & [name, path] : result)
-      lldebug("  {} -> {}", name, path);
+      llog::debug("  {} -> {}", name, path);
     return result;
   }
 
   auto ThemeProvider::load_palette_from_file(const string_view folder, const string_view theme_name) const -> expected<ThemeProvider::PaletteSet, string>
   {
     if(not this->m_names.contains(string(theme_name)))
-      return unexpected(string("theme not found"));
+      return leaf::Err(string("theme not found"));
 
     PaletteSet result;
     const auto path = fmt::format("{}/{}", string(folder), this->m_names.at(string(theme_name)));
@@ -171,8 +184,8 @@ namespace gui::theme
     try { table = toml::parse(contents); }
     catch(const toml::parse_error& err)
     {
-      llwarn("failed to parse theme file {}, reason: {}", filesystem::path(path).filename().string(), err.what());
-      return unexpected(string("failed to parse theme file"));
+      llog::warn("failed to parse theme file {}, reason: {}", filesystem::path(path).filename().string(), err.what());
+      return leaf::Err(string("failed to parse theme file"));
     }
 
     for(const auto& key : ThemeTOMLColorKeys)
@@ -181,7 +194,7 @@ namespace gui::theme
       const auto light = table["light"][key].value<string>();
       if(not dark.has_value() or not light.has_value())
       {
-        llwarn("failed to get color '{}' from theme file {}", key, filesystem::path(path).filename().string());
+        llog::warn("failed to get color '{}' from theme file {}", key, filesystem::path(path).filename().string());
         continue;
       }
       result[PaletteType::Dark][string(key)] = dark.value();
@@ -193,7 +206,7 @@ namespace gui::theme
       const auto value = table["primary"][key].value<string>();
       if(not value.has_value())
       {
-        llwarn("failed to get color '{}' from theme file {}", key, filesystem::path(path).filename().string());
+        llog::warn("failed to get color '{}' from theme file {}", key, filesystem::path(path).filename().string());
         continue;
       }
       const auto& name = value.value();
@@ -201,14 +214,14 @@ namespace gui::theme
       {
         if(not palette.contains(string(name)))
         {
-          llwarn("failed to get primary color '{}' from theme file {}", key, filesystem::path(path).filename().string());
+          llog::warn("failed to get primary color '{}' from theme file {}", key, filesystem::path(path).filename().string());
           continue;
         }
         palette[string(key)] = palette[string(name)];
       }
     }
 
-    lldebug("searhing for color keys in theme file {}: done", filesystem::path(path).filename().string());
+    llog::debug("searhing for color keys in theme file {}: done", filesystem::path(path).filename().string());
     return result;
   }
 }

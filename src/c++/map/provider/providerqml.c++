@@ -12,8 +12,8 @@ using namespace std;
 
 namespace map::provider
 {
-  OpenStreetMapProviderQML::OpenStreetMapProviderQML(qt::Object* parent)
-    : qt::Object(parent)
+  OpenStreetMapProviderQML::OpenStreetMapProviderQML(QObject* parent)
+    : QObject(parent)
   {
     constexpr array<string_view, 7> names = { "cycle", "hiking", "night-transit", "satellite", "street", "terrain", "transit" };
     constexpr array<string_view, 7> urls = {

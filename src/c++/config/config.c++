@@ -2,15 +2,15 @@
 // Created by user on 07.01.2024.
 //
 
-#include "config.h"
 #include <filesystem>
 #include <fstream>
+#include <config/config.h>
 
 using namespace std;
 
 namespace config
 {
-  Config::Config(ValueChangedCB cb, CreateDefaultConfigFunction cdcf)
+  Config::Config(const ValueChangedCB& cb, const CreateDefaultConfigFunction& cdcf)
     : m_value_changed_cb(cb),
       m_create_default_config_function(cdcf),
       m_root(make_unique<YAML::Node>())
@@ -21,12 +21,12 @@ namespace config
   Config::~Config() = default;
 
   once_flag of;
-  void set_permissions(string_view file_path)
+  auto set_permissions(const string_view file_path) -> void
   {
     filesystem::permissions(file_path, filesystem::perms::owner_read | filesystem::perms::owner_write);
   }
 
-  void Config::load() const
+  auto Config::load() const -> void
   {
     const auto file_path = fmt::format("{}/{}/{}",
       filesystem::current_path().string(),
@@ -36,28 +36,28 @@ namespace config
 
     if(not filesystem::exists(file_path))
     {
-      lldebug("config file is missing from {}", file_path);
-      lltrace("calling create default config function");
+      llog::debug("config file is missing from {}", file_path);
+      llog::trace("calling create default config function");
       filesystem::create_directories(filesystem::path(file_path).parent_path());
       if(auto res = this->m_create_default_config_function(file_path))
-        lldebug("default config created");
+        llog::debug("default config created");
       else
-        llerror("failed to create default config");
+        llog::error("failed to create default config");
     }
     else
-      lldebug("found existing config file at {}", file_path);
+      llog::debug("found existing config file at {}", file_path);
 
     call_once(of, [file_path](){ set_permissions(file_path); });
 
     ifstream stream(file_path);
     const string contents((istreambuf_iterator(stream)), istreambuf_iterator<char>());
     *(this->m_root) = Clone(YAML::Load(contents));
-    lldebug("config loaded");
+    llog::debug("config loaded");
   }
 
-  void Config::save() const
+  auto Config::save() const -> void
   {
-    lldebug("saving config file");
+    llog::debug("saving config file");
     const auto path = fmt::format("{}/{}/{}",
       filesystem::current_path().string(),
       CONFIG_DIRECTORY_NAME,
@@ -80,9 +80,9 @@ namespace config
     return (*this->m_root)[category][key];
   }
 
-  auto Config::get_node(string_view category, string_view key) const -> expected<YAML::Node, string>
+  auto Config::get_node(const string_view category, const string_view key) const -> expected<YAML::Node, string>
   {
     try { return this->get_node_unchecked(category, key); }
-    catch(const exception& e) { return unexpected(e.what()); }
+    catch(const exception& e) { return leaf::Err(e.what()); }
   }
 } // config

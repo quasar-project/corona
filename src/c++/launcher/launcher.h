@@ -1,14 +1,14 @@
 #pragma once
 
-#include <afx>
 #include <iostream>
-#include <application/base.h>
+#include <leaf/global.h>
 #include <QtQml/QQmlComponent>
 #include <QtQml/QQmlContext>
 #include <QtQml/QQmlEngine>
 #include <QtQuick/QQuickWindow>
 #include <QtQuickControls2/QQuickStyle>
 #include <QtWidgets/QApplication>
+#include <application/base.h>
 #include "logconfig.h"
 #include "projectinfo.h"
 #include "qtlogginghandler.h"
@@ -23,10 +23,10 @@ namespace launcher
   concept IsApplicationBase = std::is_base_of_v<application::Base, T>;
 
   template<typename T>
-  concept IsQtCoreApplication = std::is_base_of_v<qt::CoreApplication, T>;
+  concept IsQtCoreApplication = std::is_base_of_v<QCoreApplication, T>;
 
-  [[nodiscard]] inline auto platform_dependent_icon(const string_view stem) -> qt::Icon;
-  [[nodiscard]] inline auto qml_entry_from_clean_path(const string_view path) -> qt::Url;
+  [[nodiscard]] inline auto platform_dependent_icon(const string_view stem) -> QIcon;
+  [[nodiscard]] inline auto qml_entry_from_clean_path(const string_view path) -> QUrl;
 
   template<typename App>
   requires
@@ -57,19 +57,19 @@ namespace launcher
 
 namespace launcher
 {
-  inline auto platform_dependent_icon(const string_view stem) -> qt::Icon
+  inline auto platform_dependent_icon(const string_view stem) -> QIcon
   {
     #if defined(Q_OS_WIN)
-    return qt::Icon(qt::String::fromStdString(string(stem) + ".ico"));
+    return QIcon(QString::fromStdString(string(stem) + ".ico"));
     #else
     return qt::Icon(qt::String::fromStdString(string(stem) + ".png"));
     #endif
   }
 
-  inline auto qml_entry_from_clean_path(const string_view path) -> qt::Url
+  inline auto qml_entry_from_clean_path(const string_view path) -> QUrl
   {
     const auto full_path = fmt::format("qrc:/{}.qml", path);
-    return { qt::String::fromStdString(full_path) };
+    return { QString::fromStdString(full_path) };
   }
 
   template<typename App> requires IsApplicationBase<App> && IsQtCoreApplication<App>
@@ -104,7 +104,7 @@ namespace launcher
     App::setOrganizationDomain(m_project_info.homepage.data());
     App::setWindowIcon(platform_dependent_icon(m_icon_path));
 
-    llinfo("project {} version {} started", this->m_project_info.name, this->m_project_info.version);
+    llog::info("project {} version {} started", this->m_project_info.name, this->m_project_info.version);
     qInstallMessageHandler(logging_handler);
 
     if(this->m_quick_options.style == QtQuickStyle::Material)
@@ -113,24 +113,24 @@ namespace launcher
     this->m_app->register_types();
     this->m_app->start();
 
-    qt::QuickStyle::setStyle(qt::String::fromStdString(to_string(m_quick_options.style)));
-    this->m_engine = std::make_unique<qt::QmlEngine>();
-    qt::Object::connect(m_engine.get(), &qt::QmlEngine::quit, qApp, &qt::CoreApplication::quit);         // NOLINT(*-pro-type-static-cast-downcast)
-    this->m_component = std::make_unique<qt::QmlComponent>(m_engine.get(), qml_entry_from_clean_path(m_quick_options.entry));
-    qt::QuickWindow::setDefaultAlphaBuffer(true);
+    QQuickStyle::setStyle(QString::fromStdString(to_string(m_quick_options.style)));
+    this->m_engine = std::make_unique<QQmlEngine>();
+    QObject::connect(m_engine.get(), &QQmlEngine::quit, qApp, &QCoreApplication::quit);         // NOLINT(*-pro-type-static-cast-downcast)
+    this->m_component = std::make_unique<QQmlComponent>(m_engine.get(), qml_entry_from_clean_path(m_quick_options.entry));
+    QQuickWindow::setDefaultAlphaBuffer(true);
     this->m_component->loadUrl(qml_entry_from_clean_path(m_quick_options.entry));
 
-    lltrace("trying to create qml engine...");
+    llog::trace("trying to create qml engine...");
     if(this->m_component->isReady())
       this->m_component->create();
     else
     {
-      llerror("{}", this->m_component->errorString());
+      llog::error("{}", this->m_component->errorString().toStdString());
       std::cout << "press any key to exit" << std::endl;
       std::getchar();
       return 2;
     }
-    lldebug("launcher finished its task");
+    llog::debug("launcher finished its task");
 
     return App::exec();
   }

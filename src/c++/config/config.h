@@ -1,16 +1,17 @@
 #pragma once
 
-#include <afx>
 #include <functional>
 #include <memory>
 #include <string>
 #include <yaml-cpp/yaml.h>
+#include <leaf/global.h>
 
 namespace config
 {
   using std::unique_ptr;
   using std::string;
   using std::string_view;
+  using namespace leaf::types;
 
   constexpr string_view CONFIG_DIRECTORY_NAME = "config";
   constexpr string_view CONFIG_FILENAME = "config.yaml";
@@ -21,11 +22,11 @@ namespace config
       using ValueChangedCB = std::function<void (string, string)>;
       using CreateDefaultConfigFunction = std::function<bool (string_view)>;
 
-      explicit Config(ValueChangedCB, CreateDefaultConfigFunction);
+      explicit Config(const ValueChangedCB&, const CreateDefaultConfigFunction&);
       ~Config();
 
-      void load() const;
-      void save() const;
+      auto load() const -> void;
+      auto save() const -> void;
 
       [[nodiscard]] auto get_node_unchecked(string_view category, string_view key) const -> YAML::Node;
       [[nodiscard]] auto get_node(string_view category, string_view key) const -> expected<YAML::Node, string>;
@@ -37,7 +38,7 @@ namespace config
       [[nodiscard]] auto get(string_view category, string_view key) const -> expected<T, string>;
 
       template<typename T>
-      void set(string_view category, string_view key, T value);
+      auto set(string_view category, string_view key, T value) -> void;
 
     private:
       ValueChangedCB m_value_changed_cb;
@@ -59,13 +60,13 @@ namespace config
         try { return node.as<T>(); }
         catch(const YAML::BadConversion& e)
         {
-          return unexpected(string("no such key or invalid conversion (yaml::bad_conversion)"));
+          return leaf::Err(string("no such key or invalid conversion (yaml::bad_conversion)"));
         }
       });
   }
 
   template <typename T>
-  void Config::set(const string_view category, const string_view key, T value)
+  auto Config::set(const string_view category, const string_view key, T value) -> void
   {
     (*this->m_root)[category][key] = value;
     this->m_value_changed_cb(string(category), string(key));

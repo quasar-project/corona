@@ -26,11 +26,17 @@ endif()
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 
+include(FetchContent)
+FetchContent_Declare(
+  tomlplusplus
+  GIT_REPOSITORY https://github.com/marzer/tomlplusplus.git
+  GIT_TAG        v3.4.0
+)
+FetchContent_MakeAvailable(tomlplusplus)
+
+find_package(leaf 0.3.0 REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(yaml-cpp REQUIRED)
-find_package(tl-expected REQUIRED)
-find_package(range-v3 REQUIRED)
-find_package(tomlplusplus REQUIRED)
 find_package(QT NAMES Qt6 COMPONENTS Core)
 find_package(Qt6 COMPONENTS
   Core
@@ -42,7 +48,6 @@ find_package(Qt6 COMPONENTS
   Concurrent
   StateMachine
 )
-add_subdirectory(libs/corrosion)
 
 qt_add_executable(${PROJECT_NAME})
 
@@ -81,18 +86,12 @@ endif()
 target_sources(${PROJECT_NAME}
   PRIVATE
     src/c++/main.c++
-    src/c++/afx
     src/c++/corona
 
     src/c++/config/config.h
     src/c++/config/config.c++
     src/c++/config/configqmlwrapper.h
     src/c++/config/configqmlwrapper.c++
-
-    src/c++/global/definitions.h
-    src/c++/global/type_aliases.h
-    src/c++/global/log.h
-    src/c++/global/expected.h
 
     src/c++/application/corona.h
     src/c++/application/corona.c++
@@ -135,9 +134,7 @@ target_link_libraries(${PROJECT_NAME}
     Qt6::Concurrent
     Qt6::StateMachine
 
-    tl::expected
-    range-v3::range-v3
-    spdlog::spdlog
+    leaf::leaf
     yaml-cpp::yaml-cpp
     tomlplusplus::tomlplusplus
 )

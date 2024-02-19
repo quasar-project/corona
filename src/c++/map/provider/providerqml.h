@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <afx>
 #include <memory>
 #include <QtCore/QObject>
 
@@ -21,7 +20,7 @@ namespace map::provider
   using std::unique_ptr;
 
   // ReSharper disable once CppClassCanBeFinal
-  class OpenStreetMapProviderQML : public qt::Object
+  class OpenStreetMapProviderQML : public QObject
   {
     Q_OBJECT
     Q_PROPERTY(QString directory READ directory CONSTANT FINAL)
@@ -36,13 +35,13 @@ namespace map::provider
       };
       Q_ENUM(MapMode)
 
-      explicit OpenStreetMapProviderQML(qt::Object* parent = nullptr);
+      explicit OpenStreetMapProviderQML(QObject* parent = nullptr);
       virtual ~OpenStreetMapProviderQML() override;
 
       [[nodiscard]] QString directory() const;
 
     public:
-      invokable static int getMapMode(MapMode);
+      Q_INVOKABLE static int getMapMode(MapMode);
 
     private:
       unique_ptr<OpenStreetMapProvider> m_provider;

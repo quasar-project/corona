@@ -17,12 +17,12 @@ namespace gui::theme
     this->setVisible(false);
     m_anim.setDuration(333);
     m_anim.setEasingCurve(QEasingCurve::OutCubic);
-    qt::Object::connect(&m_anim, &QPropertyAnimation::finished, this, [=, this](){
+    QObject::connect(&m_anim, &QPropertyAnimation::finished, this, [=, this](){
       this->update();
       this->setVisible(false);
       emit animationFinished();
     });
-    qt::Object::connect(this, &CircularReveal::radiusChanged, this, [=, this](){
+    QObject::connect(this, &CircularReveal::radiusChanged, this, [=, this](){
       this->update();
     });
   }
@@ -57,7 +57,7 @@ namespace gui::theme
     m_anim.setEndValue(radius);
     m_center = center;
     m_grab_result = target()->grabToImage(QSize(w, h));
-    qt::Object::connect(m_grab_result.data(), &QQuickItemGrabResult::ready, this, &CircularReveal::handleGrabResult);
+    QObject::connect(m_grab_result.data(), &QQuickItemGrabResult::ready, this, &CircularReveal::handleGrabResult);
   }
 
   void CircularReveal::handleGrabResult()

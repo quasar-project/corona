@@ -6,41 +6,56 @@
 #include <QtCore/QFile>
 #include <QtCore/QVariant>
 
+template<>
+struct fmt::formatter<QString> : fmt::formatter<std::string>
+{
+  auto format(const QString& str, format_context& ctx) -> decltype(ctx.out())
+  {
+    return fmt::format_to(ctx.out(), "{}", str.toStdString());
+  }
+};
+
 namespace config
 {
-  ConfigQMLWrapper::ConfigQMLWrapper(qt::Object* parent)
-    : qt::Object(parent),
+  ConfigQMLWrapper::ConfigQMLWrapper(QObject* parent)
+    : QObject(parent),
       m_ptr(nullptr)
   {}
 
-  QVariant ConfigQMLWrapper::value(const QString& category, const QString& name) const
+  auto ConfigQMLWrapper::value(const QString& category, const QString& name) const -> QVariant
   {
-    ensure_or(this->m_ptr != nullptr, "nullptr in config wrapper", {});
+    if(this->m_ptr == nullptr) {
+      llog::error("nullptr in config wrapper");
+      return {};
+    }
 
     const auto str = this->m_ptr->get<string>(category.toStdString(), name.toStdString());;
     if(not str.has_value())
     {
-      llerror("getting {}/{} failed, reason: {}", category, name, str.error());
+      llog::error("getting {}/{} failed, reason: {}", category, name, str.error());
       return {};
     }
-    return qt::Variant(qt::String::fromStdString(str.value()));
+    return QVariant(QString::fromStdString(str.value()));
   }
 
   template<typename T>
-  void set_ptr_conv(Config* ptr, const qt::String& category, const qt::String& name, const qt::Variant& value)
+  auto set_ptr_conv(Config* ptr, const QString& category, const QString& name, const QVariant& value) -> void
   {
     ptr->set(category.toStdString(), name.toStdString(), value.value<T>());
   }
 
   template<typename T>
-  void set_ptr_conv_v(Config* ptr, const qt::String& category, const qt::String& name, const T& value)
+  auto set_ptr_conv_v(Config* ptr, const QString& category, const QString& name, const T& value) -> void
   {
     ptr->set(category.toStdString(), name.toStdString(), value);
   }
 
-  void ConfigQMLWrapper::setValue(const QString& category, const QString& name, const QVariant& value)
+  auto ConfigQMLWrapper::setValue(const QString& category, const QString& name, const QVariant& value) const -> void
   {
-    ensure(this->m_ptr != nullptr, "nullptr in config wrapper");
+    if(this->m_ptr == nullptr) {
+      llog::error("nullptr in config wrapper");
+      return;
+    }
     switch(auto type = value.metaType().underlyingType().id())
     {
       case QMetaType::QString: set_ptr_conv_v<string>(this->m_ptr, category, name, value.toString().toStdString()); break;
@@ -58,31 +73,30 @@ namespace config
       case QMetaType::Int: set_ptr_conv<int>(this->m_ptr, category, name, value); break;
       case QMetaType::Char: set_ptr_conv<i8>(this->m_ptr, category, name, value); break;
       case QMetaType::UChar: set_ptr_conv<u8>(this->m_ptr, category, name, value); break;
-      default: ensure(false, "unsupported type");
+      default: llog::error("unknown type: {}", type);
     }
   }
 
-  void ConfigQMLWrapper::save() const { this->m_ptr->save(); }
-  void ConfigQMLWrapper::load() const { this->m_ptr->load(); }
+  auto ConfigQMLWrapper::save() const -> void { this->m_ptr->save(); }
+  auto ConfigQMLWrapper::load() const -> void { this->m_ptr->load(); }
 
-  void ConfigQMLWrapper::set_source_ptr(Config* ptr)
+  auto ConfigQMLWrapper::set_source_ptr(Config* ptr) -> void
   {
     if(ptr != nullptr)
     {
-      lltrace("config qml wrapper received ptr");
+      llog::trace("config qml wrapper received ptr");
       this->m_ptr = ptr;
     }
     else
-      llcritical("invalid ptr received");
+      llog::critical("invalid ptr received");
   }
 
   void ConfigQMLWrapper::value_changed_callback(const string& category, const string& name)
   {
-    emit valueChanged(qt::String::fromStdString(category), qt::String::fromStdString(name));
+    emit valueChanged(QString::fromStdString(category), QString::fromStdString(name));
   }
 
-  auto ConfigQMLWrapper::create_default_config_callback(const string_view path) -> bool
-  {
-    return qt::File::copy(":/configuration/config.yaml", path.data());
+  auto ConfigQMLWrapper::create_default_config_callback(const string_view path) -> bool {
+    return QFile::copy(":/configuration/config.yaml", path.data());
   }
 }

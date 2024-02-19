@@ -1,14 +1,15 @@
 #pragma once
 
-#include <afx>
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
+#include <leaf/global.h>
 
 namespace gui::theme
 {
   using std::string;
   using std::string_view;
   using std::unordered_map;
+  using namespace leaf::types;
 
   class ThemeProvider
   {

@@ -2,30 +2,39 @@
 // Created by whs31 on 09.01.2024.
 //
 
-#include "themeqmlwrapper.h"
-#include "themeprovider.h"
+#include <QtCore/QDir>
+#include <QtCore/QFile>
 #include <corona>
 #include <config/config.h>
 #include <config/configqmlwrapper.h>
-#include <QtCore/QDir>
-#include <QtCore/QFile>
+#include <gui/theme/themeprovider.h>
+#include <gui/theme/themeqmlwrapper.h>
+
+template<>
+struct fmt::formatter<QString> : fmt::formatter<std::string>
+{
+  auto format(const QString& str, format_context& ctx) -> decltype(ctx.out())
+  {
+    return fmt::format_to(ctx.out(), "{}", str.toStdString());
+  }
+};
 
 constexpr std::string_view ERROR_COLOR = "#b162d8";
 
 namespace gui::theme
 {
-  ThemeQMLWrapperInternal::ThemeQMLWrapperInternal(ThemeProvider* ptr, qt::Object* parent)
-    : qt::Object(parent),
+  ThemeQMLWrapperInternal::ThemeQMLWrapperInternal(ThemeProvider* ptr, QObject* parent)
+    : QObject(parent),
       m_ptr(ptr)
   {}
 
-  auto ThemeQMLWrapperInternal::color(const qt::String& name) const -> qt::Color
+  auto ThemeQMLWrapperInternal::color(const QString& name) const -> QColor
   {
-    return qt::Color(
-      qt::String::fromStdString(
+    return QColor(
+      QString::fromStdString(
         string(
           m_ptr->color(name.toStdString())
-            .map_error([name](const string& err){ llerror("failed to get theme color {} from wrapper, reason: {}",
+            .map_error([name](const string& err){ llog::error("failed to get theme color {} from wrapper, reason: {}",
               name,
               err
             );})
@@ -35,14 +44,14 @@ namespace gui::theme
     );
   }
 
-  ThemeQMLWrapper::ThemeQMLWrapper(ThemeProvider* ptr, qt::Object* parent)
-    : qt::Object(parent),
+  ThemeQMLWrapper::ThemeQMLWrapper(ThemeProvider* ptr, QObject* parent)
+    : QObject(parent),
       m_ptr(ptr),
       m_internal(new ThemeQMLWrapperInternal(ptr, this))
   {
     ThemeQMLWrapper::emplace();
-    qt::Object::connect(&application::Corona::ref().config_wrapper(), &config::ConfigQMLWrapper::valueChanged,
-      this, [this](const qt::String& cat, const qt::String& name)
+    QObject::connect(&application::Corona::ref().config_wrapper(), &config::ConfigQMLWrapper::valueChanged,
+      this, [this](const QString& cat, const QString& name)
     {
       if(cat == "theme" and name == "theme_name")
         this->updateIO();
@@ -51,7 +60,7 @@ namespace gui::theme
 
   void ThemeQMLWrapper::toggle()
   {
-    lltrace("toggling theme");
+    llog::trace("toggling theme");
     if(this->mode() == PaletteType::Light)
       this->setMode(PaletteType::Dark);
     else
@@ -80,25 +89,26 @@ namespace gui::theme
     const auto folder_name = application::Corona::ref()
       .config()
       .get<string>("theme", "folder")
-      .map_error([](const string& msg) { llerror("failed to initialize theme qml wrapper: {}", msg); });
-    ensure(folder_name.has_value(), "theme folder name is not set");
-
-    const auto folder = fmt::format("{}/{}", qt::Application::applicationDirPath(), folder_name.value());
-    if(not qt::Dir(qt::String::fromStdString(folder)).exists())
-    {
-      lldebug("making theme folder {}...", folder_name.value());
-      qt::Dir()
-        .mkpath(qt::String::fromStdString(folder));
+      .map_error([](const string& msg) { llog::error("failed to initialize theme qml wrapper: {}", msg); });
+    if(not folder_name) {
+      return;
     }
 
-    for(const unordered_map<qt::String, qt::String> themes = {
-          { ":/theme/gruvbox.toml", qt::String::fromStdString(fmt::format("{}/gruvbox.toml", folder)) }
+    const auto folder = fmt::format("{}/{}", QApplication::applicationDirPath(), folder_name.value());
+    if(not QDir(QString::fromStdString(folder)).exists())
+    {
+      llog::debug("making theme folder {}...", folder_name.value());
+      QDir().mkpath(QString::fromStdString(folder));
+    }
+
+    for(const unordered_map<QString, QString> themes = {
+          { ":/theme/gruvbox.toml", QString::fromStdString(fmt::format("{}/gruvbox.toml", folder)) }
         }; const auto& [from, to] : themes)
     {
-      if(not qt::File::exists(to))
+      if(not QFile::exists(to))
       {
-        lltrace("copying theme {} to {}...", from, to);
-        qt::File::copy(from, to);
+        llog::trace("copying theme {} to {}...", from, to);
+        QFile::copy(from, to);
       }
     }
   }
