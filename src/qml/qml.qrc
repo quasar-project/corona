@@ -6,5 +6,7 @@
         <file>layouts/map/StateMachine.qml</file>
         <file>layouts/map/ToolBar.qml</file>
         <file>utils/ThemeCircularPaletteReveal.qml</file>
+        <file>widgets/PowerSwitchStatus.qml</file>
+        <file>ui/CircularProgressBar.qml</file>
     </qresource>
 </RCC>

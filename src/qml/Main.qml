@@ -11,6 +11,7 @@ import Corona.Gui.Theme
 
 import "layouts" as Layouts
 import "utils" as Utils
+import "widgets" as Widgets // todo: move to module
 
 ApplicationWindow {
     id: window_root
@@ -61,6 +62,10 @@ ApplicationWindow {
                 bottom: parent.bottom
             }
         }
+    }
+
+    Widgets.PowerSwitchStatus {
+        anchors.centerIn: parent
     }
 
     Utils.ThemeCircularPaletteReveal { id: themeChanger; z: 65535; rootItem: root }
