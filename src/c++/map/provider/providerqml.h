@@ -6,14 +6,7 @@
 
 #include <memory>
 #include <QtCore/QObject>
-
-#if defined CXX20_MODULES_DISABLED
 #include "openstreetmapprovider.h"
-#else
-#ifndef Q_MOC_RUN
-import map.provider;
-#endif
-#endif
 
 namespace map::provider
 {

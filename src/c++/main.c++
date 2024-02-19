@@ -3,12 +3,7 @@
 //
 
 #include <corona>
-
-#if defined CXX20_MODULES_DISABLED
 #include <launcher/launcher.h>
-#else
-import launcher;
-#endif
 
 /*
  * @ TODO LIST:

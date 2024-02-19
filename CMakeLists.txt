@@ -113,7 +113,7 @@ target_compile_definitions(${PROJECT_NAME}
     -DPROJECT_DOMAIN="${PROJECT_HOMEPAGE_URL}"
 )
 
-enable_static_crt()
+#enable_static_crt()
 
 qt_generate_deploy_app_script(
   TARGET ${PROJECT_NAME}
