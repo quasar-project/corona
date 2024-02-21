@@ -4,16 +4,18 @@
 
 #include <filesystem>
 #include <fstream>
+#include <sstream>
 #include <config/config.h>
+#include <leafconf/serializers/toml.h>
 
 using namespace std;
 
 namespace config
 {
   Config::Config(const ValueChangedCB& cb, const CreateDefaultConfigFunction& cdcf)
-    : m_value_changed_cb(cb),
-      m_create_default_config_function(cdcf),
-      m_root(make_unique<YAML::Node>())
+    : m_value_changed_cb(cb)
+    , m_create_default_config_function(cdcf)
+    , m_root(make_unique<YAML::Node>())
   {
     // this->load();
   }
@@ -21,6 +23,7 @@ namespace config
   Config::~Config() = default;
 
   once_flag of;
+
   auto set_permissions(const string_view file_path) -> void
   {
     filesystem::permissions(file_path, filesystem::perms::owner_read | filesystem::perms::owner_write);
@@ -29,9 +32,9 @@ namespace config
   auto Config::load() const -> void
   {
     const auto file_path = fmt::format("{}/{}/{}",
-      filesystem::current_path().string(),
-      CONFIG_DIRECTORY_NAME,
-      CONFIG_FILENAME
+                                       filesystem::current_path().string(),
+                                       CONFIG_DIRECTORY_NAME,
+                                       CONFIG_FILENAME
     );
 
     if(not filesystem::exists(file_path))
@@ -47,7 +50,7 @@ namespace config
     else
       llog::debug("found existing config file at {}", file_path);
 
-    call_once(of, [file_path](){ set_permissions(file_path); });
+    call_once(of, [file_path]() { set_permissions(file_path); });
 
     ifstream stream(file_path);
     const string contents((istreambuf_iterator(stream)), istreambuf_iterator<char>());
@@ -59,13 +62,13 @@ namespace config
   {
     llog::debug("saving config file");
     const auto path = fmt::format("{}/{}/{}",
-      filesystem::current_path().string(),
-      CONFIG_DIRECTORY_NAME,
-      CONFIG_FILENAME
+                                  filesystem::current_path().string(),
+                                  CONFIG_DIRECTORY_NAME,
+                                  CONFIG_FILENAME
     );
 
     filesystem::create_directories(filesystem::path(path).parent_path());
-    call_once(of, [path](){ set_permissions(path); });
+    call_once(of, [path]() { set_permissions(path); });
 
     if(filesystem::exists(path))
       filesystem::remove(path);
@@ -84,5 +87,48 @@ namespace config
   {
     try { return this->get_node_unchecked(category, key); }
     catch(const exception& e) { return leaf::Err(e.what()); }
+  }
+
+  auto ConfigData::serialize(const leaf::serialization::Serializer serializer) const -> expected<string, string>
+  {
+    const auto out = toml::table{
+      {"network", toml::table{
+        {"ipv4", toml::table{
+          {"de10", this->network.ipv4.de10},
+          {"jetson", this->network.ipv4.jetson},
+          {"power_switch", this->network.ipv4.power_switch}
+        }}
+      }}
+    };
+
+    stringstream ss;
+    switch(serializer)
+    {
+      case leaf::serialization::TOML: ss << out; break;
+      case leaf::serialization::JSON: ss << toml::json_formatter(out); break;
+      case leaf::serialization::YAML: ss << toml::yaml_formatter(out); break;
+      default: leaf::unreachable();
+    }
+    return ss.str();
+  }
+
+  auto ConfigData::deserialize(const string_view data, const leaf::serialization::Serializer serializer) -> expected<void, string>
+  {
+    if(serializer != leaf::serialization::Serializer::TOML)
+      return leaf::Err("unsupported deserialization format");
+    toml::table in;
+    try {
+      in = toml::parse(data);
+    } catch(const toml::parse_error& err) {
+      return leaf::Err(err.what());
+    }
+    try {
+      this->network.ipv4.de10 = in["network"]["ipv4"]["de10"].value<string>().value();
+      this->network.ipv4.jetson = in["network"]["ipv4"]["jetson"].value<string>().value();
+      this->network.ipv4.power_switch = in["network"]["ipv4"]["power_switch"].value<string>().value();
+    } catch(const bad_optional_access& err) {
+      return leaf::Err(err.what());
+    }
+    return {};
   }
 } // config

@@ -6,12 +6,12 @@
 #pragma once
 
 #include <memory>
+#include <config/config.h>
 #include <QtWidgets/QApplication>
-#include "base.h"
+#include <application/base.h>
 
 namespace config
 {
-  class Config;
   class ConfigQMLWrapper;
 }
 
@@ -45,9 +45,12 @@ namespace application
       [[nodiscard]] auto config() const -> config::Config&;
       [[nodiscard]] auto config_wrapper() const -> config::ConfigQMLWrapper&;
 
+      [[nodiscard]] auto main_config() const -> leaf::conf::Config<::config::ConfigData>&;
+
     private:
       unique_ptr<::config::Config> m_config;
       unique_ptr<::config::ConfigQMLWrapper> m_config_wrapper;
       unique_ptr<::gui::theme::ThemeProvider> m_theme_provider;
+      unique_ptr<leaf::conf::Config<::config::ConfigData>> m_main_config;
   };
 }

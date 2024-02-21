@@ -5,7 +5,6 @@
 #include <leaf/global.h>
 #include <QtGui/QFontDatabase>
 #include <QtQml/QmlTypeAndRevisionsRegistration>
-#include <config/config.h>
 #include <config/configqmlwrapper.h>
 #include <map/provider/providerqml.h>
 #include <gui/theme/themeprovider.h>
@@ -53,7 +52,8 @@ namespace application
             m_config->get<string>("theme", "palette")
               .value_or(string(DEFAULT_PALETTE_TYPE))
             )
-      ))
+      )),
+      m_main_config(std::make_unique<leaf::conf::Config<::config::ConfigData>>(config::build_config()))
   {
     this->m_config_wrapper->set_source_ptr(this->m_config.get());
     QObject::connect(
@@ -96,4 +96,5 @@ namespace application
 
   auto Corona::config() const -> config::Config& { return *m_config; }
   auto Corona::config_wrapper() const -> config::ConfigQMLWrapper& { return *m_config_wrapper; }
+  auto Corona::main_config() const -> leaf::conf::Config<config::ConfigData>& { return *m_main_config; }
 }

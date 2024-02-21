@@ -14,16 +14,8 @@ set_language_standard(23)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 
-include(FetchContent)
-FetchContent_Declare(
-  tomlplusplus
-  GIT_REPOSITORY https://github.com/marzer/tomlplusplus.git
-  GIT_TAG        v3.4.0
-)
-FetchContent_MakeAvailable(tomlplusplus)
-
-find_package(leaf 0.3.0 REQUIRED)
-find_package(spdlog REQUIRED)
+find_package(leaf 0.3.0 CONFIG REQUIRED)
+find_package(leafconf 0.1.0 CONFIG REQUIRED)
 find_package(yaml-cpp REQUIRED)
 find_package(QT NAMES Qt6 COMPONENTS Core)
 find_package(Qt6 COMPONENTS
@@ -99,6 +91,7 @@ target_link_libraries(${PROJECT_NAME}
     Qt6::StateMachine
 
     leaf::leaf
+    leaf::leafconf
     yaml-cpp::yaml-cpp
     tomlplusplus::tomlplusplus
 )
