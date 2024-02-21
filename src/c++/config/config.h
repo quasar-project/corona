@@ -100,8 +100,8 @@ namespace config
     using namespace leaf::conf;
     using enum leaf::conf::Config<ConfigData>::SavingPolicy;
 
-    return Config<ConfigData>(
-      "config.toml",
+    return leaf::conf::Config<ConfigData>(
+      "corona.toml",
       fs::current_path() / CONFIG_DIRECTORY_NAME,
       SaveOnDestruction,
       ConfigData()
