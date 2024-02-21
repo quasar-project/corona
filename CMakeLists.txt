@@ -73,6 +73,11 @@ target_sources(${PROJECT_NAME}
     src/c++/launcher/logconfig.c++
     src/c++/launcher/launcher.h
 
+    src/c++/network/localaddr.h
+    src/c++/network/localaddr.c++
+    src/c++/network/modules/powerswitch.h
+    src/c++/network/modules/powerswitch.c++
+
     src/qml/qml.qrc
     src/js/js.qrc
     resources/resources.qrc

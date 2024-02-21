@@ -10,6 +10,7 @@
 #include <gui/theme/themeprovider.h>
 #include <gui/theme/themeqmlwrapper.h>
 #include <gui/theme/circular_reveal.h>
+#include <network/localaddr.h>
 #include <application/corona.h>
 
 template<>
@@ -77,6 +78,12 @@ namespace application
     QGuiApplication::setFont(QFont(family));
 
     this->m_theme_provider->load();
+
+    // dump local address
+    if(const auto local_address = network::Ipv4Address::local_address(); local_address)
+      llog::info("local address: {}", local_address->ip);
+    else
+      llog::error("failed to get local address: {}", local_address.error());
   }
 
   auto Corona::register_types() -> void
