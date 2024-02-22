@@ -9,6 +9,7 @@ namespace network::modules
   class PowerSwitch
   {
     constexpr u32 REQUEST_MARKER = 0xAAAAAAAA;
+    constexpr u16 LOCAL_PORT = 12000;
 
     struct [[gnu::packed]] RequestPacket
     {
@@ -26,5 +27,8 @@ namespace network::modules
       u32 voltage;
       u32 current;
     };
+
+    public:
+
   };
 }
