@@ -23,8 +23,17 @@ namespace gui
   }
 }
 
+namespace network
+{
+  namespace modules
+  {
+    class PowerSwitch;
+  }
+}
+
 namespace application
 {
+  using std::shared_ptr;
   using std::unique_ptr;
 
   class Corona : public QApplication,
@@ -52,5 +61,6 @@ namespace application
       unique_ptr<::config::ConfigQMLWrapper> m_config_wrapper;
       unique_ptr<::gui::theme::ThemeProvider> m_theme_provider;
       unique_ptr<leaf::conf::Config<::config::ConfigData>> m_main_config;
+      shared_ptr<network::modules::PowerSwitch> m_power_switch;
   };
 }

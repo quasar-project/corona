@@ -4,6 +4,8 @@ import QtQuick.Controls.Material
 import QtQuick.Layouts
 
 import Corona.Gui.Theme
+import Corona.Network
+
 import "../ui" as UI
 
 Page {
@@ -78,6 +80,7 @@ Page {
                 display: AbstractButton.IconOnly
                 Material.accent: Theme.io.color("overlay0")
                 Layout.alignment: Qt.AlignHCenter
+                onCheckedChanged: PowerSwitch.toggle_channel(channel)
             }
         }
         Material.background: Theme.io.color("surface0")
@@ -89,11 +92,19 @@ Page {
             UI.CircularGauge {
                 width: 75
                 height: 75
+
+                min: 0
+                max: 100
+                value: 15
             }
 
             UI.CircularGauge {
                 width: 75
                 height: 75
+
+                min: 0
+                max: 50
+                value: 15
             }
         }
 

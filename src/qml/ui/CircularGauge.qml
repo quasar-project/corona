@@ -9,9 +9,9 @@ Rectangle {
     radius: width / 2
     color: Theme.io.color("crust")
 
-    property real min: 0
-    property real max: 100
-    property real value: 0
+    required property real min
+    required property real max
+    required property real value
 
     property var gaugeColorsPercentage: [ 0.15, 0.70 ] // green is implicit (total - (r + y))
 
@@ -107,19 +107,4 @@ Rectangle {
     }
 
     Behavior on value { NumberAnimation { duration: 100; easing.type: Easing.InOutQuad }}
-    SequentialAnimation on value {
-        NumberAnimation {
-            from: 0
-            to: 100
-            duration: 2000
-        }
-
-        NumberAnimation {
-            from: 100
-            to: 0
-            duration: 1000
-        }
-
-        loops: Animation.Infinite
-    }
 }

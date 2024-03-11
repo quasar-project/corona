@@ -97,6 +97,9 @@ namespace config
           {"de10", this->network.ipv4.de10},
           {"jetson", this->network.ipv4.jetson},
           {"power_switch", this->network.ipv4.power_switch}
+        }},
+        {"ports", toml::table{
+          {"power_switch", this->network.ports.power_switch}
         }}
       }}
     };
@@ -126,6 +129,8 @@ namespace config
       this->network.ipv4.de10 = in["network"]["ipv4"]["de10"].value<string>().value();
       this->network.ipv4.jetson = in["network"]["ipv4"]["jetson"].value<string>().value();
       this->network.ipv4.power_switch = in["network"]["ipv4"]["power_switch"].value<string>().value();
+
+      this->network.ports.power_switch = in["network"]["ports"]["power_switch"].value<u16>().value();
     } catch(const bad_optional_access& err) {
       return leaf::Err(err.what());
     }

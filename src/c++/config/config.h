@@ -92,6 +92,11 @@ namespace config
         string jetson         = "192.168.1.48";
         string power_switch   = "192.168.1.50";
       } ipv4;
+
+      struct Ports
+      {
+        u16 power_switch      = 44000;
+      } ports;
     } network;
   };
 

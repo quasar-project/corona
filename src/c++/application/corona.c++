@@ -2,6 +2,7 @@
 // Created by user on 06.01.2024.
 //
 
+#include <memory>
 #include <leaf/global.h>
 #include <QtGui/QFontDatabase>
 #include <QtQml/QmlTypeAndRevisionsRegistration>
@@ -11,6 +12,7 @@
 #include <gui/theme/themeqmlwrapper.h>
 #include <gui/theme/circular_reveal.h>
 #include <network/localaddr.h>
+#include <network/modules/powerswitch.h>
 #include <application/corona.h>
 
 template<>
@@ -24,6 +26,7 @@ struct fmt::formatter<QString> : fmt::formatter<std::string>
 
 namespace application
 {
+  using std::shared_ptr;
   using std::string;
   using std::string_view;
   using namespace std::string_view_literals;
@@ -99,6 +102,13 @@ namespace application
     qmlRegisterModule("Corona.Gui.Theme", 1, 0);
     qmlRegisterSingletonInstance<::gui::theme::ThemeQMLWrapper>("Corona.Gui.Theme", 1, 0, "Theme", theme);
     qmlRegisterType<::gui::theme::CircularReveal>("Corona.Gui.Theme", 1, 0, "ThemeCircularPaletteRevealInternal");
+
+    this->m_power_switch = std::make_shared<network::modules::PowerSwitch>(
+      this->main_config().values.network.ipv4.power_switch,
+      this->main_config().values.network.ports.power_switch
+    );
+
+    qmlRegisterSingletonInstance<::network::modules::PowerSwitch>("Corona.Network", 1, 0, "PowerSwitch", this->m_power_switch.get());
   }
 
   auto Corona::config() const -> config::Config& { return *m_config; }
