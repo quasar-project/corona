@@ -62,7 +62,7 @@ namespace launcher
     #if defined(Q_OS_WIN)
     return QIcon(QString::fromStdString(string(stem) + ".ico"));
     #else
-    return qt::Icon(qt::String::fromStdString(string(stem) + ".png"));
+    return QIcon(QString::fromStdString(string(stem) + ".png"));
     #endif
   }
 

@@ -8,5 +8,6 @@
         <file>utils/ThemeCircularPaletteReveal.qml</file>
         <file>widgets/PowerSwitchStatus.qml</file>
         <file>ui/CircularProgressBar.qml</file>
+        <file>ui/CircularGauge.qml</file>
     </qresource>
 </RCC>

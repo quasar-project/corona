@@ -84,8 +84,29 @@ Page {
         Material.elevation: 200
     }
 
+    component InputGaugesStatus : Pane {
+        ColumnLayout {
+            UI.CircularGauge {
+                width: 75
+                height: 75
+            }
+
+            UI.CircularGauge {
+                width: 75
+                height: 75
+            }
+        }
+
+        Material.background: Theme.io.color("surface0")
+        Material.elevation: 200
+    }
+
     RowLayout {
         anchors.fill: parent
+
+        InputGaugesStatus {
+
+        }
 
         PowerSwitchStatusEntry {
             voltage: 10.0

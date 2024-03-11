@@ -1,0 +1,16 @@
+[package]
+name = "corona"
+authors = [
+    "whs31 <ryazantsev.dl@edu.spbstu.ru>",
+]
+description = "QuaSAR frontend application"
+
+[package.version]
+major = 2
+minor = 0
+patch = 0
+
+[dependencies]
+cmake = { version = { major = 0, minor = 1, patch = 2 }, distribution = "sources" }
+leaf = { version = { major = 0, minor = 4, patch = 1 }, distribution = "static" }
+leafconf = { version = { major = 0, minor = 1, patch = 2 }, distribution = "static" }

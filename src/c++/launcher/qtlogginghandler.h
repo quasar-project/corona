@@ -2,7 +2,7 @@
 
 class QMessageLogContext;
 
-#if !defined(Q_CC_MINGW)
+#if !defined(Q_CC_MINGW) && !defined(Q_CC_GNU)
 enum QtMsgType : int;
 #else
 enum QtMsgType;

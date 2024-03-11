@@ -7,7 +7,7 @@ project(Corona
   LANGUAGES C CXX
 )
 
-include(cmake/all.cmake)
+include(dependencies/cmake/all.cmake)
 
 set_language_standard(23)
 
