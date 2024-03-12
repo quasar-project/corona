@@ -14,6 +14,7 @@ Rectangle {
     required property real value
 
     property var gaugeColorsPercentage: [ 0.15, 0.70 ] // green is implicit (total - (r + y))
+    property string units: "-"
 
     property real angleStart: -50
     property real angleEnd: 230
@@ -78,6 +79,7 @@ Rectangle {
     }
 
     Text {
+        id: valueText
         anchors {
             horizontalCenter: parent.horizontalCenter
             top: parent.verticalCenter
@@ -87,6 +89,20 @@ Rectangle {
         font.weight: Font.Bold
         horizontalAlignment: Text.AlignHCenter
         text: Number(control.value).toFixed(2)
+        color: Theme.io.color("surface2")
+    }
+
+    Text {
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            top: valueText.bottom
+            topMargin: -4
+        }
+
+        font.weight: Font.Bold
+        font.pixelSize: 13
+        horizontalAlignment: Text.AlignHCenter
+        text: units
         color: Theme.io.color("surface1")
     }
 

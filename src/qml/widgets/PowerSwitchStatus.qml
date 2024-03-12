@@ -9,6 +9,10 @@ import io.quasar.constellation.network
 import "../ui" as UI
 
 Page {
+    property var channelNames: [
+        "", "АПД", "РЛМ", "ЭВМ", "УМ", "К 5", "КОМ", "НАВ"
+    ]
+
     id: control
     title: "Коммутатор питания"
     header: ToolBar {
@@ -30,11 +34,13 @@ Page {
     Material.elevation: 200
 
     component PowerSwitchStatusEntry : Pane {
-        required property real voltage
-        required property real current
         required property real max_voltage
         required property real min_voltage
+        property real max_current: 3000
+        property real min_current: 0
         required property int channel
+        property real voltage: NetworkAPI.powerSwitch.channels[channel].voltage
+        property real current: NetworkAPI.powerSwitch.channels[channel].current
 
         ColumnLayout {
             Label {
@@ -59,7 +65,7 @@ Page {
             }
 
             UI.CircularProgressBar {
-                value: 0.5
+                value: (current - min_current) / (max_current - min_current)
                 size: 40
                 lineWidth: 6
                 primaryColor: Theme.io.color("green")
@@ -67,7 +73,7 @@ Page {
                 Layout.alignment: Qt.AlignHCenter
             }
             Label {
-                text: `CH ${channel}`
+                text: channelNames[channel]
                 font {
                     pointSize: 13
                     weight: Font.Bold
@@ -76,11 +82,12 @@ Page {
                 Layout.alignment: Qt.AlignHCenter
             }
             Switch {
-                checked: true
+                checked: NetworkAPI.powerSwitch.channels[channel].status
+                checkable: false
                 display: AbstractButton.IconOnly
                 Material.accent: Theme.io.color("overlay0")
                 Layout.alignment: Qt.AlignHCenter
-                onCheckedChanged: NetworkAPI.powerSwitch.toggleChannel(channel)
+                onPressed: NetworkAPI.powerSwitch.toggleChannel(channel)
             }
         }
         Material.background: Theme.io.color("surface0")
@@ -92,19 +99,24 @@ Page {
             UI.CircularGauge {
                 width: 75
                 height: 75
+                units: "В"
 
+                // li-io cell count = 5
+                //
+                // gaugeColorsPercentage: []
                 min: 0
-                max: 100
-                value: 15
+                max: 4.3 * 5
+                value: NetworkAPI.powerSwitch.channels[0].voltage
             }
 
             UI.CircularGauge {
                 width: 75
                 height: 75
+                units: "А"
 
                 min: 0
-                max: 50
-                value: 15
+                max: (100 / 15)
+                value: NetworkAPI.powerSwitch.channels[0].current / 1000
             }
         }
 
@@ -120,59 +132,45 @@ Page {
         }
 
         PowerSwitchStatusEntry {
-            voltage: 10.0
-            current: 215
             channel: 1
-            max_voltage: 12.0
-            min_voltage: 8.0
+            max_voltage: 20.0
+            min_voltage: 10.0
         }
 
         PowerSwitchStatusEntry {
-            voltage: 12.0
-            current: 215
             channel: 2
-            max_voltage: 12.0
-            min_voltage: 8.0
+            max_voltage: 20.0
+            min_voltage: 10.0
         }
 
         PowerSwitchStatusEntry {
-            voltage: 10.0
-            current: 215
             channel: 3
-            max_voltage: 12.0
-            min_voltage: 8.0
+            max_voltage: 20.0
+            min_voltage: 10.0
         }
 
         PowerSwitchStatusEntry {
-            voltage: 10.0
-            current: 215
             channel: 4
-            max_voltage: 12.0
-            min_voltage: 8.0
+            max_voltage: 20.0
+            min_voltage: 10.0
         }
 
         PowerSwitchStatusEntry {
-            voltage: 10.0
-            current: 215
             channel: 5
-            max_voltage: 12.0
-            min_voltage: 8.0
+            max_voltage: 20.0
+            min_voltage: 10.0
         }
 
         PowerSwitchStatusEntry {
-            voltage: 8.0
-            current: 230
             channel: 6
-            max_voltage: 12.0
-            min_voltage: 8.0
+            max_voltage: 10.0
+            min_voltage: 0.0
         }
 
         PowerSwitchStatusEntry {
-            voltage: 10.0
-            current: 215
             channel: 7
-            max_voltage: 12.0
-            min_voltage: 8.0
+            max_voltage: 10.0
+            min_voltage: 0.0
         }
     }
 }
