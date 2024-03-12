@@ -33,6 +33,8 @@ Page {
     }
     Material.elevation: 200
 
+    Component.onCompleted: NetworkAPI.powerSwitch.start("192.168.0.239 ", 44000, 10)
+
     component PowerSwitchStatusEntry : Pane {
         required property real max_voltage
         required property real min_voltage
