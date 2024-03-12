@@ -57,7 +57,8 @@ namespace application
               .value_or(string(DEFAULT_PALETTE_TYPE))
             )
       )),
-      m_main_config(std::make_unique<leaf::conf::Config<::config::ConfigData>>(config::build_config()))
+      m_main_config(std::make_unique<leaf::conf::Config<::config::ConfigData>>(config::build_config())),
+      m_network_api(std::make_shared<constellation::network::NetworkAPI>())
   {
     this->m_config_wrapper->set_source_ptr(this->m_config.get());
     QObject::connect(
@@ -81,12 +82,6 @@ namespace application
     QGuiApplication::setFont(QFont(family));
 
     this->m_theme_provider->load();
-
-    // dump local address
-    if(const auto local_address = network::Ipv4Address::local_address(); local_address)
-      llog::info("local address: {}", local_address->ip);
-    else
-      llog::error("failed to get local address: {}", local_address.error());
   }
 
   auto Corona::register_types() -> void
@@ -103,12 +98,7 @@ namespace application
     qmlRegisterSingletonInstance<::gui::theme::ThemeQMLWrapper>("Corona.Gui.Theme", 1, 0, "Theme", theme);
     qmlRegisterType<::gui::theme::CircularReveal>("Corona.Gui.Theme", 1, 0, "ThemeCircularPaletteRevealInternal");
 
-    this->m_power_switch = std::make_shared<network::modules::PowerSwitch>(
-      this->main_config().values.network.ipv4.power_switch,
-      this->main_config().values.network.ports.power_switch
-    );
-
-    qmlRegisterSingletonInstance<::network::modules::PowerSwitch>("Corona.Network", 1, 0, "PowerSwitch", this->m_power_switch.get());
+    qmlRegisterSingletonInstance<::constellation::network::NetworkAPI>("io.quasar.constellation.network", 1, 0, "NetworkAPI", this->m_network_api.get());
   }
 
   auto Corona::config() const -> config::Config& { return *m_config; }

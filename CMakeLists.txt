@@ -16,7 +16,9 @@ set(CMAKE_AUTOMOC ON)
 
 find_package(leaf 0.3.0 CONFIG REQUIRED)
 find_package(leafconf 0.1.0 CONFIG REQUIRED)
+find_package(constellation CONFIG REQUIRED)
 find_package(yaml-cpp REQUIRED)
+find_package(Boost REQUIRED)
 find_package(QT NAMES Qt6 COMPONENTS Core)
 find_package(Qt6 COMPONENTS
   Core
@@ -73,11 +75,6 @@ target_sources(${PROJECT_NAME}
     src/c++/launcher/logconfig.c++
     src/c++/launcher/launcher.h
 
-    src/c++/network/localaddr.h
-    src/c++/network/localaddr.c++
-    src/c++/network/modules/powerswitch.h
-    src/c++/network/modules/powerswitch.c++
-
     src/qml/qml.qrc
     src/js/js.qrc
     resources/resources.qrc
@@ -94,11 +91,14 @@ target_link_libraries(${PROJECT_NAME}
     Qt6::QuickControls2
     Qt6::Concurrent
     Qt6::StateMachine
+    Qt6::Network
 
     leaf::leaf
     leaf::leafconf
     yaml-cpp::yaml-cpp
     tomlplusplus::tomlplusplus
+
+    quasar::constellation
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE src/c++)

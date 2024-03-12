@@ -9,6 +9,7 @@
 #include <config/config.h>
 #include <QtWidgets/QApplication>
 #include <application/base.h>
+#include <constellation/network/api.h>
 
 namespace config
 {
@@ -20,14 +21,6 @@ namespace gui
   namespace theme
   {
     class ThemeProvider;
-  }
-}
-
-namespace network
-{
-  namespace modules
-  {
-    class PowerSwitch;
   }
 }
 
@@ -61,6 +54,6 @@ namespace application
       unique_ptr<::config::ConfigQMLWrapper> m_config_wrapper;
       unique_ptr<::gui::theme::ThemeProvider> m_theme_provider;
       unique_ptr<leaf::conf::Config<::config::ConfigData>> m_main_config;
-      shared_ptr<network::modules::PowerSwitch> m_power_switch;
+      shared_ptr<constellation::network::NetworkAPI> m_network_api;
   };
 }

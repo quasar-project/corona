@@ -4,7 +4,7 @@ import QtQuick.Controls.Material
 import QtQuick.Layouts
 
 import Corona.Gui.Theme
-import Corona.Network
+import io.quasar.constellation.network
 
 import "../ui" as UI
 
@@ -80,7 +80,7 @@ Page {
                 display: AbstractButton.IconOnly
                 Material.accent: Theme.io.color("overlay0")
                 Layout.alignment: Qt.AlignHCenter
-                onCheckedChanged: PowerSwitch.toggle_channel(channel)
+                onCheckedChanged: NetworkAPI.powerSwitch.toggleChannel(channel)
             }
         }
         Material.background: Theme.io.color("surface0")
