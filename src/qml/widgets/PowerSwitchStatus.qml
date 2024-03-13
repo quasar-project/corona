@@ -33,11 +33,11 @@ Page {
     }
     Material.elevation: 200
 
-    Component.onCompleted: NetworkAPI.powerSwitch.start("192.168.0.239 ", 44000, 10)
+    Component.onCompleted: NetworkAPI.powerSwitch.start(NetworkAPI.powerSwitch.configIp, NetworkAPI.powerSwitch.configPort, 10)
 
     component PowerSwitchStatusEntry : Pane {
-        required property real max_voltage
-        required property real min_voltage
+        property real max_voltage: NetworkAPI.powerSwitch.configCellMaxVoltages[channel - 1]
+        property real min_voltage: NetworkAPI.powerSwitch.configCellMinVoltages[channel - 1]
         property real max_current: 3000
         property real min_current: 0
         required property int channel
@@ -75,7 +75,7 @@ Page {
                 Layout.alignment: Qt.AlignHCenter
             }
             Label {
-                text: channelNames[channel]
+                text: NetworkAPI.powerSwitch.configChannelNames[channel - 1]
                 font {
                     pointSize: 13
                     weight: Font.Bold
@@ -107,8 +107,9 @@ Page {
                 //
                 // gaugeColorsPercentage: []
                 min: 0
-                max: 4.3 * 5
+                max: NetworkAPI.powerSwitch.configCellMaxVoltage * NetworkAPI.powerSwitch.configCellCount
                 value: NetworkAPI.powerSwitch.channels[0].voltage
+                Component.onCompleted: console.error(min, max)
             }
 
             UI.CircularGauge {
@@ -117,7 +118,7 @@ Page {
                 units: "А"
 
                 min: 0
-                max: (100 / 15)
+                max: NetworkAPI.powerSwitch.configCellMaxCurrent
                 value: NetworkAPI.powerSwitch.channels[0].current / 1000
             }
         }
@@ -129,50 +130,34 @@ Page {
     RowLayout {
         anchors.fill: parent
 
-        InputGaugesStatus {
-
-        }
+        InputGaugesStatus {}
 
         PowerSwitchStatusEntry {
             channel: 1
-            max_voltage: 20.0
-            min_voltage: 10.0
         }
 
         PowerSwitchStatusEntry {
             channel: 2
-            max_voltage: 20.0
-            min_voltage: 10.0
         }
 
         PowerSwitchStatusEntry {
             channel: 3
-            max_voltage: 20.0
-            min_voltage: 10.0
         }
 
         PowerSwitchStatusEntry {
             channel: 4
-            max_voltage: 20.0
-            min_voltage: 10.0
         }
 
         PowerSwitchStatusEntry {
             channel: 5
-            max_voltage: 20.0
-            min_voltage: 10.0
         }
 
         PowerSwitchStatusEntry {
             channel: 6
-            max_voltage: 10.0
-            min_voltage: 0.0
         }
 
         PowerSwitchStatusEntry {
             channel: 7
-            max_voltage: 10.0
-            min_voltage: 0.0
         }
     }
 }
