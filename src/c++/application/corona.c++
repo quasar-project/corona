@@ -11,8 +11,6 @@
 #include <gui/theme/themeprovider.h>
 #include <gui/theme/themeqmlwrapper.h>
 #include <gui/theme/circular_reveal.h>
-#include <network/localaddr.h>
-#include <network/modules/powerswitch.h>
 #include <application/corona.h>
 
 template<>
