@@ -33,3 +33,10 @@ if(WIN32)
     )
   endif()
 endif()
+
+message(STATUS "[${PROJECT_NAME}-test] copying ${CMAKE_CURRENT_SOURCE_DIR}/data to ${CMAKE_CURRENT_BINARY_DIR}/data")
+add_custom_command(TARGET ${PROJECT_NAME}-test
+  POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/data" "${CMAKE_CURRENT_BINARY_DIR}/data"
+  COMMAND_EXPAND_LISTS
+)
