@@ -1,32 +1,49 @@
+import os
 from conan import ConanFile
+from conan.tools.cmake import CMake, CMakeToolchain, cmake_layout, CMakeDeps
+from conan.tools.build import check_min_cppstd
 
 
-class Corona(ConanFile):
-    settings = "os", "compiler", "build_type", "arch"
-    generators = "CMakeDeps", "CMakeToolchain"
+class CoronaRecipe(ConanFile):
+    name = "corona"
+    version = "2.0.0"
+    description = "Frontend and interop library for QuaSAR hardware"
+    author = "whs31 <whs31@github.io>"
+    topics = ("qt", "qml", "js", "api", "plugin", "application")
+    settings = "os", "arch", "compiler", "build_type"
+    exports_sources = "*"
+    options = {
+        "standalone": [True, False]
+    }
+    default_options = {
+        "standalone": False
+    }
 
-    name = "Corona"
-    version = "1.0.0"
+    @property
+    def _min_cppstd(self):
+        return "23"
 
     def requirements(self):
-        # self.requires("qt/6.6.1")
-        self.requires("spdlog/1.11.0")
-        self.requires("yaml-cpp/0.8.0")
-        self.requires("tl-expected/1.0.0")
-        self.requires("range-v3/0.12.0")
-        self.requires("tomlplusplus/3.4.0")
+        self.requires("floppy/[>=1.2.1]", transitive_headers=True, transitive_libs=True)
+        self.requires("magic_enum/0.9.5", transitive_headers=True, transitive_libs=True)
+        self.requires("boost/[>=1.85.0]", transitive_headers=True, transitive_libs=True)
+        self.requires("reflect-cpp/0.11.1")
 
-        # self.default_options = {
-        #     "qt:shared": False,
-        #     "qt:qtsvg": True,
-        #     "qt:qtquickcontrols2": True,
-        #     "qt:qtnetwork": True,
-        #     "qt:qtlocation": True,
-        #     "qt:qtdeclarative": True,
-        #     "qt:gui": True,
-        #     "qt:qtpositioning": True,
-        #     "qt:qtimageformats": True,
-        #
-        #     "qt:with_harfbuzz": False,
-        #     "qt:with_glib": False,
-        # }
+    def layout(self):
+        cmake_layout(self)
+
+    def validate(self):
+        if self.settings.get_safe("compiler.cppstd"):
+            check_min_cppstd(self, self._min_cppstd)
+
+    def generate(self):
+        deps = CMakeDeps(self)
+        deps.generate()
+        tc = CMakeToolchain(self)
+        tc.variables["CORONA_STANDALONE"] = self.options.standalone
+        tc.generate()
+
+    def build(self):
+        cmake = CMake(self)
+        cmake.configure()
+        cmake.build()

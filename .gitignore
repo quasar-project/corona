@@ -1,9 +1,7 @@
-# CLion folders
-.idea
-
 # Build artifacts
 cmake-build-*
 build*/
+cmake-visual-studio-*
 
 # Misc
 logs*/
@@ -24,12 +22,19 @@ ui_*
 # Doxygen generated
 src/html/
 src/latex/
+!docs/images
+!docs/src
+docs/*
 
 # Conan (deps folder must have separate .gitignore)
 CMakeUserPresets.json
 conan_provider.cmake
-dependencies
 
 # Rust
 Cargo.lock
 target
+
+# DLL exports
+.export
+
+.idea/QtSettings.xml
