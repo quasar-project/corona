@@ -15,6 +15,7 @@ project(corona
 set(PROJECT_NAMESPACE quasar::)
 
 option(CORONA_STANDALONE "Build corona as standalone application" OFF)
+option(CORONA_TEST "Enable corona unit tests" OFF)
 
 if("${CMAKE_GENERATOR}" MATCHES "^Visual Studio")
   set(CMAKE_GENERATOR_PLATFORM "x64" CACHE STRING "" FORCE)
@@ -31,7 +32,7 @@ find_package(reflect-cpp REQUIRED)
 find_package(magic_enum REQUIRED)
 #find_package(Protobuf REQUIRED)
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
-#find_package(Boost 1.67.0 REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system headers)
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR}
   COMPONENTS
@@ -44,7 +45,8 @@ find_package(Qt${QT_VERSION_MAJOR}
 )
 
 
-add_library(${PROJECT_NAME})
+add_library(${PROJECT_NAME}
+  include/corona/detail/export.h)
 add_library(${PROJECT_NAMESPACE}${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -69,8 +71,10 @@ target_sources(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
   PUBLIC
     floppy::floppy
+  PRIVATE
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
+    boost::boost
 )
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -81,13 +85,7 @@ if(WIN32)
   target_link_libraries(${PROJECT_NAME} PRIVATE ws2_32 wsock32)
 endif()
 
-target_include_directories(${PROJECT_NAME}
-  PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>
-  PRIVATE
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/c++
-)
+target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include> PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/c++)
 
 if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
   message(STATUS "[${PROJECT_NAME}] adding compiler flags: -Wall -Wextra -Wpedantic -Werror")
@@ -107,12 +105,12 @@ else()
 endif()
 target_compile_definitions(${PROJECT_NAME}
   PRIVATE
-  -DCMAKE_TARGET_NAME=${PROJECT_NAME}
-  -DCMAKE_PROJECT_VERSION_MAJOR=${PROJECT_VERSION_MAJOR}
-  -DCMAKE_PROJECT_VERSION_MINOR=${PROJECT_VERSION_MINOR}
-  -DCMAKE_PROJECT_VERSION_PATCH=${PROJECT_VERSION_PATCH}
-  -DCMAKE_ORGANIZATION_NAME="QuaSAR Team"
-  -DCMAKE_ORGANIZATION_URL=${PROJECT_HOMEPAGE_URL}
+  -DCORONA_TARGET_NAME="${PROJECT_NAME}"
+  -DCORONA_PROJECT_VERSION_MAJOR=${PROJECT_VERSION_MAJOR}
+  -DCORONA_PROJECT_VERSION_MINOR=${PROJECT_VERSION_MINOR}
+  -DCORONA_PROJECT_VERSION_PATCH=${PROJECT_VERSION_PATCH}
+  -DCORONA_ORGANIZATION_NAME="QuaSAR Team"
+  -DCORONA_ORGANIZATION_URL="${PROJECT_HOMEPAGE_URL}"
 )
 
 if(STANDALONE_EXECUTABLE)
@@ -128,6 +126,13 @@ if(WIN32)
     COMMAND_EXPAND_LISTS
   )
 endif()
+
+if(CORONA_TEST)
+  enable_testing()
+  add_subdirectory(tests)
+endif()
+
+# bin
 
 message(STATUS "[${PROJECT_NAME}] compile integration tests status: ${INTEGRATION_TESTS}")
 message(STATUS "[${PROJECT_NAME}] installing ${PROJECT_NAME} in namespace ${PROJECT_NAMESPACE}")
@@ -160,6 +165,7 @@ install(FILES ${PROJECT_CONFIG_FILE} ${CONFIG_VERSION_FILE} DESTINATION ${INSTAL
 
 message(STATUS "[${PROJECT_NAME}] configuring ${PROJECT_NAME} done!")
 unset(CORONA_STANDALONE CACHE)
+unset(CORONA_TEST CACHE)
 
 # for exe : if(WIN32 AND ${CMAKE_CXX_COMPILER_ID} MATCHES "GNU|Clang|Mingw|MINGW")
 #  message(STATUS "[${PROJECT_NAME}] adding -mwindows linker opt (${CMAKE_CXX_COMPILER_ID})")

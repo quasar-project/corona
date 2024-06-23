@@ -13,10 +13,12 @@ class CoronaRecipe(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
     exports_sources = "*"
     options = {
-        "standalone": [True, False]
+        "standalone": [True, False],
+        "test": [True, False]
     }
     default_options = {
-        "standalone": False
+        "standalone": False,
+        "test": False
     }
 
     @property
@@ -28,6 +30,8 @@ class CoronaRecipe(ConanFile):
         self.requires("magic_enum/0.9.5", transitive_headers=True, transitive_libs=True)
         self.requires("boost/[>=1.85.0]", transitive_headers=True, transitive_libs=True)
         self.requires("reflect-cpp/0.11.1")
+        if self.options.test:
+            self.requires("gtest/[>=1.10.0]")
 
     def layout(self):
         cmake_layout(self)
@@ -41,6 +45,7 @@ class CoronaRecipe(ConanFile):
         deps.generate()
         tc = CMakeToolchain(self)
         tc.variables["CORONA_STANDALONE"] = self.options.standalone
+        tc.variables["CORONA_TEST"] = self.options.test
         tc.generate()
 
     def build(self):
