@@ -1,10 +1,17 @@
 #pragma once
 
-#include <corona/detail/export.h>
+#include <span>
+#include <filesystem>
 #include <floppy/euclid.h>
+#include <corona/detail/export.h>
 
 namespace corona::image::metadata
 {
+  using std::span;
+  namespace fs = std::filesystem;
+
+  // todo: exception definition
+
   struct Metadata
   {
     /// \brief Image type enumeration.
@@ -26,7 +33,38 @@ namespace corona::image::metadata
       M6 = 6,      ///< M6 SAR mode.
       M7 = 7,      ///< M7 SAR mode.
     };
-    // coordinate with altitude Latitude in WGS84 datum of image anchor point (°) Altitude in the moment of capture rel. to sea level (m)
+
+    /// \brief WGS84 coordinate placeholder.
+    struct Coordinate
+    {
+      /// \brief Latitude in WGS84 datum of image anchor point (°).
+      f64 latitude;
+
+      /// \brief Longitude in WGS84 datum of image anchor point (°).
+      f64 longitude;
+
+      /// \brief Altitude in the moment of capture rel. to sea level (m).
+      f32 altitude;
+      // maybe e0?
+    };
+
+    /// \brief Parses and constructs new Metadata object from given path to image file.
+    /// \param image_file Path to image file.
+    /// \throws corona::image::metadata::decode_error if parsing failed.
+    explicit Metadata(fs::path const& image_file) noexcept(false);
+
+    /// \brief Parses and constructs new Metadata object from given view over EXIF data.
+    /// \param exif_data View over EXIF data. Must be at least the size of this object plus all required offsets.
+    /// \param relative Whether the offsets in <tt>exif_data</tt> are relative to the start of the view. If this flag is
+    /// set, parser will assume that first byte in <tt>exif_data</tt> is the start of needed data. Otherwise, constant
+    /// <tt>JPEG_HEADER_SIZE</tt> will be used as the start of needed data. Default: <tt>false</tt>.
+    /// \throws corona::image::metadata::decode_error if parsing failed.
+    explicit Metadata(span<u8 const> exif_data, bool relative = false) noexcept(false);
+
+    /// \brief Image anchor point coordinates in WGS84 datum (°).
+    /// \details Corresponds to <tt>latitude</tt>, <tt>longitude</tt> and <tt>altitude</tt> fields in former
+    /// versions of QuaSAR/Corona.
+    Coordinate anchor_point;
 
     /// \brief Image resolution in m/pixel.
     fl::math::size2d<f32> resolution;
@@ -78,6 +116,7 @@ namespace corona::image::metadata
     /// \details Corresponds to <tt>type</tt> field in former versions of QuaSAR/Corona.
     ImageType image_type;
 
+    // todo: operators?
     private:
       bool crc_valid_;
   };
