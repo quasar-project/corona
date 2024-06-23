@@ -16,13 +16,15 @@ set(PROJECT_NAMESPACE quasar::)
 
 option(CORONA_STANDALONE "Build corona as standalone application" OFF)
 option(CORONA_TEST "Enable corona unit tests" OFF)
+option(CORONA_SELF_SUFFICIENT "Do not require system boost and qt" OFF)
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 
 if("${CMAKE_GENERATOR}" MATCHES "^Visual Studio")
   set(CMAKE_GENERATOR_PLATFORM "x64" CACHE STRING "" FORCE)
 endif()
 
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
+#set(CMAKE_AUTORCC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -41,12 +43,10 @@ find_package(Qt${QT_VERSION_MAJOR}
     QuickControls2
     Positioning
     Location
-  REQUIRED QUIET
+  REQUIRED
 )
 
-
-add_library(${PROJECT_NAME}
-  include/corona/detail/export.h)
+add_library(${PROJECT_NAME})
 add_library(${PROJECT_NAMESPACE}${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -74,7 +74,7 @@ target_link_libraries(${PROJECT_NAME}
   PRIVATE
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
-    boost::boost
+    #boost::boost
 )
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -119,7 +119,7 @@ if(STANDALONE_EXECUTABLE)
 endif()
 
 
-if(WIN32)
+if(WIN32 AND BUILD_SHARED_LIBS)
   add_custom_command(TARGET ${PROJECT_NAME}
     POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}> $<TARGET_FILE_DIR:${PROJECT_NAME}>
@@ -166,6 +166,7 @@ install(FILES ${PROJECT_CONFIG_FILE} ${CONFIG_VERSION_FILE} DESTINATION ${INSTAL
 message(STATUS "[${PROJECT_NAME}] configuring ${PROJECT_NAME} done!")
 unset(CORONA_STANDALONE CACHE)
 unset(CORONA_TEST CACHE)
+unset(CORONA_SELF_SUFFICIENT CACHE)
 
 # for exe : if(WIN32 AND ${CMAKE_CXX_COMPILER_ID} MATCHES "GNU|Clang|Mingw|MINGW")
 #  message(STATUS "[${PROJECT_NAME}] adding -mwindows linker opt (${CMAKE_CXX_COMPILER_ID})")
