@@ -64,8 +64,8 @@ cmake_print_properties(TARGETS ${PROJECT_NAME} PROPERTIES
 )
 
 target_sources(${PROJECT_NAME}
-  PUBLIC
   PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/image/metadata.cc
 )
 
 target_link_libraries(${PROJECT_NAME}
@@ -85,7 +85,7 @@ if(WIN32)
   target_link_libraries(${PROJECT_NAME} PRIVATE ws2_32 wsock32)
 endif()
 
-target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include> PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/c++)
+target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include> PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
   message(STATUS "[${PROJECT_NAME}] adding compiler flags: -Wall -Wextra -Wpedantic -Werror")

@@ -22,6 +22,7 @@ Checks:
   -readability-magic-numbers,
   -cppcoreguidelines-explicit-virtual-functions,
   -cppcoreguidelines-avoid-magic-numbers,
+  cppcoreguidelines-non-private-member-variables-in-classes,
   -misc-non-private-member-variables-in-classes,
   -misc-include-cleaner
 

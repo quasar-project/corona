@@ -5,24 +5,25 @@
 #include <floppy/euclid.h>
 #include <corona/detail/export.h>
 
-namespace corona::image::metadata
+namespace corona::image
 {
   using std::span;
   namespace fs = std::filesystem;
 
   // todo: exception definition
 
-  struct Metadata
+  class Metadata
   {
+   public:
     /// \brief Image type enumeration.
-    enum class ImageType
+    enum class ImageType : char
     {
       Telescopic = 0, ///< Telescopic image (triangular).
       Strip = 1       ///< Strip image (rectangular).
     };
 
     /// \brief SAR mode enumeration.
-    enum class Mode
+    enum class Mode : char
     {
       Unknown = 0, ///< Unknown SAR mode.
       M1 = 1,      ///< M1 SAR mode.
@@ -64,60 +65,120 @@ namespace corona::image::metadata
     /// \brief Image anchor point coordinates in WGS84 datum (°).
     /// \details Corresponds to <tt>latitude</tt>, <tt>longitude</tt> and <tt>altitude</tt> fields in former
     /// versions of QuaSAR/Corona.
-    Coordinate anchor_point;
+    [[nodiscard]] auto anchor_point() const -> Coordinate const& {
+      return this->anchor_point_;
+    }
 
     /// \brief Image resolution in m/pixel.
-    fl::math::size2d<f32> resolution;
+    [[nodiscard]] auto resolution() const -> fl::math::size2d<f32> const& {
+      return this->resolution_;
+    }
 
     /// \brief Distance to the near edge of the image in meters.
     /// \details Equivalent to <tt>x0</tt> field in former versions of QuaSAR/Corona.
-    fl::math::length<f32> near_edge;
+    [[nodiscard]] auto near_edge() const -> fl::math::length<f32> const& {
+      return this->near_edge_;
+    }
 
     /// \brief Frame offset in meters.
     /// \details Equivalent to <tt>y0</tt> field in former versions of QuaSAR/Corona.
     /// \note Currently unused.
-    [[maybe_unused]] fl::math::length<f32> frame_offset;
+    [[nodiscard]] auto frame_offset() const -> fl::math::length<f32> const& {
+      return this->frame_offset_;
+    }
 
     /// \brief Azimuth of the image in degrees from north.
     /// \details Equivalent to <tt>azimuth</tt> or <tt>angle</tt> field in former versions of QuaSAR/Corona.
-    fl::math::angle<f32> azimuth;
+    [[nodiscard]] auto azimuth() const -> fl::math::angle<f32> const& {
+      return this->azimuth_;
+    }
 
     /// \brief Drift angle in degrees.
-    fl::math::angle<f32> drift_angle;
+    [[nodiscard]] auto drift_angle() const -> fl::math::angle<f32> const& {
+      return this->drift_angle_;
+    }
 
     /// \brief Image width and height in meters.
     /// \details Corresponds to <tt>lx</tt> and <tt>ly</tt> fields in former versions of QuaSAR/Corona.
-    fl::math::size2d<f32> size;
+    [[nodiscard]] auto size() const -> fl::math::size2d<f32> const& {
+      return this->size_;
+    }
 
     /// \brief Arc divergence in degrees.
     /// \details Corresponds to <tt>theta_azimuth</tt> or <tt>div</tt> field in former versions of QuaSAR/Corona.
-    fl::math::angle<f32> arc_divergence;
+    [[nodiscard]] auto arc_divergence() const -> fl::math::angle<f32> const& {
+      return this->arc_divergence_;
+    }
 
     /// \brief Velocity in m/s in the moment of capture.
-    f32 velocity;
+    [[nodiscard]] auto velocity() const -> f32 {
+      return this->velocity_;
+    }
 
     /// \brief Frequency interpolation coefficient (FIC).
     /// \details Corresponds to <tt>kR</tt> field in former versions of QuaSAR/Corona.
-    f32 frequency_interpolation_coefficient;
+    [[nodiscard]] auto frequency_interpolation_coefficient() const -> f32 {
+      return this->frequency_interpolation_coefficient_;
+    }
 
     /// \brief Image offset from time of capture (s)
     /// \details Corresponds to <tt>TShift</tt> field in former versions of QuaSAR/Corona.
-    f32 time_shift;
+    [[nodiscard]] auto time_shift() const -> f32 {
+      return this->time_shift_;
+    }
 
     /// \brief Capture duration (s)
     /// \details Corresponds to <tt>Ts</tt> field in former versions of QuaSAR/Corona.
-    f32 time_duration;
+    [[nodiscard]] auto time_duration() const -> f32 {
+      return this->time_duration_;
+    }
 
     /// \brief SAR mode.
     /// \details Corresponds to <tt>mode</tt> field in former versions of QuaSAR/Corona.
-    Mode sar_mode;
+    [[nodiscard]] auto sar_mode() const -> Mode {
+      return this->sar_mode_;
+    }
 
     /// \brief Image type.
     /// \details Corresponds to <tt>type</tt> field in former versions of QuaSAR/Corona.
-    ImageType image_type;
+    [[nodiscard]] auto image_type() const -> ImageType {
+      return this->image_type_;
+    }
+
+    /// \brief Parses and constructs new Metadata object from given path to image file.
+    /// \param image_file Path to image file.
+    /// \returns Metadata object with parsed data.
+    /// \throws corona::image::metadata::decode_error if parsing failed.
+    [[nodiscard]] static auto from_exif_file(fs::path const& image_file) noexcept(false) -> Metadata;
+
+    /// \brief Parses and constructs new Metadata object from given view over EXIF data.
+    /// \param exif_data View over EXIF data. Must be at least the size of this object plus all required offsets.
+    /// \param relative Whether the offsets in <tt>exif_data</tt> are relative to the start of the view. If this flag is
+    /// set, parser will assume that first byte in <tt>exif_data</tt> is the start of needed data. Otherwise, constant
+    /// <tt>JPEG_HEADER_SIZE</tt> will be used as the start of needed data. Default: <tt>false</tt>.
+    /// \returns Metadata object with parsed data.
+    /// \throws corona::image::metadata::decode_error if parsing failed.
+    [[nodiscard]] static auto from_exif_data(
+      span<u8 const> exif_data,
+      bool relative = false
+    ) noexcept(false) -> Metadata;
 
     // todo: operators?
     private:
-      bool crc_valid_;
+     Coordinate anchor_point_;
+     fl::math::size2d<f32> resolution_;
+     fl::math::length<f32> near_edge_;
+     [[maybe_unused]] fl::math::length<f32> frame_offset_;
+     fl::math::angle<f32> azimuth_;
+     fl::math::angle<f32> drift_angle_;
+     fl::math::size2d<f32> size_;
+     fl::math::angle<f32> arc_divergence_;
+     f32 velocity_;
+     f32 frequency_interpolation_coefficient_;
+     f32 time_shift_;
+     f32 time_duration_;
+     Mode sar_mode_;
+     ImageType image_type_;
+     bool crc_valid_;
   };
-} // namespace corona::image::metadata
+} // namespace corona::image
