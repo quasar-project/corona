@@ -17,3 +17,8 @@ TEST(ImageMetadata, Prelude)
   for(auto const& path : ::test_images)
     EXPECT_TRUE(exists(path));
 }
+
+TEST(ImageMetadata, FromExifFile)
+{
+  auto res = corona::image::Metadata::from_exif_file(::test_images[0]);
+}

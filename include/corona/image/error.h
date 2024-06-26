@@ -22,6 +22,16 @@ namespace corona::image
         : std::runtime_error(fmt::format("decoding error: in file '{}': {}", file.string(), reason))
       {}
 
+      /// \brief Construct a new decoding error object with file and reason message.
+      /// \param file File in which the error occurred.
+      /// \param reason Reason of the error.
+      decoding_error(
+        string_view const& file,
+        std::string_view reason
+        )
+        : std::runtime_error(fmt::format("decoding error: in file '{}': {}", file, reason))
+      {}
+
       /// \brief Construct a new decoding error object with reason message.
       /// \param reason Reason of the error.
       explicit decoding_error(std::string_view reason)

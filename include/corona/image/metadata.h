@@ -75,6 +75,11 @@ namespace corona::image
       // maybe e0?
     };
 
+    /// \brief Image name.
+    [[nodiscard]] auto name() const -> string_view {
+      return this->image_name_;
+    }
+
     /// \brief Image anchor point coordinates in WGS84 datum (°).
     /// \details Corresponds to <tt>latitude</tt>, <tt>longitude</tt> and <tt>altitude</tt> fields in former
     /// versions of QuaSAR/Corona.
@@ -177,6 +182,7 @@ namespace corona::image
     /// \returns Metadata object with parsed data.
     /// \throws corona::image::metadata::decode_error if parsing failed.
     [[nodiscard]] static auto from_exif_data(
+      option<string_view> filename,
       span<byte const> exif_data,
       bool relative = false,
       ExifDecodeOptions const& options = ExifDecodeOptions()
@@ -184,6 +190,7 @@ namespace corona::image
 
     // todo: operators?
     private:
+     string image_name_;
      Coordinate anchor_point_;
      fl::math::size2d<f32> resolution_;
      fl::math::length<f32> near_edge_;
