@@ -4,10 +4,12 @@
 #include <filesystem>
 #include <floppy/euclid.h>
 #include <corona/detail/export.h>
+#include <corona/image/error.h>
 
 namespace corona::image
 {
   using std::span;
+  using std::byte;
   namespace fs = std::filesystem;
 
   // todo: exception definition
@@ -15,6 +17,30 @@ namespace corona::image
   class Metadata
   {
    public:
+    /// \brief Exif decode options.
+    /// \details Options for the EXIF decoder. See \ref corona::image::Metadata::from_exif_file
+    /// and \ref corona::image::Metadata::from_exif_data.
+    struct ExifDecodeOptions
+    {
+      /// \brief Default constructor.
+      ExifDecodeOptions()
+        : max_metadata_size(1024)
+        , header_offset(20)
+        , metadata_marker(0xFFE1)
+      {}
+
+      /// \brief Constructor with explicit values.
+      ExifDecodeOptions(usize max_metadata_size, usize header_offset, u16 metadata_marker)
+        : max_metadata_size(max_metadata_size)
+        , header_offset(header_offset)
+        , metadata_marker(metadata_marker)
+      {}
+
+      usize max_metadata_size; ///< Maximum metadata size in bytes. Defaults to <code>1024</code>.
+      usize header_offset;     ///< Header offset in bytes. Defaults to <code>20</code>.
+      u16 metadata_marker;     ///< Metadata marker. Defaults to <code>0xFFE1</code>.
+    };
+
     /// \brief Image type enumeration.
     enum class ImageType : char
     {
@@ -48,19 +74,6 @@ namespace corona::image
       f32 altitude;
       // maybe e0?
     };
-
-    /// \brief Parses and constructs new Metadata object from given path to image file.
-    /// \param image_file Path to image file.
-    /// \throws corona::image::metadata::decode_error if parsing failed.
-    explicit Metadata(fs::path const& image_file) noexcept(false);
-
-    /// \brief Parses and constructs new Metadata object from given view over EXIF data.
-    /// \param exif_data View over EXIF data. Must be at least the size of this object plus all required offsets.
-    /// \param relative Whether the offsets in <tt>exif_data</tt> are relative to the start of the view. If this flag is
-    /// set, parser will assume that first byte in <tt>exif_data</tt> is the start of needed data. Otherwise, constant
-    /// <tt>JPEG_HEADER_SIZE</tt> will be used as the start of needed data. Default: <tt>false</tt>.
-    /// \throws corona::image::metadata::decode_error if parsing failed.
-    explicit Metadata(span<u8 const> exif_data, bool relative = false) noexcept(false);
 
     /// \brief Image anchor point coordinates in WGS84 datum (°).
     /// \details Corresponds to <tt>latitude</tt>, <tt>longitude</tt> and <tt>altitude</tt> fields in former
@@ -147,20 +160,26 @@ namespace corona::image
 
     /// \brief Parses and constructs new Metadata object from given path to image file.
     /// \param image_file Path to image file.
+    /// \param options Optional decoder options. Default: default options.
     /// \returns Metadata object with parsed data.
     /// \throws corona::image::metadata::decode_error if parsing failed.
-    [[nodiscard]] static auto from_exif_file(fs::path const& image_file) noexcept(false) -> Metadata;
+    [[nodiscard]] static auto from_exif_file(
+      fs::path const& image_file,
+      ExifDecodeOptions const& options = ExifDecodeOptions()
+    ) noexcept(false) -> Metadata;
 
     /// \brief Parses and constructs new Metadata object from given view over EXIF data.
     /// \param exif_data View over EXIF data. Must be at least the size of this object plus all required offsets.
     /// \param relative Whether the offsets in <tt>exif_data</tt> are relative to the start of the view. If this flag is
     /// set, parser will assume that first byte in <tt>exif_data</tt> is the start of needed data. Otherwise, constant
     /// <tt>JPEG_HEADER_SIZE</tt> will be used as the start of needed data. Default: <tt>false</tt>.
+    /// \param options Optional decoder options. Default: default options.
     /// \returns Metadata object with parsed data.
     /// \throws corona::image::metadata::decode_error if parsing failed.
     [[nodiscard]] static auto from_exif_data(
-      span<u8 const> exif_data,
-      bool relative = false
+      span<byte const> exif_data,
+      bool relative = false,
+      ExifDecodeOptions const& options = ExifDecodeOptions()
     ) noexcept(false) -> Metadata;
 
     // todo: operators?

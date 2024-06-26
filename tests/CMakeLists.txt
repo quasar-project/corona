@@ -24,7 +24,7 @@ if(WIN32)
   )
 
   # copy lib${PROJECT_NAME}.dll folder with ${PROJECT_NAME}-test.exe
-  if(NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+  if(NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC" AND BUILD_SHARED_LIBS)
     message(STATUS "copying ${CMAKE_BINARY_DIR}/lib${PROJECT_NAME}.dll to ${CMAKE_CURRENT_BINARY_DIR}/lib${PROJECT_NAME}.dll")
     add_custom_command(TARGET ${PROJECT_NAME}-test
       POST_BUILD

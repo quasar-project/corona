@@ -19,7 +19,7 @@ class CoronaRecipe(ConanFile):
         "self_sufficient": [True, False]
     }
     default_options = {
-        "shared": False,
+        "shared": True,
         "standalone": False,
         "test": False,
         "self_sufficient": False
