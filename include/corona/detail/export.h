@@ -14,15 +14,18 @@
 # define CORONA_EXPORT
 #endif
 
+/// \brief Corona library namespace.
 namespace corona
 {
   using std::string;
   using std::string_view;
   using namespace fl::types;
 
+  /// \brief Namespace for project metadata.
   namespace meta
   {
-    [[maybe_unused]] constexpr inline auto floppy_meta = fl::meta::project_meta(
+    /// \brief Meta information about the library.
+    [[maybe_unused]] constexpr inline auto corona_meta = fl::meta::project_meta(
         fl::meta::version(
             CORONA_PROJECT_VERSION_MAJOR,
             CORONA_PROJECT_VERSION_MINOR,

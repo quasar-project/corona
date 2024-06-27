@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <corona/detail/export.h>
 
+/// \brief Image-related classes and functions.
 namespace corona::image
 {
   /// \brief Image decoding exception class.

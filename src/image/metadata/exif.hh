@@ -4,6 +4,7 @@
 #include <utility/memory.hh>
 #include <utility/checksum.hh>
 
+/// \brief Image metadata related classes and functions.
 namespace corona::image::metadata
 {
   /// \brief JPEG metadata header. Serialized in big endian.
@@ -85,6 +86,9 @@ namespace corona::image::metadata
       return utility::checksum::crc16(reinterpret_cast<byte const*>(this), sizeof(ExifMetadata) - sizeof(u16));
     }
 
+    /// \brief Decodes metadata from a byte array.
+    /// \param data Span of bytes containing the metadata.
+    /// \throws corona::image::decoding_error If the span is too small.
     [[nodiscard]] static auto from_bytes(span<byte const> const data) -> ExifMetadata {
       if(data.size_bytes() < sizeof(ExifMetadata))
         throw decoding_error("exif data too small");

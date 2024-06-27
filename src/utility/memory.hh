@@ -2,6 +2,7 @@
 
 #include <concepts>
 
+/// \brief Memory utilities.
 namespace corona::utility::memory
 {
   /// \brief Copies bytes represented by source pointer into destination pointer of type <code>D</code>.

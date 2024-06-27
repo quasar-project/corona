@@ -6,11 +6,17 @@
 #include <limits>
 #include <floppy/floppy.h>
 
+/// \brief Utility classes and functions.
+namespace corona::utility {} // namespace corona::utility
+
+/// \brief Checksum utilities.
 namespace corona::utility::checksum
 {
   using std::byte;
   using std::span;
   using namespace floppy::literals;
+
+  /// \brief Implementation details of checksum utilities.
   namespace detail
   {
     using std::array;
