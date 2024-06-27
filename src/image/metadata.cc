@@ -93,6 +93,12 @@ namespace corona::image
         header.size
       ));
     auto const raw = metadata::ExifMetadata::from_bytes(exif_data);
+
+    auto value_or_default = [](f32 const val) -> f32 {
+      if(std::isnan(val) or std::isinf(val))
+        return 0.0F;
+      return val;
+    };
     auto self = Metadata();
     self.image_name_ = filename.value_or("raw data");
     self.anchor_point_ = {
@@ -100,17 +106,17 @@ namespace corona::image
       .longitude = raw.longitude,
       .altitude = raw.altitude
     };
-    self.resolution_ = { raw.dx, raw.dy };
-    self.near_edge_ = raw.x0;
-    self.frame_offset_ = raw.y0;
-    self.azimuth_ = fl::math::angle<f32>::from_degrees(raw.azimuth);
-    self.drift_angle_ = fl::math::angle<f32>::from_degrees(raw.drift_angle);
-    self.size_ = { raw.lx, raw.ly };
-    self.arc_divergence_ = fl::math::angle<f32>::from_degrees(raw.div);
-    self.velocity_ = raw.velocity / 3.6F;
-    self.frequency_interpolation_coefficient_ = raw.fic;
-    self.time_shift_ = raw.time_offset;
-    self.time_duration_ = raw.time_duration;
+    self.resolution_ = { value_or_default(raw.dx), value_or_default(raw.dy) };
+    self.near_edge_ = value_or_default(raw.x0);
+    self.frame_offset_ = value_or_default(raw.y0);
+    self.azimuth_ = fl::math::angle<f32>::from_degrees(value_or_default(raw.azimuth));
+    self.drift_angle_ = fl::math::angle<f32>::from_degrees(value_or_default(raw.drift_angle));
+    self.size_ = { value_or_default(raw.lx), value_or_default(raw.ly) };
+    self.arc_divergence_ = fl::math::angle<f32>::from_degrees(value_or_default(raw.div));
+    self.velocity_ = value_or_default(raw.velocity / 3.6F);
+    self.frequency_interpolation_coefficient_ = value_or_default(raw.fic);
+    self.time_shift_ = value_or_default(raw.time_offset);
+    self.time_duration_ = value_or_default(raw.time_duration);
     self.sar_mode_ = static_cast<Mode>(raw.mode);
     self.image_type_ = static_cast<ImageType>(raw.image_type);
     self.crc_valid_ = false; // todo
