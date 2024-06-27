@@ -200,7 +200,7 @@ namespace corona::image
     /// \param image_file Path to image file.
     /// \param options Optional decoder options. Default: default options.
     /// \returns Metadata object with parsed data.
-    /// \throws corona::image::metadata::decode_error if parsing failed.
+    /// \throws corona::image::decode_error if parsing failed.
     [[nodiscard]] static auto from_exif_file(
       fs::path const& image_file,
       ExifDecodeOptions const& options = ExifDecodeOptions()
@@ -213,7 +213,7 @@ namespace corona::image
     /// <tt>JPEG_HEADER_SIZE</tt> will be used as the start of needed data. Default: <tt>false</tt>.
     /// \param options Optional decoder options. Default: default options.
     /// \returns Metadata object with parsed data.
-    /// \throws corona::image::metadata::decode_error if parsing failed.
+    /// \throws corona::image::decode_error if parsing failed.
     [[nodiscard]] static auto from_exif_data(
       option<string_view> filename,
       span<byte const> exif_data,
