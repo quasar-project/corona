@@ -3,6 +3,7 @@
 #include <bit>
 #include <array>
 #include <span>
+#include <limits>
 #include <floppy/floppy.h>
 
 namespace corona::utility::checksum
@@ -59,13 +60,13 @@ namespace corona::utility::checksum
   [[nodiscard]] constexpr auto crc16(byte const* data, usize size) -> u16 {
     if(data == nullptr)
       throw std::invalid_argument("crc16: data cannot be null");
-    auto c = 0xFFFF_u16;
-    for(auto i = 0_ZU; i < size; ++i) {
-      c ^= static_cast<u16>(data[i]); // NOLINT(*-pro-bounds-pointer-arithmetic)
-      for(auto j = 0_ZU; j < 8; ++j) {
-        if((c bitand 0x0001)) {
+    auto c = std::numeric_limits<u16>::max();
+    for(auto i = 0_ZU; i < size; i++) {
+      c xor_eq static_cast<u16>(data[i]); // NOLINT(*-pro-bounds-pointer-arithmetic)
+      for(auto j = 0_ZU; j < 8; j++) {
+        if(c bitand 0x0001) {
           c >>= 1;
-          c ^= 0xA001;
+          c xor_eq 0xA001;
         } else
           c >>= 1;
       }
@@ -94,10 +95,10 @@ namespace corona::utility::checksum
   [[nodiscard]] constexpr auto crc16_ccitt(byte const* data, usize size) -> u16 {
     if(data == nullptr)
       throw std::invalid_argument("crc16_ccitt: data cannot be null");
-    auto c = 0xFFFF_u16;
+    auto c = std::numeric_limits<u16>::max();
     while(size--) // NOLINT(*-infinite-loop)
-      c = (c << 8) ^ detail::CCITT_TABLE[
-        static_cast<usize>(static_cast<byte>(c >> 8) ^ *(data++)) // NOLINT(*-pro-bounds-pointer-arithmetic)
+      c = (c << 8) xor detail::CCITT_TABLE[
+        static_cast<usize>(static_cast<byte>(c >> 8) xor *(data++)) // NOLINT(*-pro-bounds-pointer-arithmetic)
       ];
     return c;
   }

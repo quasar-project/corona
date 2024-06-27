@@ -5,8 +5,6 @@
 #include <magic_enum/magic_enum.hpp>
 #include <floppy/logging.h>
 #include <image/metadata/exif.hh>
-#include <utility/checksum.hh>
-#include <utility/memory.hh>
 
 namespace llog = floppy::log;
 namespace me = magic_enum;
@@ -15,7 +13,7 @@ namespace corona::image
 {
   auto Metadata::to_string() const -> std::string {
     return fmt::format(
-      "{}: {{\n"
+      "\'{}\': {{\n"
       "  anchor: [{}°, {}°, {}],\n"
       "  resolution: {} m/px,\n"
       "  near edge: {} m,\n"
@@ -68,7 +66,7 @@ namespace corona::image
         ifs.gcount(),
         exif_data.size())
       );
-    return from_exif_data(image_file.filename().string(), exif_data, false, options);
+    return from_exif_data(image_file.stem().string(), exif_data, false, options);
   }
 
   auto Metadata::from_exif_data(
@@ -93,8 +91,7 @@ namespace corona::image
         header.size
       ));
     auto const raw = metadata::ExifMetadata::from_bytes(exif_data);
-
-    auto value_or_default = [](f32 const val) -> f32 {
+    auto strip_nan = [](f32 const val) -> f32 {
       if(std::isnan(val) or std::isinf(val))
         return 0.0F;
       return val;
@@ -106,20 +103,23 @@ namespace corona::image
       .longitude = raw.longitude,
       .altitude = raw.altitude
     };
-    self.resolution_ = { value_or_default(raw.dx), value_or_default(raw.dy) };
-    self.near_edge_ = value_or_default(raw.x0);
-    self.frame_offset_ = value_or_default(raw.y0);
-    self.azimuth_ = fl::math::angle<f32>::from_degrees(value_or_default(raw.azimuth));
-    self.drift_angle_ = fl::math::angle<f32>::from_degrees(value_or_default(raw.drift_angle));
-    self.size_ = { value_or_default(raw.lx), value_or_default(raw.ly) };
-    self.arc_divergence_ = fl::math::angle<f32>::from_degrees(value_or_default(raw.div));
-    self.velocity_ = value_or_default(raw.velocity / 3.6F);
-    self.frequency_interpolation_coefficient_ = value_or_default(raw.fic);
-    self.time_shift_ = value_or_default(raw.time_offset);
-    self.time_duration_ = value_or_default(raw.time_duration);
+    self.resolution_ = { strip_nan(raw.dx), strip_nan(raw.dy) };
+    self.near_edge_ = strip_nan(raw.x0);
+    self.frame_offset_ = strip_nan(raw.y0);
+    self.azimuth_ = fl::math::angle<f32>::from_degrees(strip_nan(raw.azimuth));
+    self.drift_angle_ = fl::math::angle<f32>::from_degrees(strip_nan(raw.drift_angle));
+    self.size_ = { strip_nan(raw.lx), strip_nan(raw.ly) };
+    self.arc_divergence_ = fl::math::angle<f32>::from_degrees(strip_nan(raw.div));
+    self.velocity_ = strip_nan(raw.velocity / 3.6F);
+    self.frequency_interpolation_coefficient_ = strip_nan(raw.fic);
+    self.time_shift_ = strip_nan(raw.time_offset);
+    self.time_duration_ = strip_nan(raw.time_duration);
     self.sar_mode_ = static_cast<Mode>(raw.mode);
     self.image_type_ = static_cast<ImageType>(raw.image_type);
-    self.crc_valid_ = false; // todo
+    auto const actual_crc = raw.checksum();
+    if(actual_crc != raw.crc)
+      llog::warn("exif data checksum mismatch: expected 0x{:04X}, actual 0x{:04X}", actual_crc, raw.crc);
+    self.crc_valid_ = raw.crc == actual_crc;
     llog::debug("successfully parsed exif data from {}", self.name());
     return self;
   }

@@ -23,7 +23,7 @@ TEST(ImageMetadata, FromExifFile)
 {
   auto res = corona::image::Metadata::from_exif_file(::test_images[0]);
   fmt::print("{}\n", res);
-  EXPECT_EQ(res.name(), "m1-13-12-2022_20-51-15.jpg");
+  EXPECT_EQ(res.name(), "m1-13-12-2022_20-51-15");
   EXPECT_FLOAT_EQ(res.anchor_point().latitude, 55.482986);
   EXPECT_FLOAT_EQ(res.anchor_point().longitude, 36.710065);
   EXPECT_FLOAT_EQ(res.anchor_point().altitude, 66.240005);
@@ -42,4 +42,5 @@ TEST(ImageMetadata, FromExifFile)
   EXPECT_FLOAT_EQ(res.time_duration(), 1.0F);
   EXPECT_EQ(res.sar_mode(), corona::image::Metadata::Mode::Unknown);
   EXPECT_EQ(res.image_type(), corona::image::Metadata::ImageType::Telescopic);
+  EXPECT_FALSE(res);
 }

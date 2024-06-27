@@ -77,10 +77,31 @@ namespace corona::image
     virtual ~Metadata() = default;
 
     /// \brief Converts metadata object to string.
+    /// \details Example string representation:
+    /// \code {.js}
+    /// 'm1-13-12-2022_20-51-15': {
+    ///   anchor: [55.482986°, 36.710065°, 66.240005],
+    ///   resolution: [1, 1] m/px,
+    ///   near edge: 100.000 m,
+    ///   frame offset: -200.000,
+    ///   azimuth: 335.06°N,
+    ///   drift angle: -0.32°,
+    ///   size: [2000, 400] m,
+    ///   arc divergence: 20.00°,
+    ///   velocity: 30.214148 m/s,
+    ///   fic: 1,
+    ///   time shift: 1 s,
+    ///   time duration: 1 s,
+    ///   sar mode: Unknown,
+    ///   image type: Telescopic,
+    ///   valid: false
+    /// }
+    /// \endcode
     /// \returns String representation of the metadata.
     [[nodiscard]] virtual auto to_string() const -> std::string override;
 
     /// \brief Image name.
+    /// \details Usually the name of the image file without extension.
     [[nodiscard]] auto name() const -> string_view {
       return this->image_name_;
     }
@@ -168,6 +189,11 @@ namespace corona::image
       return this->image_type_;
     }
 
+    /// \brief Returns <tt>true</tt> if checksum is valid.
+    [[nodiscard]] auto valid() const -> bool {
+      return this->crc_valid_;
+    }
+
     /// \brief Parses and constructs new Metadata object from given path to image file.
     /// \param image_file Path to image file.
     /// \param options Optional decoder options. Default: default options.
@@ -193,7 +219,9 @@ namespace corona::image
       ExifDecodeOptions const& options = ExifDecodeOptions()
     ) noexcept(false) -> Metadata;
 
-    // todo: operators?
+    /// \brief Returns <tt>true</tt> if checksum of metadata is valid.
+    [[nodiscard]] explicit operator bool() const { return this->valid(); }
+
     private:
      string image_name_;
      Coordinate anchor_point_;

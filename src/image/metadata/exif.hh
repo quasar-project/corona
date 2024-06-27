@@ -2,6 +2,7 @@
 
 #include <corona/image/error.h>
 #include <utility/memory.hh>
+#include <utility/checksum.hh>
 
 namespace corona::image::metadata
 {
@@ -71,12 +72,18 @@ namespace corona::image::metadata
     f32 time_offset;     ///< Image offset from time of capture (s)
     f32 time_duration;   ///< Total capture duration (s)
     //NOLINTNEXTLINE(*-avoid-c-arrays)
-    [[maybe_unused]] byte reserved_1[8]; ///< Reserved 8 bytes (1)
-    byte mode;           ///< Image mode
-    byte image_type;     ///< Image type (0 means telescopic)
+    [[maybe_unused]] byte reserved[8]; ///< Reserved 8 bytes (1)
+    u8 mode;             ///< Image mode
+    u8 image_type;       ///< Image type (0 means telescopic)
     //NOLINTNEXTLINE(*-avoid-c-arrays)
-    [[maybe_unused]] byte reserved_3[8]; ///< Reserved 8 bytes (2)
-    u16 checksum;        ///< Checksum (CRC16)
+    [[maybe_unused]] byte reserved_2[8]; ///< Reserved 8 bytes (2)
+    u16 crc;             ///< Checksum (CRC16)
+
+    /// \brief Calculates and returns the image checksum.
+    /// \return The image checksum.
+    [[nodiscard]] auto checksum() const -> u16 {
+      return utility::checksum::crc16(reinterpret_cast<byte const*>(this), sizeof(ExifMetadata) - sizeof(u16));
+    }
 
     [[nodiscard]] static auto from_bytes(span<byte const> const data) -> ExifMetadata {
       if(data.size_bytes() < sizeof(ExifMetadata))
