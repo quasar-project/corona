@@ -1,5 +1,6 @@
-#include <gtest/gtest.h>
 #include <corona/image/metadata.h>
+
+#include <gtest/gtest.h>
 #include "include.h"
 
 using namespace std::literals;
