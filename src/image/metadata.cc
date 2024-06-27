@@ -2,11 +2,55 @@
 
 #include <bit>
 #include <fstream>
+#include <magic_enum/magic_enum.hpp>
 #include <floppy/logging.h>
 #include <image/metadata/exif.hh>
 
+namespace llog = floppy::log;
+namespace me = magic_enum;
+
 namespace corona::image
 {
+  auto Metadata::to_string() const -> std::string {
+    return fmt::format(
+      "{}: {{\n"
+      "  anchor: [{}°, {}°, {}],\n"
+      "  resolution: {} m/px,\n"
+      "  near edge: {} m,\n"
+      "  frame offset: {},\n"
+      "  azimuth: {}N,\n"
+      "  drift angle: {},\n"
+      "  size: {} m,\n"
+      "  arc divergence: {},\n"
+      "  velocity: {} m/s,\n"
+      "  fic: {},\n"
+      "  time shift: {} s,\n"
+      "  time duration: {} s,\n"
+      "  sar mode: {},\n"
+      "  image type: {},\n"
+      "  valid: {}\n"
+      "}}",
+      this->name(),
+      this->anchor_point().latitude,
+      this->anchor_point().longitude,
+      this->anchor_point().altitude,
+      this->resolution(),
+      this->near_edge(),
+      this->frame_offset(),
+      this->azimuth(),
+      this->drift_angle(),
+      this->size(),
+      this->arc_divergence(),
+      this->velocity(),
+      this->frequency_interpolation_coefficient(),
+      this->time_shift(),
+      this->time_duration(),
+      string(me::enum_name(this->sar_mode())),
+      string(me::enum_name(this->image_type())),
+      this->crc_valid_ // todo
+    );
+  }
+
   auto Metadata::from_exif_file(
     fs::path const& image_file,
     ExifDecodeOptions const& options
@@ -31,6 +75,7 @@ namespace corona::image
     bool const relative,
     ExifDecodeOptions const& options
   ) noexcept(false) -> Metadata {
+    llog::trace("parsing exif data for {}", filename.value_or("raw data"));
     if(not relative)
       exif_data = exif_data.subspan(options.header_offset);
     auto const header = metadata::ExifHeader::from_bytes(exif_data);
@@ -60,17 +105,17 @@ namespace corona::image
     };
     self.near_edge_ = *std::bit_cast<f32 const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 2);
     self.frame_offset_ = *std::bit_cast<f32 const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 3);
-    self.azimuth_ = fl::math::angle<f32>::from_radians(*std::bit_cast<f32 const*>(
+    self.azimuth_ = fl::math::angle<f32>::from_degrees(*std::bit_cast<f32 const*>(
       exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 4)
     );
-    self.drift_angle_ = fl::math::angle<f32>::from_radians(*std::bit_cast<f32 const*>(
+    self.drift_angle_ = fl::math::angle<f32>::from_degrees(*std::bit_cast<f32 const*>(
       exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 5)
     );
     self.size_ = {
       *std::bit_cast<f32 const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 6),
       *std::bit_cast<f32 const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 7)
     };
-    self.arc_divergence_ = fl::math::angle<f32>::from_radians(*std::bit_cast<f32 const*>(
+    self.arc_divergence_ = fl::math::angle<f32>::from_degrees(*std::bit_cast<f32 const*>(
       exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 8)
     );
     self.velocity_ = *std::bit_cast<f32 const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 9);
@@ -82,9 +127,7 @@ namespace corona::image
     //auto const crc = *std::bit_cast<u16 const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 18 + sizeof(char) * 2);
     //self.crc_valid_ =
     // todo: crc
-    // NOLINTEND(*-pro-type-reinterpret-cast)
-    //fl::log::debug("decoded metadata for {}", self.name());
-    // todo: fix loggers
+    fl::log::debug("successfully parsed exif data from {}", self.name());
     // todo: fix nans
     // https://github.com/quasar-project/deko/blob/main/src/decoder/jpeg_decoder.rs
     // http://uav.radar-mms.com/gitlab/developers/rls/quasar/-/blob/qt5/src/c++/processing/imageprocessing.c++?ref_type=heads

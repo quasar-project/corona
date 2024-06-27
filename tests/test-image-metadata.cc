@@ -22,4 +22,6 @@ TEST(ImageMetadata, Prelude)
 TEST(ImageMetadata, FromExifFile)
 {
   auto res = corona::image::Metadata::from_exif_file(::test_images[0]);
+  fmt::print("{}\n", res);
+
 }

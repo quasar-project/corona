@@ -3,6 +3,7 @@
 #include <span>
 #include <filesystem>
 #include <floppy/euclid.h>
+#include <floppy/traits.h>
 #include <corona/detail/export.h>
 #include <corona/image/error.h>
 
@@ -12,9 +13,7 @@ namespace corona::image
   using std::byte;
   namespace fs = std::filesystem;
 
-  // todo: exception definition
-
-  class Metadata
+  class Metadata : public fl::traits::formattable<Metadata, char>
   {
    public:
     /// \brief Exif decode options.
@@ -74,6 +73,12 @@ namespace corona::image
       f32 altitude;
       // maybe e0?
     };
+
+    virtual ~Metadata() = default;
+
+    /// \brief Converts metadata object to string.
+    /// \returns String representation of the metadata.
+    [[nodiscard]] virtual auto to_string() const -> std::string override;
 
     /// \brief Image name.
     [[nodiscard]] auto name() const -> string_view {
