@@ -1,0 +1,26 @@
+var structcorona_1_1image_1_1metadata_1_1ExifMetadata =
+[
+    [ "checksum", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#ab7bb68c5c47a53274ded1a7e1e98910f", null ],
+    [ "from_bytes", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a4c2625070ba76e98bcfc32301fb32f65", null ],
+    [ "latitude", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#aff5b099533ff913b8f10976342ecc7b2", null ],
+    [ "longitude", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#acab00f1832301980e339c6b19c6c7501", null ],
+    [ "dx", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a539f613ddfb166fed2f5809ffbef9209", null ],
+    [ "dy", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#abe2bfb50fd9edacea5305a670e3e56da", null ],
+    [ "x0", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a21b22ebb1f7efd7e20ab036d92e4180b", null ],
+    [ "y0", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a14da173633318815366ea02b608a538c", null ],
+    [ "azimuth", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a4779e09386a14085b60979fbb70600e3", null ],
+    [ "drift_angle", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a2f9c974dd64f514d9a097b12f26dc204", null ],
+    [ "lx", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a9fe2d3665d98b28d95a4a0f86d8c2b35", null ],
+    [ "ly", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a6ec86e6545432edc0b26be701368219e", null ],
+    [ "div", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a03ac9f2aa46a5bc833e3c4cba28fe1c1", null ],
+    [ "velocity", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a4f23fc5bf1dd25ba2d710878ee179958", null ],
+    [ "altitude", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a7eb56ccb9b51537b84866805a50b65bd", null ],
+    [ "fic", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a0900c1795e75d3bf0781232e4f7ab91f", null ],
+    [ "time_offset", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#ab0493711d70375968acf218ae2ebb751", null ],
+    [ "time_duration", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a08d951121c9691dcc46f83273b3f7a99", null ],
+    [ "reserved", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a7a6f66c8ee0b53cb1d4cbd6bfa47a597", null ],
+    [ "mode", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a7cea6ae40aa46b41e3806213a39718c6", null ],
+    [ "image_type", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a0efe665ddb1a472b8017dc9d9614ec0b", null ],
+    [ "reserved_2", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a7fdf5e75162b421dc5ef7a03d7e95981", null ],
+    [ "crc", "structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#ad584d87183b5f8733980d11d9cc8cb7a", null ]
+];

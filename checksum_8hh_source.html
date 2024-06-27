@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Doxygen Awesome" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Documentation for the Floppy library" />
+<meta property="og:url" content="https://whs31.github.io/floppy" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="Documentation for the Corona library" />
+<meta name="twitter:description" content=""https://quasar-project.github.io/corona" />
+<!-- END twitter metadata -->
+<title>Corona: checksum.hh Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/quasar-project/corona" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo-tmp.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Corona
+   &#160;<span id="projectnumber">2.0.0</span>
+   </div>
+   <div id="projectbrief">Front-end for the QuaSAR</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('checksum_8hh_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">checksum.hh</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;bit&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;array&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;span&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;limits&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;floppy/floppy.h&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="namespacecorona_1_1utility.html">   10</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacecorona_1_1utility.html">corona::utility</a> {} <span class="comment">// namespace corona::utility</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="foldopen" id="foldopen00013" data-start="{" data-end="}">
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="namespacecorona_1_1utility_1_1checksum.html">   13</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacecorona_1_1utility_1_1checksum.html">corona::utility::checksum</a></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  <span class="keyword">using </span>std::byte;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>  <span class="keyword">using </span>std::span;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>  <span class="keyword">using namespace </span>floppy::literals;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="foldopen" id="foldopen00020" data-start="{" data-end="}">
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="namespacecorona_1_1utility_1_1checksum_1_1detail.html">   20</a></span>  <span class="keyword">namespace </span>detail</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keyword">using </span>std::array;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">auto</span> <span class="keyword">constexpr</span> CCITT_TABLE = array&lt;u16, 256&gt; {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50A5, 0x60C6, 0x70E7</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>      , 0x8108, 0x9129, 0xA14A, 0xB16B, 0xC18C, 0xD1AD, 0xE1CE, 0xF1EF</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>      , 0x1231, 0x0210, 0x3273, 0x2252, 0x52B5, 0x4294, 0x72F7, 0x62D6</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>      , 0x9339, 0x8318, 0xB37B, 0xA35A, 0xD3BD, 0xC39C, 0xF3FF, 0xE3DE</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>      , 0x2462, 0x3443, 0x0420, 0x1401, 0x64E6, 0x74C7, 0x44A4, 0x5485</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>      , 0xA56A, 0xB54B, 0x8528, 0x9509, 0xE5EE, 0xF5CF, 0xC5AC, 0xD58D</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>      , 0x3653, 0x2672, 0x1611, 0x0630, 0x76D7, 0x66F6, 0x5695, 0x46B4</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>      , 0xB75B, 0xA77A, 0x9719, 0x8738, 0xF7DF, 0xE7FE, 0xD79D, 0xC7BC</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>      , 0x48C4, 0x58E5, 0x6886, 0x78A7, 0x0840, 0x1861, 0x2802, 0x3823</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>      , 0xC9CC, 0xD9ED, 0xE98E, 0xF9AF, 0x8948, 0x9969, 0xA90A, 0xB92B</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>      , 0x5AF5, 0x4AD4, 0x7AB7, 0x6A96, 0x1A71, 0x0A50, 0x3A33, 0x2A12</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>      , 0xDBFD, 0xCBDC, 0xFBBF, 0xEB9E, 0x9B79, 0x8B58, 0xBB3B, 0xAB1A</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>      , 0x6CA6, 0x7C87, 0x4CE4, 0x5CC5, 0x2C22, 0x3C03, 0x0C60, 0x1C41</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>      , 0xEDAE, 0xFD8F, 0xCDEC, 0xDDCD, 0xAD2A, 0xBD0B, 0x8D68, 0x9D49</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>      , 0x7E97, 0x6EB6, 0x5ED5, 0x4EF4, 0x3E13, 0x2E32, 0x1E51, 0x0E70</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>      , 0xFF9F, 0xEFBE, 0xDFDD, 0xCFFC, 0xBF1B, 0xAF3A, 0x9F59, 0x8F78</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>      , 0x9188, 0x81A9, 0xB1CA, 0xA1EB, 0xD10C, 0xC12D, 0xF14E, 0xE16F</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>      , 0x1080, 0x00A1, 0x30C2, 0x20E3, 0x5004, 0x4025, 0x7046, 0x6067</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>      , 0x83B9, 0x9398, 0xA3FB, 0xB3DA, 0xC33D, 0xD31C, 0xE37F, 0xF35E</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>      , 0x02B1, 0x1290, 0x22F3, 0x32D2, 0x4235, 0x5214, 0x6277, 0x7256</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>      , 0xB5EA, 0xA5CB, 0x95A8, 0x8589, 0xF56E, 0xE54F, 0xD52C, 0xC50D</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>      , 0x34E2, 0x24C3, 0x14A0, 0x0481, 0x7466, 0x6447, 0x5424, 0x4405</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>      , 0xA7DB, 0xB7FA, 0x8799, 0x97B8, 0xE75F, 0xF77E, 0xC71D, 0xD73C</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>      , 0x26D3, 0x36F2, 0x0691, 0x16B0, 0x6657, 0x7676, 0x4615, 0x5634</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>      , 0xD94C, 0xC96D, 0xF90E, 0xE92F, 0x99C8, 0x89E9, 0xB98A, 0xA9AB</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>      , 0x5844, 0x4865, 0x7806, 0x6827, 0x18C0, 0x08E1, 0x3882, 0x28A3</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>      , 0xCB7D, 0xDB5C, 0xEB3F, 0xFB1E, 0x8BF9, 0x9BD8, 0xABBB, 0xBB9A</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>      , 0x4A75, 0x5A54, 0x6A37, 0x7A16, 0x0AF1, 0x1AD0, 0x2AB3, 0x3A92</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>      , 0xFD2E, 0xED0F, 0xDD6C, 0xCD4D, 0xBDAA, 0xAD8B, 0x9DE8, 0x8DC9</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>      , 0x7C26, 0x6C07, 0x5C64, 0x4C45, 0x3CA2, 0x2C83, 0x1CE0, 0x0CC1</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>      , 0xEF1F, 0xFF3E, 0xCF5D, 0xDF7C, 0xAF9B, 0xBFBA, 0x8FD9, 0x9FF8</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>      , 0x6E17, 0x7E36, 0x4E55, 0x5E74, 0x2E93, 0x3EB2, 0x0ED1, 0x1EF0</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    };</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  } <span class="comment">// namespace detail</span></div>
+</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="foldopen" id="foldopen00066" data-start="{" data-end="}">
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="namespacecorona_1_1utility_1_1checksum.html#a54fce5e50bf5fc61c7950249c3558c4f">   66</a></span>  [[nodiscard]] <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_function" href="namespacecorona_1_1utility_1_1checksum.html#a54fce5e50bf5fc61c7950249c3558c4f">crc16</a>(<span class="keywordtype">byte</span> <span class="keyword">const</span>* data, usize size) -&gt; u16 {</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keywordflow">if</span>(data == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>      <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;crc16: data cannot be null&quot;</span>);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keyword">auto</span> c = std::numeric_limits&lt;u16&gt;::max();</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keywordflow">for</span>(<span class="keyword">auto</span> i = 0_ZU; i &lt; size; i++) {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>      c xor_eq <span class="keyword">static_cast&lt;</span>u16<span class="keyword">&gt;</span>(data[i]); <span class="comment">// NOLINT(*-pro-bounds-pointer-arithmetic)</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>      <span class="keywordflow">for</span>(<span class="keyword">auto</span> j = 0_ZU; j &lt; 8; j++) {</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keywordflow">if</span>(c bitand 0x0001) {</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>          c &gt;&gt;= 1;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>          c xor_eq 0xA001;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        } <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>          c &gt;&gt;= 1;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>      }</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    }</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="keywordflow">return</span> c;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  }</div>
+</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="foldopen" id="foldopen00088" data-start="{" data-end="}">
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="namespacecorona_1_1utility_1_1checksum.html#af7b73141bc4c54eca78ea6661742616b">   88</a></span>  [[nodiscard]] <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_function" href="namespacecorona_1_1utility_1_1checksum.html#a54fce5e50bf5fc61c7950249c3558c4f">crc16</a>(span&lt;byte const&gt; <span class="keyword">const</span> data) -&gt; u16 {</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keywordflow">if</span>(data.empty())</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>      <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;crc16: data cannot be empty&quot;</span>);</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespacecorona_1_1utility_1_1checksum.html#a54fce5e50bf5fc61c7950249c3558c4f">crc16</a>(data.data(), data.size());</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  }</div>
+</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="foldopen" id="foldopen00101" data-start="{" data-end="}">
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="namespacecorona_1_1utility_1_1checksum.html#accaa11476cfc1e0326de1a8e1687b419">  101</a></span>  [[nodiscard]] <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_function" href="namespacecorona_1_1utility_1_1checksum.html#accaa11476cfc1e0326de1a8e1687b419">crc16_ccitt</a>(<span class="keywordtype">byte</span> <span class="keyword">const</span>* data, usize size) -&gt; u16 {</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="keywordflow">if</span>(data == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>      <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;crc16_ccitt: data cannot be null&quot;</span>);</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keyword">auto</span> c = std::numeric_limits&lt;u16&gt;::max();</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="keywordflow">while</span>(size--) <span class="comment">// NOLINT(*-infinite-loop)</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>      c = (c &lt;&lt; 8) xor detail::CCITT_TABLE[</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keyword">static_cast&lt;</span>usize<span class="keyword">&gt;</span>(<span class="keyword">static_cast&lt;</span><span class="keywordtype">byte</span><span class="keyword">&gt;</span>(c &gt;&gt; 8) xor *(data++)) <span class="comment">// NOLINT(*-pro-bounds-pointer-arithmetic)</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>      ];</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    <span class="keywordflow">return</span> c;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>  }</div>
+</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="foldopen" id="foldopen00117" data-start="{" data-end="}">
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno"><a class="line" href="namespacecorona_1_1utility_1_1checksum.html#a173fa18ea2d242ed6874c9fc332887eb">  117</a></span>  [[nodiscard]] <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_function" href="namespacecorona_1_1utility_1_1checksum.html#accaa11476cfc1e0326de1a8e1687b419">crc16_ccitt</a>(span&lt;byte const&gt; <span class="keyword">const</span> data) -&gt; u16 {</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="keywordflow">if</span>(data.empty())</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>      <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;crc16_ccitt: data cannot be empty&quot;</span>);</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespacecorona_1_1utility_1_1checksum.html#accaa11476cfc1e0326de1a8e1687b419">crc16_ccitt</a>(data.data(), data.size());</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  }</div>
+</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>} <span class="comment">// namespace corona::utility::checksum</span></div>
+</div>
+<div class="ttc" id="anamespacecorona_1_1utility_1_1checksum_html"><div class="ttname"><a href="namespacecorona_1_1utility_1_1checksum.html">corona::utility::checksum</a></div><div class="ttdoc">Checksum utilities.</div><div class="ttdef"><b>Definition</b> <a href="#l00013">checksum.hh:14</a></div></div>
+<div class="ttc" id="anamespacecorona_1_1utility_1_1checksum_html_a54fce5e50bf5fc61c7950249c3558c4f"><div class="ttname"><a href="namespacecorona_1_1utility_1_1checksum.html#a54fce5e50bf5fc61c7950249c3558c4f">corona::utility::checksum::crc16</a></div><div class="ttdeci">constexpr auto crc16(byte const *data, usize size) -&gt; u16</div><div class="ttdoc">Computes CRC16 checksum of a byte array represented by pointer and size.</div><div class="ttdef"><b>Definition</b> <a href="#l00066">checksum.hh:66</a></div></div>
+<div class="ttc" id="anamespacecorona_1_1utility_1_1checksum_html_accaa11476cfc1e0326de1a8e1687b419"><div class="ttname"><a href="namespacecorona_1_1utility_1_1checksum.html#accaa11476cfc1e0326de1a8e1687b419">corona::utility::checksum::crc16_ccitt</a></div><div class="ttdeci">constexpr auto crc16_ccitt(byte const *data, usize size) -&gt; u16</div><div class="ttdoc">Computes CRC16 CCITT checksum of a byte array represented by pointer and size.</div><div class="ttdef"><b>Definition</b> <a href="#l00101">checksum.hh:101</a></div></div>
+<div class="ttc" id="anamespacecorona_1_1utility_html"><div class="ttname"><a href="namespacecorona_1_1utility.html">corona::utility</a></div><div class="ttdoc">Utility classes and functions.</div><div class="ttdef"><b>Definition</b> <a href="#l00010">checksum.hh:10</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_0619a8f54b4fad7043a6de45be8fde0b.html">utility</a></li><li class="navelem"><b>checksum.hh</b></li>
+    <li class="footer">Generated on Thu Jun 27 2024 for Corona by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+  </ul>
+</div>
+</body>
+</html>

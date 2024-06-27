@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Doxygen Awesome" />
+<meta property="og:image" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta property="og:description" content="Documentation for the Floppy library" />
+<meta property="og:url" content="https://whs31.github.io/floppy" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://repository-images.githubusercontent.com/348492097/4f16df80-88fb-11eb-9d31-4015ff22c452" />
+<meta name="twitter:title" content="Documentation for the Corona library" />
+<meta name="twitter:description" content=""https://quasar-project.github.io/corona" />
+<!-- END twitter metadata -->
+<title>Corona: metadata.cc Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/quasar-project/corona" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo-tmp.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Corona
+   &#160;<span id="projectnumber">2.0.0</span>
+   </div>
+   <div id="projectbrief">Front-end for the QuaSAR</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('metadata_8cc_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">metadata.cc</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;corona/image/metadata.h&gt;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;bit&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;fstream&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;magic_enum/magic_enum.hpp&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;floppy/logging.h&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;image/metadata/exif.hh&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span>llog = floppy::log;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span>me = magic_enum;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacecorona_1_1image.html">corona::image</a></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
+<div class="foldopen" id="foldopen00014" data-start="{" data-end="}">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classcorona_1_1image_1_1Metadata.html#a0ca5c9d60715ea9edac142defa3d4bb4">   14</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#a0ca5c9d60715ea9edac142defa3d4bb4">Metadata::to_string</a>() const -&gt; std::<span class="keywordtype">string</span> {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordflow">return</span> fmt::format(</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>      <span class="stringliteral">&quot;\&#39;{}\&#39;: {{\n&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>      <span class="stringliteral">&quot;  anchor: [{}°, {}°, {}],\n&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>      <span class="stringliteral">&quot;  resolution: {} m/px,\n&quot;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>      <span class="stringliteral">&quot;  near edge: {} m,\n&quot;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>      <span class="stringliteral">&quot;  frame offset: {},\n&quot;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>      <span class="stringliteral">&quot;  azimuth: {}N,\n&quot;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>      <span class="stringliteral">&quot;  drift angle: {},\n&quot;</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>      <span class="stringliteral">&quot;  size: {} m,\n&quot;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>      <span class="stringliteral">&quot;  arc divergence: {},\n&quot;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>      <span class="stringliteral">&quot;  velocity: {} m/s,\n&quot;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>      <span class="stringliteral">&quot;  fic: {},\n&quot;</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>      <span class="stringliteral">&quot;  time shift: {} s,\n&quot;</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>      <span class="stringliteral">&quot;  time duration: {} s,\n&quot;</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>      <span class="stringliteral">&quot;  sar mode: {},\n&quot;</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>      <span class="stringliteral">&quot;  image type: {},\n&quot;</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>      <span class="stringliteral">&quot;  valid: {}\n&quot;</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>      <span class="stringliteral">&quot;}}&quot;</span>,</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>      this-&gt;<a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#ac1fdd4574c43adb340d337606e8fed67">name</a>(),</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>      this-&gt;<a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#a7f6446cd0bf1bb53660bab402cb593e7">anchor_point</a>().latitude,</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>      this-&gt;<a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#a7f6446cd0bf1bb53660bab402cb593e7">anchor_point</a>().longitude,</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>      this-&gt;<a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#a7f6446cd0bf1bb53660bab402cb593e7">anchor_point</a>().altitude,</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>      this-&gt;<a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#a989f750422bd0b988b3d3ac09ef9c87d">resolution</a>(),</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>      this-&gt;<a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#a50264742e6ece84544dbad968ae46b21">near_edge</a>(),</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>      this-&gt;<a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#a2aa41c8405113586a1e5fd0387c97df6">frame_offset</a>(),</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>      this-&gt;<a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#adb8ccdf65743600004087b3b838fc21b">azimuth</a>(),</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>      this-&gt;<a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#a1469d179ea2612fae939de294787b895">drift_angle</a>(),</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>      this-&gt;<a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#ab894a7241c7ac1a5d25f37f873eaa038">size</a>(),</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>      this-&gt;<a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#a7b674aa1e69d6fcee4393754228e7ae0">arc_divergence</a>(),</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>      this-&gt;<a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#a505df76f3f85237ef8e19b1b1dc94096">velocity</a>(),</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>      this-&gt;<a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#a6b4651483d19cbc7e67ee1dfd9a91494">frequency_interpolation_coefficient</a>(),</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>      this-&gt;<a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#a649088cb74ee2329e823a6b374f0078f">time_shift</a>(),</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>      this-&gt;<a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#a037ec5f4d218f538f1b0c678e1c89e02">time_duration</a>(),</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>      <span class="keywordtype">string</span>(me::enum_name(this-&gt;<a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#a27e75fc22c411472e4d3a97b08be520f">sar_mode</a>())),</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>      <span class="keywordtype">string</span>(me::enum_name(this-&gt;<a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#abb96cea1147f1c57d72bdf598311f4f3">image_type</a>())),</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>      this-&gt;crc_valid_ <span class="comment">// todo</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    );</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  }</div>
+</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="foldopen" id="foldopen00054" data-start="{" data-end="}">
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classcorona_1_1image_1_1Metadata.html#a361df9681d16772f243f9bb88f004b0a">   54</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#a361df9681d16772f243f9bb88f004b0a">Metadata::from_exif_file</a>(</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    fs::path <span class="keyword">const</span>&amp; image_file,</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <a class="code hl_struct" href="structcorona_1_1image_1_1Metadata_1_1ExifDecodeOptions.html">ExifDecodeOptions</a> <span class="keyword">const</span>&amp; options</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  ) <span class="keyword">noexcept</span>(<span class="keyword">false</span>) -&gt; <a class="code hl_class" href="classcorona_1_1image_1_1Metadata.html">Metadata</a> {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keyword">auto</span> ifs = std::ifstream(image_file, std::ios::binary);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keywordflow">if</span>(not ifs)</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>      <span class="keywordflow">throw</span> <a class="code hl_class" href="classcorona_1_1image_1_1decoding__error.html">decoding_error</a>(image_file, <span class="stringliteral">&quot;failed to open file&quot;</span>);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="comment">// read first 1024 bytes</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keyword">auto</span> exif_data = std::vector&lt;byte&gt;(options.max_metadata_size);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    ifs.read(<span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">char</span>*<span class="keyword">&gt;</span>(exif_data.data()), <span class="keyword">static_cast&lt;</span>std::streamsize<span class="keyword">&gt;</span>(exif_data.size())); <span class="comment">// NOLINT(*-pro-type-reinterpret-cast)</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keywordflow">if</span>(<span class="keyword">static_cast&lt;</span>usize<span class="keyword">&gt;</span>(ifs.gcount()) &lt; exif_data.size())</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>      <span class="keywordflow">throw</span> <a class="code hl_class" href="classcorona_1_1image_1_1decoding__error.html">decoding_error</a>(image_file, fmt::format(<span class="stringliteral">&quot;exif data too small: {} bytes of at least {} bytes&quot;</span>,</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        ifs.gcount(),</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        exif_data.size())</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>      );</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keywordflow">return</span> from_exif_data(image_file.stem().string(), exif_data, <span class="keyword">false</span>, options);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  }</div>
+</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="foldopen" id="foldopen00072" data-start="{" data-end="}">
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="classcorona_1_1image_1_1Metadata.html#a192dc672bad81b83c6f75b5d8a80539a">   72</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="classcorona_1_1image_1_1Metadata.html#a192dc672bad81b83c6f75b5d8a80539a">Metadata::from_exif_data</a>(</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    option&lt;string_view&gt; filename,</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    span&lt;byte const&gt; exif_data,</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keywordtype">bool</span> <span class="keyword">const</span> relative,</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <a class="code hl_struct" href="structcorona_1_1image_1_1Metadata_1_1ExifDecodeOptions.html">ExifDecodeOptions</a> <span class="keyword">const</span>&amp; options</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  ) <span class="keyword">noexcept</span>(<span class="keyword">false</span>) -&gt; <a class="code hl_class" href="classcorona_1_1image_1_1Metadata.html">Metadata</a> {</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    llog::trace(<span class="stringliteral">&quot;parsing exif data for {}&quot;</span>, filename.value_or(<span class="stringliteral">&quot;raw data&quot;</span>));</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keywordflow">if</span>(not relative)</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>      exif_data = exif_data.subspan(options.header_offset);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keyword">auto</span> <span class="keyword">const</span> header = <a class="code hl_function" href="structcorona_1_1image_1_1metadata_1_1ExifHeader.html#a24a85d1773cfbce38322eab4d447ab2b">metadata::ExifHeader::from_bytes</a>(exif_data);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="keywordflow">if</span>(header.marker != options.metadata_marker)</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>      <span class="keywordflow">throw</span> <a class="code hl_class" href="classcorona_1_1image_1_1decoding__error.html">decoding_error</a>(filename.value_or(<span class="stringliteral">&quot;raw data&quot;</span>), fmt::format(<span class="stringliteral">&quot;invalid exif marker: 0x{:04X}, expected 0x{:04X}&quot;</span>,</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        header.marker,</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        options.metadata_marker</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>      ));</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    exif_data = exif_data.subspan(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="structcorona_1_1image_1_1metadata_1_1ExifHeader.html">metadata::ExifHeader</a>));</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keywordflow">if</span>(exif_data.size() &lt; header.size)</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>      <span class="keywordflow">throw</span> <a class="code hl_class" href="classcorona_1_1image_1_1decoding__error.html">decoding_error</a>(filename.value_or(<span class="stringliteral">&quot;raw data&quot;</span>), fmt::format(<span class="stringliteral">&quot;exif data too small: {} bytes of at least {} bytes&quot;</span>,</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        exif_data.size(),</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        header.size</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>      ));</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="keyword">auto</span> <span class="keyword">const</span> raw = <a class="code hl_function" href="structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a4c2625070ba76e98bcfc32301fb32f65">metadata::ExifMetadata::from_bytes</a>(exif_data);</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="keyword">auto</span> strip_nan = [](f32 <span class="keyword">const</span> val) -&gt; f32 {</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>      <span class="keywordflow">if</span>(std::isnan(val) or std::isinf(val))</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        <span class="keywordflow">return</span> 0.0F;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>      <span class="keywordflow">return</span> val;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    };</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <span class="keyword">auto</span> self = <a class="code hl_class" href="classcorona_1_1image_1_1Metadata.html">Metadata</a>();</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    self.image_name_ = filename.value_or(<span class="stringliteral">&quot;raw data&quot;</span>);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    self.anchor_point_ = {</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>      .latitude = raw.latitude,</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>      .longitude = raw.longitude,</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>      .altitude = raw.altitude</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    };</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    self.resolution_ = { strip_nan(raw.dx), strip_nan(raw.dy) };</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    self.near_edge_ = strip_nan(raw.x0);</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    self.frame_offset_ = strip_nan(raw.y0);</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    self.azimuth_ = fl::math::angle&lt;f32&gt;::from_degrees(strip_nan(raw.azimuth));</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    self.drift_angle_ = fl::math::angle&lt;f32&gt;::from_degrees(strip_nan(raw.drift_angle));</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    self.size_ = { strip_nan(raw.lx), strip_nan(raw.ly) };</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    self.arc_divergence_ = fl::math::angle&lt;f32&gt;::from_degrees(strip_nan(raw.div));</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    self.velocity_ = strip_nan(raw.velocity / 3.6F);</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    self.frequency_interpolation_coefficient_ = strip_nan(raw.fic);</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    self.time_shift_ = strip_nan(raw.time_offset);</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    self.time_duration_ = strip_nan(raw.time_duration);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    self.sar_mode_ = <span class="keyword">static_cast&lt;</span><a class="code hl_enumeration" href="classcorona_1_1image_1_1Metadata.html#afcbd6bdd41f75046052efd922bdc95dc">Mode</a><span class="keyword">&gt;</span>(raw.mode);</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    self.image_type_ = <span class="keyword">static_cast&lt;</span><a class="code hl_enumeration" href="classcorona_1_1image_1_1Metadata.html#abc8685e56096fc9b4227e4712897878b">ImageType</a><span class="keyword">&gt;</span>(raw.image_type);</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <span class="keyword">auto</span> <span class="keyword">const</span> actual_crc = raw.checksum();</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordflow">if</span>(actual_crc != raw.crc)</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>      llog::warn(<span class="stringliteral">&quot;exif data checksum mismatch: expected 0x{:04X}, actual 0x{:04X}&quot;</span>, actual_crc, raw.crc);</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    self.crc_valid_ = raw.crc == actual_crc;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    llog::debug(<span class="stringliteral">&quot;successfully parsed exif data from {}&quot;</span>, self.name());</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="keywordflow">return</span> self;</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>  }</div>
+</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>} <span class="comment">// namespace corona::image</span></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html">corona::image::Metadata</a></div><div class="ttdoc">Image metadata generic class.</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00018">metadata.h:19</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_a037ec5f4d218f538f1b0c678e1c89e02"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#a037ec5f4d218f538f1b0c678e1c89e02">corona::image::Metadata::time_duration</a></div><div class="ttdeci">auto time_duration() const -&gt; f32</div><div class="ttdoc">Capture duration (s)</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00178">metadata.h:178</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_a0ca5c9d60715ea9edac142defa3d4bb4"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#a0ca5c9d60715ea9edac142defa3d4bb4">corona::image::Metadata::to_string</a></div><div class="ttdeci">virtual auto to_string() const -&gt; std::string override</div><div class="ttdoc">Converts metadata object to string.</div><div class="ttdef"><b>Definition</b> <a href="#l00014">metadata.cc:14</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_a1469d179ea2612fae939de294787b895"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#a1469d179ea2612fae939de294787b895">corona::image::Metadata::drift_angle</a></div><div class="ttdeci">auto drift_angle() const -&gt; fl::math::angle&lt; f32 &gt; const &amp;</div><div class="ttdoc">Drift angle in degrees.</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00143">metadata.h:143</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_a192dc672bad81b83c6f75b5d8a80539a"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#a192dc672bad81b83c6f75b5d8a80539a">corona::image::Metadata::from_exif_data</a></div><div class="ttdeci">static auto from_exif_data(option&lt; string_view &gt; filename, span&lt; byte const &gt; exif_data, bool relative=false, ExifDecodeOptions const &amp;options=ExifDecodeOptions()) noexcept(false) -&gt; Metadata</div><div class="ttdoc">Parses and constructs new Metadata object from given view over EXIF data.</div><div class="ttdef"><b>Definition</b> <a href="#l00072">metadata.cc:72</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_a27e75fc22c411472e4d3a97b08be520f"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#a27e75fc22c411472e4d3a97b08be520f">corona::image::Metadata::sar_mode</a></div><div class="ttdeci">auto sar_mode() const -&gt; Mode</div><div class="ttdoc">SAR mode.</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00184">metadata.h:184</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_a2aa41c8405113586a1e5fd0387c97df6"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#a2aa41c8405113586a1e5fd0387c97df6">corona::image::Metadata::frame_offset</a></div><div class="ttdeci">auto frame_offset() const -&gt; fl::math::length&lt; f32 &gt; const &amp;</div><div class="ttdoc">Frame offset in meters.</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00132">metadata.h:132</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_a361df9681d16772f243f9bb88f004b0a"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#a361df9681d16772f243f9bb88f004b0a">corona::image::Metadata::from_exif_file</a></div><div class="ttdeci">static auto from_exif_file(fs::path const &amp;image_file, ExifDecodeOptions const &amp;options=ExifDecodeOptions()) noexcept(false) -&gt; Metadata</div><div class="ttdoc">Parses and constructs new Metadata object from given path to image file.</div><div class="ttdef"><b>Definition</b> <a href="#l00054">metadata.cc:54</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_a50264742e6ece84544dbad968ae46b21"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#a50264742e6ece84544dbad968ae46b21">corona::image::Metadata::near_edge</a></div><div class="ttdeci">auto near_edge() const -&gt; fl::math::length&lt; f32 &gt; const &amp;</div><div class="ttdoc">Distance to the near edge of the image in meters.</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00125">metadata.h:125</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_a505df76f3f85237ef8e19b1b1dc94096"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#a505df76f3f85237ef8e19b1b1dc94096">corona::image::Metadata::velocity</a></div><div class="ttdeci">auto velocity() const -&gt; f32</div><div class="ttdoc">Velocity in m/s in the moment of capture.</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00160">metadata.h:160</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_a649088cb74ee2329e823a6b374f0078f"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#a649088cb74ee2329e823a6b374f0078f">corona::image::Metadata::time_shift</a></div><div class="ttdeci">auto time_shift() const -&gt; f32</div><div class="ttdoc">Image offset from time of capture (s)</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00172">metadata.h:172</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_a6b4651483d19cbc7e67ee1dfd9a91494"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#a6b4651483d19cbc7e67ee1dfd9a91494">corona::image::Metadata::frequency_interpolation_coefficient</a></div><div class="ttdeci">auto frequency_interpolation_coefficient() const -&gt; f32</div><div class="ttdoc">Frequency interpolation coefficient (FIC).</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00166">metadata.h:166</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_a7b674aa1e69d6fcee4393754228e7ae0"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#a7b674aa1e69d6fcee4393754228e7ae0">corona::image::Metadata::arc_divergence</a></div><div class="ttdeci">auto arc_divergence() const -&gt; fl::math::angle&lt; f32 &gt; const &amp;</div><div class="ttdoc">Arc divergence in degrees.</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00155">metadata.h:155</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_a7f6446cd0bf1bb53660bab402cb593e7"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#a7f6446cd0bf1bb53660bab402cb593e7">corona::image::Metadata::anchor_point</a></div><div class="ttdeci">auto anchor_point() const -&gt; Coordinate const &amp;</div><div class="ttdoc">Image anchor point coordinates in WGS84 datum (°).</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00114">metadata.h:114</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_a989f750422bd0b988b3d3ac09ef9c87d"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#a989f750422bd0b988b3d3ac09ef9c87d">corona::image::Metadata::resolution</a></div><div class="ttdeci">auto resolution() const -&gt; fl::math::size2d&lt; f32 &gt; const &amp;</div><div class="ttdoc">Image resolution in m/pixel.</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00119">metadata.h:119</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_ab894a7241c7ac1a5d25f37f873eaa038"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#ab894a7241c7ac1a5d25f37f873eaa038">corona::image::Metadata::size</a></div><div class="ttdeci">auto size() const -&gt; fl::math::size2d&lt; f32 &gt; const &amp;</div><div class="ttdoc">Image width and height in meters.</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00149">metadata.h:149</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_abb96cea1147f1c57d72bdf598311f4f3"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#abb96cea1147f1c57d72bdf598311f4f3">corona::image::Metadata::image_type</a></div><div class="ttdeci">auto image_type() const -&gt; ImageType</div><div class="ttdoc">Image type.</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00190">metadata.h:190</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_abc8685e56096fc9b4227e4712897878b"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#abc8685e56096fc9b4227e4712897878b">corona::image::Metadata::ImageType</a></div><div class="ttdeci">ImageType</div><div class="ttdoc">Image type enumeration.</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00046">metadata.h:47</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_ac1fdd4574c43adb340d337606e8fed67"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#ac1fdd4574c43adb340d337606e8fed67">corona::image::Metadata::name</a></div><div class="ttdeci">auto name() const -&gt; string_view</div><div class="ttdoc">Image name.</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00107">metadata.h:107</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_adb8ccdf65743600004087b3b838fc21b"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#adb8ccdf65743600004087b3b838fc21b">corona::image::Metadata::azimuth</a></div><div class="ttdeci">auto azimuth() const -&gt; fl::math::angle&lt; f32 &gt; const &amp;</div><div class="ttdoc">Azimuth of the image in degrees from north.</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00138">metadata.h:138</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1Metadata_html_afcbd6bdd41f75046052efd922bdc95dc"><div class="ttname"><a href="classcorona_1_1image_1_1Metadata.html#afcbd6bdd41f75046052efd922bdc95dc">corona::image::Metadata::Mode</a></div><div class="ttdeci">Mode</div><div class="ttdoc">SAR mode enumeration.</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00053">metadata.h:54</a></div></div>
+<div class="ttc" id="aclasscorona_1_1image_1_1decoding__error_html"><div class="ttname"><a href="classcorona_1_1image_1_1decoding__error.html">corona::image::decoding_error</a></div><div class="ttdoc">Image decoding exception class.</div><div class="ttdef"><b>Definition</b> <a href="error_8h_source.html#l00013">error.h:14</a></div></div>
+<div class="ttc" id="anamespacecorona_1_1image_html"><div class="ttname"><a href="namespacecorona_1_1image.html">corona::image</a></div><div class="ttdoc">Image-related classes and functions.</div><div class="ttdef"><b>Definition</b> <a href="error_8h_source.html#l00008">error.h:9</a></div></div>
+<div class="ttc" id="astructcorona_1_1image_1_1Metadata_1_1ExifDecodeOptions_html"><div class="ttname"><a href="structcorona_1_1image_1_1Metadata_1_1ExifDecodeOptions.html">corona::image::Metadata::ExifDecodeOptions</a></div><div class="ttdoc">Exif decode options.</div><div class="ttdef"><b>Definition</b> <a href="metadata_8h_source.html#l00024">metadata.h:25</a></div></div>
+<div class="ttc" id="astructcorona_1_1image_1_1metadata_1_1ExifHeader_html"><div class="ttname"><a href="structcorona_1_1image_1_1metadata_1_1ExifHeader.html">corona::image::metadata::ExifHeader</a></div><div class="ttdoc">JPEG metadata header. Serialized in big endian.</div><div class="ttdef"><b>Definition</b> <a href="exif_8hh_source.html#l00011">exif.hh:12</a></div></div>
+<div class="ttc" id="astructcorona_1_1image_1_1metadata_1_1ExifHeader_html_a24a85d1773cfbce38322eab4d447ab2b"><div class="ttname"><a href="structcorona_1_1image_1_1metadata_1_1ExifHeader.html#a24a85d1773cfbce38322eab4d447ab2b">corona::image::metadata::ExifHeader::from_bytes</a></div><div class="ttdeci">static auto from_bytes(byte const *data) -&gt; ExifHeader</div><div class="ttdoc">Decodes header from a pointer to bytes containing the header.</div><div class="ttdef"><b>Definition</b> <a href="exif_8hh_source.html#l00034">exif.hh:34</a></div></div>
+<div class="ttc" id="astructcorona_1_1image_1_1metadata_1_1ExifMetadata_html_a4c2625070ba76e98bcfc32301fb32f65"><div class="ttname"><a href="structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a4c2625070ba76e98bcfc32301fb32f65">corona::image::metadata::ExifMetadata::from_bytes</a></div><div class="ttdeci">static auto from_bytes(span&lt; byte const &gt; const data) -&gt; ExifMetadata</div><div class="ttdoc">Decodes metadata from a byte array.</div><div class="ttdef"><b>Definition</b> <a href="exif_8hh_source.html#l00092">exif.hh:92</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a6a17ec937b4e07383dde71de6c9d000.html">image</a></li><li class="navelem"><b>metadata.cc</b></li>
+    <li class="footer">Generated on Thu Jun 27 2024 for Corona by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+  </ul>
+</div>
+</body>
+</html>
