@@ -1,7 +1,7 @@
 #pragma once
 
-#include <bit>
 #include <corona/image/error.h>
+#include <utility/memory.hh>
 
 namespace corona::image::metadata
 {
@@ -48,5 +48,40 @@ namespace corona::image::metadata
 
     u16 marker;
     u16 size;
+  };
+
+  /// \brief Exif metadata contents.
+  /// \details Serialized in little endian.
+  struct ExifMetadata
+  {
+    f64 latitude;        ///< Latitude in WGS84 datum of image anchor point (°)
+    f64 longitude;       ///< Longitude in WGS84 datum of image anchor point (°)
+    f32 dx;              ///< Horizontal resolution (m/pixel)
+    f32 dy;              ///< Vertical resolution (m/pixel)
+    f32 x0;              ///< Near edge of image offset (m)
+    f32 y0;              ///< Frame offset (m)
+    f32 azimuth;         ///< Azimuth of image (°)
+    f32 drift_angle;     ///< Drift angle relative to azimuth (°)
+    f32 lx;              ///< Image width (m)
+    f32 ly;              ///< Image height (m)
+    f32 div;             ///< Arc divergence (°)
+    f32 velocity;        ///< Velocity in the moment of capture (km/h)
+    f32 altitude;        ///< Altitude in the moment of capture rel. to sea level (m)
+    f32 fic;             ///< Frequency Interpolation Coefficient
+    f32 time_offset;     ///< Image offset from time of capture (s)
+    f32 time_duration;   ///< Total capture duration (s)
+    //NOLINTNEXTLINE(*-avoid-c-arrays)
+    [[maybe_unused]] byte reserved_1[8]; ///< Reserved 8 bytes (1)
+    byte mode;           ///< Image mode
+    byte image_type;     ///< Image type (0 means telescopic)
+    //NOLINTNEXTLINE(*-avoid-c-arrays)
+    [[maybe_unused]] byte reserved_3[8]; ///< Reserved 8 bytes (2)
+    u16 checksum;        ///< Checksum (CRC16)
+
+    [[nodiscard]] static auto from_bytes(span<byte const> const data) -> ExifMetadata {
+      if(data.size_bytes() < sizeof(ExifMetadata))
+        throw decoding_error("exif data too small");
+      return utility::memory::byte_cast<ExifMetadata>(data.data());
+    }
   };
 } // namespace corona::image::metadata

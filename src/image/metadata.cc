@@ -5,6 +5,8 @@
 #include <magic_enum/magic_enum.hpp>
 #include <floppy/logging.h>
 #include <image/metadata/exif.hh>
+#include <utility/checksum.hh>
+#include <utility/memory.hh>
 
 namespace llog = floppy::log;
 namespace me = magic_enum;
@@ -90,47 +92,29 @@ namespace corona::image
         exif_data.size(),
         header.size
       ));
+    auto const raw = metadata::ExifMetadata::from_bytes(exif_data);
     auto self = Metadata();
     self.image_name_ = filename.value_or("raw data");
     self.anchor_point_ = {
-      .latitude = *std::bit_cast<f64 const*>(exif_data.data()),
-      .longitude = *std::bit_cast<f64 const*>(exif_data.data() + sizeof(f64)),
-      .altitude = *std::bit_cast<f32 const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 10)
+      .latitude = raw.latitude,
+      .longitude = raw.longitude,
+      .altitude = raw.altitude
     };
-    self.anchor_point_.latitude = *std::bit_cast<f64 const*>(exif_data.data());
-    self.anchor_point_.longitude = *std::bit_cast<f64 const*>(exif_data.data() + sizeof(f64));
-    self.resolution_ = {
-      *std::bit_cast<f32 const*>(exif_data.data() + sizeof(f64) * 2),
-      *std::bit_cast<f32 const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32))
-    };
-    self.near_edge_ = *std::bit_cast<f32 const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 2);
-    self.frame_offset_ = *std::bit_cast<f32 const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 3);
-    self.azimuth_ = fl::math::angle<f32>::from_degrees(*std::bit_cast<f32 const*>(
-      exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 4)
-    );
-    self.drift_angle_ = fl::math::angle<f32>::from_degrees(*std::bit_cast<f32 const*>(
-      exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 5)
-    );
-    self.size_ = {
-      *std::bit_cast<f32 const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 6),
-      *std::bit_cast<f32 const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 7)
-    };
-    self.arc_divergence_ = fl::math::angle<f32>::from_degrees(*std::bit_cast<f32 const*>(
-      exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 8)
-    );
-    self.velocity_ = *std::bit_cast<f32 const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 9);
-    self.frequency_interpolation_coefficient_ = *std::bit_cast<f32 const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 11);
-    self.time_shift_ = *std::bit_cast<f32 const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 12);
-    self.time_duration_ = *std::bit_cast<f32 const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 13);
-    self.sar_mode_ = *std::bit_cast<Mode const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 16);
-    self.image_type_ = *std::bit_cast<ImageType const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 16 + sizeof(char));
-    //auto const crc = *std::bit_cast<u16 const*>(exif_data.data() + sizeof(f64) * 2 + sizeof(f32) * 18 + sizeof(char) * 2);
-    //self.crc_valid_ =
-    // todo: crc
-    fl::log::debug("successfully parsed exif data from {}", self.name());
-    // todo: fix nans
-    // https://github.com/quasar-project/deko/blob/main/src/decoder/jpeg_decoder.rs
-    // http://uav.radar-mms.com/gitlab/developers/rls/quasar/-/blob/qt5/src/c++/processing/imageprocessing.c++?ref_type=heads
+    self.resolution_ = { raw.dx, raw.dy };
+    self.near_edge_ = raw.x0;
+    self.frame_offset_ = raw.y0;
+    self.azimuth_ = fl::math::angle<f32>::from_degrees(raw.azimuth);
+    self.drift_angle_ = fl::math::angle<f32>::from_degrees(raw.drift_angle);
+    self.size_ = { raw.lx, raw.ly };
+    self.arc_divergence_ = fl::math::angle<f32>::from_degrees(raw.div);
+    self.velocity_ = raw.velocity / 3.6F;
+    self.frequency_interpolation_coefficient_ = raw.fic;
+    self.time_shift_ = raw.time_offset;
+    self.time_duration_ = raw.time_duration;
+    self.sar_mode_ = static_cast<Mode>(raw.mode);
+    self.image_type_ = static_cast<ImageType>(raw.image_type);
+    self.crc_valid_ = false; // todo
+    llog::debug("successfully parsed exif data from {}", self.name());
     return self;
   }
 } // namespace corona::image
