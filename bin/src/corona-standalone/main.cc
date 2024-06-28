@@ -25,9 +25,9 @@ auto main$(int argc, char** argv) -> int
   );
 
   return cs::app::Corona(argc, argv)
-    .with_icon("icon")
+    .with_icon("app/icon")
     .with_quick_style(cs::app::QuickStyle::Material)
-    .run_scene("Main");
+    .run_scene("qml/Main");
 }
 
 #if defined(FLOPPY_OS_WINDOWS)

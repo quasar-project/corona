@@ -43,14 +43,39 @@ if(WIN32)
   set(CORONA_OUTPUT_SET ${CORONA_RES_FILES})
 endif()
 
+qt_add_resources(${CORONA_STANDALONE_NAME}
+  PREFIX "/app"
+  FILES
+    resources/icon.svg
+    resources/icon.png
+    resources/icon.ico
+)
+
+qt_add_resources(${CORONA_STANDALONE_NAME}
+  PREFIX "/"
+  FILES
+    resources/icons/common/block.svg
+    resources/icons/common/cog.svg
+    resources/icons/common/dark.svg
+    resources/icons/common/light.svg
+    resources/icons/toolbar/ruler.svg
+    resources/icons/toolbar/grid.svg
+)
+
+qt_add_resources(${CORONA_STANDALONE_NAME}
+  PREFIX "/qml"
+  FILES
+    qml/Main.qml
+)
+
 target_sources(${CORONA_STANDALONE_NAME}
   PRIVATE
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/main.cc
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/logger.cc
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/app.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/main.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/logger.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/app.cc
 
-  #${CMAKE_CURRENT_SOURCE_DIR}/src/qml/qrc.qrc
-  ${CORONA_OUTPUT_SET}
+    #${CMAKE_CURRENT_SOURCE_DIR}/src/qml/qrc.qrc
+    ${CORONA_OUTPUT_SET}
 )
 
 target_link_libraries(${CORONA_STANDALONE_NAME}
