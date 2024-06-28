@@ -1,5 +1,21 @@
 set(CORONA_STANDALONE_NAME ${PROJECT_NAME}-standalone)
 
+message(STATUS "[${CORONA_STANDALONE_NAME}] cleaning version...")
+if(NOT PROJECT_VERSION_PATCH)
+  set(PROJECT_VERSION_PATCH 0)
+endif()
+
+if(NOT PROJECT_VERSION_TWEAK)
+  set(PROJECT_VERSION_TWEAK 0)
+endif()
+
+message(STATUS "[${CORONA_STANDALONE_NAME}] configuring os bundle...")
+if(APPLE)
+  set(OS_BUNDLE MACOSX_BUNDLE)
+elseif(WIN32)
+  set(OS_BUNDLE WIN32)
+endif()
+
 add_executable(${CORONA_STANDALONE_NAME})
 
 set_target_properties(${CORONA_STANDALONE_NAME} PROPERTIES
@@ -16,11 +32,23 @@ cmake_print_properties(TARGETS ${CORONA_STANDALONE_NAME} PROPERTIES
   POSITION_INDEPENDENT_CODE
 )
 
+message(STATUS "[${CORONA_STANDALONE_NAME}] generating meta files...")
+if(WIN32)
+  set(CORONA_ICON_FILE ${CMAKE_CURRENT_SOURCE_DIR}/resources/icon.ico)
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/windows_metafile.rc.in "windows_metafile.rc")
+  set(CORONA_RES_FILES "windows_metafile.rc")
+  set(CMAKE_RC_COMPILER_INIT windres)
+  enable_language(RC)
+  set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <SOURCE> -o <OBJECT>")
+  set(CORONA_OUTPUT_SET ${CORONA_RES_FILES})
+endif()
+
 target_sources(${CORONA_STANDALONE_NAME}
   PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/main.cc
 
   #${CMAKE_CURRENT_SOURCE_DIR}/src/qml/qrc.qrc
+  ${CORONA_OUTPUT_SET}
 )
 
 target_link_libraries(${CORONA_STANDALONE_NAME}
@@ -45,6 +73,11 @@ target_include_directories(${CORONA_STANDALONE_NAME} PRIVATE ${CMAKE_CURRENT_SOU
 if(WIN32 AND ${CMAKE_CXX_COMPILER_ID} MATCHES "GNU|Clang|Mingw|MINGW" AND NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
   message(STATUS "[${CORONA_STANDALONE_NAME}] adding -mwindows linker opt (${CMAKE_CXX_COMPILER_ID})")
   target_link_options(${CORONA_STANDALONE_NAME} PRIVATE -mwindows)
+endif()
+
+if(WIN32)
+  message(STATUS "[${CORONA_STANDALONE_NAME}] adding -static-libgcc and -static-libstdc++ linker opt (${CMAKE_CXX_COMPILER_ID})")
+  target_link_options(${PROJECT_NAME} PRIVATE -static-libgcc -static-libstdc++)
 endif()
 
 if(WIN32)
