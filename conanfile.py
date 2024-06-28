@@ -50,10 +50,10 @@ class CoronaRecipe(ConanFile):
         deps = CMakeDeps(self)
         deps.generate()
         tc = CMakeToolchain(self)
-        tc.variables["CORONA_STANDALONE"] = self.options.standalone
-        tc.variables["CORONA_TEST"] = self.options.test
-        tc.variables["CORONA_SELF_SUFFICIENT"] = self.options.self_sufficient
-        tc.variables["BUILD_SHARED_LIBS"] = self.options.shared
+        tc.cache_variables["CORONA_STANDALONE"] = self.options.standalone
+        tc.cache_variables["CORONA_TEST"] = self.options.test
+        tc.cache_variables["CORONA_SELF_SUFFICIENT"] = self.options.self_sufficient
+        tc.cache_variables["BUILD_SHARED_LIBS"] = self.options.shared
         tc.generate()
 
     def build(self):

@@ -75,10 +75,11 @@ if(WIN32 AND ${CMAKE_CXX_COMPILER_ID} MATCHES "GNU|Clang|Mingw|MINGW" AND NOT CM
   target_link_options(${CORONA_STANDALONE_NAME} PRIVATE -mwindows)
 endif()
 
-if(WIN32)
-  message(STATUS "[${CORONA_STANDALONE_NAME}] adding -static-libgcc and -static-libstdc++ linker opt (${CMAKE_CXX_COMPILER_ID})")
-  target_link_options(${PROJECT_NAME} PRIVATE -static-libgcc -static-libstdc++)
-endif()
+# todo: this is not working
+#if(WIN32)
+#  message(STATUS "[${CORONA_STANDALONE_NAME}] adding -static-libgcc and -static-libstdc++ linker opt (${CMAKE_CXX_COMPILER_ID})")
+#  target_link_options(${PROJECT_NAME} PRIVATE -static-libgcc -static-libstdc++)
+#endif()
 
 if(WIN32)
   add_custom_command(TARGET ${CORONA_STANDALONE_NAME}
