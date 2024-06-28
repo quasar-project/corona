@@ -3,6 +3,7 @@
 #include <memory>
 #include <filesystem>
 #include <floppy/logging.h>
+#include <floppy/traits.h>
 #include <corona-standalone/definitions.hh>
 
 namespace corona::standalone::app
@@ -10,7 +11,7 @@ namespace corona::standalone::app
   using std::shared_ptr;
   namespace fs = std::filesystem;
 
-  struct Logger
+  struct Logger : public fl::traits::pin<Logger>
   {
    public:
     enum class Target : char

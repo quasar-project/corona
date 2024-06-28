@@ -1,10 +1,10 @@
 #include <floppy/floppy.h>
 #include <corona-standalone/app/logger.hh>
-#include <corona-standalone/app/iapplication.hh>
+#include <corona-standalone/app/app.hh>
 
 #if defined(FLOPPY_OS_WINDOWS)
 # include <windows.h>
-#define main$ _main
+# define main$ _main
 #else
 # define main$ main
 #endif
@@ -12,8 +12,8 @@
 namespace cs = corona::standalone;
 auto main$(int argc, char** argv) -> int
 {
-  [[maybe_unused]] auto const logger = cs::app::Logger(
-    cs::app::Logger::Params{
+  [[maybe_unused]] auto const logger = cs::app::Logger::make(
+    cs::app::Logger::Params {
       .is_default = true,
       .name = "main",
       .level = cs::llog::level::level_enum::trace,
@@ -23,14 +23,11 @@ auto main$(int argc, char** argv) -> int
       .folder = std::filesystem::current_path() / "logs"
     }
   );
-  cs::llog::trace("example trace message");
-  cs::llog::debug("example debug message");
-  cs::llog::info("example info message");
-  cs::llog::warn("example warn message");
-  cs::llog::error("example error message");
-  cs::llog::critical("example critical message");
-  std::cin.get();
-  return 0;
+
+  return cs::app::Corona(argc, argv)
+    .with_icon("icon")
+    .with_quick_style(cs::app::QuickStyle::Material)
+    .run_scene("Main");
 }
 
 #if defined(FLOPPY_OS_WINDOWS)

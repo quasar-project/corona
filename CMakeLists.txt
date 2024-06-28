@@ -103,6 +103,7 @@ else()
   message(STATUS "[${PROJECT_NAME}] adding static export symbols: CORONA_STATIC_LIBRARY")
   target_compile_definitions(${PROJECT_NAME} PUBLIC -DCORONA_STATIC_LIBRARY=1)
 endif()
+
 target_compile_definitions(${PROJECT_NAME}
   PUBLIC
   -DCORONA_TARGET_NAME="${PROJECT_NAME}"

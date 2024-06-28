@@ -63,7 +63,7 @@ namespace corona::standalone::app
       string(me::enum_name(this->params().target))
     );
     if(this->params().filename.has_value()) {
-      llog::trace(R"(logger '{}': working directory is '{}')", this->params().name, folder.string());
+      llog::trace(R"(logger '{}': working directory is '{}')", this->params().name, folder.generic_string());
       llog::trace(R"(logger '{}': filename = '{}', max file size = {} MB, max files = {})",
         this->params().name,
         *this->params().filename,

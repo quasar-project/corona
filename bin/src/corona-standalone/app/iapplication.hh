@@ -1,8 +1,28 @@
-//
-// Created by whs31 on 6/28/2024.
-//
+#pragma once
 
-#ifndef CORONA_IAPPLICATION_HH
-#define CORONA_IAPPLICATION_HH
+#include <qcoreapplication.h>
+#include <floppy/floppy.h>
+#include <floppy/traits.h>
 
-#endif // CORONA_IAPPLICATION_HH
+namespace corona::standalone::app
+{
+  enum class QuickStyle : char
+  {
+    Default,
+    Material,
+    Universal,
+    Fusion
+  };
+
+  template <std::derived_from<QCoreApplication> T>
+  class IApplication : public T, // NOLINT(*-special-member-functions)
+                       public fl::traits::pin<IApplication<T>>
+  {
+   public:
+    explicit IApplication(int& argc, char** argv)
+      : T(argc, argv)
+    {}
+
+    virtual ~IApplication() = default;
+  };
+}
