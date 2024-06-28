@@ -46,6 +46,7 @@ endif()
 target_sources(${CORONA_STANDALONE_NAME}
   PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/main.cc
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/logger.cc
 
   #${CMAKE_CURRENT_SOURCE_DIR}/src/qml/qrc.qrc
   ${CORONA_OUTPUT_SET}

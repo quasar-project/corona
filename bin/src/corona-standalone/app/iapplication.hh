@@ -1,0 +1,8 @@
+//
+// Created by whs31 on 6/28/2024.
+//
+
+#ifndef CORONA_IAPPLICATION_HH
+#define CORONA_IAPPLICATION_HH
+
+#endif // CORONA_IAPPLICATION_HH
