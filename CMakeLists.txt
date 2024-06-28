@@ -24,7 +24,7 @@ if("${CMAKE_GENERATOR}" MATCHES "^Visual Studio")
 endif()
 
 set(CMAKE_AUTOMOC ON)
-#set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTORCC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -113,12 +113,6 @@ target_compile_definitions(${PROJECT_NAME}
   -DCORONA_ORGANIZATION_URL="${PROJECT_HOMEPAGE_URL}"
 )
 
-if(STANDALONE_EXECUTABLE)
-  message(STATUS "[${PROJECT_NAME}] building corona as standalone executable")
-  add_subdirectory(bin)
-endif()
-
-
 if(WIN32 AND BUILD_SHARED_LIBS)
   add_custom_command(TARGET ${PROJECT_NAME}
     POST_BUILD
@@ -132,7 +126,10 @@ if(CORONA_TEST)
   add_subdirectory(tests)
 endif()
 
-# bin
+if(CORONA_STANDALONE)
+  message(STATUS "[${PROJECT_NAME}] building corona as standalone executable")
+  add_subdirectory(bin)
+endif()
 
 message(STATUS "[${PROJECT_NAME}] compile integration tests status: ${INTEGRATION_TESTS}")
 message(STATUS "[${PROJECT_NAME}] installing ${PROJECT_NAME} in namespace ${PROJECT_NAMESPACE}")
@@ -167,8 +164,3 @@ message(STATUS "[${PROJECT_NAME}] configuring ${PROJECT_NAME} done!")
 unset(CORONA_STANDALONE CACHE)
 unset(CORONA_TEST CACHE)
 unset(CORONA_SELF_SUFFICIENT CACHE)
-
-# for exe : if(WIN32 AND ${CMAKE_CXX_COMPILER_ID} MATCHES "GNU|Clang|Mingw|MINGW")
-#  message(STATUS "[${PROJECT_NAME}] adding -mwindows linker opt (${CMAKE_CXX_COMPILER_ID})")
-#  target_link_options(${PROJECT_NAME} PRIVATE -mwindows)
-#endif()

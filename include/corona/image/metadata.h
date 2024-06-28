@@ -77,6 +77,10 @@ namespace corona::image
     };
 
     virtual ~Metadata() = default;
+    Metadata(Metadata const&) = default;
+    Metadata(Metadata&&) = default;
+    auto operator=(Metadata const&) -> Metadata& = default;
+    auto operator=(Metadata&&) -> Metadata& = default;
 
     /// \brief Converts metadata object to string.
     /// \details Example string representation:
@@ -224,22 +228,24 @@ namespace corona::image
     /// \brief Returns <tt>true</tt> if checksum of metadata is valid.
     [[nodiscard]] explicit operator bool() const { return this->valid(); }
 
-    private:
-     string image_name_;
-     Coordinate anchor_point_;
-     fl::math::size2d<f32> resolution_;
-     fl::math::length<f32> near_edge_;
-     [[maybe_unused]] fl::math::length<f32> frame_offset_;
-     fl::math::angle<f32> azimuth_;
-     fl::math::angle<f32> drift_angle_;
-     fl::math::size2d<f32> size_;
-     fl::math::angle<f32> arc_divergence_;
-     f32 velocity_;
-     f32 frequency_interpolation_coefficient_;
-     f32 time_shift_;
-     f32 time_duration_;
-     Mode sar_mode_;
-     ImageType image_type_;
-     bool crc_valid_;
+   private:
+    Metadata() = default;
+
+    string image_name_;
+    Coordinate anchor_point_{};
+    fl::math::size2d<f32> resolution_;
+    fl::math::length<f32> near_edge_;
+    [[maybe_unused]] fl::math::length<f32> frame_offset_;
+    fl::math::angle<f32> azimuth_;
+    fl::math::angle<f32> drift_angle_;
+    fl::math::size2d<f32> size_;
+    fl::math::angle<f32> arc_divergence_;
+    f32 velocity_ = 0.0F;
+    f32 frequency_interpolation_coefficient_ = 0.0F;
+    f32 time_shift_ = 0.0F;
+    f32 time_duration_ = 0.0F;
+    Mode sar_mode_ = Mode::Unknown;
+    ImageType image_type_ = ImageType::Telescopic;
+    bool crc_valid_ = false;
   };
 } // namespace corona::image
