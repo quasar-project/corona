@@ -14,19 +14,19 @@ namespace corona::standalone::app
     : params_(std::move(params))
   {
     if(this->params().pattern.empty())
-      llog::warn("no pattern specified for logger \'{}\'. default pattern will be used", this->params().name);
+      llog::warn()("no pattern specified for logger \'{}\'. default pattern will be used", this->params().name);
     auto sinks = vector<spdlog::sink_ptr>();
     auto bitmask = fl::to_underlying(this->params().target);
-    auto mask = char(1);
+    auto mask = static_cast<char>(1);
     auto const folder = [this]() {
       if(not this->params().folder.has_value()) {
-        llog::warn("no folder specified for logger \'{}\'. assuming current directory", this->params().name);
+        llog::warn()("no folder specified for logger \'{}\'. assuming current directory", this->params().name);
         return fs::current_path();
       }
       return *this->params().folder;
     }();
     if(not exists(folder)) {
-      llog::trace("log folder provided for logger \'{}\' does not exist. creating", this->params().name);
+      llog::trace()("log folder provided for logger \'{}\' does not exist. creating", this->params().name);
       create_directories(folder);
     }
     while(bitmask) {
@@ -57,14 +57,14 @@ namespace corona::standalone::app
     (**this)->flush_on(llog::level::level_enum::debug);
     spdlog::flush_every(std::chrono::seconds(1));
     this->logger_ = **this;
-    llog::trace(R"(logger '{}': created with level '{}' and target '{}')",
+    llog::trace()(R"(logger '{}': created with level '{}' and target '{}')",
       this->get()->name(),
       spdlog::level::to_string_view(this->params().level),
       string(me::enum_name(this->params().target))
     );
     if(this->params().filename.has_value()) {
-      llog::trace(R"(logger '{}': working directory is '{}')", this->params().name, folder.generic_string());
-      llog::trace(R"(logger '{}': filename = '{}', max file size = {} MB, max files = {})",
+      llog::trace()(R"(logger '{}': working directory is '{}')", this->params().name, folder.generic_string());
+      llog::trace()(R"(logger '{}': filename = '{}', max file size = {} MB, max files = {})",
         this->params().name,
         *this->params().filename,
         this->params().max_file_size_mb,
@@ -77,7 +77,7 @@ namespace corona::standalone::app
   Logger::~Logger() {
     if(not *this)
       return;
-    llog::trace("logger \'{}\': closing", this->get()->name());
+    llog::trace()("logger \'{}\': closing", this->get()->name());
     if(this->params().is_default)
       spdlog::shutdown();
   }

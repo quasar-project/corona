@@ -75,7 +75,7 @@ namespace corona::image
     bool const relative,
     ExifDecodeOptions const& options
   ) noexcept(false) -> Metadata {
-    llog::trace("parsing exif data for {}", filename.value_or("raw data"));
+    llog::trace()("parsing exif data for {}", filename.value_or("raw data"));
     if(not relative)
       exif_data = exif_data.subspan(options.header_offset);
     auto const header = metadata::ExifHeader::from_bytes(exif_data);
@@ -118,9 +118,9 @@ namespace corona::image
     self.image_type_ = static_cast<ImageType>(raw.image_type);
     auto const actual_crc = raw.checksum();
     if(actual_crc != raw.crc)
-      llog::warn("exif data checksum mismatch: expected 0x{:04X}, actual 0x{:04X}", actual_crc, raw.crc);
+      llog::warn()("exif data checksum mismatch: expected 0x{:04X}, actual 0x{:04X}", actual_crc, raw.crc);
     self.crc_valid_ = raw.crc == actual_crc;
-    llog::debug("successfully parsed exif data from {}", self.name());
+    llog::debug()("successfully parsed exif data from {}", self.name());
     return self;
   }
 } // namespace corona::image

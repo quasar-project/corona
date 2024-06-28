@@ -109,4 +109,14 @@ if(WIN32)
       COMMAND_EXPAND_LISTS
     )
   endif()
+
+  # windeployqt
+  if(WINDEPLOYQT_EXECUTABLE)
+    message(STATUS "running windeployqt for ${CORONA_STANDALONE_NAME}")
+    add_custom_command(TARGET ${CORONA_STANDALONE_NAME}
+      POST_BUILD
+      COMMAND ${WINDEPLOYQT_EXECUTABLE} $<TARGET_FILE:${CORONA_STANDALONE_NAME}>
+      COMMAND_EXPAND_LISTS
+    )
+  endif()
 endif()
