@@ -18,7 +18,7 @@ auto main$(int argc, char** argv) -> int
       .name = "main",
       .level = cs::llog::level::level_enum::trace,
       .target = cs::app::Logger::Target::All,
-      .pattern = "[%Y-%m-%d %H:%M:%S.%e] (%n) [%^%l%$] %v",
+      .pattern = "[%X] (%n) [%^%L%$] %^%v%$",
       .filename = "corona.log",
       .folder = std::filesystem::current_path() / "logs"
     }

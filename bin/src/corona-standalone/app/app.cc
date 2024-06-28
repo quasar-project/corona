@@ -9,26 +9,12 @@
 #include <magic_enum/magic_enum.hpp>
 #include <floppy/directories.h>
 #include <corona-standalone/utility/formatters.hh>
+#include <corona-standalone/app/ui_logger.hh>
 
 namespace me = magic_enum;
 
 namespace
 {
-  auto qmsglogger(
-    QtMsgType const type,
-    [[maybe_unused]] QMessageLogContext const& ctx,
-    QString const& msg
-    ) -> void {
-    switch(type) {
-      case QtDebugMsg: fl::log::debug()("{}", msg); break;
-      case QtInfoMsg: fl::log::info()("{}", msg); break;
-      case QtWarningMsg: fl::log::warn()("{}", msg); break;
-      case QtCriticalMsg: fl::log::error()("{}", msg); break;
-      case QtFatalMsg: fl::log::critical()("{}", msg); break;
-      default: fl::unreachable();
-    }
-  }
-
   [[nodiscard]] inline auto platform_dependent_icon(std::string_view const stem) -> QIcon {
     if constexpr(fl::current_platform.operating_system == fl::platform::operating_system::windows)
       return QIcon(QString::fromStdString(":/" + std::string(stem) + ".ico"));
@@ -67,7 +53,7 @@ namespace corona::standalone::app
     Corona::setApplicationVersion(corona::standalone::app::meta::corona_meta.version().as_str().data());
     Corona::setOrganizationName(corona::standalone::app::meta::corona_meta.organization().data());
     Corona::setOrganizationDomain(corona::standalone::app::meta::corona_meta.domain().data());
-    ::qInstallMessageHandler(::qmsglogger);
+    ::qInstallMessageHandler(UILogger::message_handler);
   }
   auto Corona::with_icon(string_view const path) -> Corona& {
     llog::trace()("app icon is set to \'{}\'", path);
