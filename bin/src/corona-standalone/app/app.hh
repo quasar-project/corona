@@ -11,7 +11,7 @@ namespace corona::standalone::app
   {
    public:
     explicit Corona(int& args, char** argv);
-    virtual ~Corona() override;
+    virtual ~Corona() override; // NOLINT(*-use-override)
 
     auto with_icon(string_view path) -> Corona&;
     auto with_quick_style(QuickStyle style) -> Corona&;

@@ -22,47 +22,52 @@ ApplicationWindow {
     width: 1500
     height: 800
     visible: true
-    // color: Theme.io.color("crust")
+    color: Theme.io.color("crust")
 
     Component.onCompleted: {
-        showMaximized()
+        //showMaximized()
     }
 
-    // Material.theme: Theme.mode === Theme.Dark ? Material.Dark : Material.Light
-    // Material.background: Theme.io.color("background")
-    // Material.foreground: Theme.io.color("foreground")
-    // Material.accent: Theme.io.color("accent")
-    // Material.primary: Theme.io.color("main")
-    // Material.roundedScale: Material.ExtraSmallScale
+    Material.theme: Theme.mode === Theme.Dark ? Material.Dark : Material.Light
+    Material.background: Theme.io.color("background")
+    Material.foreground: Theme.io.color("foreground")
+    Material.accent: Theme.io.color("accent")
+    Material.primary: Theme.io.color("main")
+    Material.roundedScale: Material.ExtraSmallScale
 
     // menuBar: Layouts.MenuApplicationBar {}
 
-    // ToolButton {
-    //     anchors.right: parent.right
-    //     parent: window_root.menuBar
-    //     icon {
-    //         source: Theme.mode === Theme.Dark ? "qrc:/icons/common/light.svg" : "qrc:/icons/common/dark.svg"
-    //     }
-    //     flat: true
-    //     onPressed: themeChanger.toggle(this)
-    // }
-    //
-    // Rectangle {
-    //     id: root
-    //     anchors.fill: parent
-    //     color: Theme.io.color("crust")
-    //
-    //     Layouts.MapView {
-    //         id: map
-    //
-    //         anchors {
-    //             top: parent.top
-    //             left: parent.left
-    //             right: parent.right
-    //             bottom: parent.bottom
-    //         }
-    //     }
-    // }
+    ToolButton {
+        anchors.right: parent.right
+        parent: window_root.menuBar
+        icon {
+            source: Theme.mode === Theme.Dark ? "qrc:/icons/common/light.svg" : "qrc:/icons/common/dark.svg"
+        }
+        flat: true
+        onPressed: themeChanger.toggle(this)
+    }
+
+    Rectangle {
+        id: root
+        anchors.fill: parent
+        color: Theme.io.color("crust")
+        Rectangle {
+            anchors.centerIn: parent
+            color: "red"
+            width: 100
+            height: 100
+        }
+        // Layouts.MapView {
+        //     id: map
+        //
+        //     anchors {
+        //         top: parent.top
+        //         left: parent.left
+        //         right: parent.right
+        //         bottom: parent.bottom
+        //     }
+        // }
+    }
     //
     // Widgets.PowerSwitchStatus {
     //     anchors.centerIn: parent
