@@ -55,7 +55,7 @@ namespace corona::standalone::app
     Corona::setOrganizationDomain(corona::standalone::app::meta::corona_meta.domain().data());
     ::qInstallMessageHandler(UILogger::message_handler);
 
-    ::qmlRegisterSingletonInstance("io.corona.standalone.theme", 1, 0, "Theme", impl_->theme.ptr_mut());
+    ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Theme", impl_->theme.ptr_mut());
   }
   auto Corona::with_icon(string_view const path) -> Corona& {
     llog::trace()("app icon is set to \'{}\'", path);

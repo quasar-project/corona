@@ -6,7 +6,8 @@ import QtLocation
 import QtPositioning
 import QtQuick.Layouts
 
-import io.corona.standalone.theme as MTheme
+import io.corona.standalone.app as App
+import io.corona.standalone.theme as ThemeImpl
 
 // import "layouts" as Layouts
 // import "utils" as Utils
@@ -21,28 +22,28 @@ ApplicationWindow {
     width: 1500
     height: 800
     visible: true
-    color: MTheme.Theme.palette.base0
+    color: App.Theme.palette.base0
 
     Component.onCompleted: {
         //showMaximized()
     }
 
-    Material.theme: MTheme.Theme.mode === MTheme.Theme.Dark ? Material.Dark : Material.Light
-    Material.background: MTheme.Theme.palette.base2
-    Material.foreground: MTheme.Theme.palette.text
-    Material.accent: MTheme.Theme.palette.mauve
-    Material.primary: MTheme.Theme.palette.sky
+    Material.theme: App.Theme.mode === App.Theme.Dark ? Material.Dark : Material.Light
+    Material.background: App.Theme.palette.base2
+    Material.foreground: App.Theme.palette.text
+    Material.accent: App.Theme.palette.mauve
+    Material.primary: App.Theme.palette.sky
     Material.roundedScale: Material.ExtraSmallScale
 
     Rectangle {
         id: root
-        color: MTheme.Theme.palette.base0
+        color: App.Theme.palette.base0
         anchors.fill: parent
 
         Button {
             id: button
             height: 100
-            text: MTheme.Theme.mode === MTheme.Theme.Dark ? "Dark" : "Light"
+            text: App.Theme.mode === App.Theme.Dark ? "Dark" : "Light"
             anchors.centerIn: parent
             onClicked: themeChanger.toggle(this)
         }
@@ -50,12 +51,12 @@ ApplicationWindow {
         Button {
             id: button2
             height: 100
-            text: MTheme.Theme.mode === MTheme.Theme.Dark ? "Dark" : "Light"
+            text: App.Theme.mode === App.Theme.Dark ? "Dark" : "Light"
             anchors.right: parent.right
             onClicked: themeChanger.toggle(this)
         }
     }
 
-    MTheme.CircularChanger { id: themeChanger; rootItem: root; theme: MTheme.Theme; }
+    ThemeImpl.CircularChanger { id: themeChanger; rootItem: root; theme: App.Theme; }
 }
 

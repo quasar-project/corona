@@ -2,11 +2,11 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Window
 
-import io.corona.standalone.theme as ThemeModule
+import io.corona.standalone.theme as M
 
 Loader {
     required property Item rootItem
-    required property ThemeModule.ThemeWrapper theme
+    required property M.ThemeWrapper theme
 
     id: loader_reveal
     anchors.fill: parent
@@ -30,7 +30,7 @@ Loader {
     Component {
         id: __reveal
 
-        ThemeModule.CircularReveal {
+        M.CircularReveal {
             id: reveal
             target: rootItem
             anchors.fill: parent
