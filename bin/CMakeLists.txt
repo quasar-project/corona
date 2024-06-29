@@ -1,5 +1,8 @@
 set(CORONA_STANDALONE_NAME ${PROJECT_NAME}-standalone)
 
+set(CMAKE_AUTOMOC ON)
+cmake_policy(SET CMP0100 NEW)
+
 message(STATUS "[${CORONA_STANDALONE_NAME}] cleaning version...")
 if(NOT PROJECT_VERSION_PATCH)
   set(PROJECT_VERSION_PATCH 0)
@@ -32,6 +35,8 @@ cmake_print_properties(TARGETS ${CORONA_STANDALONE_NAME} PROPERTIES
   POSITION_INDEPENDENT_CODE
 )
 
+find_package(tomlplusplus REQUIRED)
+
 message(STATUS "[${CORONA_STANDALONE_NAME}] generating meta files...")
 if(WIN32)
   set(CORONA_ICON_FILE ${CMAKE_CURRENT_SOURCE_DIR}/resources/icon.ico)
@@ -52,14 +57,14 @@ qt_add_resources(${CORONA_STANDALONE_NAME}
 )
 
 qt_add_resources(${CORONA_STANDALONE_NAME}
-  PREFIX "/"
+  PREFIX "/icons"
   FILES
-    resources/icons/common/block.svg
-    resources/icons/common/cog.svg
-    resources/icons/common/dark.svg
-    resources/icons/common/light.svg
-    resources/icons/toolbar/ruler.svg
-    resources/icons/toolbar/grid.svg
+    resources/icons/block.svg
+    resources/icons/cog.svg
+    resources/icons/dark.svg
+    resources/icons/light.svg
+    resources/icons/ruler.svg
+    resources/icons/grid.svg
 )
 
 qt_add_resources(${CORONA_STANDALONE_NAME}
@@ -73,8 +78,9 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/main.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/logger.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/app.cc
-
-    #${CMAKE_CURRENT_SOURCE_DIR}/src/qml/qrc.qrc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/reveal.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/theme.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/values.cc
     ${CORONA_OUTPUT_SET}
 )
 
@@ -83,6 +89,7 @@ target_link_libraries(${CORONA_STANDALONE_NAME}
     ${PROJECT_NAME}
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
+    tomlplusplus::tomlplusplus
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Quick
     Qt${QT_VERSION_MAJOR}::QuickControls2
@@ -136,12 +143,12 @@ if(WIN32)
   endif()
 
   # windeployqt
-  if(WINDEPLOYQT_EXECUTABLE)
-    message(STATUS "running windeployqt for ${CORONA_STANDALONE_NAME}")
-    add_custom_command(TARGET ${CORONA_STANDALONE_NAME}
-      POST_BUILD
-      COMMAND ${WINDEPLOYQT_EXECUTABLE} $<TARGET_FILE:${CORONA_STANDALONE_NAME}>
-      COMMAND_EXPAND_LISTS
-    )
-  endif()
+#  if(WINDEPLOYQT_EXECUTABLE)
+#    message(STATUS "running windeployqt for ${CORONA_STANDALONE_NAME}")
+#    add_custom_command(TARGET ${CORONA_STANDALONE_NAME}
+#      POST_BUILD
+#      COMMAND ${WINDEPLOYQT_EXECUTABLE} $<TARGET_FILE:${CORONA_STANDALONE_NAME}>
+#      COMMAND_EXPAND_LISTS
+#    )
+#  endif()
 endif()

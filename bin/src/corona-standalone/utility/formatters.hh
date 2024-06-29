@@ -13,10 +13,10 @@ namespace fmt
 {
   template<>
   struct formatter<QString> {
-    template<typename ParseContext>
+    template <typename ParseContext>
     constexpr static auto parse(ParseContext& ctx) { return ctx.begin(); }
 
-    template<typename FormatContext>
+    template <typename FormatContext>
     static auto format(const QString& s, FormatContext& ctx) {
       return fmt::format_to(ctx.out(), "{}", s.toStdString());
     }
@@ -24,10 +24,10 @@ namespace fmt
 
   template<>
   struct formatter<QByteArray> {
-    template<typename ParseContext>
+    template <typename ParseContext>
     constexpr static auto parse(ParseContext& ctx) { return ctx.begin(); }
 
-    template<typename FormatContext>
+    template <typename FormatContext>
     static auto format(const QByteArray& s, FormatContext& ctx) {
       return fmt::format_to(ctx.out(), "{}", s.toStdString());
     }
@@ -46,10 +46,10 @@ namespace fmt
 
   template<>
   struct formatter<QStringView> {
-    template<typename ParseContext>
+    template <typename ParseContext>
     constexpr static auto parse(ParseContext& ctx) { return ctx.begin(); }
 
-    template<typename FormatContext>
+    template <typename FormatContext>
     static auto format(const QStringView& s, FormatContext& ctx) {
       return fmt::format_to(ctx.out(), "{}", s.toString().toStdString());
     }
@@ -57,10 +57,10 @@ namespace fmt
 
   template<>
   struct formatter<QChar> {
-    template<typename ParseContext>
+    template <typename ParseContext>
     constexpr static auto parse(ParseContext& ctx) { return ctx.begin(); }
 
-    template<typename FormatContext>
+    template <typename FormatContext>
     static auto format(const QChar& s, FormatContext& ctx) {
       return fmt::format_to(ctx.out(), "{}", s.unicode());
     }
@@ -68,10 +68,10 @@ namespace fmt
 
   template<>
   struct formatter<QPoint> {
-    template<typename ParseContext>
+    template <typename ParseContext>
     constexpr static auto parse(ParseContext& ctx) { return ctx.begin(); }
 
-    template<typename FormatContext>
+    template <typename FormatContext>
     static auto format(const QPoint& s, FormatContext& ctx) {
       return fmt::format_to(ctx.out(), "[{}, {}]", s.x(), s.y());
     }
@@ -79,10 +79,10 @@ namespace fmt
 
   template<>
   struct formatter<QPointF> {
-    template<typename ParseContext>
+    template <typename ParseContext>
     constexpr static auto parse(ParseContext& ctx) { return ctx.begin(); }
 
-    template<typename FormatContext>
+    template <typename FormatContext>
     static auto format(const QPointF& s, FormatContext& ctx) {
       return fmt::format_to(ctx.out(), "[{}, {}]", s.x(), s.y());
     }
@@ -91,10 +91,10 @@ namespace fmt
 #if defined QT_POSITIONING_LIB
   template<>
   struct formatter<QGeoCoordinate> {
-    template<typename ParseContext>
+    template <typename ParseContext>
     constexpr static auto parse(ParseContext& ctx) { return ctx.begin(); }
 
-    template<typename FormatContext>
+    template <typename FormatContext>
     static auto format(const QGeoCoordinate& s, FormatContext& ctx) {
       return fmt::format_to(ctx.out(), "{}", s.toString().toStdString());
     }

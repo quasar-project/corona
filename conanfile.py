@@ -33,6 +33,8 @@ class CoronaRecipe(ConanFile):
         self.requires("floppy/1.2.3-logging-preview", transitive_headers=True, transitive_libs=True)
         self.requires("magic_enum/0.9.5", transitive_headers=True, transitive_libs=True)
         self.requires("reflect-cpp/0.11.1")
+        if self.options.standalone:
+            self.requires("tomlplusplus/[>=3.0.1]")
         if self.options.test:
             self.requires("gtest/[>=1.10.0]")
         if self.options.self_sufficient:
@@ -60,3 +62,17 @@ class CoronaRecipe(ConanFile):
         cmake = CMake(self)
         cmake.configure()
         cmake.build()
+
+    #  def package(self):
+    #         cmake = CMake(self)
+    #         cmake.install()
+    #         rmdir(self, os.path.join(self.package_folder, "lib", "cmake"))
+    #         rmdir(self, os.path.join(self.package_folder, "lib", "pkgconfig"))
+    #         rmdir(self, os.path.join(self.package_folder, "res"))
+    #         rmdir(self, os.path.join(self.package_folder, "share"))
+    #
+    #     def package_info(self):
+    #         self.cpp_info.set_property("cmake_file_name", "flavor")
+    #         self.cpp_info.set_property("cmake_target_name", "flavor::flavor")
+    #         self.cpp_info.libs = ["flavor"]
+    #         self.cpp_info.requires = ["magic_enum::magic_enum", "leaf::leaf", "fmt-qt::fmt-qt", "qmlbind20::qmlbind20", "tomlplusplus::tomlplusplus"]
