@@ -13,7 +13,6 @@ using std::istreambuf_iterator;
 using namespace std::literals;
 namespace me = magic_enum;
 
-
 namespace corona::standalone::gui::theme
 {
   constexpr auto ROOT_SUBDIRECTORY = "gui"sv;
@@ -28,6 +27,9 @@ namespace corona::standalone::gui::theme
     ))
     , folder_(location[floppy::filesystem::application_dirs::dir::data] / THEMES_SUBDIRECTORY)
   {
+    if(not this->cfg_)
+      llog::error()("failed to load theme configuration");
+    this->cfg_.load();
     if(not exists(this->folder_)) {
       llog::trace()("created missing theme folder: {}", this->folder_.generic_string());
       create_directories(this->folder_);
@@ -87,7 +89,7 @@ namespace corona::standalone::gui::theme
         if(contents.value().meta.name == this->cfg_().active)
           return entry.path();
       }
-      throw std::runtime_error("no theme found with name: "s + this->cfg_().active);
+      return none;
     }();
 
     if(not active_file) {
@@ -161,9 +163,11 @@ auto fl::serialization::deserialize<fl::serialization::format::toml>(std::basic_
   }
   try {
     res.active = in["active"].value<string>().value();
-    res.mode = me::enum_cast<corona::standalone::gui::theme::Mode>(in["mode"].value<string>().value()).value();
+    res.mode = in["mode"].value<string>().value() == "Light"
+      ? corona::standalone::gui::theme::Mode::Light
+      : corona::standalone::gui::theme::Mode::Dark;
   } catch(std::exception const& err) {
     throw serialization_error(format::toml);
   }
-  return {};
+  return res;
 }

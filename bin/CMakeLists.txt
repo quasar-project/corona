@@ -71,6 +71,7 @@ qt_add_resources(${CORONA_STANDALONE_NAME}
   PREFIX "/qml"
   FILES
     qml/Main.qml
+    qml/theme/CircularChanger.qml
 )
 
 target_sources(${CORONA_STANDALONE_NAME}
@@ -81,6 +82,7 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/reveal.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/theme.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/values.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/qml/theme_wrapper.cc
     ${CORONA_OUTPUT_SET}
 )
 

@@ -1,8 +1,11 @@
 #pragma once
 
 #include <floppy/directories.h>
-#include <floppy/configuration.h>
 #include <corona-standalone/gui/theme/values.hh>
+
+#if not defined(Q_MOC_RUN)
+# include <floppy/configuration.h>
+#endif
 
 namespace corona::standalone::gui::theme
 {

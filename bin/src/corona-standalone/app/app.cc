@@ -10,6 +10,7 @@
 #include <floppy/directories.h>
 #include <corona-standalone/utility/formatters.hh>
 #include <corona-standalone/app/ui_logger.hh>
+#include <corona-standalone/gui/theme/qml/theme_wrapper.hh>
 
 namespace me = magic_enum;
 
@@ -33,14 +34,13 @@ namespace corona::standalone::app
     impl();
 
     fl::filesystem::application_dirs dirs;
-    /// theme (todo)
+    fl::box<gui::theme::qml::ThemeWrapper> theme;
   };
 
   Corona::impl::impl()
     : dirs(fl::filesystem::application_dirs(corona::standalone::app::meta::corona_meta))
-  {
-    // theme instance (todo)
-  }
+    , theme(fl::make_box<gui::theme::qml::ThemeWrapper>(nullptr))
+  {}
 
   Corona::Corona(int& args, char** argv)
     : IApplication(args, argv)
@@ -54,6 +54,8 @@ namespace corona::standalone::app
     Corona::setOrganizationName(corona::standalone::app::meta::corona_meta.organization().data());
     Corona::setOrganizationDomain(corona::standalone::app::meta::corona_meta.domain().data());
     ::qInstallMessageHandler(UILogger::message_handler);
+
+    ::qmlRegisterSingletonInstance("io.corona.standalone.theme", 1, 0, "Theme", impl_->theme.ptr_mut());
   }
   auto Corona::with_icon(string_view const path) -> Corona& {
     llog::trace()("app icon is set to \'{}\'", path);
