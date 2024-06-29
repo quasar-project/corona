@@ -1,5 +1,8 @@
 #include <corona-standalone/app/app.hh>
 
+#include <fstream>
+#include <qfile.h>
+#include <qfileinfo.h>
 #include <qqml.h>
 #include <qqmlcomponent.h>
 #include <qqmlcontext.h>
@@ -10,6 +13,7 @@
 #include <floppy/directories.h>
 #include <corona-standalone/utility/formatters.hh>
 #include <corona-standalone/app/ui_logger.hh>
+#include <corona-standalone/app/default_themes.hh>
 #include <corona-standalone/gui/theme/qml/theme_wrapper.hh>
 
 namespace me = magic_enum;
@@ -33,6 +37,9 @@ namespace corona::standalone::app
   {
     impl();
 
+    auto emplace_themes() -> void;
+
+
     fl::filesystem::application_dirs dirs;
     fl::box<gui::theme::qml::ThemeWrapper> theme;
   };
@@ -41,6 +48,17 @@ namespace corona::standalone::app
     : dirs(fl::filesystem::application_dirs(corona::standalone::app::meta::corona_meta))
     , theme(fl::make_box<gui::theme::qml::ThemeWrapper>(nullptr))
   {}
+
+  auto Corona::impl::emplace_themes() -> void {
+    llog::debug()("emplacing application themes");
+    for(auto const& path : default_themes) {
+      auto const stem = ::QFileInfo(path.data()).fileName().toStdString();
+      if(not ::QFile::copy(path.data(), (this->theme.ref_mut().unwrap().folder() / stem).string().data()))
+        llog::error()("failed to copy {} to {}", path.data(), (this->theme.ref_mut().unwrap().folder() / stem).string().data());
+      else
+        llog::trace()("emplaced theme \'{}\'", stem);
+    }
+  }
 
   Corona::Corona(int& args, char** argv)
     : IApplication(args, argv)
@@ -55,8 +73,13 @@ namespace corona::standalone::app
     Corona::setOrganizationDomain(corona::standalone::app::meta::corona_meta.domain().data());
     ::qInstallMessageHandler(UILogger::message_handler);
 
+    this->impl_->emplace_themes();
+
     ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Theme", impl_->theme.ptr_mut());
   }
+
+  Corona::~Corona() = default;
+
   auto Corona::with_icon(string_view const path) -> Corona& {
     llog::trace()("app icon is set to \'{}\'", path);
     Corona::setWindowIcon(::platform_dependent_icon(path));
@@ -89,5 +112,8 @@ namespace corona::standalone::app
     return Corona::exec();
   }
 
-  Corona::~Corona() = default;
+  auto Corona::dirs() const -> fl::filesystem::application_dirs const& { return this->impl_->dirs; }
+  auto Corona::dirs_mut() -> fl::filesystem::application_dirs& { return this->impl_->dirs; }
+  auto Corona::theme() const -> gui::theme::qml::ThemeWrapper const& { return *this->impl_->theme; }
+  auto Corona::theme_mut() -> gui::theme::qml::ThemeWrapper& { return *this->impl_->theme; }
 } // namespace corona::standalone::app

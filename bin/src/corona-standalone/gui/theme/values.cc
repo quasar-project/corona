@@ -224,5 +224,5 @@ auto fl::serialization::deserialize<fl::serialization::format::toml>(std::basic_
   } catch(std::exception const& err) {
     throw fl::serialization::serialization_error(serialization::format::toml);
   }
-  return {};
+  return res;
 }

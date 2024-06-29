@@ -19,11 +19,11 @@ namespace corona::standalone::gui::theme
 } // namespace corona::standalone::gui::theme
 
 template <>
-auto fl::serialization::serialize<fl::serialization::format::toml>(corona::standalone::gui::theme::ThemeConfiguration const& value)
+auto fl::serialization::serialize<fl::serialization::format::yaml>(corona::standalone::gui::theme::ThemeConfiguration const& value)
   -> std::basic_string<char>;
 
 template <>
-auto fl::serialization::deserialize<fl::serialization::format::toml>(std::basic_string<char> const& value)
+auto fl::serialization::deserialize<fl::serialization::format::yaml>(std::basic_string<char> const& value)
   -> corona::standalone::gui::theme::ThemeConfiguration;
 
 namespace corona::standalone::gui::theme
@@ -48,7 +48,7 @@ namespace corona::standalone::gui::theme
     [[nodiscard]] auto emplace_default() -> fs::path;
     [[nodiscard]] static auto read_theme(fs::path const& path) -> option<ThemeData>;
 
-    fl::configuration_file<fl::serialization::format::toml, ThemeConfiguration> cfg_;
+    fl::configuration_file<fl::serialization::format::yaml, ThemeConfiguration> cfg_;
     fs::path folder_;
     ThemeData active_;
   };

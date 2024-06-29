@@ -41,6 +41,10 @@ class CoronaRecipe(ConanFile):
             self.requires("boost/[>=1.85.0]", transitive_headers=True, transitive_libs=True)
             # qt6
 
+    def configure(self):
+        self.options["reflect-cpp"].with_json = True
+        self.options["reflect-cpp"].with_yaml = True
+
     def layout(self):
         cmake_layout(self)
 

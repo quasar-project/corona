@@ -54,6 +54,7 @@ qt_add_resources(${CORONA_STANDALONE_NAME}
     resources/icon.svg
     resources/icon.png
     resources/icon.ico
+    resources/themes/gruvbox.toml
 )
 
 qt_add_resources(${CORONA_STANDALONE_NAME}

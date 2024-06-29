@@ -2,7 +2,8 @@
 
 #include <fstream>
 #include <sstream>
-#include <toml++/toml.h>
+#include <rfl.hpp>
+#include <rfl/yaml.hpp>
 #include <magic_enum/magic_enum.hpp>
 
 using std::string;
@@ -20,8 +21,8 @@ namespace corona::standalone::gui::theme
   constexpr auto DEFAULT_THEME_FILENAME = "default-autogen.toml"sv;
 
   Theme::Theme(fl::filesystem::application_dirs const& location)
-    : cfg_(fl::configuration_file<fl::serialization::format::toml, ThemeConfiguration>(
-      "theme_config.toml",
+    : cfg_(fl::configuration_file<fl::serialization::format::yaml, ThemeConfiguration>(
+      "theme_config.yml",
       location[floppy::filesystem::application_dirs::dir::config] / ROOT_SUBDIRECTORY,
       fl::saving_policy::autosave
     ))
@@ -61,7 +62,6 @@ namespace corona::standalone::gui::theme
       return;
     }
     this->cfg_().mode = mode;
-    llog::debug()("set theme mode to `{}`", me::enum_name(mode));
   }
 
   auto Theme::swap_mode() -> void {
@@ -121,7 +121,7 @@ namespace corona::standalone::gui::theme
     return path;
   }
 
-  auto Theme::read_theme(const fs::path& path) -> option<ThemeData> {
+  auto Theme::read_theme(fs::path const& path) -> option<ThemeData> {
     auto stream = ifstream(path);
     if(not stream) {
       llog::warn()("failed to open theme file: {}", path.generic_string());
@@ -141,33 +141,13 @@ namespace corona::standalone::gui::theme
   }
 } // namespace corona::standalone::gui::theme
 
-template <>
-auto fl::serialization::serialize<fl::serialization::format::toml>(corona::standalone::gui::theme::ThemeConfiguration const& value)
-  -> std::basic_string<char> {
-  auto const out = toml::table{
-    {"active", value.active},
-    {"mode", me::enum_name(value.mode)}
-  };
-  return (std::stringstream() << out).str();
+namespace s = fl::serialization;
+namespace csgt = corona::standalone::gui::theme;
+
+template <> auto s::serialize<s::format::yaml>(csgt::ThemeConfiguration const& value) -> std::basic_string<char> {
+  return rfl::yaml::write(value);
 }
 
-template <>
-auto fl::serialization::deserialize<fl::serialization::format::toml>(std::basic_string<char> const& value)
-  -> corona::standalone::gui::theme::ThemeConfiguration {
-  auto res = corona::standalone::gui::theme::ThemeConfiguration{};
-  auto in = toml::table();
-  try {
-    in = toml::parse(value);
-  } catch(toml::parse_error const& e) {
-    throw serialization_error(format::toml);
-  }
-  try {
-    res.active = in["active"].value<string>().value();
-    res.mode = in["mode"].value<string>().value() == "Light"
-      ? corona::standalone::gui::theme::Mode::Light
-      : corona::standalone::gui::theme::Mode::Dark;
-  } catch(std::exception const& err) {
-    throw serialization_error(format::toml);
-  }
-  return res;
+template <> auto s::deserialize<s::format::yaml>(std::basic_string<char> const& value) -> csgt::ThemeConfiguration {
+  return rfl::yaml::read<corona::standalone::gui::theme::ThemeConfiguration>(value).value();
 }
