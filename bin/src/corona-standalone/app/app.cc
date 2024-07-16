@@ -53,7 +53,10 @@ namespace corona::standalone::app
     llog::debug()("emplacing application themes");
     for(auto const& path : default_themes) {
       auto const stem = ::QFileInfo(path.data()).fileName().toStdString();
-      if(not ::QFile::copy(path.data(), (this->theme.ref_mut().unwrap().folder() / stem).string().data()))
+      auto const target = (this->theme.ref_mut().unwrap().folder() / stem).string();
+      if(::QFile::exists(target.data()))
+        continue;
+      if(not ::QFile::copy(path.data(), target.data()))
         llog::error()("failed to copy {} to {}", path.data(), (this->theme.ref_mut().unwrap().folder() / stem).string().data());
       else
         llog::trace()("emplaced theme \'{}\'", stem);

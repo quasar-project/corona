@@ -36,6 +36,7 @@ cmake_print_properties(TARGETS ${CORONA_STANDALONE_NAME} PROPERTIES
 )
 
 find_package(tomlplusplus REQUIRED)
+find_package(imgui REQUIRED)
 
 message(STATUS "[${CORONA_STANDALONE_NAME}] generating meta files...")
 if(WIN32)
@@ -84,6 +85,8 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/theme.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/values.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/qml/theme_wrapper.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/imgui/qrhiimgui.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/imgui/qrhiimguiitem.cc
     ${CORONA_OUTPUT_SET}
 )
 
@@ -93,8 +96,12 @@ target_link_libraries(${CORONA_STANDALONE_NAME}
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     tomlplusplus::tomlplusplus
+    imgui::imgui
     Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::Gui
+    Qt${QT_VERSION_MAJOR}::GuiPrivate
     Qt${QT_VERSION_MAJOR}::Quick
+    Qt${QT_VERSION_MAJOR}::QuickPrivate
     Qt${QT_VERSION_MAJOR}::QuickControls2
     Qt${QT_VERSION_MAJOR}::Positioning
     Qt${QT_VERSION_MAJOR}::Location
