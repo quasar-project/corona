@@ -29,7 +29,8 @@ namespace ImGui
      public:
       enum class flavor
       {
-        dracula
+        dracula,
+        dark_high_contrast
       };
 
       enum class color
@@ -85,30 +86,60 @@ namespace ImGui
       }
 
       constexpr explicit palette([[maybe_unused]] flavor const f)
-        : m_colors {
-            vec4_from_hex("#000000"),  // black
-            vec4_from_hex("#1A1A1A"),  // dark_background
-            vec4_from_hex("#21212B"),  // mantle
-            vec4_from_hex("#282A36"),  // background
-            vec4_from_hex("#292936"),  // selection_background (surface0)
-            vec4_from_hex("#303340"),  // surface1
-            vec4_from_hex("#333845"),  // surface2
-            vec4_from_hex("#44475A"),  // currentLine
-            vec4_from_hex("#44475A"),  // selection
-            vec4_from_hex("#7F7F7F"),  // dark_foreground
-            vec4_from_hex("#F8F8F2"),  // foreground
-            vec4_from_hex("#6272A4"),  // comment
-            vec4_from_hex("#8BE9FD"),  // cyan
-            vec4_from_hex("#50FA7B"),  // green
-            vec4_from_hex("#FFB86C"),  // orange
-            vec4_from_hex("#FF79C6"),  // pink
-            vec4_from_hex("#705E9C"),  // dark_purple
-            vec4_from_hex("#BD93F9"),  // purple
-            vec4_from_hex("#D694FF"),  // light_purple
-            vec4_from_hex("#FF5555"),  // red
-            vec4_from_hex("#F1FA8C"),  // yellow
-          }
-      {}
+      {
+        switch(f) {
+          case flavor::dracula:
+            this->m_colors = {
+              vec4_from_hex("#000000"),  // black
+                vec4_from_hex("#1A1A1A"),  // dark_background
+                vec4_from_hex("#21212B"),  // mantle
+                vec4_from_hex("#282A36"),  // background
+                vec4_from_hex("#292936"),  // selection_background (surface0)
+                vec4_from_hex("#303340"),  // surface1
+                vec4_from_hex("#333845"),  // surface2
+                vec4_from_hex("#44475A"),  // currentLine
+                vec4_from_hex("#44475A"),  // selection
+                vec4_from_hex("#7F7F7F"),  // dark_foreground
+                vec4_from_hex("#F8F8F2"),  // foreground
+                vec4_from_hex("#6272A4"),  // comment
+                vec4_from_hex("#8BE9FD"),  // cyan
+                vec4_from_hex("#50FA7B"),  // green
+                vec4_from_hex("#FFB86C"),  // orange
+                vec4_from_hex("#FF79C6"),  // pink
+                vec4_from_hex("#705E9C"),  // dark_purple
+                vec4_from_hex("#BD93F9"),  // purple
+                vec4_from_hex("#D694FF"),  // light_purple
+                vec4_from_hex("#FF5555"),  // red
+                vec4_from_hex("#F1FA8C"),  // yellow
+            };
+            break;
+          case flavor::dark_high_contrast:
+            this->m_colors = {
+              vec4_from_hex("#000000"),  // black
+              vec4_from_hex("#0a0d12"),  // dark_background
+              vec4_from_hex("#0a0d12"),  // mantle
+              vec4_from_hex("#0d1117"),  // background
+              vec4_from_hex("#1b1f23"),  // selection_background (surface0)
+              vec4_from_hex("#1f2428"),  // surface1
+              vec4_from_hex("#171e27"),  // surface2
+              vec4_from_hex("#2f363d"),  // currentLine
+              vec4_from_hex("#44475A"),  // selection
+              vec4_from_hex("#444d56"),  // dark_foreground
+              vec4_from_hex("#e1e4e8"),  // foreground
+              vec4_from_hex("#959da5"),  // comment
+              vec4_from_hex("#0366d6"),  // cyan
+              vec4_from_hex("#34d058"),  // green
+              vec4_from_hex("#ffab70"),  // orange
+              vec4_from_hex("#f97583"),  // pink
+              vec4_from_hex("#705E9C"),  // dark_purple
+              vec4_from_hex("#BD93F9"),  // purple
+              vec4_from_hex("#D694FF"),  // light_purple
+              vec4_from_hex("#ea4a5a"),  // red
+              vec4_from_hex("#F1FA8C"),  // yellow
+            };
+            break;
+        }
+      }
 
       [[nodiscard]] constexpr auto operator[](color const col) const -> vec4 const& {
         return this->m_colors[static_cast<usize>(col)];
@@ -232,7 +263,7 @@ namespace ImGui
       }
     };
 
-    constexpr inline auto default_palette = palette(palette::flavor::dracula);
+    constexpr inline auto default_palette = palette(palette::flavor::dark_high_contrast);
   } // namespace ext
 } // namespace ImGui
 

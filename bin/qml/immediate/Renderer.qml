@@ -11,6 +11,7 @@ Rectangle {
     anchors.fill: parent
     enabled: this.visible
     visible: this.opacity > 0
+    opacity: 0
     Behavior on opacity { NumberAnimation { duration: 200; easing.type: Easing.InOutCubic } }
 
     function toggle() {
