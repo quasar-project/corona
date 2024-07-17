@@ -1,3 +1,7 @@
+<a href="https://quasar-project.github.io/corona/index.html">
+<img src="https://img.shields.io/badge/documentation-doxygen-white?style=for-the-badge&logo=readthedocs" alt="docs_badge"/>
+</a>
+
 ## Build
 
 ### Windows (x64)
