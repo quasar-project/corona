@@ -8,6 +8,7 @@ import QtQuick.Layouts
 
 import io.corona.standalone.app as App
 import io.corona.standalone.theme as ThemeImpl
+import io.corona.standalone.imgui as ImguiModule
 
 // import "layouts" as Layouts
 // import "utils" as Utils
@@ -58,5 +59,16 @@ ApplicationWindow {
     }
 
     ThemeImpl.CircularChanger { id: themeChanger; rootItem: root; theme: App.Theme; }
+    ImguiModule.ImmediateGuiGenericRenderer {
+        id: imgui
+        objectName: "imgui"
+        anchors.fill: parent
+        SequentialAnimation on opacity {
+            id: __opacityAnim__
+            running: false
+            NumberAnimation { from: 1; to: 0; duration: 500 }
+            NumberAnimation { from: 0; to: 1; duration: 500 }
+        }
+    }
 }
 

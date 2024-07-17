@@ -27,6 +27,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+# -- dependencies --
 find_package(floppy REQUIRED)
 find_package(reflect-cpp REQUIRED)
 find_package(magic_enum REQUIRED)

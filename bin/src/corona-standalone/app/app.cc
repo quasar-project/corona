@@ -15,8 +15,38 @@
 #include <corona-standalone/app/ui_logger.hh>
 #include <corona-standalone/app/default_themes.hh>
 #include <corona-standalone/gui/theme/qml/theme_wrapper.hh>
+#include <corona-standalone/gui/immediate/generic.hh>
+
+#include <imgui.h>
 
 namespace me = magic_enum;
+
+namespace test {
+  static bool showDemoWindow = true;
+
+  static void frame()
+  {
+    ImGuiIO &io(ImGui::GetIO());
+    io.FontAllowUserScaling = true; // enable ctrl+wheel on windows
+    io.IniFilename = nullptr; // no imgui.ini
+
+    ImGui::ShowDemoWindow(&showDemoWindow);
+
+    ImGui::SetNextWindowPos(ImVec2(50, 120), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(400, 100), ImGuiCond_FirstUseEver);
+    ImGui::Begin("Test");
+    static char s[512];
+    bool print = false;
+    if (ImGui::InputText("qDebug", s, sizeof(s), ImGuiInputTextFlags_EnterReturnsTrue))
+      print = true;
+    if (ImGui::Button("Print"))
+      print = true;
+    if (print)
+      qDebug("%s", s);
+    ImGui::End();
+  }
+
+} // namespace Test
 
 namespace
 {
@@ -39,9 +69,10 @@ namespace corona::standalone::app
 
     auto emplace_themes() -> void;
 
-
     fl::filesystem::application_dirs dirs;
     fl::box<gui::theme::qml::ThemeWrapper> theme;
+    gui::immediate::GenericItem* imgui{nullptr};
+    QQuickWindow* quick_window{nullptr};
   };
 
   Corona::impl::impl()
@@ -112,6 +143,15 @@ namespace corona::standalone::app
       llog::info()("cleaning up and quitting");
       engine.quit();
     });
+    this->impl_->quick_window = qobject_cast<::QQuickWindow*>(engine.rootObjects().front());
+    auto* imgui_ptr = this->quick_window()->findChild<gui::immediate::GenericItem*>("imgui");
+    if(imgui_ptr == nullptr)
+      fl::panic("failed to find imgui in qml scene");
+    this->impl_->imgui = imgui_ptr;
+    llog::trace()("found imgui local pointer: {}", static_cast<void*>(imgui_ptr));
+    // test
+    this->imgui_mut() += test::frame;
+    // end test
     return Corona::exec();
   }
 
@@ -119,4 +159,7 @@ namespace corona::standalone::app
   auto Corona::dirs_mut() -> fl::filesystem::application_dirs& { return this->impl_->dirs; }
   auto Corona::theme() const -> gui::theme::qml::ThemeWrapper const& { return *this->impl_->theme; }
   auto Corona::theme_mut() -> gui::theme::qml::ThemeWrapper& { return *this->impl_->theme; }
+  auto Corona::imgui() const -> gui::immediate::GenericItem const& { return *this->impl_->imgui; }
+  auto Corona::imgui_mut() -> gui::immediate::GenericItem& { return *this->impl_->imgui; }
+  auto Corona::quick_window() const -> QQuickWindow* { return this->impl_->quick_window; }
 } // namespace corona::standalone::app

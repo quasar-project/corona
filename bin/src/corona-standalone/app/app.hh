@@ -5,10 +5,16 @@
 #include <corona-standalone/app/iapplication.hh>
 #include <corona-standalone/app/meta.hh>
 
+/* fwd */
+class QQuickWindow;
 namespace floppy::filesystem { class application_dirs; } // namespace floppy::filesystem
 namespace corona::standalone
 {
-  namespace gui::theme::qml { class ThemeWrapper; } // namespace corona::standalone::gui::theme::qml
+  namespace gui {
+    namespace theme::qml { class ThemeWrapper; } // namespace theme::qml
+    namespace immediate { class GenericItem; } // namespace immediate
+  } // namespace gui
+
   namespace app
   {
     class Corona final : public IApplication<QGuiApplication> // NOLINT(*-special-member-functions) (reason: pinned)
@@ -27,6 +33,11 @@ namespace corona::standalone
 
       [[nodiscard]] auto theme() const -> gui::theme::qml::ThemeWrapper const&;
       [[nodiscard]] auto theme_mut() -> gui::theme::qml::ThemeWrapper&;
+
+      [[nodiscard]] auto imgui() const -> gui::immediate::GenericItem const&;
+      [[nodiscard]] auto imgui_mut() -> gui::immediate::GenericItem&;
+
+      [[nodiscard]] auto quick_window() const -> QQuickWindow*;
 
      private:
       struct impl;

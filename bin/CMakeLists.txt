@@ -19,26 +19,10 @@ elseif(WIN32)
   set(OS_BUNDLE WIN32)
 endif()
 
-add_executable(${CORONA_STANDALONE_NAME})
-
-set_target_properties(${CORONA_STANDALONE_NAME} PROPERTIES
-  CXX_STANDARD 23
-  CXX_STANDARD_REQUIRED ON
-  CXX_EXTENSIONS OFF
-  POSITION_INDEPENDENT_CODE ON
-)
-
-cmake_print_properties(TARGETS ${CORONA_STANDALONE_NAME} PROPERTIES
-  CXX_STANDARD
-  CXX_STANDARD_REQUIRED
-  CXX_EXTENSIONS
-  POSITION_INDEPENDENT_CODE
-)
-
+# -- dependencies --
 find_package(tomlplusplus REQUIRED)
 find_package(imgui REQUIRED)
-find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt${QT_VERSION_MAJOR}
+find_package(Qt6
   COMPONENTS
     Core
     Quick
@@ -48,6 +32,26 @@ find_package(Qt${QT_VERSION_MAJOR}
     ShaderTools
   REQUIRED
 )
+
+# -- executable --
+qt_add_executable(${CORONA_STANDALONE_NAME})
+set_target_properties(${CORONA_STANDALONE_NAME} PROPERTIES
+  CXX_STANDARD 23
+  CXX_STANDARD_REQUIRED ON
+  CXX_EXTENSIONS OFF
+  POSITION_INDEPENDENT_CODE ON
+)
+cmake_print_properties(TARGETS ${CORONA_STANDALONE_NAME} PROPERTIES
+  CXX_STANDARD
+  CXX_STANDARD_REQUIRED
+  CXX_EXTENSIONS
+  POSITION_INDEPENDENT_CODE
+)
+
+set(imgui_base ${CMAKE_CURRENT_SOURCE_DIR}/libs/qrhiimgui)
+set(imgui_target ${CORONA_STANDALONE_NAME})
+include(${imgui_base}/imgui.cmakeinc)
+include(${imgui_base}/imguiquick.cmakeinc)
 
 message(STATUS "[${CORONA_STANDALONE_NAME}] generating meta files...")
 if(WIN32)
@@ -99,6 +103,7 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/theme.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/values.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/qml/theme_wrapper.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/generic.cc
     ${CORONA_OUTPUT_SET}
 )
 
@@ -108,15 +113,15 @@ target_link_libraries(${CORONA_STANDALONE_NAME}
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     tomlplusplus::tomlplusplus
-    imgui::imgui
-    Qt${QT_VERSION_MAJOR}::Core
-    Qt${QT_VERSION_MAJOR}::Gui
-    Qt${QT_VERSION_MAJOR}::GuiPrivate
-    Qt${QT_VERSION_MAJOR}::Quick
-    Qt${QT_VERSION_MAJOR}::QuickPrivate
-    Qt${QT_VERSION_MAJOR}::QuickControls2
-    Qt${QT_VERSION_MAJOR}::Positioning
-    Qt${QT_VERSION_MAJOR}::Location
+    #imgui::imgui
+    Qt::Core
+    Qt::Gui
+    Qt::GuiPrivate
+    Qt::Quick
+    Qt::QuickPrivate
+    Qt::QuickControls2
+    Qt::Positioning
+    Qt::Location
 )
 
 target_compile_definitions(${CORONA_STANDALONE_NAME}
@@ -133,7 +138,12 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU
   target_compile_definitions(${CORONA_STANDALONE_NAME} PRIVATE -DBOOST_ASIO_HAS_STD_INVOKE_RESULT=1)
 endif()
 
-target_include_directories(${CORONA_STANDALONE_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_include_directories(${CORONA_STANDALONE_NAME}
+  PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/libs/qrhiimgui
+    ${CMAKE_CURRENT_SOURCE_DIR}/libs/qrhiimgui/imgui
+)
 
 # tmp workaround for debug
 if(WIN32 AND ${CMAKE_CXX_COMPILER_ID} MATCHES "GNU|Clang|Mingw|MINGW" AND NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
