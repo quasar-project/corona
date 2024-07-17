@@ -18,7 +18,7 @@
 *.csv linguist-detectable=true
 *.md linguist-detectable=true
 
-bin/libs/qrhiimgui/extern/** linguist-vendored
+bin/libs/qrhiimgui/imgui/** linguist-vendored
 
 *.gitattributes text
 .gitignore      text
