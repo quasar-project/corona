@@ -1,7 +1,5 @@
 #include <corona-standalone/gui/immediate/extensions.hh>
 
-#include <floppy/logging.h>
-
 namespace ImGui::ext
 {
   style::style(palette const& p, style::roundings const& r) noexcept
@@ -59,7 +57,5 @@ namespace ImGui::ext
     colors[ImGuiCol_PlotHistogramHovered] = p[foreground];
     colors[ImGuiCol_PlotLines] = p[yellow];
     colors[ImGuiCol_PlotLinesHovered] = p[orange];
-
-    fl::log::trace()("set new imgui style");
   }
 } // namespace ImGui::ext

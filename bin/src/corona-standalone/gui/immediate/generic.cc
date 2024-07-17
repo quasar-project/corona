@@ -25,5 +25,8 @@ namespace corona::standalone::gui::immediate
   auto GenericItem::frame() -> void {
     for(auto& callback : this->callbacks_)
       callback();
+
+    for(auto& drawable : this->drawables_)
+      drawable->draw_debug_frame();
   }
-}
+} // namespace corona::standalone::gui::immediate

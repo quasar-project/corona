@@ -1,10 +1,8 @@
 #include <corona-standalone/app/app.hh>
 
-#include <fstream>
 #include <qfile.h>
 #include <qfileinfo.h>
 #include <qqml.h>
-#include <qqmlcomponent.h>
 #include <qqmlcontext.h>
 #include <qqmlapplicationengine.h>
 #include <qquickwindow.h>
@@ -16,38 +14,9 @@
 #include <corona-standalone/app/default_themes.hh>
 #include <corona-standalone/gui/theme/qml/theme_wrapper.hh>
 #include <corona-standalone/gui/immediate/generic.hh>
-
-#include <imgui.h>
+#include <corona-standalone/gui/immediate/sink.hh>
 
 namespace me = magic_enum;
-
-namespace test {
-  static bool showDemoWindow = true;
-
-  static void frame()
-  {
-    ImGuiIO &io(ImGui::GetIO());
-    io.FontAllowUserScaling = true; // enable ctrl+wheel on windows
-    io.IniFilename = nullptr; // no imgui.ini
-
-    ImGui::ShowDemoWindow(&showDemoWindow);
-
-    ImGui::SetNextWindowPos(ImVec2(50, 120), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSize(ImVec2(400, 100), ImGuiCond_FirstUseEver);
-    ImGui::Begin("Test");
-    static char s[512];
-    bool print = false;
-    if (ImGui::InputText("qDebug", s, sizeof(s), ImGuiInputTextFlags_EnterReturnsTrue))
-      print = true;
-    if (ImGui::Button("Print"))
-      print = true;
-    if (print)
-      qDebug("%s", s);
-    ImGui::End();
-  }
-
-} // namespace Test
-
 namespace
 {
   [[nodiscard]] inline auto platform_dependent_icon(std::string_view const stem) -> QIcon {
@@ -72,6 +41,7 @@ namespace corona::standalone::app
     fl::filesystem::application_dirs dirs;
     fl::box<gui::theme::qml::ThemeWrapper> theme;
     gui::immediate::GenericItem* imgui{nullptr};
+    std::shared_ptr<gui::immediate::LogSink> imgui_sink{nullptr};
     QQuickWindow* quick_window{nullptr};
   };
 
@@ -98,9 +68,6 @@ namespace corona::standalone::app
     : IApplication(args, argv)
     , impl_(fl::make_box<impl>())
   {
-    llog::debug()("initialized {}", fl::source_location::current().function_name());
-    llog::info()("app: {}", corona::standalone::app::meta::corona_meta);
-    llog::info()("lib: {}", corona::meta::corona_meta);
     Corona::setApplicationName(corona::standalone::app::meta::corona_meta.name().data());
     Corona::setApplicationVersion(corona::standalone::app::meta::corona_meta.version().as_str().data());
     Corona::setOrganizationName(corona::standalone::app::meta::corona_meta.organization().data());
@@ -108,6 +75,11 @@ namespace corona::standalone::app
     ::qInstallMessageHandler(UILogger::message_handler);
 
     this->impl_->emplace_themes();
+    this->impl_->imgui_sink = gui::immediate::LogSink::create();
+    spdlog::default_logger()->sinks().push_back(this->impl_->imgui_sink);
+    llog::debug()("initialized {}", fl::source_location::current().function_name());
+    llog::info()("app: {}", corona::standalone::app::meta::corona_meta);
+    llog::info()("lib: {}", corona::meta::corona_meta);
 
     ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Theme", impl_->theme.ptr_mut());
   }
@@ -143,15 +115,17 @@ namespace corona::standalone::app
       llog::info()("cleaning up and quitting");
       engine.quit();
     });
+    auto& io = im::GetIO();
+    io.IniFilename = nullptr;
+    io.LogFilename = nullptr;
+    im::ext::style(im::ext::default_palette, im::ext::style::roundings{});
     this->impl_->quick_window = qobject_cast<::QQuickWindow*>(engine.rootObjects().front());
     auto* imgui_ptr = this->quick_window()->findChild<gui::immediate::GenericItem*>("imgui");
     if(imgui_ptr == nullptr)
       fl::panic("failed to find imgui in qml scene");
     this->impl_->imgui = imgui_ptr;
     llog::trace()("found imgui local pointer: {}", static_cast<void*>(imgui_ptr));
-    // test
-    this->imgui_mut() += test::frame;
-    // end test
+    this->imgui_mut() += this->impl_->imgui_sink.get();
     return Corona::exec();
   }
 
