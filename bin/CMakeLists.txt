@@ -90,6 +90,7 @@ qt_add_qml_module(${CORONA_STANDALONE_NAME}
   QML_FILES
     qml/Main.qml
     qml/theme/CircularChanger.qml
+    qml/immediate/Renderer.qml
   RESOURCE_PREFIX "/"
   NO_RESOURCE_TARGET_PATH
 )

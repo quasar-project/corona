@@ -9,6 +9,7 @@ namespace qml
     fmt::println("registering io.corona.standalone.gui qml types");
     qmlRegisterModule("io.corona.standalone.imgui", 1, 0);
     qmlRegisterType<corona::standalone::gui::immediate::GenericItem>("io.corona.standalone.imgui", 1, 0, "ImmediateGuiGenericRenderer");
+    qmlRegisterType(QUrl("qrc:/qml/immediate/Renderer.qml"), "io.corona.standalone.imgui", 1, 0, "ImmediateGuiMainRenderer");
     return true;
   }();
 } // namespace qml
