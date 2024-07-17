@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structcorona_1_1image_1_1metadata_1_1ExifMetadata.html" title="Exif metadata contents." alt="" coords="5,5,111,31"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,5,99,31"/>
+<area shape="rect" id="Node000001" href="$classcorona_1_1image_1_1Metadata.html" title="Image metadata generic class." alt="" coords="147,5,228,31"/>
+<area shape="poly" id="edge3_Node000000_Node000001" title=" " alt="" coords="114,16,146,16,146,21,114,21"/>
 </map>
