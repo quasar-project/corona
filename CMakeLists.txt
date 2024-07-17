@@ -33,16 +33,6 @@ find_package(magic_enum REQUIRED)
 #find_package(Protobuf REQUIRED)
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 find_package(Boost REQUIRED COMPONENTS system headers)
-find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt${QT_VERSION_MAJOR}
-  COMPONENTS
-    Core
-    Quick
-    QuickControls2
-    Positioning
-    Location
-  REQUIRED
-)
 
 add_library(${PROJECT_NAME})
 add_library(${PROJECT_NAMESPACE}${PROJECT_NAME} ALIAS ${PROJECT_NAME})

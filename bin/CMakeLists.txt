@@ -37,6 +37,17 @@ cmake_print_properties(TARGETS ${CORONA_STANDALONE_NAME} PROPERTIES
 
 find_package(tomlplusplus REQUIRED)
 find_package(imgui REQUIRED)
+find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt${QT_VERSION_MAJOR}
+  COMPONENTS
+    Core
+    Quick
+    QuickControls2
+    Positioning
+    Location
+    ShaderTools
+  REQUIRED
+)
 
 message(STATUS "[${CORONA_STANDALONE_NAME}] generating meta files...")
 if(WIN32)
@@ -69,11 +80,14 @@ qt_add_resources(${CORONA_STANDALONE_NAME}
     resources/icons/grid.svg
 )
 
-qt_add_resources(${CORONA_STANDALONE_NAME}
-  PREFIX "/qml"
-  FILES
+qt_add_qml_module(${CORONA_STANDALONE_NAME}
+  URI "Corona.Standalone"
+  VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
+  QML_FILES
     qml/Main.qml
     qml/theme/CircularChanger.qml
+  RESOURCE_PREFIX "/"
+  NO_RESOURCE_TARGET_PATH
 )
 
 target_sources(${CORONA_STANDALONE_NAME}
@@ -85,8 +99,6 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/theme.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/values.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/qml/theme_wrapper.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/imgui/qrhiimgui.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/imgui/qrhiimguiitem.cc
     ${CORONA_OUTPUT_SET}
 )
 
