@@ -101,6 +101,8 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/values.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/qml/theme_wrapper.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/generic.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/sink.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/extensions.cc
     ${CORONA_OUTPUT_SET}
 )
 
@@ -111,7 +113,6 @@ target_link_libraries(${CORONA_STANDALONE_NAME}
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     tomlplusplus::tomlplusplus
-    #imgui::imgui
     Qt::Core
     Qt::Gui
     Qt::GuiPrivate
