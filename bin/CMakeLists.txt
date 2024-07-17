@@ -19,23 +19,35 @@ elseif(WIN32)
   set(OS_BUNDLE WIN32)
 endif()
 
-add_executable(${CORONA_STANDALONE_NAME})
+# -- dependencies --
+find_package(tomlplusplus REQUIRED)
+find_package(imgui REQUIRED)
+find_package(Qt6
+  COMPONENTS
+    Core
+    Quick
+    QuickControls2
+    Positioning
+    Location
+    ShaderTools
+  REQUIRED
+)
+add_subdirectory(libs/qrhiimgui)
 
+# -- executable --
+qt_add_executable(${CORONA_STANDALONE_NAME})
 set_target_properties(${CORONA_STANDALONE_NAME} PROPERTIES
   CXX_STANDARD 23
   CXX_STANDARD_REQUIRED ON
   CXX_EXTENSIONS OFF
   POSITION_INDEPENDENT_CODE ON
 )
-
 cmake_print_properties(TARGETS ${CORONA_STANDALONE_NAME} PROPERTIES
   CXX_STANDARD
   CXX_STANDARD_REQUIRED
   CXX_EXTENSIONS
   POSITION_INDEPENDENT_CODE
 )
-
-find_package(tomlplusplus REQUIRED)
 
 message(STATUS "[${CORONA_STANDALONE_NAME}] generating meta files...")
 if(WIN32)
@@ -68,11 +80,15 @@ qt_add_resources(${CORONA_STANDALONE_NAME}
     resources/icons/grid.svg
 )
 
-qt_add_resources(${CORONA_STANDALONE_NAME}
-  PREFIX "/qml"
-  FILES
+qt_add_qml_module(${CORONA_STANDALONE_NAME}
+  URI "Corona.Standalone"
+  VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
+  QML_FILES
     qml/Main.qml
     qml/theme/CircularChanger.qml
+    qml/immediate/Renderer.qml
+  RESOURCE_PREFIX "/"
+  NO_RESOURCE_TARGET_PATH
 )
 
 target_sources(${CORONA_STANDALONE_NAME}
@@ -84,20 +100,28 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/theme.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/values.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/qml/theme_wrapper.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/generic.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/sink.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/info_widget.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/extensions.cc
     ${CORONA_OUTPUT_SET}
 )
 
 target_link_libraries(${CORONA_STANDALONE_NAME}
   PRIVATE
-    ${PROJECT_NAME}
+    corona
+    corona-standalone::qrhiimgui
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     tomlplusplus::tomlplusplus
-    Qt${QT_VERSION_MAJOR}::Core
-    Qt${QT_VERSION_MAJOR}::Quick
-    Qt${QT_VERSION_MAJOR}::QuickControls2
-    Qt${QT_VERSION_MAJOR}::Positioning
-    Qt${QT_VERSION_MAJOR}::Location
+    Qt::Core
+    Qt::Gui
+    Qt::GuiPrivate
+    Qt::Quick
+    Qt::QuickPrivate
+    Qt::QuickControls2
+    Qt::Positioning
+    Qt::Location
 )
 
 target_compile_definitions(${CORONA_STANDALONE_NAME}
@@ -114,10 +138,15 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU
   target_compile_definitions(${CORONA_STANDALONE_NAME} PRIVATE -DBOOST_ASIO_HAS_STD_INVOKE_RESULT=1)
 endif()
 
-target_include_directories(${CORONA_STANDALONE_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_include_directories(${CORONA_STANDALONE_NAME}
+  PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/libs/qrhiimgui
+    ${CMAKE_CURRENT_SOURCE_DIR}/libs/qrhiimgui/imgui
+)
 
 # tmp workaround for debug
-if(WIN32 AND ${CMAKE_CXX_COMPILER_ID} MATCHES "GNU|Clang|Mingw|MINGW" AND NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+if(WIN32 AND ${CMAKE_CXX_COMPILER_ID} MATCHES "GNU|Clang|Mingw|MINGW") #AND NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
   message(STATUS "[${CORONA_STANDALONE_NAME}] adding -mwindows linker opt (${CMAKE_CXX_COMPILER_ID})")
   target_link_options(${CORONA_STANDALONE_NAME} PRIVATE -mwindows)
 endif()

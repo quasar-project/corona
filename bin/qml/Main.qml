@@ -7,7 +7,8 @@ import QtPositioning
 import QtQuick.Layouts
 
 import io.corona.standalone.app as App
-import io.corona.standalone.theme as ThemeImpl
+import io.corona.standalone.theme as ThemeModule
+import io.corona.standalone.imgui as ImguiModule
 
 // import "layouts" as Layouts
 // import "utils" as Utils
@@ -57,6 +58,7 @@ ApplicationWindow {
         }
     }
 
-    ThemeImpl.CircularChanger { id: themeChanger; rootItem: root; theme: App.Theme; }
+    ImguiModule.ImmediateGuiMainRenderer { id: imguiRenderer; shortcut: "F5" }
+    ThemeModule.CircularChanger { id: themeChanger; rootItem: root; theme: App.Theme; }
 }
 
