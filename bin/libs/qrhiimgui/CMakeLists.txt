@@ -19,15 +19,15 @@ target_sources(${PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_draw.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_tables.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_widgets.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/qrhiimgui/qrhiimgui.h
   ${CMAKE_CURRENT_SOURCE_DIR}/qrhiimgui.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/qrhiimgui.h
-  ${CMAKE_CURRENT_SOURCE_DIR}/qrhiimguiitem.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/qrhiimgui/qrhiimguiitem.h
   ${CMAKE_CURRENT_SOURCE_DIR}/qrhiimguiitem.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/imgui
-  ${CMAKE_CURRENT_SOURCE_DIR}/include/qrhiimgui
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 target_link_libraries(${PROJECT_NAME}

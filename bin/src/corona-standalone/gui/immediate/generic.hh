@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <functional>
-#include <qrhiimguiitem.h>
+#include <qrhiimgui/qrhiimguiitem.h>
 
 namespace corona::standalone::gui::immediate
 {

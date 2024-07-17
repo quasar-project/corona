@@ -1,7 +1,7 @@
 // Copyright (C) 2022 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
 
-#include "qrhiimgui.h"
+#include <qrhiimgui/qrhiimgui.h>
 #include <QtCore/qfile.h>
 #include <QtGui/qguiapplication.h>
 #include <QtGui/qevent.h>
