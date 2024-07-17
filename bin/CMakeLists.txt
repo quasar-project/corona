@@ -32,6 +32,7 @@ find_package(Qt6
     ShaderTools
   REQUIRED
 )
+add_subdirectory(libs/qrhiimgui)
 
 # -- executable --
 qt_add_executable(${CORONA_STANDALONE_NAME})
@@ -47,11 +48,6 @@ cmake_print_properties(TARGETS ${CORONA_STANDALONE_NAME} PROPERTIES
   CXX_EXTENSIONS
   POSITION_INDEPENDENT_CODE
 )
-
-set(imgui_base ${CMAKE_CURRENT_SOURCE_DIR}/libs/qrhiimgui)
-set(imgui_target ${CORONA_STANDALONE_NAME})
-include(${imgui_base}/imgui.cmakeinc)
-include(${imgui_base}/imguiquick.cmakeinc)
 
 message(STATUS "[${CORONA_STANDALONE_NAME}] generating meta files...")
 if(WIN32)
@@ -110,7 +106,8 @@ target_sources(${CORONA_STANDALONE_NAME}
 
 target_link_libraries(${CORONA_STANDALONE_NAME}
   PRIVATE
-    ${PROJECT_NAME}
+    corona
+    corona-standalone::qrhiimgui
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     tomlplusplus::tomlplusplus
