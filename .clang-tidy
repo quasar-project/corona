@@ -15,6 +15,7 @@ Checks:
   llvm-namespace-comment,
   misc-*,
   readability-*,
+  -modernize-use-override,
   -readability-identifier-length,
   -readability-implicit-bool-conversion,
   -readability-braces-around-statements,
@@ -22,7 +23,6 @@ Checks:
   -readability-magic-numbers,
   -cppcoreguidelines-explicit-virtual-functions,
   -cppcoreguidelines-avoid-magic-numbers,
-  cppcoreguidelines-non-private-member-variables-in-classes,
   -misc-non-private-member-variables-in-classes,
   -misc-include-cleaner
 
