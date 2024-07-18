@@ -10,22 +10,19 @@
 
 namespace corona::standalone::gui::immediate
 {
-  struct custom_command_struct {
-    bool should_close = false;
-  };
+  struct custom_command_struct {};
 
   class terminal_commands : public ImTerm::basic_spdlog_terminal_helper<terminal_commands, custom_command_struct, std::mutex> {
    public:
     terminal_commands();
 
-    static std::vector<std::string> no_completion(argument_type&) { return {}; }
+    static auto no_completion(argument_type&) -> std::vector<std::string> { return {}; }
 
-    static void clear(argument_type&);
-    static void configure_term(argument_type&);
-    static std::vector<std::string> configure_term_autocomplete(argument_type&);
-    static void echo(argument_type&);
-    static void exit(argument_type&);
-    static void help(argument_type&);
-    static void quit(argument_type&);
+    static auto clear(argument_type&) -> void;
+    static auto configure_term(argument_type&) -> void;
+    static auto configure_term_autocomplete(argument_type&) -> std::vector<std::string>;
+    static auto echo(argument_type&) -> void;
+    static auto help(argument_type&) -> void;
+    static auto quit(argument_type&) -> void;
   };
 } // namespace corona::standalone::gui::immediate

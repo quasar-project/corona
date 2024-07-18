@@ -3,6 +3,7 @@
 #include <array>
 #include <optional>
 #include <charconv>
+#include <qguiapplication.h>
 #include <imterm/misc.hpp>
 
 namespace {
@@ -11,7 +12,6 @@ namespace {
     terminal_commands::command_type{"clear", "clears the terminal screen", terminal_commands::clear, terminal_commands::no_completion},
     terminal_commands::command_type{"configure_terminal", "configures terminal behaviour and appearance", terminal_commands::configure_term, terminal_commands::configure_term_autocomplete},
     terminal_commands::command_type{"echo", "prints text", terminal_commands::echo, terminal_commands::no_completion},
-    terminal_commands::command_type{"exit", "closes this terminal", terminal_commands::exit, terminal_commands::no_completion},
     terminal_commands::command_type{"help", "show this help", terminal_commands::help, terminal_commands::no_completion},
     terminal_commands::command_type{"print", "prints text", terminal_commands::echo, terminal_commands::no_completion},
     terminal_commands::command_type{"quit", "closes this application", terminal_commands::quit, terminal_commands::no_completion},
@@ -147,47 +147,41 @@ namespace {
 namespace corona::standalone::gui::immediate
 {
   terminal_commands::terminal_commands() {
-    for (const command_type& cmd : local_command_list)
+    for(const command_type& cmd : local_command_list)
       add_command_(cmd);
   }
 
-  void terminal_commands::clear(argument_type& arg) {
-    arg.term.clear();
-  }
+  void terminal_commands::clear(argument_type& arg) { arg.term.clear(); }
 
   void terminal_commands::configure_term(argument_type& arg) {
     using namespace cfg_term;
 
-    std::vector<std::string>& cl = arg.command_line;
-    if (cl.size() < 3) {
+    auto& cl = arg.command_line;
+    if(cl.size() < 3)
       arg.term.add_text_err("Not enough arguments");
-    }
-    if (cl[1] == strings[cmds::completion] && cl.size() == 3) {
-      if (cl[2] == strings[cmds::cpl_up]) {
+    if(cl[1] == strings[cmds::completion] && cl.size() == 3) {
+      if(cl[2] == strings[cmds::cpl_up])
         arg.term.set_autocomplete_pos(ImTerm::position::up);
-      } else if (cl[2] == strings[cmds::cpl_down]) {
+      else if (cl[2] == strings[cmds::cpl_down])
         arg.term.set_autocomplete_pos(ImTerm::position::down);
-      } else if (cl[2] == strings[cmds::cpl_disable]) {
+      else if (cl[2] == strings[cmds::cpl_disable])
         arg.term.set_autocomplete_pos(ImTerm::position::nowhere);
-      } else {
+      else
         arg.term.add_formatted_err("Unknown completion parameter: {}", cl[2]);
-      }
     } else if (cl[1] == strings[cmds::colors]) {
-      if (cl.size() == 3 && cl[2] == strings[cmds::col_list_themes]) {
+      if(cl.size() == 3 && cl[2] == strings[cmds::col_list_themes]) {
         unsigned long max_size = 0;
-        for (const ImTerm::theme& theme : ImTerm::themes::list) {
+        for (const ImTerm::theme& theme : ImTerm::themes::list)
           max_size = std::max(max_size, static_cast<unsigned long>(theme.name.size()));
-        }
-
         arg.term.add_text("Available styles: ");
-        for (const ImTerm::theme& theme : ImTerm::themes::list) {
+        for(auto const& theme : ImTerm::themes::list) {
           std::string str("      ");
           str += theme.name;
           arg.term.add_text(std::move(str));
         }
-      } else if(cl.size() == 3 && cl[2] == strings[cmds::col_reset_theme]) {
+      } else if(cl.size() == 3 && cl[2] == strings[cmds::col_reset_theme])
         arg.term.reset_colors();
-      } else if (cl.size() == 4 && cl[2] == strings[cmds::col_set_theme]) {
+      else if (cl.size() == 4 && cl[2] == strings[cmds::col_set_theme]) {
         for (const ImTerm::theme& theme : ImTerm::themes::list) {
           if (theme.name == cl[3]) {
             arg.term.theme() = theme;
@@ -198,11 +192,10 @@ namespace corona::standalone::gui::immediate
       } else if (((cl.size() == 8 || cl.size() == 7 || cl.size() == 4) && cl[2] == strings[cmds::col_set_value])
                  || ((cl.size() == 4) && cl[2] == strings[cmds::col_get_value])) {
         auto it = misc::find_first_prefixed(cl[3], strings.begin() + cmds::csv_begin, strings.begin() + cmds::csv_end, [](auto&&){return false;});
-        if (it == strings.begin() + cmds::csv_end) {
+        if(it == strings.begin() + cmds::csv_end) {
           arg.term.add_formatted_err("Unknown item: {}", cl[3]);
           return;
         }
-
         std::optional<ImTerm::theme::constexpr_color>* theme_color = nullptr;
         auto enum_v = static_cast<cmds::cmds>(it - strings.begin());
         switch (enum_v) {
@@ -247,9 +240,8 @@ namespace corona::standalone::gui::immediate
             arg.term.add_text_err("Internal error.");
             return;
         }
-
-        if (cl[2] == strings[cmds::col_set_value]) {
-          if (cl.size() == 4) {
+        if(cl[2] == strings[cmds::col_set_value]) {
+          if(cl.size() == 4) {
             theme_color->reset();
             return;
           }
@@ -258,36 +250,33 @@ namespace corona::standalone::gui::immediate
             return misc::success(res.ec) && res.ptr == (&str[str.size() - 1] + 1);
           };
           std::uint8_t r{}, g{}, b{}, a{255};
-          if (!try_parse(cl[4], r) || !try_parse(cl[5], g) || !try_parse(cl[6], b) || (cl.size() == 8 && !try_parse(cl[7], a))) {
+          if(not try_parse(cl[4], r) or not try_parse(cl[5], g) or not try_parse(cl[6], b) or (cl.size() == 8 and not try_parse(cl[7], a)))
             arg.term.add_text_err("Bad color argument(s)");
-          }
-
           *theme_color = {static_cast<float>(r) / 255.f,static_cast<float>(g) / 255.f,static_cast<float>(b) / 255.f,static_cast<float>(a) / 255.f};
         } else {
-          if (*theme_color) {
+          if(*theme_color) {
             auto to_255 = [](float v) {
               return static_cast<int>(v * 255.f + 0.5f);
-            };;
-            arg.term.add_formatted("Current value for {}: [R: {}] [G: {}] [B: {}] [A: {}]", cl[3], to_255((**theme_color).r)
-                                                                                                     , to_255((**theme_color).g), to_255((**theme_color).b), to_255((**theme_color).a));
-          } else {
-            arg.term.add_formatted("Current value for {}: unset", cl[3]);
+            };
+            arg.term.add_formatted("Current value for {}: [R: {}] [G: {}] [B: {}] [A: {}]", cl[3], to_255((**theme_color).r), to_255((**theme_color).g), to_255((**theme_color).b), to_255((**theme_color).a));
           }
+          else
+            arg.term.add_formatted("Current value for {}: unset", cl[3]);
         }
       }
 
     } else if ((cl.size() == 3 || cl.size() == 4 || cl.size() == 10) && cl[1] == strings[cmds::set_text]) {
       auto it = misc::find_first_prefixed(cl[2], strings.begin() + cmds::st_begin, strings.begin() + cmds::st_optional_end, [](auto&&){return false;});
-      if (it == strings.begin() + cmds::st_optional_end) {
+      if(it == strings.begin() + cmds::st_optional_end) {
         it = misc::find_first_prefixed(cl[2], strings.begin() + cmds::st_optional_end, strings.begin() + cmds::st_end, [](auto&&){return false;});
-        if (it == strings.begin() + cmds::st_end) {
+        if(it == strings.begin() + cmds::st_end)
           arg.term.add_formatted_err("Unknown text field: {}", cl[2]);
-        } else if (cl.size() != 10) {
+        else if(cl.size() != 10) {
           arg.term.add_text_err("Not enough/Too much arguments !");
           arg.term.add_text_err("You should specify, in order: trace text, debug text, info text, warning text, error text, critical text, none text");
-        } else {
-          arg.term.set_level_list_text(cl[3], cl[4], cl[5], cl[6], cl[7], cl[8], cl[9]);
         }
+        else
+          arg.term.set_level_list_text(cl[3], cl[4], cl[5], cl[6], cl[7], cl[8], cl[9]);
       } else {
         std::optional<std::string>* str = nullptr;
         auto enum_v = static_cast<cmds::cmds>(it - strings.begin());
@@ -301,85 +290,65 @@ namespace corona::standalone::gui::immediate
             arg.term.add_text_err("Internal error.");
             return;
         }
-        if (cl.size() == 4) {
+        if (cl.size() == 4)
           *str = cl[3];
-        } else {
+        else
           str->reset();
-        }
       }
-
-    } else {
+    } else
       arg.term.add_formatted_err("Unknown parameter: {}", cl[1]);
-    }
   }
 
   std::vector<std::string> terminal_commands::configure_term_autocomplete(argument_type& all_args) {
     using namespace cfg_term;
     auto& args = all_args.command_line;
-
     std::vector<std::string> ans;
-    unsigned int current_subpart = 0u;
+    auto current_subpart = 0u;
 
     auto try_match_str = [&ans, &args, &current_subpart](std::string_view vs) {
-      std::string& str = args[current_subpart];
-
-      if (str.size() > vs.size()) {
+      auto& str = args[current_subpart];
+      if (str.size() > vs.size())
         return;
-      }
-
       bool is_prefix = std::equal(str.begin(), str.end(), vs.begin(), [](char c1, char c2) {
         auto to_upper = [] (char c) -> char { return c < 'a' ? c + ('a' - 'A') : c; }; // don't care about the locale here
         return to_upper(c1) == to_upper(c2);
       });
-      if (is_prefix) {
+      if(is_prefix)
         ans.emplace_back(vs.data(), vs.size());
-      }
     };
-    auto try_match = [&try_match_str](cmds::cmds cmd) {
-      try_match_str(strings[cmd]);
-    };
+    auto try_match = [&try_match_str](cmds::cmds cmd) { try_match_str(strings[cmd]); };
     auto try_match_range = [&try_match](cmds::cmds begin, cmds::cmds end) {
-      for (int i = begin ; i < end ; ++i) {
+      for(int i = begin; i < end; ++i)
         try_match(static_cast<cmds::cmds>(i));
-      }
     };
-
     if (args.size() == 2) {
       current_subpart = 1;
       try_match(cmds::completion);
       try_match(cmds::colors);
       try_match(cmds::set_text);
-
     } else if (args.size() == 3) {
       current_subpart = 2;
       if (args[1] == strings[cmds::completion]) {
-        if (all_args.term.get_autocomplete_pos() != ImTerm::position::nowhere) {
+        if(all_args.term.get_autocomplete_pos() != ImTerm::position::nowhere)
           try_match(cmds::cpl_disable);
-        }
-        if (all_args.term.get_autocomplete_pos() != ImTerm::position::down) {
+        if(all_args.term.get_autocomplete_pos() != ImTerm::position::down)
           try_match(cmds::cpl_down);
-        }
-        if (all_args.term.get_autocomplete_pos() != ImTerm::position::up) {
+        if(all_args.term.get_autocomplete_pos() != ImTerm::position::up)
           try_match(cmds::cpl_up);
-        }
-
-      } else if (args[1] == strings[cmds::colors]) {
-        try_match_range(cmds::col_begin, cmds::col_end);
-
-      } else if (args[1] == strings[cmds::set_text]) {
-        try_match_range(cmds::st_begin, cmds::st_end);
       }
+      else if (args[1] == strings[cmds::colors])
+        try_match_range(cmds::col_begin, cmds::col_end);
+      else if (args[1] == strings[cmds::set_text])
+        try_match_range(cmds::st_begin, cmds::st_end);
 
     } else if (args.size() == 4) {
       if (args[1] == strings[cmds::colors]) {
         current_subpart = 3;
-        if (args[2] == strings[cmds::col_set_theme]) {
-          for (const ImTerm::theme& theme : ImTerm::themes::list) {
+        if (args[2] == strings[cmds::col_set_theme])
+          for (const ImTerm::theme& theme : ImTerm::themes::list)
             try_match_str(theme.name);
-          }
-        } else if (args[2] == strings[cmds::col_set_value] || args[2] == strings[cmds::col_get_value]) {
+        else if (args[2] == strings[cmds::col_set_value] || args[2] == strings[cmds::col_get_value])
           try_match_range(cmds::csv_begin, cmds::csv_end);
-        }
       }
     }
     std::sort(ans.begin(), ans.end());
@@ -387,28 +356,25 @@ namespace corona::standalone::gui::immediate
   }
 
   void terminal_commands::echo(argument_type& arg) {
-    if (arg.command_line.size() < 2) {
+    if(arg.command_line.size() < 2) {
       arg.term.add_formatted("");
       return;
     }
-    if (arg.command_line[1][0] == '-') {
-      if (arg.command_line[1] == "--help" || arg.command_line[1] == "-help") {
+    if(arg.command_line[1][0] == '-') {
+      if(arg.command_line[1] == "--help" || arg.command_line[1] == "-help")
         arg.term.add_formatted("usage: {} [text to be printed]", arg.command_line[0]);
-      } else {
+      else
         arg.term.add_formatted_err("Unknown argument: {}", arg.command_line[1]);
-      }
     } else {
       std::string str{};
       auto it = std::next(arg.command_line.begin(), 1);
-      while (it != arg.command_line.end() && it->empty()) {
+      while (it != arg.command_line.end() && it->empty())
         ++it;
-      }
       if (it != arg.command_line.end()) {
         str = *it;
-        for (++it ; it != arg.command_line.end() ; ++it) {
-          if (it->empty()) {
+        for(++it ; it != arg.command_line.end() ; ++it) {
+          if(it->empty())
             continue;
-          }
           str.reserve(str.size() + it->size() + 1);
           str += ' ';
           str += *it;
@@ -418,23 +384,20 @@ namespace corona::standalone::gui::immediate
     }
   }
 
-  void terminal_commands::exit(argument_type& arg) {
-    arg.term.set_should_close();
-  }
-
   void terminal_commands::help(argument_type& arg) {
-    constexpr unsigned long list_element_name_max_size = misc::max_size(local_command_list.begin(), local_command_list.end(),
-                                                                        [](const command_type& cmd) { return cmd.name.size(); });
+    constexpr auto list_element_name_max_size = misc::max_size(
+      local_command_list.begin(),
+      local_command_list.end(),
+      [](command_type const& cmd) { return cmd.name.size(); }
+    );
 
     arg.term.add_formatted("Available commands:");
-    for (const command_type& cmd : local_command_list) {
+    for (auto const& cmd : local_command_list) {
       arg.term.add_formatted("        {:{}} | {}", cmd.name, list_element_name_max_size, cmd.description);
     }
     arg.term.add_formatted("");
     arg.term.add_formatted("Additional information might be available using \"'command' --help\"");
   }
 
-  void terminal_commands::quit(argument_type& arg) {
-    arg.val.should_close = true;
-  }
+  void terminal_commands::quit(argument_type& arg) { ::QGuiApplication::exit(0); }
 } // namespace corona::standalone::gui::immediate
