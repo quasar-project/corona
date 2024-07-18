@@ -33,6 +33,7 @@ find_package(Qt6
   REQUIRED
 )
 add_subdirectory(libs/qrhiimgui)
+add_subdirectory(libs/imterm)
 
 # -- executable --
 qt_add_executable(${CORONA_STANDALONE_NAME})
@@ -111,6 +112,7 @@ target_link_libraries(${CORONA_STANDALONE_NAME}
   PRIVATE
     corona
     corona-standalone::qrhiimgui
+    corona-standalone::terminal
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     tomlplusplus::tomlplusplus
