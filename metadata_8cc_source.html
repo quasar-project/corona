@@ -214,7 +214,7 @@ $(function(){initNavTree('metadata_8cc_source.html',''); initResizable(); });
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keywordtype">bool</span> <span class="keyword">const</span> relative,</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <a class="code hl_struct" href="structcorona_1_1image_1_1Metadata_1_1ExifDecodeOptions.html">ExifDecodeOptions</a> <span class="keyword">const</span>&amp; options</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  ) <span class="keyword">noexcept</span>(<span class="keyword">false</span>) -&gt; <a class="code hl_class" href="classcorona_1_1image_1_1Metadata.html">Metadata</a> {</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    llog::trace()(<span class="stringliteral">&quot;parsing exif data for {}&quot;</span>, filename.value_or(<span class="stringliteral">&quot;raw data&quot;</span>));</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    llog::trace(<span class="stringliteral">&quot;parsing exif data for {}&quot;</span>, filename.value_or(<span class="stringliteral">&quot;raw data&quot;</span>));</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keywordflow">if</span>(not relative)</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>      exif_data = exif_data.subspan(options.header_offset);</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keyword">auto</span> <span class="keyword">const</span> header = <a class="code hl_function" href="structcorona_1_1image_1_1metadata_1_1ExifHeader.html#a24a85d1773cfbce38322eab4d447ab2b">metadata::ExifHeader::from_bytes</a>(exif_data);</div>
@@ -257,9 +257,9 @@ $(function(){initNavTree('metadata_8cc_source.html',''); initResizable(); });
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    self.image_type_ = <span class="keyword">static_cast&lt;</span><a class="code hl_enumeration" href="classcorona_1_1image_1_1Metadata.html#abc8685e56096fc9b4227e4712897878b">ImageType</a><span class="keyword">&gt;</span>(raw.image_type);</div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <span class="keyword">auto</span> <span class="keyword">const</span> actual_crc = raw.checksum();</div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordflow">if</span>(actual_crc != raw.crc)</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>      llog::warn()(<span class="stringliteral">&quot;exif data checksum mismatch: expected 0x{:04X}, actual 0x{:04X}&quot;</span>, actual_crc, raw.crc);</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>      llog::warn(<span class="stringliteral">&quot;exif data checksum mismatch: expected 0x{:04X}, actual 0x{:04X}&quot;</span>, actual_crc, raw.crc);</div>
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    self.crc_valid_ = raw.crc == actual_crc;</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    llog::debug()(<span class="stringliteral">&quot;successfully parsed exif data from {}&quot;</span>, self.name());</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    llog::debug(<span class="stringliteral">&quot;successfully parsed exif data from {}&quot;</span>, self.name());</div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="keywordflow">return</span> self;</div>
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>  }</div>
 </div>
@@ -297,7 +297,7 @@ $(function(){initNavTree('metadata_8cc_source.html',''); initResizable(); });
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_a6a17ec937b4e07383dde71de6c9d000.html">image</a></li><li class="navelem"><b>metadata.cc</b></li>
-    <li class="footer">Generated on Wed Jul 17 2024 for Corona by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+    <li class="footer">Generated on Thu Jul 18 2024 for Corona by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
   </ul>
 </div>
 </body>
