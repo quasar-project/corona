@@ -25,7 +25,7 @@ auto main$(int argc, char** argv) -> int
   );
 
   return cs::app::Corona(argc, argv, logger)
-    .with_icon("app/icon")
+    .with_icon("resources/icon")
     .with_quick_style(cs::app::QuickStyle::Material)
     .run_scene("qml/Main");
 }

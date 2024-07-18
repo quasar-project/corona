@@ -2,13 +2,12 @@ import QtQuick
 import QtQuick.Window
 import QtQuick.Controls
 import QtQuick.Controls.Material
-import QtLocation
-import QtPositioning
 import QtQuick.Layouts
 
 import io.corona.standalone.app as App
 import io.corona.standalone.theme as ThemeModule
 import io.corona.standalone.imgui as ImguiModule
+import io.corona.standalone.map as MapModule
 
 // import "layouts" as Layouts
 // import "utils" as Utils
@@ -42,19 +41,17 @@ ApplicationWindow {
         color: App.Theme.palette.base0
         anchors.fill: parent
 
+        MapModule.MapView {
+            id: mapView
+            anchors.fill: parent
+            imguiRenderer: imguiRenderer
+        }
+
         Button {
             id: button
             height: 100
             text: App.Theme.mode === App.Theme.Dark ? "Dark" : "Light"
             anchors.centerIn: parent
-            onClicked: themeChanger.toggle(this)
-        }
-
-        Button {
-            id: button2
-            height: 100
-            text: App.Theme.mode === App.Theme.Dark ? "Dark" : "Light"
-            anchors.right: parent.right
             onClicked: themeChanger.toggle(this)
         }
     }

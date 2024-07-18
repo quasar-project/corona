@@ -35,7 +35,7 @@ namespace corona::standalone::app
 {
   struct Corona::impl
   {
-    impl(Logger& logger);
+    explicit impl(Logger& logger);
 
     auto emplace_themes() -> void;
 
@@ -67,12 +67,13 @@ namespace corona::standalone::app
   auto Corona::impl::emplace_themes() -> void {
     llog::debug("emplacing application themes");
     for(auto const& path : default_themes) {
+      auto const from = std::filesystem::path(path);
       auto const stem = ::QFileInfo(path.data()).fileName().toStdString();
-      auto const target = (this->theme.ref_mut().unwrap().folder() / stem).string();
-      if(::QFile::exists(target.data()))
+      auto const to = this->theme.ref_mut().unwrap().folder() / stem;
+      if(::QFile::exists(to))
         continue;
-      if(not ::QFile::copy(path.data(), target.data()))
-        llog::error("failed to copy {} to {}", path.data(), (this->theme.ref_mut().unwrap().folder() / stem).string().data());
+      if(not ::QFile::copy(from, to))
+        llog::warn("failed to copy {} to {}", from.string(), to.string());
       else
         llog::trace("emplaced theme \'{}\'", stem);
     }

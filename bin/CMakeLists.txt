@@ -61,33 +61,25 @@ if(WIN32)
   set(CORONA_OUTPUT_SET ${CORONA_RES_FILES})
 endif()
 
-qt_add_resources(${CORONA_STANDALONE_NAME}
-  PREFIX "/app"
-  FILES
+qt_add_qml_module(${CORONA_STANDALONE_NAME}
+  URI "io.corona.standalone"
+  VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
+  QML_FILES
+    qml/Main.qml
+    qml/theme/CircularChanger.qml
+    qml/immediate/Renderer.qml
+    qml/map/MapView.qml
+  RESOURCES
     resources/icon.svg
     resources/icon.png
     resources/icon.ico
     resources/themes/gruvbox.toml
-)
-
-qt_add_resources(${CORONA_STANDALONE_NAME}
-  PREFIX "/icons"
-  FILES
     resources/icons/block.svg
     resources/icons/cog.svg
     resources/icons/dark.svg
     resources/icons/light.svg
     resources/icons/ruler.svg
     resources/icons/grid.svg
-)
-
-qt_add_qml_module(${CORONA_STANDALONE_NAME}
-  URI "Corona.Standalone"
-  VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
-  QML_FILES
-    qml/Main.qml
-    qml/theme/CircularChanger.qml
-    qml/immediate/Renderer.qml
   RESOURCE_PREFIX "/"
   NO_RESOURCE_TARGET_PATH
 )
@@ -103,6 +95,7 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/qml/theme_wrapper.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/generic.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/terminal_commands.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/map/qml/qmlreg.cc
     ${CORONA_OUTPUT_SET}
 )
 

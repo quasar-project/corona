@@ -15,7 +15,7 @@ Rectangle {
     enabled: this.visible
     visible: this.opacity > 0
     opacity: this.max_opacity
-    Behavior on opacity { NumberAnimation { duration: 200; easing.type: Easing.InOutCubic } }
+    Behavior on opacity { NumberAnimation { duration: 100; easing.type: Easing.InOutQuad } }
 
     ImguiModule.ImmediateGuiGenericRenderer {
         id: imgui
