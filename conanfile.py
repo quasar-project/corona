@@ -30,7 +30,7 @@ class CoronaRecipe(ConanFile):
         return "23"
 
     def requirements(self):
-        self.requires("floppy/1.2.3-logging-preview", transitive_headers=True, transitive_libs=True)
+        self.requires("floppy/1.2.2", transitive_headers=True, transitive_libs=True)
         self.requires("magic_enum/0.9.5", transitive_headers=True, transitive_libs=True)
         self.requires("reflect-cpp/0.11.1")
         if self.options.standalone:

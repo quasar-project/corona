@@ -54,19 +54,21 @@ namespace corona::standalone::app
     , information_widget(std::make_shared<gui::immediate::InformationWidget>(meta::corona_meta.name(), meta::corona_meta.version().as_str()))
   {
     spdlog::default_logger()->sinks().push_back(this->imgui_sink);
+    llog::info("app: {}", corona::standalone::app::meta::corona_meta);
+    llog::info("lib: {}", corona::meta::corona_meta);
   }
 
   auto Corona::impl::emplace_themes() -> void {
-    llog::debug()("emplacing application themes");
+    llog::debug("emplacing application themes");
     for(auto const& path : default_themes) {
       auto const stem = ::QFileInfo(path.data()).fileName().toStdString();
       auto const target = (this->theme.ref_mut().unwrap().folder() / stem).string();
       if(::QFile::exists(target.data()))
         continue;
       if(not ::QFile::copy(path.data(), target.data()))
-        llog::error()("failed to copy {} to {}", path.data(), (this->theme.ref_mut().unwrap().folder() / stem).string().data());
+        llog::error("failed to copy {} to {}", path.data(), (this->theme.ref_mut().unwrap().folder() / stem).string().data());
       else
-        llog::trace()("emplaced theme \'{}\'", stem);
+        llog::trace("emplaced theme \'{}\'", stem);
     }
   }
 
@@ -81,9 +83,7 @@ namespace corona::standalone::app
     ::qInstallMessageHandler(UILogger::message_handler);
 
     this->impl_->emplace_themes();
-    llog::debug()("initialized {}", fl::source_location::current().function_name());
-    llog::info()("app: {}", corona::standalone::app::meta::corona_meta);
-    llog::info()("lib: {}", corona::meta::corona_meta);
+    llog::debug("initialized {}", fl::source_location::current().function_name());
 
     ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Theme", impl_->theme.ptr_mut());
   }
@@ -91,7 +91,7 @@ namespace corona::standalone::app
   Corona::~Corona() = default;
 
   auto Corona::with_icon(string_view const path) -> Corona& {
-    llog::trace()("app icon is set to \'{}\'", path);
+    llog::trace("app icon is set to \'{}\'", path);
     Corona::setWindowIcon(::platform_dependent_icon(path));
     return *this;
   }
@@ -100,23 +100,23 @@ namespace corona::standalone::app
     if(style == QuickStyle::Material)
       ::qputenv("QT_QUICK_CONTROLS_MATERIAL_VARIANT", "Dense");
     ::QQuickStyle::setStyle(::QString::fromStdString(string(me::enum_name(style))));
-    llog::trace()("app quick style is set to \'{}\'", string(me::enum_name(style)));
+    llog::trace("app quick style is set to \'{}\'", string(me::enum_name(style)));
     return *this;
   }
 
   auto Corona::run_scene(string_view path) -> int {
-    llog::debug()("preparing to run quick scene");
+    llog::debug("preparing to run quick scene");
     auto const u = ::qml_url(path);
-    llog::trace()("qml root url is set to `{}`", u.toString());
+    llog::trace("qml root url is set to `{}`", u.toString());
     auto engine = ::QQmlApplicationEngine();
     ::QQuickWindow::setDefaultAlphaBuffer(true);
-    llog::trace()("created default qml engine");
+    llog::trace("created default qml engine");
     engine.load(u);
     if(engine.rootObjects().isEmpty())
       fl::panic("failed to load qml scene");
-    llog::debug()("loaded qml scene");
+    llog::debug("loaded qml scene");
     ::QObject::connect(this, &Corona::aboutToQuit, [&engine] {
-      llog::info()("cleaning up and quitting");
+      llog::info("cleaning up and quitting");
       engine.quit();
     });
     auto& io = im::GetIO();
@@ -136,7 +136,7 @@ namespace corona::standalone::app
     if(imgui_ptr == nullptr)
       fl::panic("failed to find imgui in qml scene");
     this->impl_->imgui = imgui_ptr;
-    llog::trace()("found imgui local pointer: {}", static_cast<void*>(imgui_ptr));
+    llog::trace("found imgui local pointer: {}", static_cast<void*>(imgui_ptr));
     this->imgui_mut() += this->impl_->imgui_sink.get();
     this->imgui_mut() += this->impl_->information_widget.get();
     return Corona::exec();

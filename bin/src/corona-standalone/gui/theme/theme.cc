@@ -29,17 +29,17 @@ namespace corona::standalone::gui::theme
     , folder_(location[floppy::filesystem::application_dirs::dir::data] / THEMES_SUBDIRECTORY)
   {
     if(not this->cfg_)
-      llog::error()("failed to load theme configuration");
+      llog::error("failed to load theme configuration");
     this->cfg_.load();
     if(not exists(this->folder_)) {
-      llog::trace()("created missing theme folder: {}", this->folder_.generic_string());
+      llog::trace("created missing theme folder: {}", this->folder_.generic_string());
       create_directories(this->folder_);
     }
-    llog::debug()("assuming theme pwd: {}", this->folder_.generic_string());
+    llog::debug("assuming theme pwd: {}", this->folder_.generic_string());
     try {
       this->load();
     } catch(std::exception const& e) {
-      llog::error()("fatal error during theme initialization: {}", e.what());
+      llog::error("fatal error during theme initialization: {}", e.what());
     }
   }
   auto Theme::folder() const -> fs::path const& { return this->folder_; }
@@ -58,7 +58,7 @@ namespace corona::standalone::gui::theme
 
   auto Theme::set_mode(Mode mode) -> void {
     if(not this->active().has_pallete_for(mode)) {
-      llog::warn()("requested mode `{}` but no palette found for theme: `{}`", me::enum_name(mode), this->active().meta.name);
+      llog::warn("requested mode `{}` but no palette found for theme: `{}`", me::enum_name(mode), this->active().meta.name);
       return;
     }
     this->cfg_().mode = mode;
@@ -83,7 +83,7 @@ namespace corona::standalone::gui::theme
           continue;
         const auto contents = Theme::read_theme(entry.path());
         if(not contents) {
-          llog::warn()("error reading theme file ({})", entry.path().filename().string());
+          llog::warn("error reading theme file ({})", entry.path().filename().string());
           continue;
         }
         if(contents.value().meta.name == this->cfg_().active)
@@ -93,11 +93,11 @@ namespace corona::standalone::gui::theme
     }();
 
     if(not active_file) {
-      llog::warn()("theme with name `{}` is not found. falling back to default theme", this->cfg_().active);
+      llog::warn("theme with name `{}` is not found. falling back to default theme", this->cfg_().active);
       try {
         active_file = this->emplace_default();
       } catch(std::exception const& e) {
-        llog::error()("failed to create default theme: {}", e.what());
+        llog::error("failed to create default theme: {}", e.what());
         return;
       }
     }
@@ -106,7 +106,7 @@ namespace corona::standalone::gui::theme
       throw std::runtime_error("failed to load theme: "s + active_file->filename().string());
     else
       this->active_ = active.value();
-    llog::info()("loaded theme: `{}`", this->active_.meta.name);
+    llog::info("loaded theme: `{}`", this->active_.meta.name);
     if(not this->active().has_pallete_for(this->mode()))
       this->swap_mode();
   }
@@ -117,25 +117,25 @@ namespace corona::standalone::gui::theme
     if(not exists(path))
       throw std::runtime_error("failed to create default theme: "s + path.generic_string());
     this->cfg_().active = "default";
-    llog::debug()("created default theme: {}", path.generic_string());
+    llog::debug("created default theme: {}", path.generic_string());
     return path;
   }
 
   auto Theme::read_theme(fs::path const& path) -> option<ThemeData> {
     auto stream = ifstream(path);
     if(not stream) {
-      llog::warn()("failed to open theme file: {}", path.generic_string());
+      llog::warn("failed to open theme file: {}", path.generic_string());
       return none;
     }
     auto contents = string(istreambuf_iterator<char>{stream}, istreambuf_iterator<char>{});
     if(not stream) {
-      llog::warn()("failed to read theme file: {}", path.generic_string());
+      llog::warn("failed to read theme file: {}", path.generic_string());
       return none;
     }
     try {
       return fl::serialization::deserialize<fl::serialization::format::toml, ThemeData>(contents);
     } catch(std::exception const& e) {
-      llog::warn()("failed to deserialize theme file: {}, reason: {}", path.string(), e.what());
+      llog::warn("failed to deserialize theme file: {}, reason: {}", path.string(), e.what());
       return none;
     }
   }

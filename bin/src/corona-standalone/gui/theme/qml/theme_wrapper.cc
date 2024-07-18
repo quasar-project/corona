@@ -48,7 +48,7 @@ namespace corona::standalone::gui::theme::qml
     try {
       this->unwrap().set_theme_name(name.toStdString());
     } catch (std::exception const& e) {
-      llog::error()("failed to set theme name: {}", e.what());
+      llog::error("failed to set theme name: {}", e.what());
       return;
     }
     emit this->themeNameChanged();
