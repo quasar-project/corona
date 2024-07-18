@@ -147,9 +147,8 @@ namespace {
 namespace corona::standalone::gui::immediate
 {
   terminal_commands::terminal_commands() {
-    for (const command_type& cmd : local_command_list) {
+    for (const command_type& cmd : local_command_list)
       add_command_(cmd);
-    }
   }
 
   void terminal_commands::clear(argument_type& arg) {
@@ -186,13 +185,9 @@ namespace corona::standalone::gui::immediate
           str += theme.name;
           arg.term.add_text(std::move(str));
         }
-
-
       } else if(cl.size() == 3 && cl[2] == strings[cmds::col_reset_theme]) {
         arg.term.reset_colors();
-
       } else if (cl.size() == 4 && cl[2] == strings[cmds::col_set_theme]) {
-
         for (const ImTerm::theme& theme : ImTerm::themes::list) {
           if (theme.name == cl[3]) {
             arg.term.theme() = theme;
@@ -200,11 +195,9 @@ namespace corona::standalone::gui::immediate
           }
         }
         arg.term.add_formatted_err("Unknown theme: {}", cl[3]);
-
       } else if (((cl.size() == 8 || cl.size() == 7 || cl.size() == 4) && cl[2] == strings[cmds::col_set_value])
                  || ((cl.size() == 4) && cl[2] == strings[cmds::col_get_value])) {
         auto it = misc::find_first_prefixed(cl[3], strings.begin() + cmds::csv_begin, strings.begin() + cmds::csv_end, [](auto&&){return false;});
-
         if (it == strings.begin() + cmds::csv_end) {
           arg.term.add_formatted_err("Unknown item: {}", cl[3]);
           return;

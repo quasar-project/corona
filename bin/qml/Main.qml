@@ -26,7 +26,7 @@ ApplicationWindow {
     color: App.Theme.palette.base0
 
     Component.onCompleted: {
-        //showMaximized()
+        showMaximized()
     }
 
     Material.theme: App.Theme.mode === App.Theme.Dark ? Material.Dark : Material.Light

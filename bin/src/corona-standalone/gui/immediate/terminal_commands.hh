@@ -16,7 +16,6 @@ namespace corona::standalone::gui::immediate
 
   class terminal_commands : public ImTerm::basic_spdlog_terminal_helper<terminal_commands, custom_command_struct, std::mutex> {
    public:
-
     terminal_commands();
 
     static std::vector<std::string> no_completion(argument_type&) { return {}; }

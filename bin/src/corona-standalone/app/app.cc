@@ -54,6 +54,7 @@ namespace corona::standalone::app
     , terminal(std::make_unique<ImTerm::terminal<gui::immediate::terminal_commands>>(*this->terminal_cmd, "Debug console"))
   {
     spdlog::default_logger()->sinks().push_back(this->terminal->get_terminal_helper());
+    this->terminal->execute("configure_terminal colors set-theme \"Dark Cherry\"");
     llog::info("app: {}", corona::standalone::app::meta::corona_meta);
     llog::info("lib: {}", corona::meta::corona_meta);
   }
@@ -119,6 +120,8 @@ namespace corona::standalone::app
       llog::info("cleaning up and quitting");
       engine.quit();
     });
+    ImGui::GetIO().LogFilename = nullptr;
+    ImGui::GetIO().IniFilename = nullptr;
     this->impl_->quick_window = qobject_cast<::QQuickWindow*>(engine.rootObjects().front());
     auto* imgui_ptr = this->quick_window()->findChild<gui::immediate::GenericItem*>("imgui");
     if(imgui_ptr == nullptr)

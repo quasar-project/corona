@@ -149,7 +149,7 @@ target_include_directories(${CORONA_STANDALONE_NAME}
 )
 
 # tmp workaround for debug
-if(WIN32 AND ${CMAKE_CXX_COMPILER_ID} MATCHES "GNU|Clang|Mingw|MINGW") #AND NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+if(WIN32 AND ${CMAKE_CXX_COMPILER_ID} MATCHES "GNU|Clang|Mingw|MINGW" AND NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
   message(STATUS "[${CORONA_STANDALONE_NAME}] adding -mwindows linker opt (${CMAKE_CXX_COMPILER_ID})")
   target_link_options(${CORONA_STANDALONE_NAME} PRIVATE -mwindows)
 endif()
