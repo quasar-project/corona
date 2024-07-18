@@ -22,14 +22,12 @@
 #include <array>
 
 #include "terminal.hpp"
-#if __has_include("spdlog/spdlog.h")
-#include "spdlog/common.h"
-#include "spdlog/formatter.h"
-#include "spdlog/pattern_formatter.h"
-#include "spdlog/details/log_msg.h"
-#include "spdlog/sinks/base_sink.h"
+#include <spdlog/common.h>
+#include <spdlog/formatter.h>
+#include <spdlog/pattern_formatter.h>
+#include <spdlog/details/log_msg.h>
+#include <spdlog/sinks/base_sink.h>
 
-#define IMTERM_SPDLOG_INCLUDED
 // helpers
 namespace ImTerm::details {
 	constexpr message::severity::severity_t to_imterm_severity(spdlog::level::level_enum);
@@ -37,7 +35,6 @@ namespace ImTerm::details {
 	constexpr spdlog::level::level_enum to_spdlog_severity(message::type);
 	inline ImTerm::message to_imterm_msg(const spdlog::details::log_msg&);
 }
-#endif
 
 namespace ImTerm {
 
@@ -187,7 +184,6 @@ namespace ImTerm {
 		std::set<command_type> cmd_list_{};
 	};
 
-#ifdef IMTERM_SPDLOG_INCLUDED
 
 	// Basic spdlog terminal helper inheriting spdlog::sinks::sink (logging messages to the terminal)
 	// You may inherit to save some hassle
@@ -198,7 +194,8 @@ namespace ImTerm {
 	// Refer to terminal_helper_example (see above) for a commented example
 	// should not be used after move
 	template <typename TerminalHelper, typename Value, typename Mutex>
-	class basic_spdlog_terminal_helper : public basic_terminal_helper<TerminalHelper, Value>, public spdlog::sinks::base_sink<Mutex> {
+	class basic_spdlog_terminal_helper : public basic_terminal_helper<TerminalHelper, Value>,
+	                                     public spdlog::sinks::base_sink<Mutex> {
 		using SinkBase = spdlog::sinks::base_sink<Mutex>;
 		using TermHBase = basic_terminal_helper<TerminalHelper,Value>;
 	public:
@@ -336,11 +333,7 @@ namespace ImTerm {
 			return term_msg;
 		}
 	}
-#endif
-
 }
 
-
-#undef IMTERM_SPDLOG_INCLUDED
 
 #endif //TERMINAL_HELPER_HPP

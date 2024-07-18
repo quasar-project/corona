@@ -18,6 +18,7 @@
 ///                                                                                                                                     ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#include <cstring>
 #include <atomic>
 #include <vector>
 #include <string>
@@ -25,13 +26,10 @@
 #include <optional>
 #include <array>
 #include <imgui.h>
+#include <fmt/format.h>
 
 #include "utils.hpp"
 #include "misc.hpp"
-
-#ifdef IMTERM_USE_FMT
-#include "fmt/format.h"
-#endif
 
 namespace ImTerm {
 
@@ -141,21 +139,19 @@ namespace ImTerm {
 			return m_autocomplete_pos;
 		}
 
-#ifdef IMTERM_USE_FMT
 		// logs a colorless text to the message panel
 		// added as terminal message with info severity
 		template <typename... Args>
-		void add_formatted(const char* fmt, Args&&... args) {
+		void add_formatted(fmt::format_string<Args...> fmt, Args&&... args) {
 			add_text(fmt::format(fmt, std::forward<Args>(args)...));
 		}
 
 		// logs a colorless text to the message panel
 		// added as terminal message with warn severity
 		template <typename... Args>
-		void add_formatted_err(const char* fmt, Args&&... args) {
+		void add_formatted_err(fmt::format_string<Args...> fmt, Args&&... args) {
 			add_text_err(fmt::format(fmt, std::forward<Args>(args)...));
 		}
-#endif
 
 		// logs a text to the message panel
 		// added as terminal message with info severity
@@ -422,9 +418,7 @@ namespace ImTerm {
 		bool m_autowrap{true};  // TODO: accessors
 		std::vector<std::string>::size_type m_last_size{0u};
 		int m_level{message::severity::trace}; // TODO: accessors
-#ifdef IMTERM_ENABLE_REGEX
 		bool m_regex_search{true}; // TODO: accessors, button
-#endif
 
 		std::optional<std::string> m_autoscroll_text;
 		std::optional<std::string> m_clear_text;
@@ -480,6 +474,5 @@ namespace ImTerm {
 
 #include "terminal.tpp"
 
-#undef IMTERM_FMT_INCLUDED
 
 #endif //IMTERM_TERMINAL_HPP

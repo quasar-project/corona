@@ -24,9 +24,7 @@
 #include <optional>
 #include <iterator>
 #include <algorithm>
-#ifdef IMTERM_ENABLE_REGEX
 #include <regex>
-#endif
 
 #include "misc.hpp"
 
@@ -142,7 +140,6 @@ namespace details {
 		return colors;
 	}
 
-#ifdef IMTERM_ENABLE_REGEX
 	inline std::map<std::string::const_iterator, std::pair<unsigned long, std::optional<theme::constexpr_color>>>
 	regex_colors_split(std::string_view filter, const message& msg, const std::optional<theme::constexpr_color>& matching_text_color) {
 		auto make_pair = [](auto len, std::optional<theme::constexpr_color> color = {}) {
@@ -208,7 +205,6 @@ namespace details {
 		}
 		return colors;
 	}
-#endif
 }
 
 template <typename TerminalHelper>
@@ -652,7 +648,6 @@ void terminal<TerminalHelper>::display_messages() noexcept {
 				}
 
 				std::map<std::string::const_iterator, std::pair<unsigned long, std::optional<theme::constexpr_color>>> colors;
-#ifdef IMTERM_ENABLE_REGEX
 				if (m_regex_search) {
 					try {
 						std::string_view filter{m_log_text_filter_buffer.data(), m_log_text_filter_buffer_usage};
@@ -664,10 +659,8 @@ void terminal<TerminalHelper>::display_messages() noexcept {
 					std::string_view filter{m_log_text_filter_buffer.data(), m_log_text_filter_buffer_usage};
 						colors = details::simple_colors_split(filter, msg, m_colors.matching_text);
 				}
-#else
 				std::string_view filter{m_log_text_filter_buffer.data(), m_log_text_filter_buffer_usage};
 				colors = details::simple_colors_split(filter, msg, m_colors.matching_text);
-#endif
 				if (colors.empty()) {
 					return;
 				}

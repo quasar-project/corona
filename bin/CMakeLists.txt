@@ -105,6 +105,7 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/sink.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/info_widget.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/extensions.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/terminal_commands.cc
     ${CORONA_OUTPUT_SET}
 )
 

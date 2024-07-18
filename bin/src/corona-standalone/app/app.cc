@@ -8,14 +8,14 @@
 #include <qquickwindow.h>
 #include <qquickstyle.h>
 #include <magic_enum/magic_enum.hpp>
+#include <imterm/terminal.hpp>
 #include <floppy/directories.h>
 #include <corona-standalone/utility/formatters.hh>
 #include <corona-standalone/app/ui_logger.hh>
 #include <corona-standalone/app/default_themes.hh>
 #include <corona-standalone/gui/theme/qml/theme_wrapper.hh>
 #include <corona-standalone/gui/immediate/generic.hh>
-#include <corona-standalone/gui/immediate/sink.hh>
-#include <corona-standalone/gui/immediate/info_widget.hh>
+#include <corona-standalone/gui/immediate/terminal_commands.hh>
 
 namespace me = magic_enum;
 namespace
@@ -42,18 +42,18 @@ namespace corona::standalone::app
     fl::filesystem::application_dirs dirs;
     fl::box<gui::theme::qml::ThemeWrapper> theme;
     gui::immediate::GenericItem* imgui{nullptr};
-    std::shared_ptr<gui::immediate::LogSink> imgui_sink;
-    std::shared_ptr<gui::immediate::InformationWidget> information_widget;
+    std::unique_ptr<gui::immediate::custom_command_struct> terminal_cmd;
+    std::unique_ptr<ImTerm::terminal<gui::immediate::terminal_commands>> terminal;
     QQuickWindow* quick_window{nullptr};
   };
 
   Corona::impl::impl()
     : dirs(fl::filesystem::application_dirs(corona::standalone::app::meta::corona_meta))
     , theme(fl::make_box<gui::theme::qml::ThemeWrapper>(nullptr))
-    , imgui_sink(std::shared_ptr(gui::immediate::LogSink::create()))
-    , information_widget(std::make_shared<gui::immediate::InformationWidget>(meta::corona_meta.name(), meta::corona_meta.version().as_str()))
+    , terminal_cmd(std::make_unique<gui::immediate::custom_command_struct>())
+    , terminal(std::make_unique<ImTerm::terminal<gui::immediate::terminal_commands>>(*this->terminal_cmd, "Debug console"))
   {
-    spdlog::default_logger()->sinks().push_back(this->imgui_sink);
+    spdlog::default_logger()->sinks().push_back(this->terminal->get_terminal_helper());
     llog::info("app: {}", corona::standalone::app::meta::corona_meta);
     llog::info("lib: {}", corona::meta::corona_meta);
   }
@@ -119,26 +119,15 @@ namespace corona::standalone::app
       llog::info("cleaning up and quitting");
       engine.quit();
     });
-    auto& io = im::GetIO();
-    io.IniFilename = nullptr;
-    io.LogFilename = nullptr;
-    im::ext::style(im::ext::default_palette, im::ext::style::roundings {
-      .tab = 0,
-      .scrollbar = 0,
-      .window = 0,
-      .grab = 0,
-      .frame = 0,
-      .popup = 0,
-      .child = 0
-    });
     this->impl_->quick_window = qobject_cast<::QQuickWindow*>(engine.rootObjects().front());
     auto* imgui_ptr = this->quick_window()->findChild<gui::immediate::GenericItem*>("imgui");
     if(imgui_ptr == nullptr)
       fl::panic("failed to find imgui in qml scene");
     this->impl_->imgui = imgui_ptr;
     llog::trace("found imgui local pointer: {}", static_cast<void*>(imgui_ptr));
-    this->imgui_mut() += this->impl_->imgui_sink.get();
-    this->imgui_mut() += this->impl_->information_widget.get();
+    this->imgui_mut() += [this](){
+      this->impl_->terminal->show();
+    };
     return Corona::exec();
   }
 

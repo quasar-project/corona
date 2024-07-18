@@ -58,7 +58,7 @@ ApplicationWindow {
         }
     }
 
-    ImguiModule.ImmediateGuiMainRenderer { id: imguiRenderer; shortcut: "F5" }
+    ImguiModule.ImmediateGuiMainRenderer { id: imguiRenderer; shortcut: "F5"; opacity: 0.85 }
     ThemeModule.CircularChanger { id: themeChanger; rootItem: root; theme: App.Theme; }
 }
 

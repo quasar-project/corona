@@ -21,6 +21,8 @@
 
 
 #include <utility>
+#include <algorithm>
+#include <memory>
 #include <iterator>
 #include <functional>
 #include <type_traits>
