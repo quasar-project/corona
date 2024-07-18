@@ -15,6 +15,7 @@ settings/userSettings.json
 settings/*.cfg
 moc_*
 ui_*
+**/!ui_logger.hh
 *.moc
 *.o
 *.prl

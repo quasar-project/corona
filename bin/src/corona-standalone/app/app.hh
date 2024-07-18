@@ -17,16 +17,20 @@ namespace corona::standalone
 
   namespace app
   {
+    class Logger;
     class Corona final : public IApplication<QGuiApplication> // NOLINT(*-special-member-functions) (reason: pinned)
     {
      public:
-      explicit Corona(int& args, char** argv);
+      explicit Corona(int& args, char** argv, Logger& logger);
       virtual ~Corona() override; // NOLINT(*-use-override)
 
       auto with_icon(string_view path) -> Corona&;
       auto with_quick_style(QuickStyle style) -> Corona&;
 
       [[nodiscard]] auto run_scene(string_view path) -> int;
+
+      [[nodiscard]] auto logger() const -> Logger const&;
+      [[nodiscard]] auto logger_mut() -> Logger&;
 
       [[nodiscard]] auto dirs() const -> fl::filesystem::application_dirs const&;
       [[nodiscard]] auto dirs_mut() -> fl::filesystem::application_dirs&;

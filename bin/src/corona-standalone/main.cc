@@ -12,7 +12,7 @@
 namespace cs = corona::standalone;
 auto main$(int argc, char** argv) -> int
 {
-  [[maybe_unused]] auto const logger = cs::app::Logger::make(
+  auto logger = cs::app::Logger::make(
     cs::app::Logger::Params {
       .is_default = true,
       .name = "main",
@@ -24,7 +24,7 @@ auto main$(int argc, char** argv) -> int
     }
   );
 
-  return cs::app::Corona(argc, argv)
+  return cs::app::Corona(argc, argv, logger)
     .with_icon("app/icon")
     .with_quick_style(cs::app::QuickStyle::Material)
     .run_scene("qml/Main");

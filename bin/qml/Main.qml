@@ -26,6 +26,7 @@ ApplicationWindow {
     color: App.Theme.palette.base0
 
     Component.onCompleted: {
+        console.info("application ui loaded")
         showMaximized()
     }
 

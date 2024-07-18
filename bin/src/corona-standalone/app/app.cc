@@ -35,10 +35,11 @@ namespace corona::standalone::app
 {
   struct Corona::impl
   {
-    impl();
+    impl(Logger& logger);
 
     auto emplace_themes() -> void;
 
+    Logger& logger;
     fl::filesystem::application_dirs dirs;
     fl::box<gui::theme::qml::ThemeWrapper> theme;
     gui::immediate::GenericItem* imgui{nullptr};
@@ -47,13 +48,17 @@ namespace corona::standalone::app
     QQuickWindow* quick_window{nullptr};
   };
 
-  Corona::impl::impl()
-    : dirs(fl::filesystem::application_dirs(corona::standalone::app::meta::corona_meta))
+  Corona::impl::impl(Logger& logger)
+    : logger(logger)
+    , dirs(fl::filesystem::application_dirs(corona::standalone::app::meta::corona_meta))
     , theme(fl::make_box<gui::theme::qml::ThemeWrapper>(nullptr))
     , terminal_cmd(std::make_unique<gui::immediate::custom_command_struct>())
     , terminal(std::make_unique<ImTerm::terminal<gui::immediate::terminal_commands>>(*this->terminal_cmd, "Debug console"))
   {
-    spdlog::default_logger()->sinks().push_back(this->terminal->get_terminal_helper());
+    this->logger->sinks().push_back(this->terminal->get_terminal_helper());
+    llog::trace("added default logger to debug console");
+    UILogger::ref_mut().logger().sinks().push_back(this->terminal->get_terminal_helper());
+    llog::trace("added ui logger to debug console");
     this->terminal->execute("configure_terminal colors set-theme \"Dark Cherry\"");
     llog::info("app: {}", corona::standalone::app::meta::corona_meta);
     llog::info("lib: {}", corona::meta::corona_meta);
@@ -73,9 +78,9 @@ namespace corona::standalone::app
     }
   }
 
-  Corona::Corona(int& args, char** argv)
+  Corona::Corona(int& args, char** argv, Logger& logger)
     : IApplication(args, argv)
-    , impl_(fl::make_box<impl>())
+    , impl_(fl::make_box<impl>(logger))
   {
     Corona::setApplicationName(corona::standalone::app::meta::corona_meta.name().data());
     Corona::setApplicationVersion(corona::standalone::app::meta::corona_meta.version().as_str().data());
@@ -134,6 +139,8 @@ namespace corona::standalone::app
     return Corona::exec();
   }
 
+  auto Corona::logger() const -> Logger const& { return this->impl_->logger; }
+  auto Corona::logger_mut() -> Logger& { return this->impl_->logger; }
   auto Corona::dirs() const -> fl::filesystem::application_dirs const& { return this->impl_->dirs; }
   auto Corona::dirs_mut() -> fl::filesystem::application_dirs& { return this->impl_->dirs; }
   auto Corona::theme() const -> gui::theme::qml::ThemeWrapper const& { return *this->impl_->theme; }
