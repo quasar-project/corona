@@ -22,6 +22,8 @@ endif()
 # -- dependencies --
 find_package(tomlplusplus REQUIRED)
 find_package(imgui REQUIRED)
+find_package(glfw3 REQUIRED)
+find_package(OpenGL REQUIRED)
 find_package(Qt6
   COMPONENTS
     Core
@@ -32,7 +34,6 @@ find_package(Qt6
     ShaderTools
   REQUIRED
 )
-add_subdirectory(libs/qrhiimgui)
 add_subdirectory(libs/imterm)
 
 # -- executable --
@@ -95,8 +96,9 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/theme.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/values.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/qml/theme_wrapper.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/generic.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/terminal_commands.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/backends/imgui_impl_opengl3.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/backends/imgui_impl_glfw.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/map/qml/qmlreg.cc
     ${CORONA_OUTPUT_SET}
 )
@@ -104,16 +106,16 @@ target_sources(${CORONA_STANDALONE_NAME}
 target_link_libraries(${CORONA_STANDALONE_NAME}
   PRIVATE
     corona
-    corona-standalone::qrhiimgui
     corona-standalone::terminal
+    imgui::imgui
+    glfw
+    OpenGL::GL
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     tomlplusplus::tomlplusplus
     Qt::Core
     Qt::Gui
-    Qt::GuiPrivate
     Qt::Quick
-    Qt::QuickPrivate
     Qt::QuickControls2
     Qt::Positioning
     Qt::Location

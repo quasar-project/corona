@@ -35,6 +35,8 @@ class CoronaRecipe(ConanFile):
         self.requires("reflect-cpp/0.11.1")
         if self.options.standalone:
             self.requires("tomlplusplus/[>=3.0.1]")
+            self.requires("imgui/cci.20230105+1.89.2.docking", transitive_headers=True, transitive_libs=True)
+            self.requires("glfw/3.4")
         if self.options.test:
             self.requires("gtest/[>=1.10.0]")
         if self.options.self_sufficient:
