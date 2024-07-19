@@ -77,7 +77,6 @@ namespace corona::standalone::app
   Logger::~Logger() {
     if(not *this)
       return;
-    llog::trace("logger \'{}\': closing", this->get()->name());
     if(this->params().is_default)
       spdlog::shutdown();
   }

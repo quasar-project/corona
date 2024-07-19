@@ -259,14 +259,12 @@ namespace ImTerm {
     }
 
     void sink_it_(const spdlog::details::log_msg& msg) override {
-      if (msg.level == spdlog::level::off) {
+      if(msg.level == spdlog::level::off)
         return;
-      }
       assert(terminal_ != nullptr);
       spdlog::memory_buf_t buff{};
       SinkBase::formatter_->format(msg, buff);
-      terminal_->add_message({details::to_imterm_severity(msg.level), fmt::to_string(buff)
-                               , msg.color_range_start, msg.color_range_end, false});
+      terminal_->add_message({details::to_imterm_severity(msg.level), fmt::to_string(buff), msg.color_range_start, msg.color_range_end, false});
     }
 
     void flush_() override {}

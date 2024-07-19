@@ -8,10 +8,7 @@ import io.corona.standalone.app as App
 import io.corona.standalone.theme as ThemeModule
 import io.corona.standalone.imgui as ImguiModule
 import io.corona.standalone.map as MapModule
-
-// import "layouts" as Layouts
-// import "utils" as Utils
-// import "widgets" as Widgets // todo: move to module
+import io.corona.standalone.layouts as LayoutsModule
 
 ApplicationWindow {
     id: window_root
@@ -36,6 +33,10 @@ ApplicationWindow {
     Material.primary: App.Theme.palette.sky
     Material.roundedScale: Material.ExtraSmallScale
 
+    menuBar: LayoutsModule.ApplicationMenuBar {
+        themeChanger: themeChanger
+    }
+
     Rectangle {
         id: root
         color: App.Theme.palette.base0
@@ -46,17 +47,9 @@ ApplicationWindow {
             anchors.fill: parent
             imguiRenderer: imguiRenderer
         }
-
-        Button {
-            id: button
-            height: 100
-            text: App.Theme.mode === App.Theme.Dark ? "Dark" : "Light"
-            anchors.centerIn: parent
-            onClicked: themeChanger.toggle(this)
-        }
     }
 
-    ImguiModule.ImmediateGuiMainRenderer { id: imguiRenderer; shortcut: "F5"; opacity: 0 }
+    ImguiModule.ImmediateGuiMainRenderer { id: imguiRenderer; shortcut: "\\"; opacity: 0 }
     ThemeModule.CircularChanger { id: themeChanger; rootItem: root; theme: App.Theme; }
 }
 

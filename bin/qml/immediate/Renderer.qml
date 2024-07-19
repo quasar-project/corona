@@ -9,7 +9,7 @@ Rectangle {
     function toggle() { this.opacity = this.opacity > 0.5 ? 0 : this.max_opacity }
 
     id: imgui_frame
-    layer.enabled: true
+    layer.enabled: false
     color: "transparent"
     anchors.fill: parent
     enabled: this.visible

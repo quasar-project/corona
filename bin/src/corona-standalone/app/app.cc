@@ -95,7 +95,7 @@ namespace corona::standalone::app
     ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Theme", impl_->theme.ptr_mut());
   }
 
-  Corona::~Corona() = default;
+  Corona::~Corona() { spdlog::set_level(spdlog::level::off); }
 
   auto Corona::with_icon(string_view const path) -> Corona& {
     llog::trace("app icon is set to \'{}\'", path);
@@ -126,8 +126,6 @@ namespace corona::standalone::app
       llog::info("cleaning up and quitting");
       engine.quit();
     });
-    ImGui::GetIO().LogFilename = nullptr;
-    ImGui::GetIO().IniFilename = nullptr;
     this->impl_->quick_window = qobject_cast<::QQuickWindow*>(engine.rootObjects().front());
     auto* imgui_ptr = this->quick_window()->findChild<gui::immediate::GenericItem*>("imgui");
     if(imgui_ptr == nullptr)

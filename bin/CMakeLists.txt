@@ -69,6 +69,7 @@ qt_add_qml_module(${CORONA_STANDALONE_NAME}
     qml/theme/CircularChanger.qml
     qml/immediate/Renderer.qml
     qml/map/MapView.qml
+    qml/layouts/ApplicationMenuBar.qml
   RESOURCES
     resources/icon.svg
     resources/icon.png
@@ -89,6 +90,7 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/main.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/logger.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/app.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/qml/qmlreg.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/reveal.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/theme.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/values.cc

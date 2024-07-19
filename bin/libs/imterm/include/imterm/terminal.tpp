@@ -15,8 +15,6 @@
 ///                                                                                                                                     ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <imgui.h>
-#include <imgui_internal.h>
 #include <array>
 #include <cctype>
 #include <charconv>
@@ -25,7 +23,9 @@
 #include <iterator>
 #include <algorithm>
 #include <regex>
-
+#include <spdlog/spdlog.h>
+#include <imgui.h>
+#include <imgui_internal.h>
 #include "misc.hpp"
 
 namespace ImTerm {
@@ -1582,13 +1582,13 @@ namespace ImTerm {
 
   template <typename TerminalHelper>
   void terminal<TerminalHelper>::push_message(message&& msg) {
-    try_lock();
+    if(not spdlog::default_logger())
+      return;
     if (m_logs.size() == m_max_log_len) {
       m_logs[m_current_log_oldest_idx] = std::move(msg);
       m_current_log_oldest_idx = (m_current_log_oldest_idx + 1) % m_logs.size();
     } else {
       m_logs.emplace_back(std::move(msg));
     }
-    try_unlock();
   }
 } // namespace term

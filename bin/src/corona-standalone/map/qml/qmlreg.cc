@@ -4,9 +4,9 @@
 namespace qml
 {
   [[maybe_unused]] volatile auto register_map_ = []() { // NOLINT(*-identifier-naming)
-    fmt::println("registering io.corona.standalone.map qml types");
-    qmlRegisterModule("io.corona.standalone.map", 1, 0);
-    qmlRegisterType(QUrl("qrc:/qml/map/MapView.qml"), "io.corona.standalone.map", 1, 0, "MapView");
+    fmt::println("registering io.corona.standalone.layouts qml types");
+    qmlRegisterModule("io.corona.standalone.layouts", 1, 0);
+    qmlRegisterType(QUrl("qrc:/qml/layouts/ApplicationMenuBar.qml"), "io.corona.standalone.layouts", 1, 0, "ApplicationMenuBar");
     return true;
   }();
 } // namespace qml
