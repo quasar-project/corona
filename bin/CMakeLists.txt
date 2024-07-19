@@ -21,7 +21,7 @@ endif()
 
 # -- dependencies --
 find_package(tomlplusplus REQUIRED)
-find_package(imgui REQUIRED)
+#find_package(imgui REQUIRED)
 find_package(Qt6
   COMPONENTS
     Core
