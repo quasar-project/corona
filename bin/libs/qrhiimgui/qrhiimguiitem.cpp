@@ -130,7 +130,7 @@ struct QRhiImguiItemPrivate
     QQuickWindow *window = nullptr;
     QMetaObject::Connection windowConn;
     QRhiImgui gui;
-    bool showDemoWindow = true;
+    bool showMetrics = true;
 
     QRhiImguiItemPrivate(QRhiImguiItem *item) : q(item) { }
 };
@@ -147,6 +147,15 @@ QRhiImguiItem::QRhiImguiItem(QQuickItem *parent)
 QRhiImguiItem::~QRhiImguiItem()
 {
     delete d;
+}
+
+auto QRhiImguiItem::graphicsInfo() const -> QRhiGraphicsInfo const& {
+    return this->m_graphics_info;
+}
+
+void QRhiImguiItem::setGraphicsInfo(QRhiGraphicsInfo const& graphics_info) {
+    this->m_graphics_info = graphics_info;
+    emit graphicsInfoChanged();
 }
 
 QSGNode *QRhiImguiItem::updatePaintNode(QSGNode *node, QQuickItem::UpdatePaintNodeData *)
@@ -258,7 +267,19 @@ QRhiImgui *QRhiImguiItem::imgui()
 
 void QRhiImguiItem::frame()
 {
-    ImGui::ShowDemoWindow(&d->showDemoWindow);
+  auto& io = ImGui::GetIO();
+  ImGui::Begin("Scenegraph metrics", &this->d->showMetrics);
+  ImGui::Text("Backend: %s", this->graphicsInfo().api().toLatin1().data());
+  ImGui::Separator();
+  ImGui::Text("Version: %d.%d", this->graphicsInfo().majorVer(), this->graphicsInfo().minorVer());
+  ImGui::Text("Profile: %s", this->graphicsInfo().profile().toLatin1().data());
+  ImGui::Text("Renderable type: %s", this->graphicsInfo().renderableType().toLatin1().data());
+  ImGui::Text("Shader compilation type: %s", this->graphicsInfo().shaderCompilationType().toLatin1().data());
+  ImGui::Text("Shader source type: %s", this->graphicsInfo().shaderSourceType().toLatin1().data());
+  ImGui::Text("Shader type: %s", this->graphicsInfo().shaderType().toLatin1().data());
+  ImGui::Separator();
+  ImGui::Text("Framerate: %.1f (%.5f ms/frame)", io.Framerate, 1'000.0F / io.Framerate);
+  ImGui::End();
 }
 
 QRhiImguiItemCustomRenderer *QRhiImguiItem::createCustomRenderer()

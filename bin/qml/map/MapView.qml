@@ -64,7 +64,7 @@ Map {
 
     Shortcut {
         enabled: map.zoomLevel < map.maximumZoomLevel
-        sequence: StandardKey.ZoomIn
+        sequences: [ StandardKey.ZoomIn ]
         onActivated: map.zoomLevel = Math.round(map.zoomLevel + 1)
     }
 

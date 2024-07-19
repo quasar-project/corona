@@ -23,9 +23,9 @@ namespace corona::standalone::gui::immediate
   GenericItem::~GenericItem() = default;
 
   auto GenericItem::frame() -> void {
+    this->QRhiImguiItem::frame();
     for(auto& callback : this->callbacks_)
       callback();
-
     for(auto& drawable : this->drawables_)
       drawable->draw_debug_frame();
   }

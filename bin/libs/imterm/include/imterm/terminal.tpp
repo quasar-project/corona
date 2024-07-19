@@ -833,6 +833,8 @@ namespace ImTerm {
     m_previously_active_id = ImGui::GetActiveID();
   }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstringop-overflow"
   template <typename TerminalHelper>
   void terminal<TerminalHelper>::show_autocomplete() noexcept {
     constexpr ImGuiWindowFlags overlay_flags = ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar
@@ -952,6 +954,7 @@ namespace ImTerm {
       ImGui::PopStyleVar();
     }
   }
+#pragma GCC diagnostic pop
 
   template <typename TerminalHelper>
   void terminal<TerminalHelper>::call_command() noexcept {
