@@ -16,6 +16,7 @@ Rectangle {
     visible: this.opacity > 0
     opacity: this.max_opacity
     Behavior on opacity { NumberAnimation { duration: 100; easing.type: Easing.InOutQuad } }
+    onVisibleChanged: forceActiveFocus()
 
     ImguiModule.ImmediateGuiGenericRenderer {
         id: imgui
