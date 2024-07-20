@@ -816,12 +816,12 @@ namespace ImTerm {
     };
 
     if (m_previously_active_id == m_input_text_id && ImGui::GetActiveID() != m_input_text_id) {
-      if (ImGui::IsKeyPressedMap(ImGuiKey_Enter)) {
+      if (ImGui::IsKeyPressed(ImGuiKey_Enter)) {
         call_command();
         m_should_take_focus = true;
         clear_frame();
 
-      } else if (ImGui::IsKeyPressedMap(ImGuiKey_Escape)) {
+      } else if (ImGui::IsKeyPressed(ImGuiKey_Escape)) {
         if (m_buffer_usage == 0u && m_previous_buffer_usage == 0u) {
           m_should_show_next_frame = false; // should hide on next frames
         } else {

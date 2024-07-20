@@ -306,6 +306,7 @@ QRhiImgui::QRhiImgui()
   ImGui::SetCurrentContext(static_cast<ImGuiContext *>(context));
   rebuildFontAtlas();
   ImGuiIO &io(ImGui::GetIO());
+  io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
   io.GetClipboardTextFn = getClipboardText;
   io.SetClipboardTextFn = setClipboardText;
 }
