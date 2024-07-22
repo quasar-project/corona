@@ -32,32 +32,43 @@ namespace
 
 namespace corona::standalone::app
 {
+  struct ImGUIData
+  {
+    explicit ImGUIData(Logger& logger)
+      : terminal_cmd(std::make_unique<gui::immediate::custom_command_struct>())
+      , terminal(std::make_unique<imterm::terminal<gui::immediate::terminal_commands>>(*this->terminal_cmd, "Debug console"))
+    {
+      logger->sinks().push_back(this->terminal->get_terminal_helper());
+      llog::trace("added default logger to debug console");
+      UILogger::ref_mut().logger().sinks().push_back(this->terminal->get_terminal_helper());
+      llog::trace("added ui logger to debug console");
+      this->terminal->execute("configure_terminal colors set-theme \"Dark Cherry\"");
+    }
+
+    qdebugenv::CExtendableRenderer* imgui{nullptr};
+    std::unique_ptr<gui::immediate::custom_command_struct> terminal_cmd;
+    std::unique_ptr<imterm::terminal<gui::immediate::terminal_commands>> terminal;
+  };
+
   struct Corona::impl
   {
     explicit impl(Logger& logger);
 
     auto emplace_themes() -> void;
+    auto configure_imgui(::QQmlApplicationEngine* engine) -> void;
 
     Logger& logger;
     fl::filesystem::application_dirs dirs;
     fl::box<gui::theme::qml::ThemeWrapper> theme;
-    qdebugenv::CExtendableRenderer* imgui{nullptr};
-    std::unique_ptr<gui::immediate::custom_command_struct> terminal_cmd;
-    std::unique_ptr<imterm::terminal<gui::immediate::terminal_commands>> terminal;
+    ImGUIData imgui;
   };
 
   Corona::impl::impl(Logger& logger)
     : logger(logger)
     , dirs(fl::filesystem::application_dirs(corona::standalone::app::meta::corona_meta))
     , theme(fl::make_box<gui::theme::qml::ThemeWrapper>(nullptr))
-    , terminal_cmd(std::make_unique<gui::immediate::custom_command_struct>())
-    , terminal(std::make_unique<imterm::terminal<gui::immediate::terminal_commands>>(*this->terminal_cmd, "Debug console"))
+    , imgui(logger)
   {
-    this->logger->sinks().push_back(this->terminal->get_terminal_helper());
-    llog::trace("added default logger to debug console");
-    UILogger::ref_mut().logger().sinks().push_back(this->terminal->get_terminal_helper());
-    llog::trace("added ui logger to debug console");
-    this->terminal->execute("configure_terminal colors set-theme \"Dark Cherry\"");
     llog::info("app: {}", corona::standalone::app::meta::corona_meta);
     llog::info("lib: {}", corona::meta::corona_meta);
   }
@@ -75,6 +86,16 @@ namespace corona::standalone::app
       else
         llog::trace("emplaced theme \'{}\'", stem);
     }
+  }
+
+  auto Corona::impl::configure_imgui(::QQmlApplicationEngine* engine) -> void {
+    llog::trace("configuring imgui");
+    this->imgui.imgui = dynamic_cast<qdebugenv::CExtendableRenderer*>(
+      qdebugenv::CExtendableRenderer::from_engine(engine)
+    );
+    this->imgui.imgui->style_default();
+    *this->imgui.imgui += [this](){ this->imgui.terminal->show(); };
+    llog::trace("imgui configured successfully");
   }
 
   Corona::Corona(int& args, char** argv, Logger& logger)
@@ -124,13 +145,7 @@ namespace corona::standalone::app
       llog::info("cleaning up and quitting");
       engine.quit();
     });
-    this->impl_->imgui = dynamic_cast<qdebugenv::CExtendableRenderer*>(
-      qdebugenv::CExtendableRenderer::from_engine(&engine)
-    );
-    this->imgui_mut().style_default();
-    this->imgui_mut() += [this](){
-      this->impl_->terminal->show();
-    };
+    this->impl_->configure_imgui(&engine);
     return Corona::exec();
   }
 
@@ -140,6 +155,6 @@ namespace corona::standalone::app
   auto Corona::dirs_mut() -> fl::filesystem::application_dirs& { return this->impl_->dirs; }
   auto Corona::theme() const -> gui::theme::qml::ThemeWrapper const& { return *this->impl_->theme; }
   auto Corona::theme_mut() -> gui::theme::qml::ThemeWrapper& { return *this->impl_->theme; }
-  auto Corona::imgui() const -> qdebugenv::CExtendableRenderer const& { return *this->impl_->imgui; }
-  auto Corona::imgui_mut() -> qdebugenv::CExtendableRenderer& { return *this->impl_->imgui; }
+  auto Corona::imgui() const -> qdebugenv::CExtendableRenderer const& { return *this->impl_->imgui.imgui; }
+  auto Corona::imgui_mut() -> qdebugenv::CExtendableRenderer& { return *this->impl_->imgui.imgui; }
 } // namespace corona::standalone::app

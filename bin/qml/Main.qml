@@ -49,7 +49,7 @@ ApplicationWindow {
         }
     }
 
-    QDebugEnv_Rendering.ImmediateGUIRenderingFacility { id: imguiRenderer; shortcut: "\\"; opacity: 0 }
     ThemeModule.CircularChanger { id: themeChanger; rootItem: root; theme: App.Theme; }
+    QDebugEnv_Rendering.ImmediateGUIRenderingFacility { id: imguiRenderer; shortcut: "\\"; opacity: 0 }
 }
 
