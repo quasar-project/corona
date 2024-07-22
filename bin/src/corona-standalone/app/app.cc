@@ -44,7 +44,6 @@ namespace corona::standalone::app
     qdebugenv::CExtendableRenderer* imgui{nullptr};
     std::unique_ptr<gui::immediate::custom_command_struct> terminal_cmd;
     std::unique_ptr<imterm::terminal<gui::immediate::terminal_commands>> terminal;
-    QQuickWindow* quick_window{nullptr};
   };
 
   Corona::impl::impl(Logger& logger)
@@ -125,12 +124,10 @@ namespace corona::standalone::app
       llog::info("cleaning up and quitting");
       engine.quit();
     });
-    this->impl_->quick_window = qobject_cast<::QQuickWindow*>(engine.rootObjects().front());
-    auto* imgui_ptr = this->quick_window()->findChild<qdebugenv::CExtendableRenderer*>("imgui");
-    if(imgui_ptr == nullptr)
-      fl::panic("failed to find imgui in qml scene");
-    this->impl_->imgui = imgui_ptr;
-    llog::trace("found imgui local pointer: {}", static_cast<void*>(imgui_ptr));
+    this->impl_->imgui = dynamic_cast<qdebugenv::CExtendableRenderer*>(
+      qdebugenv::CExtendableRenderer::from_engine(&engine)
+    );
+    this->imgui_mut().style_default();
     this->imgui_mut() += [this](){
       this->impl_->terminal->show();
     };
@@ -145,5 +142,4 @@ namespace corona::standalone::app
   auto Corona::theme_mut() -> gui::theme::qml::ThemeWrapper& { return *this->impl_->theme; }
   auto Corona::imgui() const -> qdebugenv::CExtendableRenderer const& { return *this->impl_->imgui; }
   auto Corona::imgui_mut() -> qdebugenv::CExtendableRenderer& { return *this->impl_->imgui; }
-  auto Corona::quick_window() const -> QQuickWindow* { return this->impl_->quick_window; }
 } // namespace corona::standalone::app

@@ -38,8 +38,6 @@ namespace corona::standalone
       [[nodiscard]] auto imgui() const -> qdebugenv::CExtendableRenderer const&;
       [[nodiscard]] auto imgui_mut() -> qdebugenv::CExtendableRenderer&;
 
-      [[nodiscard]] auto quick_window() const -> QQuickWindow*;
-
      private:
       struct impl;
       fl::traits::pimpl<struct impl> impl_;
