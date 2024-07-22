@@ -21,7 +21,7 @@ endif()
 
 # -- dependencies --
 find_package(tomlplusplus REQUIRED)
-#find_package(imgui REQUIRED)
+find_package(qdebugenv REQUIRED)
 find_package(Qt6
   COMPONENTS
     Core
@@ -32,7 +32,6 @@ find_package(Qt6
     ShaderTools
   REQUIRED
 )
-add_subdirectory(libs/qrhiimgui)
 add_subdirectory(libs/imterm)
 
 # -- executable --
@@ -61,13 +60,20 @@ if(WIN32)
   set(CORONA_OUTPUT_SET ${CORONA_RES_FILES})
 endif()
 
+qt6_add_shaders(${PROJECT_NAME} "imgui_shaders"
+  PREFIX "/"
+  BASE ${CMAKE_CURRENT_SOURCE_DIR}
+  FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/imgui.vert
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/imgui.frag
+)
+
 qt_add_qml_module(${CORONA_STANDALONE_NAME}
   URI "io.corona.standalone"
   VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
   QML_FILES
     qml/Main.qml
     qml/theme/CircularChanger.qml
-    qml/immediate/Renderer.qml
     qml/map/MapView.qml
     qml/layouts/ApplicationMenuBar.qml
   RESOURCES
@@ -95,7 +101,6 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/theme.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/values.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/qml/theme_wrapper.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/generic.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/terminal_commands.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/map/qml/qmlreg.cc
     ${CORONA_OUTPUT_SET}
@@ -104,11 +109,11 @@ target_sources(${CORONA_STANDALONE_NAME}
 target_link_libraries(${CORONA_STANDALONE_NAME}
   PRIVATE
     corona
-    corona-standalone::qrhiimgui
     corona-standalone::terminal
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     tomlplusplus::tomlplusplus
+    qdebugenv::qdebugenv
     Qt::Core
     Qt::Gui
     Qt::GuiPrivate

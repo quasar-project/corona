@@ -6,10 +6,10 @@ import QtQuick.Layouts
 
 import io.corona.standalone.app as App
 import io.corona.standalone.theme as ThemeModule
-import io.corona.standalone.imgui as ImguiModule
+import io.qdebugenv.rendering as QDebugEnv_Rendering
 
 Map {
-    required property ImguiModule.ImmediateGuiMainRenderer imguiRenderer
+    required property QDebugEnv_Rendering.ImmediateGUIRenderingFacility imguiRenderer
 
     id: map
     layer {

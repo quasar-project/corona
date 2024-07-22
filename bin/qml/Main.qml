@@ -4,9 +4,9 @@ import QtQuick.Controls
 import QtQuick.Controls.Material
 import QtQuick.Layouts
 
+import io.qdebugenv.rendering as QDebugEnv_Rendering
 import io.corona.standalone.app as App
 import io.corona.standalone.theme as ThemeModule
-import io.corona.standalone.imgui as ImguiModule
 import io.corona.standalone.map as MapModule
 import io.corona.standalone.layouts as LayoutsModule
 
@@ -49,7 +49,7 @@ ApplicationWindow {
         }
     }
 
-    ImguiModule.ImmediateGuiMainRenderer { id: imguiRenderer; shortcut: "\\"; opacity: 0 }
+    QDebugEnv_Rendering.ImmediateGUIRenderingFacility { id: imguiRenderer; shortcut: "\\"; opacity: 0 }
     ThemeModule.CircularChanger { id: themeChanger; rootItem: root; theme: App.Theme; }
 }
 

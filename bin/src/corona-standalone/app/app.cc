@@ -10,11 +10,11 @@
 #include <magic_enum/magic_enum.hpp>
 #include <imterm/terminal.hpp>
 #include <floppy/directories.h>
+#include <qdebugenv/class_extendable_renderer.h>
 #include <corona-standalone/utility/formatters.hh>
 #include <corona-standalone/app/ui_logger.hh>
 #include <corona-standalone/app/default_themes.hh>
 #include <corona-standalone/gui/theme/qml/theme_wrapper.hh>
-#include <corona-standalone/gui/immediate/generic.hh>
 #include <corona-standalone/gui/immediate/terminal_commands.hh>
 
 namespace me = magic_enum;
@@ -42,7 +42,7 @@ namespace corona::standalone::app
     Logger& logger;
     fl::filesystem::application_dirs dirs;
     fl::box<gui::theme::qml::ThemeWrapper> theme;
-    gui::immediate::GenericItem* imgui{nullptr};
+    qdebugenv::CExtendableRenderer* imgui{nullptr};
     std::unique_ptr<gui::immediate::custom_command_struct> terminal_cmd;
     std::unique_ptr<ImTerm::terminal<gui::immediate::terminal_commands>> terminal;
     QQuickWindow* quick_window{nullptr};
@@ -127,7 +127,7 @@ namespace corona::standalone::app
       engine.quit();
     });
     this->impl_->quick_window = qobject_cast<::QQuickWindow*>(engine.rootObjects().front());
-    auto* imgui_ptr = this->quick_window()->findChild<gui::immediate::GenericItem*>("imgui");
+    auto* imgui_ptr = this->quick_window()->findChild<qdebugenv::CExtendableRenderer*>("imgui");
     if(imgui_ptr == nullptr)
       fl::panic("failed to find imgui in qml scene");
     this->impl_->imgui = imgui_ptr;
@@ -144,7 +144,7 @@ namespace corona::standalone::app
   auto Corona::dirs_mut() -> fl::filesystem::application_dirs& { return this->impl_->dirs; }
   auto Corona::theme() const -> gui::theme::qml::ThemeWrapper const& { return *this->impl_->theme; }
   auto Corona::theme_mut() -> gui::theme::qml::ThemeWrapper& { return *this->impl_->theme; }
-  auto Corona::imgui() const -> gui::immediate::GenericItem const& { return *this->impl_->imgui; }
-  auto Corona::imgui_mut() -> gui::immediate::GenericItem& { return *this->impl_->imgui; }
+  auto Corona::imgui() const -> qdebugenv::CExtendableRenderer const& { return *this->impl_->imgui; }
+  auto Corona::imgui_mut() -> qdebugenv::CExtendableRenderer& { return *this->impl_->imgui; }
   auto Corona::quick_window() const -> QQuickWindow* { return this->impl_->quick_window; }
 } // namespace corona::standalone::app

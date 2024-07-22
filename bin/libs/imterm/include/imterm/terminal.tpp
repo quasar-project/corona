@@ -24,8 +24,8 @@
 #include <algorithm>
 #include <regex>
 #include <spdlog/spdlog.h>
-#include <imgui.h>
-#include <imgui_internal.h>
+#include <qdebugenv/vendored/imgui.h>
+#include <qdebugenv/vendored/imgui_internal.h>
 #include "misc.hpp"
 
 namespace ImTerm {

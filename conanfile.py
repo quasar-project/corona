@@ -30,11 +30,12 @@ class CoronaRecipe(ConanFile):
         return "23"
 
     def requirements(self):
-        self.requires("floppy/[>=1.2.2]", transitive_headers=True, transitive_libs=True)
+        self.requires("floppy/[>=1.2.4]", transitive_headers=True, transitive_libs=True)
         self.requires("magic_enum/0.9.5", transitive_headers=True, transitive_libs=True)
         self.requires("reflect-cpp/0.11.1")
         if self.options.standalone:
             self.requires("tomlplusplus/[>=3.0.1]")
+            self.requires("qdebugenv/[>=0.1.0]")
         if self.options.test:
             self.requires("gtest/[>=1.10.0]")
         if self.options.self_sufficient:
@@ -44,8 +45,6 @@ class CoronaRecipe(ConanFile):
     def configure(self):
         self.options["reflect-cpp"].with_json = True
         self.options["reflect-cpp"].with_yaml = True
-        if self.options.standalone:
-            self.options["imgui/*"].shared = self.options.shared
 
     def layout(self):
         cmake_layout(self)
