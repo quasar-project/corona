@@ -8,7 +8,6 @@
 #include <qquickwindow.h>
 #include <qquickstyle.h>
 #include <magic_enum/magic_enum.hpp>
-#include <imterm/terminal.hpp>
 #include <floppy/directories.h>
 #include <qdebugenv/class_extendable_renderer.h>
 #include <corona-standalone/utility/formatters.hh>
@@ -44,7 +43,7 @@ namespace corona::standalone::app
     fl::box<gui::theme::qml::ThemeWrapper> theme;
     qdebugenv::CExtendableRenderer* imgui{nullptr};
     std::unique_ptr<gui::immediate::custom_command_struct> terminal_cmd;
-    std::unique_ptr<ImTerm::terminal<gui::immediate::terminal_commands>> terminal;
+    std::unique_ptr<imterm::terminal<gui::immediate::terminal_commands>> terminal;
     QQuickWindow* quick_window{nullptr};
   };
 
@@ -53,7 +52,7 @@ namespace corona::standalone::app
     , dirs(fl::filesystem::application_dirs(corona::standalone::app::meta::corona_meta))
     , theme(fl::make_box<gui::theme::qml::ThemeWrapper>(nullptr))
     , terminal_cmd(std::make_unique<gui::immediate::custom_command_struct>())
-    , terminal(std::make_unique<ImTerm::terminal<gui::immediate::terminal_commands>>(*this->terminal_cmd, "Debug console"))
+    , terminal(std::make_unique<imterm::terminal<gui::immediate::terminal_commands>>(*this->terminal_cmd, "Debug console"))
   {
     this->logger->sinks().push_back(this->terminal->get_terminal_helper());
     llog::trace("added default logger to debug console");

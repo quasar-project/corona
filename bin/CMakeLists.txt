@@ -32,7 +32,6 @@ find_package(Qt6
     ShaderTools
   REQUIRED
 )
-add_subdirectory(libs/imterm)
 
 # -- executable --
 qt_add_executable(${CORONA_STANDALONE_NAME})
@@ -109,7 +108,6 @@ target_sources(${CORONA_STANDALONE_NAME}
 target_link_libraries(${CORONA_STANDALONE_NAME}
   PRIVATE
     corona
-    corona-standalone::terminal
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     tomlplusplus::tomlplusplus
@@ -145,7 +143,6 @@ target_include_directories(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/libs/qrhiimgui/imgui
 )
 
-# tmp workaround for debug
 if(WIN32 AND ${CMAKE_CXX_COMPILER_ID} MATCHES "GNU|Clang|Mingw|MINGW" AND NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
   message(STATUS "[${CORONA_STANDALONE_NAME}] adding -mwindows linker opt (${CMAKE_CXX_COMPILER_ID})")
   target_link_options(${CORONA_STANDALONE_NAME} PRIVATE -mwindows)
@@ -173,14 +170,4 @@ if(WIN32)
       COMMAND_EXPAND_LISTS
     )
   endif()
-
-  # windeployqt
-#  if(WINDEPLOYQT_EXECUTABLE)
-#    message(STATUS "running windeployqt for ${CORONA_STANDALONE_NAME}")
-#    add_custom_command(TARGET ${CORONA_STANDALONE_NAME}
-#      POST_BUILD
-#      COMMAND ${WINDEPLOYQT_EXECUTABLE} $<TARGET_FILE:${CORONA_STANDALONE_NAME}>
-#      COMMAND_EXPAND_LISTS
-#    )
-#  endif()
 endif()
