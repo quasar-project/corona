@@ -38,6 +38,7 @@ namespace corona::standalone::app
       : terminal_cmd(std::make_unique<gui::immediate::custom_command_struct>())
       , terminal(std::make_unique<imterm::terminal<gui::immediate::terminal_commands>>(*this->terminal_cmd, "Debug console"))
     {
+      this->terminal->get_terminal_helper()->set_pattern("[%X] (%n) [%^%l%$] %^%v%$");
       logger->sinks().push_back(this->terminal->get_terminal_helper());
       llog::trace("added default logger to debug console");
       CUserInterfaceLogger::ref_mut().logger().sinks().push_back(this->terminal->get_terminal_helper());
@@ -57,7 +58,7 @@ namespace corona::standalone::app
     auto emplace_themes() -> void;
     auto configure_imgui(::QQmlApplicationEngine* engine) -> void;
 
-    CLogger& logger;
+    CLogger& logger; // NOLINT(*-avoid-const-or-ref-data-members)
     fl::filesystem::application_dirs dirs;
     fl::box<gui::theme::qml::CThemeWrapper> theme;
     ImGUIData imgui;
