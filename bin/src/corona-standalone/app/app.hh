@@ -2,7 +2,7 @@
 
 #include <qguiapplication.h>
 #include <corona-standalone/definitions.hh>
-#include <corona-standalone/app/iapplication.hh>
+#include <corona-standalone/app/interface_application.hh>
 #include <corona-standalone/app/meta.hh>
 
 /* fwd */
@@ -11,14 +11,14 @@ namespace floppy::filesystem { class application_dirs; } // namespace floppy::fi
 namespace qdebugenv { class CExtendableRenderer; } // namespace qdebugenv
 namespace corona::standalone
 {
-  namespace gui::theme::qml { class ThemeWrapper; } // namespace gui::theme::qml
+  namespace gui::theme::qml { class CThemeWrapper; } // namespace gui::theme::qml
   namespace app
   {
-    class Logger;
+    class CLogger;
     class Corona final : public IApplication<QGuiApplication> // NOLINT(*-special-member-functions) (reason: pinned)
     {
      public:
-      explicit Corona(int& args, char** argv, Logger& logger);
+      explicit Corona(int& args, char** argv, CLogger& logger);
       virtual ~Corona() override; // NOLINT(*-use-override)
 
       auto with_icon(string_view path) -> Corona&;
@@ -26,14 +26,14 @@ namespace corona::standalone
 
       [[nodiscard]] auto run_scene(string_view path) -> int;
 
-      [[nodiscard]] auto logger() const -> Logger const&;
-      [[nodiscard]] auto logger_mut() -> Logger&;
+      [[nodiscard]] auto logger() const -> CLogger const&;
+      [[nodiscard]] auto logger_mut() -> CLogger&;
 
       [[nodiscard]] auto dirs() const -> fl::filesystem::application_dirs const&;
       [[nodiscard]] auto dirs_mut() -> fl::filesystem::application_dirs&;
 
-      [[nodiscard]] auto theme() const -> gui::theme::qml::ThemeWrapper const&;
-      [[nodiscard]] auto theme_mut() -> gui::theme::qml::ThemeWrapper&;
+      [[nodiscard]] auto theme() const -> gui::theme::qml::CThemeWrapper const&;
+      [[nodiscard]] auto theme_mut() -> gui::theme::qml::CThemeWrapper&;
 
       [[nodiscard]] auto imgui() const -> qdebugenv::CExtendableRenderer const&;
       [[nodiscard]] auto imgui_mut() -> qdebugenv::CExtendableRenderer&;

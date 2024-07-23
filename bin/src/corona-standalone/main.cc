@@ -1,5 +1,4 @@
-#include <floppy/floppy.h>
-#include <corona-standalone/app/logger.hh>
+#include <corona-standalone/app/class_logger.hh>
 #include <corona-standalone/app/app.hh>
 
 #if defined(FLOPPY_OS_WINDOWS)
@@ -9,24 +8,28 @@
 # define main$ main
 #endif
 
-namespace cs = corona::standalone;
 auto main$(int argc, char** argv) -> int
 {
-  auto logger = cs::app::Logger::make(
-    cs::app::Logger::Params {
+  using corona::standalone::app::CLogger;
+  using corona::standalone::app::Corona;
+  using corona::standalone::app::QuickStyle;
+  using namespace corona::standalone::llog::level;
+
+  auto logger = CLogger::make(
+    CLogger::Params {
       .is_default = true,
       .name = "main",
-      .level = cs::llog::level::level_enum::trace,
-      .target = cs::app::Logger::Target::All,
+      .level = trace,
+      .target = CLogger::Target::All,
       .pattern = "[%X] (%n) [%^%L%$] %^%v%$",
       .filename = "corona.log",
       .folder = std::filesystem::current_path() / "logs"
     }
   );
 
-  return cs::app::Corona(argc, argv, logger)
+  return Corona(argc, argv, logger)
     .with_icon("resources/icon")
-    .with_quick_style(cs::app::QuickStyle::Material)
+    .with_quick_style(QuickStyle::Material)
     .run_scene("qml/Main");
 }
 

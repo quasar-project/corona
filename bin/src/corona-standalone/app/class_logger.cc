@@ -1,4 +1,4 @@
-#include <corona-standalone/app/logger.hh>
+#include <corona-standalone/app/class_logger.hh>
 
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/rotating_file_sink.h>
@@ -7,10 +7,9 @@
 
 using std::vector;
 namespace me = magic_enum;
-
 namespace corona::standalone::app
 {
-  Logger::Logger(Params params)
+  CLogger::CLogger(Params params)
     : params_(std::move(params))
   {
     if(this->params().pattern.empty())
@@ -30,7 +29,7 @@ namespace corona::standalone::app
       create_directories(folder);
     }
     while(bitmask) {
-      switch(bitmask bitand mask) {
+      switch(bitmask & mask) {
         case fl::to_underlying(Target::File):
           if(not this->params().filename.has_value())
             fl::panic(fmt::format("no filename specified for logger \'{}\'", this->params().name));
@@ -74,12 +73,12 @@ namespace corona::standalone::app
     (**this)->flush();
   }
 
-  Logger::~Logger() {
+  CLogger::~CLogger() {
     if(not *this)
       return;
     if(this->params().is_default)
       spdlog::shutdown();
   }
 
-  auto Logger::make(const Logger::Params& params) -> Logger { return Logger(params); }
+  auto CLogger::make(CLogger::Params const& params) -> CLogger { return CLogger(params); }
 } // namespace corona::standalone::app

@@ -28,3 +28,4 @@ SpaceAfterTemplateKeyword: 'true'
 SpaceBeforeCpp11BracedList: 'true'
 Standard: Cpp11
 UseTab: Never
+QualifierAlignment: Right

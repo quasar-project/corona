@@ -28,10 +28,10 @@ auto fl::serialization::deserialize<fl::serialization::format::yaml>(std::basic_
 
 namespace corona::standalone::gui::theme
 {
-  class Theme final
+  class CTheme final
   {
    public:
-    explicit Theme(fl::filesystem::application_dirs const& location);
+    explicit CTheme(fl::filesystem::application_dirs const& location);
 
     [[nodiscard]] auto folder() const -> fs::path const&;
     [[nodiscard]] auto theme_name() const -> string_view;

@@ -11,7 +11,7 @@ namespace corona::standalone::app
   using std::shared_ptr;
   namespace fs = std::filesystem;
 
-  struct Logger : public fl::traits::pin<Logger>
+  struct CLogger : public fl::traits::pin<CLogger> // NOLINT(*-special-member-functions) (reason: pinned)
   {
    public:
     enum class Target : char
@@ -34,8 +34,8 @@ namespace corona::standalone::app
       usize max_files = 3;
     };
 
-    explicit Logger(Params params);
-    ~Logger();
+    explicit CLogger(Params params);
+    ~CLogger();
 
     [[nodiscard]] auto get() -> shared_ptr<spdlog::logger>& { return this->logger_; }
     [[nodiscard]] auto get() const -> shared_ptr<spdlog::logger> const& { return this->logger_; }
@@ -47,20 +47,18 @@ namespace corona::standalone::app
     [[nodiscard]] auto operator->() -> shared_ptr<spdlog::logger>& { return this->logger_; }
     [[nodiscard]] auto operator->() const -> shared_ptr<spdlog::logger> const& { return this->logger_; }
 
-    [[nodiscard]] static auto make(Params const& params) -> Logger;
+    [[nodiscard]] static auto make(Params const& params) -> CLogger;
 
    private:
-     shared_ptr<spdlog::logger> logger_;
-     Params params_;
+    shared_ptr<spdlog::logger> logger_;
+    Params params_;
   };
 
-  constexpr auto operator|(const Logger::Target& lhs, const Logger::Target& rhs) -> Logger::Target {
-    return static_cast<Logger::Target>(static_cast<char>(lhs) | static_cast<char>(rhs));
+  constexpr auto operator|(CLogger::Target const& lhs, CLogger::Target const& rhs) -> CLogger::Target {
+    return static_cast<CLogger::Target>(static_cast<char>(lhs) | static_cast<char>(rhs));
   }
 
-  constexpr auto operator&(const Logger::Target& lhs, const Logger::Target& rhs) -> Logger::Target {
-    return static_cast<Logger::Target>(static_cast<char>(lhs) & static_cast<char>(rhs));
+  constexpr auto operator&(CLogger::Target const& lhs, CLogger::Target const& rhs) -> CLogger::Target {
+    return static_cast<CLogger::Target>(static_cast<char>(lhs) & static_cast<char>(rhs));
   }
 } // namespace corona::standalone::app
-
-// [%=8!l] [thread %=5!t]:%^\033[1m %v %$\033[m

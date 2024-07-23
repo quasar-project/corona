@@ -11,9 +11,9 @@
 #include <floppy/directories.h>
 #include <qdebugenv/class_extendable_renderer.h>
 #include <corona-standalone/utility/formatters.hh>
-#include <corona-standalone/app/ui_logger.hh>
+#include <corona-standalone/app/class_user_interface_logger.hh>
 #include <corona-standalone/app/default_themes.hh>
-#include <corona-standalone/gui/theme/qml/theme_wrapper.hh>
+#include <corona-standalone/gui/theme/qml/class_theme_wrapper.hh>
 #include <corona-standalone/gui/immediate/terminal_commands.hh>
 
 namespace me = magic_enum;
@@ -34,13 +34,13 @@ namespace corona::standalone::app
 {
   struct ImGUIData
   {
-    explicit ImGUIData(Logger& logger)
+    explicit ImGUIData(CLogger& logger)
       : terminal_cmd(std::make_unique<gui::immediate::custom_command_struct>())
       , terminal(std::make_unique<imterm::terminal<gui::immediate::terminal_commands>>(*this->terminal_cmd, "Debug console"))
     {
       logger->sinks().push_back(this->terminal->get_terminal_helper());
       llog::trace("added default logger to debug console");
-      UILogger::ref_mut().logger().sinks().push_back(this->terminal->get_terminal_helper());
+      CUserInterfaceLogger::ref_mut().logger().sinks().push_back(this->terminal->get_terminal_helper());
       llog::trace("added ui logger to debug console");
       this->terminal->execute("configure_terminal colors set-theme \"Dark Cherry\"");
     }
@@ -52,21 +52,21 @@ namespace corona::standalone::app
 
   struct Corona::impl
   {
-    explicit impl(Logger& logger);
+    explicit impl(CLogger& logger);
 
     auto emplace_themes() -> void;
     auto configure_imgui(::QQmlApplicationEngine* engine) -> void;
 
-    Logger& logger;
+    CLogger& logger;
     fl::filesystem::application_dirs dirs;
-    fl::box<gui::theme::qml::ThemeWrapper> theme;
+    fl::box<gui::theme::qml::CThemeWrapper> theme;
     ImGUIData imgui;
   };
 
-  Corona::impl::impl(Logger& logger)
+  Corona::impl::impl(CLogger& logger)
     : logger(logger)
     , dirs(fl::filesystem::application_dirs(corona::standalone::app::meta::corona_meta))
-    , theme(fl::make_box<gui::theme::qml::ThemeWrapper>(nullptr))
+    , theme(fl::make_box<gui::theme::qml::CThemeWrapper>(nullptr))
     , imgui(logger)
   {
     llog::info("app: {}", corona::standalone::app::meta::corona_meta);
@@ -98,20 +98,22 @@ namespace corona::standalone::app
     llog::trace("imgui configured successfully");
   }
 
-  Corona::Corona(int& args, char** argv, Logger& logger)
+  Corona::Corona(int& args, char** argv, CLogger& logger)
     : IApplication(args, argv)
     , impl_(fl::make_box<impl>(logger))
   {
+    llog::debug("Corona::Corona: running initialization");
     Corona::setApplicationName(corona::standalone::app::meta::corona_meta.name().data());
     Corona::setApplicationVersion(corona::standalone::app::meta::corona_meta.version().as_str().data());
     Corona::setOrganizationName(corona::standalone::app::meta::corona_meta.organization().data());
     Corona::setOrganizationDomain(corona::standalone::app::meta::corona_meta.domain().data());
-    ::qInstallMessageHandler(UILogger::message_handler);
+    CUserInterfaceLogger::ref_mut().install();
 
     this->impl_->emplace_themes();
     llog::debug("initialized {}", fl::source_location::current().function_name());
 
     ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Theme", impl_->theme.ptr_mut());
+    llog::debug("Corona::Corona: initialization complete");
   }
 
   Corona::~Corona() { spdlog::set_level(spdlog::level::off); }
@@ -149,12 +151,12 @@ namespace corona::standalone::app
     return Corona::exec();
   }
 
-  auto Corona::logger() const -> Logger const& { return this->impl_->logger; }
-  auto Corona::logger_mut() -> Logger& { return this->impl_->logger; }
+  auto Corona::logger() const -> CLogger const& { return this->impl_->logger; }
+  auto Corona::logger_mut() -> CLogger& { return this->impl_->logger; }
   auto Corona::dirs() const -> fl::filesystem::application_dirs const& { return this->impl_->dirs; }
   auto Corona::dirs_mut() -> fl::filesystem::application_dirs& { return this->impl_->dirs; }
-  auto Corona::theme() const -> gui::theme::qml::ThemeWrapper const& { return *this->impl_->theme; }
-  auto Corona::theme_mut() -> gui::theme::qml::ThemeWrapper& { return *this->impl_->theme; }
+  auto Corona::theme() const -> gui::theme::qml::CThemeWrapper const& { return *this->impl_->theme; }
+  auto Corona::theme_mut() -> gui::theme::qml::CThemeWrapper& { return *this->impl_->theme; }
   auto Corona::imgui() const -> qdebugenv::CExtendableRenderer const& { return *this->impl_->imgui.imgui; }
   auto Corona::imgui_mut() -> qdebugenv::CExtendableRenderer& { return *this->impl_->imgui.imgui; }
 } // namespace corona::standalone::app

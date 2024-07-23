@@ -2,14 +2,14 @@
 
 #include <memory>
 #include <qobject.h>
-#include <corona-standalone/gui/theme/theme.hh>
+#include "src/corona-standalone/gui/theme/class_theme.hh"
 
 namespace corona::standalone::gui::theme::qml
 {
-  class ThemeWrapper : public QObject
+  class CThemeWrapper : public QObject
   {
    public:
-    enum class Mode
+    enum class Mode : char
     {
       Light,
       Dark
@@ -22,9 +22,9 @@ namespace corona::standalone::gui::theme::qml
     Q_PROPERTY(QString themeName READ themeName WRITE setThemeName NOTIFY themeNameChanged FINAL STORED false)
 
    public:
-    explicit ThemeWrapper(::QObject* parent = nullptr);
+    explicit CThemeWrapper(::QObject* parent = nullptr);
 
-    [[nodiscard]] auto unwrap() -> Theme&;
+    [[nodiscard]] auto unwrap() -> CTheme&;
 
     [[nodiscard]] auto palette() const -> corona::standalone::gui::theme::Palette const&;
     [[nodiscard]] auto mode() const -> Mode;
@@ -42,6 +42,6 @@ namespace corona::standalone::gui::theme::qml
     void themeNameChanged(); // NOLINT(*-identifier-naming)
 
    private:
-    fl::box<Theme> theme_;
+    fl::box<CTheme> theme_;
   };
 } // namespace corona::standalone::gui::theme::qml

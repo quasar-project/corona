@@ -7,14 +7,14 @@
 
 namespace corona::standalone::gui::theme
 {
-  class CircularReveal : public QQuickPaintedItem
+  class CCircularReveal : public QQuickPaintedItem
   {
     Q_OBJECT
     Q_PROPERTY(QQuickItem* target READ target WRITE setTarget NOTIFY targetChanged FINAL REQUIRED)
     Q_PROPERTY(int radius READ radius WRITE setRadius NOTIFY radiusChanged FINAL)
 
    public:
-    explicit CircularReveal(::QQuickItem* parent = nullptr);
+    explicit CCircularReveal(::QQuickItem* parent = nullptr);
 
     [[nodiscard]] auto target() const -> ::QQuickItem*;
     [[nodiscard]] auto radius() const -> int;
