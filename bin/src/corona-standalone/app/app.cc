@@ -45,7 +45,7 @@ namespace corona::standalone::app
       llog::trace("ImGUIData: added default logger to debug console");
       CUserInterfaceLogger::ref_mut().logger().sinks().push_back(this->terminal->get_terminal_helper());
       llog::trace("ImGUIData: added ui logger to debug console");
-      this->terminal->execute("ImGUIData: configure_terminal colors set-theme \"Dark Cherry\"");
+      this->terminal->execute("configure_terminal colors set-theme \"Dark Cherry\"");
     }
 
     qdebugenv::CExtendableRenderer* imgui{nullptr};
