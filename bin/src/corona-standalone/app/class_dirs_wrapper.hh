@@ -31,6 +31,8 @@ namespace corona::standalone::qml
     );
     virtual ~CApplicationDirsWrapper() override;
 
+    Q_INVOKABLE void open(QString const& path);
+
     [[nodiscard]] auto cache() const -> ::QString;
     [[nodiscard]] auto config() const -> ::QString;
     [[nodiscard]] auto configLocal() const -> ::QString;
