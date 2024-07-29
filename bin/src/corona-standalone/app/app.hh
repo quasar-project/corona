@@ -39,7 +39,7 @@ namespace corona::standalone
       [[nodiscard]] auto imgui_mut() -> qdebugenv::CExtendableRenderer&;
 
      private:
-      auto load_plugins() -> void;
+      static auto load_plugins() -> void;
 
       struct impl;
       fl::traits::pimpl<struct impl> impl_;

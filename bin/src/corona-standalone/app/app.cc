@@ -17,6 +17,7 @@
 #include <corona-standalone/app/class_dirs_wrapper.hh>
 #include <corona-standalone/gui/theme/qml/class_theme_wrapper.hh>
 #include <corona-standalone/gui/immediate/terminal_commands.hh>
+#include <corona-standalone/map/class_map_view_manager.hh>
 
 namespace me = magic_enum;
 namespace
@@ -64,6 +65,7 @@ namespace corona::standalone::app
     fl::filesystem::application_dirs dirs;
     fl::box<gui::theme::qml::CThemeWrapper> theme;
     fl::box<qml::CApplicationDirsWrapper> app_dirs_wrapper;
+    fl::box<map::CMapViewManager> map_view_manager;
     ImGUIData imgui;
   };
 
@@ -72,6 +74,7 @@ namespace corona::standalone::app
     , dirs(fl::filesystem::application_dirs(corona::standalone::app::meta::corona_meta))
     , theme(fl::make_box<gui::theme::qml::CThemeWrapper>(nullptr))
     , app_dirs_wrapper(fl::make_box<qml::CApplicationDirsWrapper>(&this->dirs, nullptr))
+    , map_view_manager(fl::make_box<map::CMapViewManager>(this->dirs, nullptr))
     , imgui(logger)
   {
     llog::info("app: {}", corona::standalone::app::meta::corona_meta);
@@ -117,8 +120,9 @@ namespace corona::standalone::app
     this->impl_->emplace_themes();
     llog::debug("Corona: initialized {}", fl::source_location::current().function_name());
 
-    ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Theme", impl_->theme.ptr_mut());
-    ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Directories", impl_->app_dirs_wrapper.ptr_mut());
+    ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Theme", this->impl_->theme.ptr_mut());
+    ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Directories", this->impl_->app_dirs_wrapper.ptr_mut());
+    ::qmlRegisterSingletonInstance("io.corona.standalone.map", 1, 0, "MapManager", this->impl_->map_view_manager.ptr_mut());
     llog::debug("Corona: initialization complete");
   }
 
@@ -139,7 +143,7 @@ namespace corona::standalone::app
   }
 
   auto Corona::run_scene(string_view path) -> int {
-    this->load_plugins();
+    Corona::load_plugins();
     llog::debug("Corona: preparing to run quick scene");
     auto const u = ::qml_url(path);
     llog::trace("Corona: qml root url is set to `{}`", u.toString());

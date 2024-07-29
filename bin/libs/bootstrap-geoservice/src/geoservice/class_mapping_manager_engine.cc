@@ -6,8 +6,8 @@
 #include <private/qgeotiledmap_p.h>
 #include <floppy/logging.h>
 #include <corona/bootstrap/formatters.h>
+#include <corona/bootstrap/geoservice/class_config.h>
 #include <geoservice/parameters.hh>
-#include <geoservice/class_config.hh>
 #include <geoservice/class_geotilefetchermap.hh>
 
 namespace llog = floppy::log;
