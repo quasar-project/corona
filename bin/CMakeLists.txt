@@ -104,6 +104,7 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/qml/class_theme_wrapper.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/terminal_commands.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/map/qml/qmlreg.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/map/class_map_view_manager.cc
     ${CORONA_OUTPUT_SET}
 )
 

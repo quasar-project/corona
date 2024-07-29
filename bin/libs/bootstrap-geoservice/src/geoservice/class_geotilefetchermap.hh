@@ -3,7 +3,7 @@
 #include <qpointer.h>
 #include <qnetworkaccessmanager.h>
 #include <private/qgeotilefetcher_p.h>
-#include <geoservice/class_config.hh>
+#include <corona/bootstrap/geoservice/class_config.h>
 
 namespace corona::bootstrap::geoservice
 {

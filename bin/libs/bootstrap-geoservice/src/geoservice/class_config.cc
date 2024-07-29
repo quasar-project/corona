@@ -1,4 +1,4 @@
-#include <geoservice/class_config.hh>
+#include <corona/bootstrap/geoservice/class_config.h>
 
 #include <private/qgeomaptype_p.h>
 #include <private/qgeocameracapabilities_p.h>
@@ -10,7 +10,7 @@ namespace llog = floppy::log;
 namespace
 {
   using namespace std::literals;
-  auto constexpr default_cfg_filename = "qnx_geoservice_conf.yml"sv;
+  auto constexpr default_cfg_filename = "geoservice.conf.yml"sv;
 
   template <typename To, typename From>
   [[nodiscard]] [[maybe_unused]] auto as(From const& value) -> To = delete;

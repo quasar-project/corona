@@ -6,6 +6,7 @@ import QtQuick.Layouts
 
 import io.corona.standalone.app as App
 import io.corona.standalone.theme as ThemeModule
+import io.corona.standalone.map as MapModule
 import io.qdebugenv.rendering as QDebugEnv_Rendering
 
 Map {
@@ -35,7 +36,7 @@ Map {
         name: "cgs"
         PluginParameter {
             name: "cgs.mapping.targetConfigDirectory"
-            value: App.Directories.config + "/geoservice"
+            value: MapModule.MapManager.configPath
         }
 
         PluginParameter {
