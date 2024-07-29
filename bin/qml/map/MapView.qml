@@ -11,13 +11,13 @@ import io.qdebugenv.rendering as QDebugEnv_Rendering
 
 Map {
     required property QDebugEnv_Rendering.ImmediateGUIRenderingFacility imguiRenderer
-    property int mapType: 10 // todo: cpp enumeration
+    property var mapType: MapModule.MapManager.Auto
 
-    function evalMapType() {
-        if(this.mapType === 10)
-            return App.Theme.mode === App.Theme.Dark
-                ? this.supportedMapTypes[2]
-                : this.supportedMapTypes[0]
+    function mapTypeBinding(themeMode) {
+        if(this.mapType === MapModule.MapManager.Auto)
+            return themeMode === App.Theme.Dark
+                ? this.supportedMapTypes[MapModule.MapManager.Hybrid]
+                : this.supportedMapTypes[MapModule.MapManager.Street]
         else return this.supportedMapTypes[this.mapType]
     }
 
@@ -28,7 +28,7 @@ Map {
         samples: 8
     }
     center: QtPositioning.coordinate(60, 39.7)
-    activeMapType: this.evalMapType()
+    activeMapType: this.mapTypeBinding(App.Theme.mode)
     copyrightsVisible: false
     tilt: 15
     zoomLevel: 14
