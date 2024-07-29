@@ -99,4 +99,17 @@ Map {
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
     }
+
+    ComboBox {
+        id: mapModeChanger
+        anchors {
+            bottom: parent.bottom
+            right: parent.right
+            margins: 12
+        }
+        flat: true
+        model: ["Схема", "Спутник", "Гибрид", "Авто"]
+        currentIndex: 3
+        onCurrentIndexChanged: parent.mapType = this.currentIndex == 3 ? MapModule.MapManager.Auto : this.currentIndex
+    }
 }
