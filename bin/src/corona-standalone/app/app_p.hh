@@ -48,10 +48,10 @@ namespace corona::standalone
       auto register_qml_singletons() -> void;
 
       CLogger& logger; // NOLINT(*-avoid-const-or-ref-data-members)
+      ImGUIData imgui;
       fl::box<gui::theme::qml::CThemeWrapper> theme;
       fl::box<qml::CApplicationDirsWrapper> app_dirs;
       fl::box<map::CMapViewManager> map_view_manager;
-      ImGUIData imgui;
     };
   } // namespace app
 } // namespace corona::standalone

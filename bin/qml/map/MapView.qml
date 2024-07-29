@@ -27,11 +27,11 @@ Map {
         smooth: true
         samples: 8
     }
-    center: QtPositioning.coordinate(60, 39.7)
+    center: QtPositioning.coordinate(39, 139)
     activeMapType: this.mapTypeBinding(App.Theme.mode)
     copyrightsVisible: false
     tilt: 15
-    zoomLevel: 14
+    zoomLevel: 6
     plugin: Plugin {
         name: "cgs"
         PluginParameter {

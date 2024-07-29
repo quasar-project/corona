@@ -33,10 +33,10 @@ namespace corona::standalone::app
 
   Corona::impl::impl(CLogger& logger)
     : logger(logger)
+    , imgui(logger)
     , theme(fl::make_box<gui::theme::qml::CThemeWrapper>(nullptr))
     , app_dirs(fl::make_box<qml::CApplicationDirsWrapper>(corona::standalone::app::meta::corona_meta, nullptr))
     , map_view_manager(fl::make_box<map::CMapViewManager>(**this->app_dirs, nullptr))
-    , imgui(logger)
   {
     llog::info("app: {}", corona::standalone::app::meta::corona_meta);
     llog::info("lib: {}", corona::meta::corona_meta);
