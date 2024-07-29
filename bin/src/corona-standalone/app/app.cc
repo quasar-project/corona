@@ -1,23 +1,14 @@
 #include <corona-standalone/app/app.hh>
+#include <corona-standalone/app/app_p.hh>
 
 #include <qfile.h>
-#include <qfileinfo.h>
-#include <qqml.h>
 #include <qqmlcontext.h>
-#include <qqmlapplicationengine.h>
 #include <qquickwindow.h>
 #include <qquickstyle.h>
+#include <qqmlapplicationengine.h>
 #include <magic_enum/magic_enum.hpp>
 #include <floppy/directories.h>
-#include <qdebugenv/class_extendable_renderer.h>
 #include <corona/bootstrap/geoservice/import.h>
-#include <corona-standalone/utility/formatters.hh>
-#include <corona-standalone/app/class_user_interface_logger.hh>
-#include <corona-standalone/app/default_themes.hh>
-#include <corona-standalone/app/class_dirs_wrapper.hh>
-#include <corona-standalone/gui/theme/qml/class_theme_wrapper.hh>
-#include <corona-standalone/gui/immediate/terminal_commands.hh>
-#include <corona-standalone/map/class_map_view_manager.hh>
 
 namespace me = magic_enum;
 namespace
@@ -35,75 +26,6 @@ namespace
 
 namespace corona::standalone::app
 {
-  struct ImGUIData
-  {
-    explicit ImGUIData(CLogger& logger)
-      : terminal_cmd(std::make_unique<gui::immediate::custom_command_struct>())
-      , terminal(std::make_unique<imterm::terminal<gui::immediate::terminal_commands>>(*this->terminal_cmd, "Debug console"))
-    {
-      this->terminal->get_terminal_helper()->set_pattern("[%X] (%n) [%^%l%$] %^%v%$");
-      logger->sinks().push_back(this->terminal->get_terminal_helper());
-      llog::trace("ImGUIData: added default logger to debug console");
-      CUserInterfaceLogger::ref_mut().logger().sinks().push_back(this->terminal->get_terminal_helper());
-      llog::trace("ImGUIData: added ui logger to debug console");
-      this->terminal->execute("configure_terminal colors set-theme \"Dark Cherry\"");
-    }
-
-    qdebugenv::CExtendableRenderer* imgui{nullptr};
-    std::unique_ptr<gui::immediate::custom_command_struct> terminal_cmd;
-    std::unique_ptr<imterm::terminal<gui::immediate::terminal_commands>> terminal;
-  };
-
-  struct Corona::impl
-  {
-    explicit impl(CLogger& logger);
-
-    auto emplace_themes() -> void;
-    auto configure_imgui(::QQmlApplicationEngine* engine) -> void;
-
-    CLogger& logger; // NOLINT(*-avoid-const-or-ref-data-members)
-    fl::box<gui::theme::qml::CThemeWrapper> theme;
-    fl::box<qml::CApplicationDirsWrapper> app_dirs;
-    fl::box<map::CMapViewManager> map_view_manager;
-    ImGUIData imgui;
-  };
-
-  Corona::impl::impl(CLogger& logger)
-    : logger(logger)
-    , theme(fl::make_box<gui::theme::qml::CThemeWrapper>(nullptr))
-    , app_dirs(fl::make_box<qml::CApplicationDirsWrapper>(corona::standalone::app::meta::corona_meta, nullptr))
-    , map_view_manager(fl::make_box<map::CMapViewManager>(**this->app_dirs, nullptr))
-    , imgui(logger)
-  {
-    llog::info("app: {}", corona::standalone::app::meta::corona_meta);
-    llog::info("lib: {}", corona::meta::corona_meta);
-  }
-
-  auto Corona::impl::emplace_themes() -> void {
-    llog::debug("Corona: emplacing application themes");
-    for(auto const& path : default_themes) {
-      auto const from = std::filesystem::path(path);
-      auto const stem = ::QFileInfo(path.data()).fileName().toStdString();
-      auto const to = this->theme.ref_mut().unwrap().folder() / stem;
-      if(::QFile::exists(to))
-        continue;
-      if(not ::QFile::copy(from, to))
-        llog::warn("Corona: failed to copy {} to {}", from.string(), to.string());
-      else
-        llog::trace("Corona: emplaced theme \'{}\'", stem);
-    }
-  }
-
-  auto Corona::impl::configure_imgui(::QQmlApplicationEngine* engine) -> void {
-    llog::trace("Corona: configuring imgui");
-    this->imgui.imgui = dynamic_cast<qdebugenv::CExtendableRenderer*>(
-      qdebugenv::CExtendableRenderer::from_engine(engine)
-    );
-    this->imgui.imgui->style_default();
-    *this->imgui.imgui += [this](){ this->imgui.terminal->show(); };
-    llog::trace("Corona: imgui configured successfully");
-  }
-
   Corona::Corona(int& args, char** argv, CLogger& logger)
     : IApplication(args, argv)
     , impl_(fl::make_box<impl>(logger))
@@ -117,10 +39,7 @@ namespace corona::standalone::app
 
     this->impl_->emplace_themes();
     llog::debug("Corona: initialized {}", fl::source_location::current().function_name());
-
-    ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Directories", this->impl_->app_dirs.ptr_mut());
-    ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Theme", this->impl_->theme.ptr_mut());
-    ::qmlRegisterSingletonInstance("io.corona.standalone.map", 1, 0, "MapManager", this->impl_->map_view_manager.ptr_mut());
+    this->impl_->register_qml_singletons();
     llog::debug("Corona: initialization complete");
   }
 

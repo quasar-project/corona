@@ -96,6 +96,7 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/main.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/class_logger.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/app.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/app_p.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/class_dirs_wrapper.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/qml/qmlreg.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/class_reveal.cc
