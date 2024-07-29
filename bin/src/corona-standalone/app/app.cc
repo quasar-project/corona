@@ -14,6 +14,7 @@
 #include <corona-standalone/utility/formatters.hh>
 #include <corona-standalone/app/class_user_interface_logger.hh>
 #include <corona-standalone/app/default_themes.hh>
+#include <corona-standalone/app/class_dirs_wrapper.hh>
 #include <corona-standalone/gui/theme/qml/class_theme_wrapper.hh>
 #include <corona-standalone/gui/immediate/terminal_commands.hh>
 
@@ -62,6 +63,7 @@ namespace corona::standalone::app
     CLogger& logger; // NOLINT(*-avoid-const-or-ref-data-members)
     fl::filesystem::application_dirs dirs;
     fl::box<gui::theme::qml::CThemeWrapper> theme;
+    fl::box<qml::CApplicationDirsWrapper> app_dirs_wrapper;
     ImGUIData imgui;
   };
 
@@ -69,6 +71,7 @@ namespace corona::standalone::app
     : logger(logger)
     , dirs(fl::filesystem::application_dirs(corona::standalone::app::meta::corona_meta))
     , theme(fl::make_box<gui::theme::qml::CThemeWrapper>(nullptr))
+    , app_dirs_wrapper(fl::make_box<qml::CApplicationDirsWrapper>(&this->dirs, nullptr))
     , imgui(logger)
   {
     llog::info("app: {}", corona::standalone::app::meta::corona_meta);
@@ -115,6 +118,7 @@ namespace corona::standalone::app
     llog::debug("Corona: initialized {}", fl::source_location::current().function_name());
 
     ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Theme", impl_->theme.ptr_mut());
+    ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Directories", impl_->app_dirs_wrapper.ptr_mut());
     llog::debug("Corona: initialization complete");
   }
 
