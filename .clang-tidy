@@ -25,6 +25,7 @@ Checks:
   -cppcoreguidelines-avoid-magic-numbers,
   -misc-non-private-member-variables-in-classes,
   -misc-include-cleaner
+  -*-redundant-inline-specifier
 
 # Turn all the warnings from the checks above into errors.
 WarningsAsErrors: "*"

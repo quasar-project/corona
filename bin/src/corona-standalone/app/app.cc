@@ -62,19 +62,17 @@ namespace corona::standalone::app
     auto configure_imgui(::QQmlApplicationEngine* engine) -> void;
 
     CLogger& logger; // NOLINT(*-avoid-const-or-ref-data-members)
-    fl::filesystem::application_dirs dirs;
     fl::box<gui::theme::qml::CThemeWrapper> theme;
-    fl::box<qml::CApplicationDirsWrapper> app_dirs_wrapper;
+    fl::box<qml::CApplicationDirsWrapper> app_dirs;
     fl::box<map::CMapViewManager> map_view_manager;
     ImGUIData imgui;
   };
 
   Corona::impl::impl(CLogger& logger)
     : logger(logger)
-    , dirs(fl::filesystem::application_dirs(corona::standalone::app::meta::corona_meta))
     , theme(fl::make_box<gui::theme::qml::CThemeWrapper>(nullptr))
-    , app_dirs_wrapper(fl::make_box<qml::CApplicationDirsWrapper>(&this->dirs, nullptr))
-    , map_view_manager(fl::make_box<map::CMapViewManager>(this->dirs, nullptr))
+    , app_dirs(fl::make_box<qml::CApplicationDirsWrapper>(corona::standalone::app::meta::corona_meta, nullptr))
+    , map_view_manager(fl::make_box<map::CMapViewManager>(**this->app_dirs, nullptr))
     , imgui(logger)
   {
     llog::info("app: {}", corona::standalone::app::meta::corona_meta);
@@ -120,8 +118,8 @@ namespace corona::standalone::app
     this->impl_->emplace_themes();
     llog::debug("Corona: initialized {}", fl::source_location::current().function_name());
 
+    ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Directories", this->impl_->app_dirs.ptr_mut());
     ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Theme", this->impl_->theme.ptr_mut());
-    ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Directories", this->impl_->app_dirs_wrapper.ptr_mut());
     ::qmlRegisterSingletonInstance("io.corona.standalone.map", 1, 0, "MapManager", this->impl_->map_view_manager.ptr_mut());
     llog::debug("Corona: initialization complete");
   }
@@ -170,8 +168,8 @@ namespace corona::standalone::app
 
   auto Corona::logger() const -> CLogger const& { return this->impl_->logger; }
   auto Corona::logger_mut() -> CLogger& { return this->impl_->logger; }
-  auto Corona::dirs() const -> fl::filesystem::application_dirs const& { return this->impl_->dirs; }
-  auto Corona::dirs_mut() -> fl::filesystem::application_dirs& { return this->impl_->dirs; }
+  auto Corona::dirs() const -> fl::filesystem::application_dirs const& { return **this->impl_->app_dirs; }
+  auto Corona::dirs_mut() -> fl::filesystem::application_dirs& { return **this->impl_->app_dirs; }
   auto Corona::theme() const -> gui::theme::qml::CThemeWrapper const& { return *this->impl_->theme; }
   auto Corona::theme_mut() -> gui::theme::qml::CThemeWrapper& { return *this->impl_->theme; }
   auto Corona::imgui() const -> qdebugenv::CExtendableRenderer const& { return *this->impl_->imgui.imgui; }
