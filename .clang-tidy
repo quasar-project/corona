@@ -24,7 +24,8 @@ Checks:
   -cppcoreguidelines-explicit-virtual-functions,
   -cppcoreguidelines-avoid-magic-numbers,
   -misc-non-private-member-variables-in-classes,
-  -misc-include-cleaner
+  -misc-include-cleaner,
+  -*-redundant-inline-specifier
 
 # Turn all the warnings from the checks above into errors.
 WarningsAsErrors: "*"

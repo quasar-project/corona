@@ -19,7 +19,16 @@ namespace corona::standalone::qml
     Q_PROPERTY(QString applicationDir READ applicationDir CONSTANT FINAL STORED false)
 
    public:
-    explicit CApplicationDirsWrapper(fl::filesystem::application_dirs* dirs, ::QObject* parent = nullptr);
+    explicit CApplicationDirsWrapper(
+      std::string_view qualifier,
+      std::string_view organization,
+      std::string_view application,
+      ::QObject* parent = nullptr
+    );
+    explicit CApplicationDirsWrapper(
+      fl::meta::project_meta const& meta,
+      ::QObject* parent = nullptr
+    );
     virtual ~CApplicationDirsWrapper() override;
 
     [[nodiscard]] auto cache() const -> ::QString;
@@ -32,7 +41,12 @@ namespace corona::standalone::qml
     [[nodiscard]] auto state() const -> ::QString;
     [[nodiscard]] auto applicationDir() const -> ::QString;
 
+    [[nodiscard]] inline auto unwrap() const -> fl::filesystem::application_dirs const& { return this->dirs_; }
+    [[nodiscard]] inline auto unwrap_mut() -> fl::filesystem::application_dirs& { return this->dirs_; }
+    [[nodiscard]] inline auto operator*() const -> fl::filesystem::application_dirs const& { return this->dirs_; }
+    [[nodiscard]] inline auto operator*() -> fl::filesystem::application_dirs& { return this->dirs_; }
+
    private:
-    fl::filesystem::application_dirs* dirs_;
+    fl::filesystem::application_dirs dirs_;
   };
 } // namespace corona::standalone::qml
