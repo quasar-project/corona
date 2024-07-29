@@ -23,6 +23,12 @@ namespace corona::standalone
 
   namespace app
   {
+    namespace detail
+    {
+      [[nodiscard]] auto platform_dependent_icon(std::string_view stem) -> ::QIcon;
+      [[nodiscard]] auto qml_url(std::string_view path) -> ::QUrl;
+    } // namespace detail
+
     struct ImGUIData
     {
       explicit ImGUIData(CLogger& logger);

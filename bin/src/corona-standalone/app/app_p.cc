@@ -1,13 +1,24 @@
 #include <corona-standalone/app/app_p.hh>
 
-#include <qqmlapplicationengine.h>
+#include <qicon.h>
 #include <qfileinfo.h>
+#include <qqmlapplicationengine.h>
 #include <corona-standalone/app/default_themes.hh>
 #include <corona-standalone/gui/theme/qml/class_theme_wrapper.hh>
 #include <corona-standalone/gui/immediate/terminal_commands.hh>
 
 namespace corona::standalone::app
 {
+  auto detail::platform_dependent_icon(std::string_view stem) -> ::QIcon {
+    if constexpr(fl::current_platform.operating_system == fl::platform::operating_system::windows)
+      return ::QIcon(::QString::fromStdString(":/" + std::string(stem) + ".ico"));
+    return ::QIcon(::QString::fromStdString(":/" + std::string(stem) + ".png"));
+  }
+
+  auto detail::qml_url(std::string_view path) -> ::QUrl {
+    return { ::QString::fromStdString(fmt::format("qrc:/{}.qml", path)) };
+  }
+
   ImGUIData::ImGUIData(CLogger& logger)
     : terminal_cmd(std::make_unique<gui::immediate::custom_command_struct>())
     , terminal(std::make_unique<imterm::terminal<gui::immediate::terminal_commands>>(*this->terminal_cmd, "Debug console"))

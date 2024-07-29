@@ -11,19 +11,6 @@
 #include <corona/bootstrap/geoservice/import.h>
 
 namespace me = magic_enum;
-namespace
-{
-  [[nodiscard]] inline auto platform_dependent_icon(std::string_view const stem) -> QIcon {
-    if constexpr(fl::current_platform.operating_system == fl::platform::operating_system::windows)
-      return QIcon(QString::fromStdString(":/" + std::string(stem) + ".ico"));
-    return QIcon(QString::fromStdString(":/" + std::string(stem) + ".png"));
-  }
-
-  [[nodiscard]] inline auto qml_url(std::string_view const path) -> QUrl {
-    return { QString::fromStdString(fmt::format("qrc:/{}.qml", path)) };
-  }
-} // namespace
-
 namespace corona::standalone::app
 {
   Corona::Corona(int& args, char** argv, CLogger& logger)
@@ -47,7 +34,7 @@ namespace corona::standalone::app
 
   auto Corona::with_icon(string_view const path) -> Corona& {
     llog::trace("Corona: app icon is set to \'{}\'", path);
-    Corona::setWindowIcon(::platform_dependent_icon(path));
+    Corona::setWindowIcon(detail::platform_dependent_icon(path));
     return *this;
   }
 
@@ -62,7 +49,7 @@ namespace corona::standalone::app
   auto Corona::run_scene(string_view path) -> int {
     Corona::load_plugins();
     llog::debug("Corona: preparing to run quick scene");
-    auto const u = ::qml_url(path);
+    auto const u = detail::qml_url(path);
     llog::trace("Corona: qml root url is set to `{}`", u.toString());
     auto engine = ::QQmlApplicationEngine();
     ::QQuickWindow::setDefaultAlphaBuffer(true);
