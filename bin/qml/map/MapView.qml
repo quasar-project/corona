@@ -6,10 +6,20 @@ import QtQuick.Layouts
 
 import io.corona.standalone.app as App
 import io.corona.standalone.theme as ThemeModule
+import io.corona.standalone.map as MapModule
 import io.qdebugenv.rendering as QDebugEnv_Rendering
 
 Map {
     required property QDebugEnv_Rendering.ImmediateGUIRenderingFacility imguiRenderer
+    property var mapType: MapModule.MapManager.Auto
+
+    function mapTypeBinding(themeMode) {
+        if(this.mapType === MapModule.MapManager.Auto)
+            return themeMode === App.Theme.Dark
+                ? this.supportedMapTypes[MapModule.MapManager.Hybrid]
+                : this.supportedMapTypes[MapModule.MapManager.Street]
+        else return this.supportedMapTypes[this.mapType]
+    }
 
     id: map
     layer {
@@ -18,12 +28,21 @@ Map {
         samples: 8
     }
     center: QtPositioning.coordinate(60, 39.7)
-    activeMapType: map.supportedMapTypes[1]
+    activeMapType: this.mapTypeBinding(App.Theme.mode)
     copyrightsVisible: false
     tilt: 15
     zoomLevel: 14
     plugin: Plugin {
-        name: "osm"
+        name: "cgs"
+        PluginParameter {
+            name: "cgs.mapping.targetConfigDirectory"
+            value: MapModule.MapManager.configPath
+        }
+
+        PluginParameter {
+            name: "cgs.mapping.targetCacheDirectory"
+            value: App.Directories.cache + "/geoservice"
+        }
     }
 
     Behavior on center { CoordinateAnimation { duration: 250; easing.type: Easing.InOutQuad } }
@@ -51,7 +70,7 @@ Map {
         acceptedDevices: Qt.platform.pluginName === "cocoa" || Qt.platform.pluginName === "wayland"
             ? PointerDevice.Mouse | PointerDevice.TouchPad
             : PointerDevice.Mouse
-        rotationScale: 1/12
+        rotationScale: 1 / 240
         property: "zoomLevel"
     }
 
@@ -79,5 +98,18 @@ Map {
         hoverEnabled: true
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
+    }
+
+    ComboBox {
+        id: mapModeChanger
+        anchors {
+            bottom: parent.bottom
+            right: parent.right
+            margins: 12
+        }
+        flat: true
+        model: ["Схема", "Спутник", "Гибрид", "Авто"]
+        currentIndex: 3
+        onCurrentIndexChanged: parent.mapType = this.currentIndex == 3 ? MapModule.MapManager.Auto : this.currentIndex
     }
 }

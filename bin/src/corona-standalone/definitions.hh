@@ -4,8 +4,13 @@
 #include <floppy/logging.h>
 #include <corona/detail/export.h>
 
-namespace corona::standalone
+namespace corona
 {
-  using namespace floppy::types;
-  namespace llog = floppy::log;
-} // namespace corona::standalone
+  namespace bootstrap {} // namespace bootstrap
+  namespace standalone
+  {
+    using namespace ::floppy::types;
+    using namespace ::corona::bootstrap;
+    namespace llog = ::floppy::log;
+  } // namespace standalone
+} // namespace corona

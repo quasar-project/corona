@@ -1,0 +1,10 @@
+{
+  "Keys": ["cgs"],
+  "Provider": "cgs",
+  "Version": 100,
+  "Experimental": false,
+  "Features": [
+    "OfflineMappingFeature",
+    "OnlineRoutingFeature"
+  ]
+}

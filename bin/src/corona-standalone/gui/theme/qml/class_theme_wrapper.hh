@@ -16,6 +16,7 @@ namespace corona::standalone::gui::theme::qml
     };
     Q_ENUM(Mode)
 
+   private:
     Q_OBJECT
     Q_PROPERTY(corona::standalone::gui::theme::Palette palette READ palette NOTIFY paletteChanged FINAL STORED true)
     Q_PROPERTY(Mode mode READ mode WRITE setMode NOTIFY modeChanged FINAL STORED false)
