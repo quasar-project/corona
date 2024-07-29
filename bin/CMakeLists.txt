@@ -32,6 +32,7 @@ find_package(Qt6
     ShaderTools
   REQUIRED
 )
+add_subdirectory(libs/bootstrap-geoservice)
 
 # -- executable --
 qt_add_executable(${CORONA_STANDALONE_NAME})
@@ -96,10 +97,10 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/class_logger.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/app.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/qml/qmlreg.cc
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/class_reveal.cc
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/class_theme.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/class_reveal.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/class_theme.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/values.cc
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/qml/class_theme_wrapper.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/qml/class_theme_wrapper.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/terminal_commands.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/map/qml/qmlreg.cc
     ${CORONA_OUTPUT_SET}
@@ -108,6 +109,7 @@ target_sources(${CORONA_STANDALONE_NAME}
 target_link_libraries(${CORONA_STANDALONE_NAME}
   PRIVATE
     corona
+    corona::geoservice
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     tomlplusplus::tomlplusplus

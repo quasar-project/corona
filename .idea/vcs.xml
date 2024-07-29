@@ -2,6 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/bin/libs/bootstrap-geoservice" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/doxygen/preset" vcs="Git" />
   </component>
 </project>
