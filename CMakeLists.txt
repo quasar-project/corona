@@ -54,16 +54,19 @@ cmake_print_properties(TARGETS ${PROJECT_NAME} PROPERTIES
 
 target_sources(${PROJECT_NAME}
   PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/config.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/image/metadata.cc
 )
 
+message(STATUS "[${PROJECT_NAME}] linking with ${Boost_LIBRARIES}")
 target_link_libraries(${PROJECT_NAME}
   PUBLIC
     floppy::floppy
   PRIVATE
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
-    #boost::boost
+    Boost::system
+    Boost::headers
 )
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
