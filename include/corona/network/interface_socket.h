@@ -5,16 +5,17 @@
 #include <span>
 #include <string>
 #include <functional>
+#include <floppy/bytearray.h>
 #include <corona/detail/export.h>
 
 namespace boost::asio { class io_context; } // namespace boost::asio
 namespace corona::misc { template <usize N, typename T> struct socket_debug; } // namespace corona::misc
 namespace corona::network
 {
-  class CORONA_API ISocketBase
+  class CORONA_API IBasicReceivingSocket
   {
    public:
-    using SocketReceiveCallback = std::function<void(std::vector<std::byte>)>;
+    using callback_receive_type = std::function<void(fl::bytearray)>;
 
     enum class Status : char
     {
@@ -26,11 +27,11 @@ namespace corona::network
       Ok
     };
 
-    virtual ~ISocketBase() = default;
+    virtual ~IBasicReceivingSocket() = default;
 
-    virtual auto start(u16 port) -> void = 0;
+    [[nodiscard]] virtual auto start(u16 port) -> result<> = 0;
     virtual auto stop() -> void = 0;
-    virtual auto send(std::span<std::byte const> data) -> void = 0;
+    virtual auto send(fl::bytearray_view data) -> void = 0;
 
     [[nodiscard]] virtual auto rx_address_str() const -> std::string = 0;
     [[nodiscard]] virtual auto tx_address_str() const -> std::string = 0;

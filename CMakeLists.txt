@@ -58,7 +58,7 @@ target_sources(${PROJECT_NAME}
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/config.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/image/metadata.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/private/network/class_udpsocket.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/private/network/class_udp_socket.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/private/network/modules/class_powerswitch.cc
 )
 
