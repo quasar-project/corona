@@ -56,6 +56,7 @@ target_sources(${PROJECT_NAME}
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/config.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/image/metadata.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/private/network/modules/class_powerswitch.cc
 )
 
 message(STATUS "[${PROJECT_NAME}] linking with ${Boost_LIBRARIES}")

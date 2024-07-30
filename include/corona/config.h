@@ -35,7 +35,7 @@ namespace corona
         { 0.0F, 10.0F },
         { 0.0F, 10.0F }
       };
-    };
+    } power_switch;
   };
 } // namespace corona
 
@@ -44,3 +44,8 @@ namespace floppy::serialization
   template <> auto serialize<format::yaml>(corona::ConfigData const& value) -> std::string;
   template <> auto deserialize<format::yaml>(std::string const& value) -> corona::ConfigData;
 } // namespace floppy::serialization
+
+namespace corona
+{
+  using CConfig = fl::configuration_file<fl::serialization::format::yaml, ConfigData>;
+} // namespace corona
