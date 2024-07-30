@@ -1,6 +1,7 @@
 #pragma once
 
 #include <boost/asio.hpp>
+#include <corona/network/class_udp_socket.h>
 #include <corona/network/modules/class_powerswitch.h>
 #include <private/misc/call_every.hh>
 
@@ -34,6 +35,19 @@ namespace corona::network::modules
     };
     #pragma pack(pop)
 
+    CConfig const& config;
+    std::chrono::steady_clock::duration request_interval;
+    fl::box<IBasicReceivingSocket> socket;
     misc::call_every<std::function<void()>> request_caller;
+    std::vector<ChannelData> channels;
+
+    impl(
+      asio::io_context& io_context,
+      CConfig const& config,
+      std::chrono::steady_clock::duration request_interval
+    );
+
+    auto read(fl::bytearray const& data) -> void;
+    auto request() -> void;
   };
 } // namespace corona::network::modules

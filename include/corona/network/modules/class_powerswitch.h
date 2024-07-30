@@ -6,18 +6,19 @@
 #include <functional>
 #include <corona/detail/export.h>
 #include <corona/config.h>
+#include <corona/debug/interface_drawable.h>
 
 namespace boost::asio { class io_context; } // namespace boost::asio
 namespace corona::network::modules
 {
-  class CPowerSwitch
+  class CPowerSwitch : public IDrawableOnImmediateGUI
   {
    public:
     struct ChannelData
     {
-      f32 voltage;  ///< Напряжение в вольтах.
-      f32 current;  ///< Ток в миллиамперах.
-      bool status;  ///< Состояние канала (вкл/выкл).
+      f32 voltage {};  ///< Напряжение в вольтах.
+      f32 current {};  ///< Ток в миллиамперах.
+      bool status {};  ///< Состояние канала (вкл/выкл).
     };
 
     explicit CPowerSwitch(
@@ -27,6 +28,8 @@ namespace corona::network::modules
       std::chrono::steady_clock::duration request_interval
     );
     virtual ~CPowerSwitch();
+
+    virtual auto frame() -> void override;
 
     [[nodiscard]] auto channels() const -> std::vector<ChannelData> const&;
     [[nodiscard]] auto config() const -> CConfig const&;

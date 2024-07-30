@@ -10,7 +10,9 @@ namespace corona::network
 {
   namespace detail
   {
-    [[nodiscard]] auto is_fatal_error(std::error_code const& e, bool treat_unknown_as_fatal) -> bool;
+    [[nodiscard]]
+    [[maybe_unused]]
+    auto is_fatal_error(std::error_code const& e, bool treat_unknown_as_fatal) -> bool;
   } // namespace detail
 
   struct CUdpReceivingSocket::impl

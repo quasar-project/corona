@@ -1,6 +1,7 @@
 #include <corona/network/class_udp_socket.h>
 #include <private/network/class_udp_socket_p.hh>
 
+#include <bit>
 #include <floppy/logging.h>
 
 namespace llog = floppy::log;
@@ -121,15 +122,14 @@ namespace corona::network
     this->impl_->socket.async_receive_from(
       asio::buffer(this->impl_->buffer),
       this->impl_->endpoint,
-      [this](std::error_code const& error, usize bytes_transferred) -> void
-      {
+      [this](std::error_code const& error, usize bytes_transferred) -> void {
         this->impl_->iodbg(misc::socket_debug<256, f32>::In, bytes_transferred);
         if(error) {
           llog::error("CUdpReceivingSocket: failed to read udp socket: {}", error.message());
           return;
         }
-        auto const ptr = reinterpret_cast<std::byte*>(this->impl_->buffer.data());
-        this->impl_->callback(fl::bytearray(ptr, ptr + bytes_transferred));
+        auto* const ptr = std::bit_cast<std::byte*>(this->impl_->buffer.data());
+        this->impl_->callback(fl::bytearray(ptr, ptr + bytes_transferred)); // NOLINT(*-pro-bounds-pointer-arithmetic)
         this->read();
       }
     );
