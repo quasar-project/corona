@@ -2,7 +2,7 @@
 
 #include <atomic>
 #include <chrono>
-#include <boost/asio.hpp>
+#include <qtimer.h>
 #include <corona/detail/export.h>
 #include <corona/vendored/imgui.h>
 #include <private/misc/rotating_debug_buffer.hh>
@@ -24,15 +24,13 @@ namespace corona::misc
       Line
     };
 
-    socket_debug(boost::asio::io_context& ctx, std::chrono::steady_clock::duration interval)
-      : worker_(ctx, interval)
-      , interval_(interval) {
+    explicit socket_debug(std::chrono::steady_clock::duration interval)
+      : interval_(interval) {
       this->work();
     }
 
     ~socket_debug() {
       this->running_ = false;
-      this->worker_.cancel();
     }
 
     inline auto update(Direction dir, usize data) -> void {
@@ -63,7 +61,7 @@ namespace corona::misc
             size,
             0,
             title.data(),
-            0.0f,
+            0.0F,
             std::numeric_limits<f32>::max(),
             ImVec2(size_x, size_y)
           );
@@ -75,7 +73,7 @@ namespace corona::misc
             size,
             0,
             title.data(),
-            0.0f,
+            0.0F,
             std::numeric_limits<f32>::max(),
             ImVec2(size_x, size_y)
           );
@@ -106,19 +104,16 @@ namespace corona::misc
     inline auto work() -> void {
       if(not this->running_)
         return;
-      this->worker_.expires_from_now(this->interval_);
-      this->worker_.async_wait([this](auto const& ec) {
-        if(not ec) {
-          this->in_.rotate();
-          this->out_.rotate();
-        }
-        this->work();
-      });
+      ::QTimer::singleShot(
+        std::chrono::duration_cast<std::chrono::milliseconds>(this->interval_).count(),
+        [this]() { this->work(); }
+      );
+      this->in_.rotate();
+      this->out_.rotate();
     }
 
     rotating_debug_buffer<N, T> in_ {};
     rotating_debug_buffer<N, T> out_ {};
-    boost::asio::steady_timer worker_;
     std::chrono::steady_clock::duration interval_;
     std::atomic<bool> running_ {false};
   };
