@@ -74,10 +74,12 @@ namespace corona::network
     return error("CUdpReceivingSocket: failed to start udp socket: {}", e.what());
   }
 
-  auto CUdpReceivingSocket::stop() -> void {
+  auto CUdpReceivingSocket::stop() -> void try {
     this->impl_->socket.close();
     this->impl_->endpoint = {};
     llog::info("CUdpReceivingSocket: closing udp connection");
+  } catch (std::exception const& e) {
+    llog::error("CUdpReceivingSocket: failed to stop udp socket: {}", e.what());
   }
 
   auto CUdpReceivingSocket::send(fl::bytearray_view data) -> void {

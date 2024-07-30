@@ -12,7 +12,8 @@
 namespace boost::asio { class io_context; } // namespace boost::asio
 namespace corona::network::modules
 {
-  class CPowerSwitch : public IDrawableOnImmediateGUI
+  class CPowerSwitch : public IDrawableOnImmediateGUI,
+                       public fl::traits::pin<CPowerSwitch>
   {
    public:
     struct ChannelData

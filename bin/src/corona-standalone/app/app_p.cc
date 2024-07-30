@@ -35,7 +35,7 @@ namespace corona::standalone::app
     : logger(logger)
     , imgui(logger)
     , theme(fl::make_box<gui::theme::qml::CThemeWrapper>(nullptr))
-    , app_dirs(fl::make_box<qml::CApplicationDirsWrapper>(corona::standalone::app::meta::corona_meta, nullptr))
+    , app_dirs(fl::make_box<qml::CApplicationDirsWrapper>(corona::meta::corona_meta, nullptr))
     , map_view_manager(fl::make_box<map::CMapViewManager>(**this->app_dirs, nullptr))
   {
     llog::info("app: {}", corona::standalone::app::meta::corona_meta);

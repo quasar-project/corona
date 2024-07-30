@@ -38,7 +38,7 @@ namespace corona::network::modules
     std::function<void()> on_channel_change,
     std::chrono::steady_clock::duration request_interval
   )
-    : impl_(fl::make_box<impl>(this, io_context, config, request_interval, on_channel_change)) {
+    : impl_(fl::make_box<impl>(this, io_context, config, request_interval, std::move(on_channel_change))) {
     this->configure()
       .map_error([](std::string const& error) {
         llog::error("CPowerSwitch: {}", error);
