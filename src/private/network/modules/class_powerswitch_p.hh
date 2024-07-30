@@ -35,7 +35,5 @@ namespace corona::network::modules
     #pragma pack(pop)
 
     misc::call_every<std::function<void()>> request_caller;
-
-    impl
   };
 } // namespace corona::network::modules

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <floppy/floppy.h>
+#include <floppy/traits.h>
 
 #if defined(FLOPPY_OS_WINDOWS)
 # if defined(CORONA_LIBRARY)

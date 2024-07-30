@@ -4,7 +4,6 @@
 #include <chrono>
 #include <vector>
 #include <functional>
-#include <floppy/traits.h>
 #include <corona/detail/export.h>
 #include <corona/config.h>
 
