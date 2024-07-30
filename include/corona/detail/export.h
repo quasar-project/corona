@@ -4,14 +4,14 @@
 
 #if defined(FLOPPY_OS_WINDOWS)
 # if defined(CORONA_LIBRARY)
-#   define CORONA_EXPORT __declspec(dllexport)
+#   define CORONA_API __declspec(dllexport)
 # elif defined(CORONA_STATIC_LIBRARY)
-#   define CORONA_EXPORT
+#   define CORONA_API
 # else
-#   define CORONA_EXPORT __declspec(dllimport)
+#   define CORONA_API __declspec(dllimport)
 # endif
 #else
-# define CORONA_EXPORT
+# define CORONA_API
 #endif
 
 /// \brief Corona library namespace.

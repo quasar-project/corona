@@ -25,19 +25,19 @@ namespace corona::network::modules
       boost::asio::io_context& io_context,
       CConfig const& config,
       std::function<void()> on_channel_change,
-      std::chrono::seconds request_interval = std::chrono::seconds{1}
+      std::chrono::steady_clock::duration request_interval
     );
     virtual ~CPowerSwitch();
 
     [[nodiscard]] auto channels() const -> std::vector<ChannelData> const&;
     [[nodiscard]] auto config() const -> CConfig const&;
 
-    auto toggle(usize channel);
-    auto stop();
-    auto restart(std::chrono::seconds request_interval = std::chrono::seconds{1});
+    auto toggle(usize channel) -> void;
+    auto stop() -> void;
+    auto restart(std::chrono::steady_clock::duration request_interval) -> void;
 
    private:
-    auto configure(CConfig const& config, std::chrono::seconds request_interval) -> void;
+    auto configure(CConfig const& config,std::chrono::steady_clock::duration request_interval) -> void;
     auto request() -> void;
     auto read() -> void;
     auto write(std::span<std::byte const> data) -> void;

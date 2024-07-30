@@ -12,7 +12,7 @@ project(corona
   HOMEPAGE_URL "io.quasar-team.github"
   LANGUAGES C CXX
 )
-set(PROJECT_NAMESPACE quasar::)
+set(PROJECT_NAMESPACE corona::)
 
 option(CORONA_STANDALONE "Build corona as standalone application" OFF)
 option(CORONA_TEST "Enable corona unit tests" OFF)
@@ -28,12 +28,14 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # -- dependencies --
+add_subdirectory(extern/imgui)
 find_package(floppy REQUIRED)
 find_package(reflect-cpp REQUIRED)
 find_package(magic_enum REQUIRED)
 #find_package(Protobuf REQUIRED)
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 find_package(Boost REQUIRED COMPONENTS system headers)
+add_library(${PROJECT_NAMESPACE}imgui ALIAS imgui)
 
 add_library(${PROJECT_NAME})
 add_library(${PROJECT_NAMESPACE}${PROJECT_NAME} ALIAS ${PROJECT_NAME})
@@ -56,6 +58,7 @@ target_sources(${PROJECT_NAME}
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/config.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/image/metadata.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/private/network/class_udpsocket.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/private/network/modules/class_powerswitch.cc
 )
 
@@ -63,6 +66,7 @@ message(STATUS "[${PROJECT_NAME}] linking with ${Boost_LIBRARIES}")
 target_link_libraries(${PROJECT_NAME}
   PUBLIC
     floppy::floppy
+    corona::imgui
   PRIVATE
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
