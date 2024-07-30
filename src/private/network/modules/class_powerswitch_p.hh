@@ -35,19 +35,20 @@ namespace corona::network::modules
     };
     #pragma pack(pop)
 
+    CPowerSwitch* q;
     CConfig const& config;
     std::chrono::steady_clock::duration request_interval;
     fl::box<IBasicReceivingSocket> socket;
     misc::call_every<std::function<void()>> request_caller;
     std::vector<ChannelData> channels;
+    std::function<void()> on_channel_change;
 
     impl(
+      CPowerSwitch* parent,
       asio::io_context& io_context,
       CConfig const& config,
-      std::chrono::steady_clock::duration request_interval
+      std::chrono::steady_clock::duration request_interval,
+      std::function<void()> on_channel_change
     );
-
-    auto read(fl::bytearray const& data) -> void;
-    auto request() -> void;
   };
 } // namespace corona::network::modules

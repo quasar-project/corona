@@ -10,7 +10,11 @@ namespace corona::network
     CUdpReceivingSocket(IBasicReceivingSocket::callback_receive_type callback, boost::asio::io_context& io_context);
     virtual ~CUdpReceivingSocket() override;
 
-    [[nodiscard]] virtual auto start(u16 port) -> result<> override;
+    [[nodiscard]] virtual auto start(
+      u16 port,
+      std::string_view remote_address,
+      u16 remote_port
+    ) -> result<> override;
     virtual auto stop() -> void override;
     virtual auto send(fl::bytearray_view data) -> void override;
 

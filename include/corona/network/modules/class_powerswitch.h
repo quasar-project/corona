@@ -4,6 +4,7 @@
 #include <chrono>
 #include <vector>
 #include <functional>
+#include <floppy/bytearray.h>
 #include <corona/detail/export.h>
 #include <corona/config.h>
 #include <corona/debug/interface_drawable.h>
@@ -39,10 +40,10 @@ namespace corona::network::modules
     auto restart(std::chrono::steady_clock::duration request_interval) -> void;
 
    private:
-    auto configure(CConfig const& config,std::chrono::steady_clock::duration request_interval) -> void;
+    [[nodiscard]] auto configure() -> result<>;
     auto request() -> void;
-    auto read() -> void;
-    auto write(std::span<std::byte const> data) -> void;
+    auto read(fl::bytearray const& data) -> void;
+    auto write(fl::bytearray_view data) -> void;
 
     struct impl;
     fl::traits::pimpl<impl> impl_;

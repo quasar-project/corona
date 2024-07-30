@@ -27,6 +27,17 @@ namespace corona::misc
       return this->call_interval;
     }
 
+    auto stop() -> void {
+      this->running = false;
+      this->timer.cancel();
+    }
+
+    auto restart() -> void {
+      this->stop();
+      this->running = true;
+      this->work();
+    }
+
    private:
     inline auto work() -> void {
       if(not this->running)

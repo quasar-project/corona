@@ -51,10 +51,17 @@ namespace corona::network
     this->CUdpReceivingSocket::stop();
   }
 
-  auto CUdpReceivingSocket::start(u16 port) -> result<> try {
+  auto CUdpReceivingSocket::start(
+    u16 port,
+    std::string_view remote_address,
+    u16 remote_port
+  ) -> result<> try {
     this->stop();
-    this->impl_->endpoint = asio::ip::udp::endpoint(asio::ip::udp::v4(), port);
-    this->impl_->socket.open(this->impl_->endpoint.protocol());
+    this->impl_->endpoint = asio::ip::udp::endpoint(
+      asio::ip::address::from_string(remote_address.data()),
+      remote_port
+    );
+    this->impl_->socket.open(asio::ip::udp::v4());
     this->impl_->socket.bind(this->impl_->endpoint);
     this->read();
     llog::info("CUdpReceivingSocket: starting new udp connection on:");

@@ -29,7 +29,11 @@ namespace corona::network
 
     virtual ~IBasicReceivingSocket() = default;
 
-    [[nodiscard]] virtual auto start(u16 port) -> result<> = 0;
+    [[nodiscard]] virtual auto start(
+      u16 port,
+      std::string_view remote_address,
+      u16 remote_port
+    ) -> result<> = 0;
     virtual auto stop() -> void = 0;
     virtual auto send(fl::bytearray_view data) -> void = 0;
 
