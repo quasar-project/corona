@@ -4,5 +4,6 @@ var namespacecorona =
     [ "meta", "namespacecorona_1_1meta.html", [
       [ "corona_meta", "namespacecorona_1_1meta.html#ad8ef85e2ec5baefc487122ec44955436", null ]
     ] ],
-    [ "utility", "namespacecorona_1_1utility.html", "namespacecorona_1_1utility" ]
+    [ "utility", "namespacecorona_1_1utility.html", "namespacecorona_1_1utility" ],
+    [ "ConfigData", "namespacecorona.html#structcorona_1_1ConfigData", "namespacecorona_structcorona_1_1ConfigData_dup" ]
 ];

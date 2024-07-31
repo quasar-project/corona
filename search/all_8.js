@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['latitude_0',['latitude',['../classcorona_1_1image_1_1Metadata.html#aff5b099533ff913b8f10976342ecc7b2',1,'corona::image::Metadata::Coordinate::latitude'],['../structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#aff5b099533ff913b8f10976342ecc7b2',1,'corona::image::metadata::ExifMetadata::latitude']]],
-  ['longitude_1',['longitude',['../classcorona_1_1image_1_1Metadata.html#acab00f1832301980e339c6b19c6c7501',1,'corona::image::Metadata::Coordinate::longitude'],['../structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#acab00f1832301980e339c6b19c6c7501',1,'corona::image::metadata::ExifMetadata::longitude']]],
-  ['lx_2',['lx',['../structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a9fe2d3665d98b28d95a4a0f86d8c2b35',1,'corona::image::metadata::ExifMetadata']]],
-  ['ly_3',['ly',['../structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a6ec86e6545432edc0b26be701368219e',1,'corona::image::metadata::ExifMetadata']]]
+  ['idrawable_0',['IDrawable',['../classcorona_1_1imgui_1_1IDrawable.html',1,'corona::imgui']]],
+  ['image_5ftype_1',['image_type',['../structcorona_1_1image_1_1metadata_1_1ExifMetadata.html#a0efe665ddb1a472b8017dc9d9614ec0b',1,'corona::image::metadata::ExifMetadata::image_type'],['../classcorona_1_1image_1_1Metadata.html#abb96cea1147f1c57d72bdf598311f4f3',1,'corona::image::Metadata::image_type() const -&gt; ImageType']]],
+  ['imagetype_2',['ImageType',['../classcorona_1_1image_1_1Metadata.html#abc8685e56096fc9b4227e4712897878b',1,'corona::image::Metadata']]],
+  ['invalid_5fhex_5fchar_3',['invalid_hex_char',['../classcorona_1_1imgui_1_1palette.html#structcorona_1_1imgui_1_1palette_1_1invalid__hex__char',1,'corona::imgui::palette']]]
 ];

@@ -1,4 +1,8 @@
 var searchData=
 [
-  ['unknown_0',['Unknown',['../classcorona_1_1image_1_1Metadata.html#afcbd6bdd41f75046052efd922bdc95dca88183b946cc5f0e8c96b2e66e1c74a7e',1,'corona::image::Metadata']]]
+  ['sar_5fmode_0',['sar_mode',['../classcorona_1_1image_1_1Metadata.html#a27e75fc22c411472e4d3a97b08be520f',1,'corona::image::Metadata']]],
+  ['size_1',['size',['../classcorona_1_1image_1_1Metadata.html#ab894a7241c7ac1a5d25f37f873eaa038',1,'corona::image::Metadata']]],
+  ['socket_5fdebug_2',['socket_debug',['../structcorona_1_1misc_1_1socket__debug.html',1,'corona::misc']]],
+  ['strip_3',['Strip',['../classcorona_1_1image_1_1Metadata.html#abc8685e56096fc9b4227e4712897878ba031b9e77f5c85a66723c832a06ba2735',1,'corona::image::Metadata']]],
+  ['style_4',['style',['../classcorona_1_1imgui_1_1style.html',1,'corona::imgui']]]
 ];

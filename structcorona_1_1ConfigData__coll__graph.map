@@ -1,0 +1,31 @@
+<map id="ConfigData" name="ConfigData">
+<area shape="rect" id="Node000001" title=" " alt="" coords="199,464,292,489"/>
+<area shape="rect" id="Node000002" href="$namespacecorona.html#structcorona_1_1ConfigData_1_1PowerSwitch" title=" " alt="" coords="194,375,298,401"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="248,416,248,463,243,463,243,416"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="117,279,238,305"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="176,320,176,336,182,350,193,363,209,372,206,377,190,367,177,352,171,337,170,320"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="55,183,111,208"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="102,219,126,245,163,276,159,280,122,249,98,222"/>
+<area shape="rect" id="Node000008" href="$namespacecorona.html#structcorona_1_1ConfigData_1_1PowerSwitch_1_1Address" title=" " alt="" coords="19,279,94,305"/>
+<area shape="poly" id="edge8_Node000008_Node000004" title=" " alt="" coords="65,222,60,233,56,257,57,278,52,279,51,256,55,232,60,220"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,94,161,120"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="86,135,86,182,80,182,80,135"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="165,183,260,208"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="203,223,199,233,184,279,179,277,194,231,198,221"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="263,271,396,312"/>
+<area shape="poly" id="edge15_Node000010_Node000006" title=" " alt="" coords="244,215,263,230,310,269,306,273,260,234,240,220"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="193,94,232,120"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="215,135,215,182,210,182,210,135"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="77,315,94,333,115,349,154,366,194,376,192,382,152,371,112,353,90,337,73,319"/>
+<area shape="rect" id="Node000009" href="$namespacecorona.html#structcorona_1_1ConfigData_1_1PowerSwitch_1_1Gauges" title=" " alt="" coords="423,279,495,305"/>
+<area shape="poly" id="edge9_Node000002_Node000009" title=" " alt="" coords="448,320,434,338,416,353,388,368,358,378,299,388,298,382,356,372,386,363,414,349,430,334,444,316"/>
+<area shape="poly" id="edge10_Node000002_Node000010" title=" " alt="" coords="309,326,286,353,262,376,258,373,282,349,305,322"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="417,183,536,208"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="464,223,439,249,396,273,394,269,436,245,460,219"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="420,94,533,120"/>
+<area shape="poly" id="edge12_Node000011_Node000012" title=" " alt="" coords="479,135,479,182,474,182,474,135"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="410,5,449,31"/>
+<area shape="poly" id="edge13_Node000012_Node000013" title=" " alt="" coords="429,46,434,69,443,81,456,91,452,96,440,85,429,71,424,47"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="504,5,542,31"/>
+<area shape="poly" id="edge14_Node000012_Node000014" title=" " alt="" coords="512,46,485,95,480,92,507,44"/>
+</map>
