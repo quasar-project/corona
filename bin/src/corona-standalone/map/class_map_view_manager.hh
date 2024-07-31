@@ -40,7 +40,7 @@ namespace corona::standalone::map
       Street,
       Satellite,
       Hybrid,
-      Auto = 127
+      Auto
     };
     Q_ENUM(MapMode)
 
@@ -87,6 +87,6 @@ namespace corona::standalone::map
     CMapStateGadget state_gadget_;
     ::QString config_path_;
     ::QString storage_path_;
-    MapMode map_mode_ { MapMode::Auto };
+    MapMode map_mode_;
   };
 } // namespace corona::standalone::map

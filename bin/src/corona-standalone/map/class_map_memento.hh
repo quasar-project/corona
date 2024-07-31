@@ -6,6 +6,14 @@
 
 namespace corona::standalone::map
 {
+  enum class MapModeWrapper : char
+  {
+    Street,
+    Satellite,
+    Hybrid,
+    Auto
+  };
+
   struct MapStateData
   {
     struct Pan
@@ -14,6 +22,7 @@ namespace corona::standalone::map
       f64 longitude = 139.0;
     } pan;
     f64 zoom = 6.0;
+    MapModeWrapper map_mode = MapModeWrapper::Auto;
   };
 } // namespace corona::standalone::map
 

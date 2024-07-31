@@ -11,6 +11,7 @@ namespace corona::standalone::map
         dirs.config_dir() / "states",
         fl::saving_policy::autosave
       )
+    , map_mode_(MapMode::Auto)
   {
     llog::debug("CMapViewManager: loading previous map state");
     this->state_config_.load();
@@ -18,6 +19,7 @@ namespace corona::standalone::map
     state_gadget.setCoordinate(::QGeoCoordinate(this->state_config_().pan.latitude, this->state_config_().pan.longitude));
     state_gadget.setZoomLevel(this->state_config_().zoom);
     this->setState(state_gadget);
+    this->setMapMode(static_cast<MapMode>(this->state_config_().map_mode));
 
     llog::debug("CMapViewManager: initializing configuration file");
     auto const cache_root = dirs.cache_dir() / "geoservice" / "offline";
@@ -57,6 +59,7 @@ namespace corona::standalone::map
     this->state_config_.values_mut().zoom = state.zoomLevel();
     this->state_config_.values_mut().pan.latitude = state.coordinate().latitude();
     this->state_config_.values_mut().pan.longitude = state.coordinate().longitude();
+    this->state_config_.values_mut().map_mode = static_cast<MapModeWrapper>(this->mapMode());
     llog::trace("CMapViewManager: saving new map state");
     emit this->stateChanged();
   }

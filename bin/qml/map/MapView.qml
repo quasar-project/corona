@@ -113,11 +113,7 @@ Map {
         }
         flat: true
         model: ["Схема", "Спутник", "Гибрид", "Авто"]
-        onActivated: (idx) => MapModule.MapManager.mapMode = idx === 3 ? MapModule.MapManager.Auto : idx
-        Component.onCompleted: {
-            if(MapModule.MapManager.mapMode === MapModule.MapManager.Auto)
-                this.currentIndex = 3
-            else this.currentIndex = MapModule.MapManager.mapMode
-        }
+        onActivated: (idx) => MapModule.MapManager.mapMode = idx
+        Component.onCompleted: this.currentIndex = MapModule.MapManager.mapMode
     }
 }
