@@ -7,18 +7,17 @@ import QtQuick.Layouts
 import io.corona.standalone.app as App
 import io.corona.standalone.theme as ThemeModule
 import io.corona.standalone.map as MapModule
-import io.qdebugenv.rendering as QDebugEnv_Rendering
+import io.corona.rendering.immediate as RenderingModule
 
 Map {
-    required property QDebugEnv_Rendering.ImmediateGUIRenderingFacility imguiRenderer
-    property var mapType: MapModule.MapManager.Auto
+    required property RenderingModule.ImmediateGUIRenderingFacility imguiRenderer
 
     function mapTypeBinding(themeMode) {
-        if(this.mapType === MapModule.MapManager.Auto)
+        if(MapModule.MapManager.mapMode === MapModule.MapManager.Auto)
             return themeMode === App.Theme.Dark
                 ? this.supportedMapTypes[MapModule.MapManager.Hybrid]
                 : this.supportedMapTypes[MapModule.MapManager.Street]
-        else return this.supportedMapTypes[this.mapType]
+        else return this.supportedMapTypes[MapModule.MapManager.mapMode]
     }
 
     id: map
@@ -27,11 +26,11 @@ Map {
         smooth: true
         samples: 8
     }
-    center: QtPositioning.coordinate(39, 139)
+    center: MapModule.MapManager.state.coordinate
     activeMapType: this.mapTypeBinding(App.Theme.mode)
     copyrightsVisible: false
     tilt: 15
-    zoomLevel: 6
+    zoomLevel: MapModule.MapManager.state.zoomLevel
     plugin: Plugin {
         name: "cgs"
         PluginParameter {
@@ -43,6 +42,11 @@ Map {
             name: "cgs.mapping.targetCacheDirectory"
             value: App.Directories.cache + "/geoservice"
         }
+    }
+
+    Component.onDestruction: {
+        MapModule.MapManager.state.coordinate = map.center
+        MapModule.MapManager.state.zoomLevel = map.zoomLevel
     }
 
     Behavior on center { CoordinateAnimation { duration: 250; easing.type: Easing.InOutQuad } }
@@ -109,7 +113,7 @@ Map {
         }
         flat: true
         model: ["Схема", "Спутник", "Гибрид", "Авто"]
-        currentIndex: 3
-        onCurrentIndexChanged: parent.mapType = this.currentIndex == 3 ? MapModule.MapManager.Auto : this.currentIndex
+        onActivated: (idx) => MapModule.MapManager.mapMode = idx
+        Component.onCompleted: this.currentIndex = MapModule.MapManager.mapMode
     }
 }

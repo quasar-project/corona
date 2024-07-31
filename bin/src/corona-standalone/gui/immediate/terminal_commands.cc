@@ -4,7 +4,6 @@
 #include <optional>
 #include <charconv>
 #include <qguiapplication.h>
-#include <imterm/misc.hpp>
 
 namespace {
   using namespace corona::standalone::gui::immediate;

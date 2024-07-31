@@ -5,13 +5,13 @@
 #include <vector>
 #include <mutex>
 #include <spdlog/sinks/base_sink.h>
-#include <qdebugenv/vendored/imterm.h>
+#include <corona/vendored/imterm.h>
 
 namespace corona::standalone::gui::immediate
 {
   struct custom_command_struct {};
 
-  class terminal_commands : public imterm::basic_spdlog_terminal_helper<terminal_commands, custom_command_struct, std::mutex> {
+  class terminal_commands : public vendored::imterm::basic_spdlog_terminal_helper<terminal_commands, custom_command_struct, std::mutex> {
    public:
     terminal_commands();
 

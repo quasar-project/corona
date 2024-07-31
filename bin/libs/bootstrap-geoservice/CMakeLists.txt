@@ -8,7 +8,7 @@ project(corona-bootstrap-geoservice
   HOMEPAGE_URL "maybe-unused.github.io/qnx"
   LANGUAGES C CXX
 )
-set(PROJECT_NAMESPACE ${PROJECT_NAME}::)
+set(PROJECT_NAMESPACE corona::)
 cmake_policy(SET CMP0100 NEW)
 
 include(CMakePrintHelpers)
@@ -40,7 +40,11 @@ find_package(Qt6
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-add_library(${PROJECT_NAME})
+if(CBG_BUILD_SHARED_LIBS)
+  add_library(${PROJECT_NAME} SHARED)
+else()
+  add_library(${PROJECT_NAME} STATIC)
+endif()
 add_library(corona::geoservice ALIAS ${PROJECT_NAME})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES

@@ -1,0 +1,33 @@
+set(PROJECT_DEV_NAME ${PROJECT_NAME}-dev)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
+find_package(Qt5 REQUIRED COMPONENTS Core Quick)
+add_executable(${PROJECT_DEV_NAME})
+target_sources(${PROJECT_DEV_NAME}
+  PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/main.cc
+)
+target_link_libraries(${PROJECT_DEV_NAME} PRIVATE ${PROJECT_NAME})
+
+message(STATUS "[${PROJECT_DEV_NAME}] adding: ${CMAKE_CURRENT_SOURCE_DIR}/Main.qml")
+set_source_files_properties(Main.qml PROPERTIES QT_RESOURCE_ALIAS dev/Main.qml)
+qt_add_qml_module(${PROJECT_DEV_NAME}
+  URI "io.qdebugenv.dev"
+  VERSION "1.0"
+  RESOURCE_PREFIX "/"
+  QML_FILES
+    Main.qml
+  OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin
+  NO_RESOURCE_TARGET_PATH
+)
+
+if(WIN32)
+  add_custom_command(TARGET ${PROJECT_DEV_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:${PROJECT_DEV_NAME}> $<TARGET_FILE_DIR:${PROJECT_DEV_NAME}>
+    COMMAND_EXPAND_LISTS
+  )
+endif()
