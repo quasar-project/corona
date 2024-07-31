@@ -114,7 +114,7 @@ target_sources(${CORONA_STANDALONE_NAME}
 
 target_link_libraries(${CORONA_STANDALONE_NAME}
   PRIVATE
-    corona
+    corona::corona
     corona::geoservice
     corona::imrenderer
     corona::imgui

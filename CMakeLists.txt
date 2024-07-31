@@ -67,8 +67,8 @@ message(STATUS "[${PROJECT_NAME}] linking with ${Boost_LIBRARIES}")
 target_link_libraries(${PROJECT_NAME}
   PUBLIC
     floppy::floppy
-    corona::imgui
   PRIVATE
+    corona::imgui
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     Boost::system

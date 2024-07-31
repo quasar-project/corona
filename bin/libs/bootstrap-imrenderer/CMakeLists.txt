@@ -70,6 +70,7 @@ target_sources(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
   PUBLIC
+    corona::corona
     corona::imgui
     corona::imterm
     floppy::floppy
