@@ -21,7 +21,6 @@ endif()
 
 # -- dependencies --
 find_package(tomlplusplus REQUIRED)
-find_package(qdebugenv REQUIRED)
 find_package(Qt6
   COMPONENTS
     Core
@@ -33,6 +32,7 @@ find_package(Qt6
   REQUIRED
 )
 add_subdirectory(libs/bootstrap-geoservice)
+add_subdirectory(libs/bootstrap-imrenderer)
 
 # -- executable --
 qt_add_executable(${CORONA_STANDALONE_NAME})
@@ -116,10 +116,12 @@ target_link_libraries(${CORONA_STANDALONE_NAME}
   PRIVATE
     corona
     corona::geoservice
+    corona::imrenderer
+    corona::imgui
+    corona::imterm
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     tomlplusplus::tomlplusplus
-    qdebugenv::qdebugenv
     Qt::Core
     Qt::Gui
     Qt::GuiPrivate

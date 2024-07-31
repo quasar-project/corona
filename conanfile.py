@@ -35,7 +35,6 @@ class CoronaRecipe(ConanFile):
         self.requires("reflect-cpp/0.11.1")
         if self.options.standalone:
             self.requires("tomlplusplus/[>=3.0.1]")
-            self.requires("qdebugenv/[>=0.1.0]")
         if self.options.test:
             self.requires("gtest/[>=1.10.0]")
         if self.options.self_sufficient:
