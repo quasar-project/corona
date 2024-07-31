@@ -27,11 +27,11 @@ Map {
         smooth: true
         samples: 8
     }
-    center: QtPositioning.coordinate(39, 139)
+    center: MapModule.MapManager.state.coordinate
     activeMapType: this.mapTypeBinding(App.Theme.mode)
     copyrightsVisible: false
     tilt: 15
-    zoomLevel: 6
+    zoomLevel: MapModule.MapManager.state.zoomLevel
     plugin: Plugin {
         name: "cgs"
         PluginParameter {
@@ -43,6 +43,11 @@ Map {
             name: "cgs.mapping.targetCacheDirectory"
             value: App.Directories.cache + "/geoservice"
         }
+    }
+
+    Component.onDestruction: {
+        MapModule.MapManager.state.coordinate = map.center
+        MapModule.MapManager.state.zoomLevel = map.zoomLevel
     }
 
     Behavior on center { CoordinateAnimation { duration: 250; easing.type: Easing.InOutQuad } }
