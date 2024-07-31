@@ -21,7 +21,6 @@ endif()
 
 # -- dependencies --
 find_package(tomlplusplus REQUIRED)
-find_package(qdebugenv REQUIRED)
 find_package(Qt6
   COMPONENTS
     Core
@@ -33,6 +32,7 @@ find_package(Qt6
   REQUIRED
 )
 add_subdirectory(libs/bootstrap-geoservice)
+add_subdirectory(libs/bootstrap-imrenderer)
 
 # -- executable --
 qt_add_executable(${CORONA_STANDALONE_NAME})
@@ -60,14 +60,6 @@ if(WIN32)
   set(CORONA_OUTPUT_SET ${CORONA_RES_FILES})
 endif()
 
-qt6_add_shaders(${PROJECT_NAME} "imgui_shaders"
-  PREFIX "/"
-  BASE ${CMAKE_CURRENT_SOURCE_DIR}
-  FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/imgui.vert
-    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/imgui.frag
-)
-
 qt_add_qml_module(${CORONA_STANDALONE_NAME}
   URI "io.corona.standalone"
   VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
@@ -87,6 +79,9 @@ qt_add_qml_module(${CORONA_STANDALONE_NAME}
     resources/icons/light.svg
     resources/icons/ruler.svg
     resources/icons/grid.svg
+    resources/icons/folder.svg
+    resources/icons/folder-media.svg
+    resources/icons/folder-settings.svg
   RESOURCE_PREFIX "/"
   NO_RESOURCE_TARGET_PATH
 )
@@ -111,12 +106,14 @@ target_sources(${CORONA_STANDALONE_NAME}
 
 target_link_libraries(${CORONA_STANDALONE_NAME}
   PRIVATE
-    corona
+    corona::corona
     corona::geoservice
+    corona::imrenderer
+    corona::imgui
+    corona::imterm
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     tomlplusplus::tomlplusplus
-    qdebugenv::qdebugenv
     Qt::Core
     Qt::Gui
     Qt::GuiPrivate
@@ -141,12 +138,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU
   target_compile_definitions(${CORONA_STANDALONE_NAME} PRIVATE -DBOOST_ASIO_HAS_STD_INVOKE_RESULT=1)
 endif()
 
-target_include_directories(${CORONA_STANDALONE_NAME}
-  PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/libs/qrhiimgui
-    ${CMAKE_CURRENT_SOURCE_DIR}/libs/qrhiimgui/imgui
-)
+target_include_directories(${CORONA_STANDALONE_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 if(WIN32 AND ${CMAKE_CXX_COMPILER_ID} MATCHES "GNU|Clang|Mingw|MINGW" AND NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
   message(STATUS "[${CORONA_STANDALONE_NAME}] adding -mwindows linker opt (${CMAKE_CXX_COMPILER_ID})")

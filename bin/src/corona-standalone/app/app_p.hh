@@ -3,8 +3,8 @@
 #include <corona-standalone/app/app.hh>
 #include <corona-standalone/utility/formatters.hh>
 
-#include <qdebugenv/vendored/imterm.h>
-#include <qdebugenv/class_extendable_renderer.h>
+#include <corona/vendored/imterm.h>
+#include <corona/bootstrap/imrenderer/class_extendable_renderer.h>
 #include <corona-standalone/app/class_dirs_wrapper.hh>
 #include <corona-standalone/app/class_user_interface_logger.hh>
 #include <corona-standalone/map/class_map_view_manager.hh>
@@ -33,9 +33,9 @@ namespace corona::standalone
     {
       explicit ImGUIData(CLogger& logger);
 
-      qdebugenv::CExtendableRenderer* imgui{nullptr};
+      bootstrap::imrenderer::CExtendableRenderer* imgui{nullptr};
       std::unique_ptr<gui::immediate::custom_command_struct> terminal_cmd;
-      std::unique_ptr<imterm::terminal<gui::immediate::terminal_commands>> terminal;
+      std::unique_ptr<vendored::imterm::terminal<gui::immediate::terminal_commands>> terminal;
     };
 
     struct Corona::impl
@@ -48,10 +48,10 @@ namespace corona::standalone
       auto register_qml_singletons() -> void;
 
       CLogger& logger; // NOLINT(*-avoid-const-or-ref-data-members)
+      ImGUIData imgui;
       fl::box<gui::theme::qml::CThemeWrapper> theme;
       fl::box<qml::CApplicationDirsWrapper> app_dirs;
       fl::box<map::CMapViewManager> map_view_manager;
-      ImGUIData imgui;
     };
   } // namespace app
 } // namespace corona::standalone

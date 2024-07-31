@@ -1,6 +1,9 @@
 #include <corona-standalone/app/class_dirs_wrapper.hh>
 
+#include <qurl.h>
 #include <qcoreapplication.h>
+#include <qdesktopservices.h>
+#include <corona-standalone/definitions.hh>
 
 namespace corona::standalone::qml
 {
@@ -39,4 +42,11 @@ namespace corona::standalone::qml
       : ::QString();
   }
   auto CApplicationDirsWrapper::applicationDir() const -> ::QString { return ::QCoreApplication::applicationDirPath(); }
+
+  void CApplicationDirsWrapper::open(::QString const& path) {
+    if(::QDesktopServices::openUrl(::QUrl(path)))
+      llog::trace("CApplicationDirsWrapper: opened \'{}\'", path.toStdString());
+    else
+      llog::warn("CApplicationDirsWrapper: failed to open \'{}\'", path.toStdString());
+  }
 } // namespace corona::standalone::qml

@@ -7,10 +7,10 @@ import QtQuick.Layouts
 import io.corona.standalone.app as App
 import io.corona.standalone.theme as ThemeModule
 import io.corona.standalone.map as MapModule
-import io.qdebugenv.rendering as QDebugEnv_Rendering
+import io.corona.rendering.immediate as RenderingModule
 
 Map {
-    required property QDebugEnv_Rendering.ImmediateGUIRenderingFacility imguiRenderer
+    required property RenderingModule.ImmediateGUIRenderingFacility imguiRenderer
     property var mapType: MapModule.MapManager.Auto
 
     function mapTypeBinding(themeMode) {
@@ -27,11 +27,11 @@ Map {
         smooth: true
         samples: 8
     }
-    center: QtPositioning.coordinate(60, 39.7)
+    center: QtPositioning.coordinate(39, 139)
     activeMapType: this.mapTypeBinding(App.Theme.mode)
     copyrightsVisible: false
     tilt: 15
-    zoomLevel: 14
+    zoomLevel: 6
     plugin: Plugin {
         name: "cgs"
         PluginParameter {

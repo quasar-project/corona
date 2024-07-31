@@ -1,0 +1,11 @@
+@PACKAGE_INIT@
+
+set(config_targets_file_imterm @config_targets_file@)
+
+include(CMakeFindDependencyMacro)
+
+find_dependency(imterm REQUIRED)
+
+include("${CMAKE_CURRENT_LIST_DIR}/${config_targets_file_imterm}")
+
+check_required_components(imterm)

@@ -20,6 +20,9 @@ namespace corona::standalone::map
       create_directories(cfg_root);
     auto const cfg_path = cfg_root / "geoservice.conf.yml";
     this->setConfigPath(::QString::fromStdString(cfg_root.generic_string()));
+    this->setStoragePath(::QString::fromStdString(cache_root.generic_string()));
+    llog::trace("CMapViewManager: config path: \'{}\'", cfg_root.generic_string());
+    llog::trace("CMapViewManager: storage path: \'{}\'", cache_root.generic_string());
     if(exists(cfg_path)) {
       llog::trace("CMapViewManager: configuration file already exists, skipping creation");
       return;
