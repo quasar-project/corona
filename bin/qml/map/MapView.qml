@@ -11,14 +11,13 @@ import io.corona.rendering.immediate as RenderingModule
 
 Map {
     required property RenderingModule.ImmediateGUIRenderingFacility imguiRenderer
-    property var mapType: MapModule.MapManager.Auto
 
     function mapTypeBinding(themeMode) {
-        if(this.mapType === MapModule.MapManager.Auto)
+        if(MapModule.MapManager.mapMode === MapModule.MapManager.Auto)
             return themeMode === App.Theme.Dark
                 ? this.supportedMapTypes[MapModule.MapManager.Hybrid]
                 : this.supportedMapTypes[MapModule.MapManager.Street]
-        else return this.supportedMapTypes[this.mapType]
+        else return this.supportedMapTypes[MapModule.MapManager.mapMode]
     }
 
     id: map
@@ -114,7 +113,11 @@ Map {
         }
         flat: true
         model: ["Схема", "Спутник", "Гибрид", "Авто"]
-        currentIndex: 3
-        onCurrentIndexChanged: parent.mapType = this.currentIndex == 3 ? MapModule.MapManager.Auto : this.currentIndex
+        onActivated: (idx) => MapModule.MapManager.mapMode = idx === 3 ? MapModule.MapManager.Auto : idx
+        Component.onCompleted: {
+            if(MapModule.MapManager.mapMode === MapModule.MapManager.Auto)
+                this.currentIndex = 3
+            else this.currentIndex = MapModule.MapManager.mapMode
+        }
     }
 }
