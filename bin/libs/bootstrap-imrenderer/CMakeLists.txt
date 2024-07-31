@@ -36,7 +36,11 @@ find_package(Qt6
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-add_library(${PROJECT_NAME})
+if(CBI_BUILD_SHARED_LIBS)
+  add_library(${PROJECT_NAME} SHARED)
+else()
+  add_library(${PROJECT_NAME} STATIC)
+endif()
 add_library(corona::imrenderer ALIAS ${PROJECT_NAME})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -55,11 +59,10 @@ cmake_print_properties(TARGETS ${PROJECT_NAME} PROPERTIES
 
 target_sources(${PROJECT_NAME}
   PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/qdebugenv/rhi/class_immediate_gui_bridge.h> $<INSTALL_INTERFACE:include/qdebugenv/rhi/class_immediate_gui_bridge.h>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/qdebugenv/rhi/class_renderer.h> $<INSTALL_INTERFACE:include/qdebugenv/rhi/class_renderer.h>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/qdebugenv/idrawable_on_immediate_gui.h> $<INSTALL_INTERFACE:include/qdebugenv/idrawable_on_immediate_gui.h>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/qdebugenv/class_generic_renderer.h> $<INSTALL_INTERFACE:include/qdebugenv/class_generic_renderer.h>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/qdebugenv/class_extendable_renderer.h> $<INSTALL_INTERFACE:include/qdebugenv/class_extendable_renderer.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/bootstrap/imrenderer/rhi/class_immediate_gui_bridge.h> $<INSTALL_INTERFACE:include/corona/bootstrap/imrenderer/rhi/class_immediate_gui_bridge.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/bootstrap/imrenderer/rhi/class_renderer.h> $<INSTALL_INTERFACE:include/corona/bootstrap/imrenderer/rhi/class_renderer.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/bootstrap/imrenderer/class_generic_renderer.h> $<INSTALL_INTERFACE:include/corona/bootstrap/imrenderer/class_generic_renderer.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/bootstrap/imrenderer/class_extendable_renderer.h> $<INSTALL_INTERFACE:include/corona/bootstrap/imrenderer/class_extendable_renderer.h>
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/rhi/class_renderer.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/rhi/class_immediate_gui_bridge.cc

@@ -3,7 +3,7 @@
 #include <qglobal.h>
 #include <private/qrhi_p.h>
 #include <private/qrhinull_p.h>
-#include <qdebugenv/detail/export.h>
+#include "../detail/export.h"
 
 #if QT_CONFIG(opengl)
 # include <private/qrhigles2_p.h>
@@ -23,9 +23,9 @@
 
 class QEvent;
 
-namespace qdebugenv
+namespace corona::bootstrap::imrenderer
 {
-  class QDE_API CRhiRenderer
+  class CORONA_BOOTSTRAP_IMRENDERER_API CRhiRenderer
   {
    public:
     CRhiRenderer();
@@ -117,4 +117,4 @@ namespace qdebugenv
     std::unique_ptr<::QRhiSampler> nearest_sampler_;
     std::unordered_map<void*, Texture> textures_;
   };
-} // namespace qdebugenv
+} // namespace corona::bootstrap::imrenderer

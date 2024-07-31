@@ -8,7 +8,7 @@
 /* fwd */
 class QQuickWindow;
 namespace floppy::filesystem { class application_dirs; } // namespace floppy::filesystem
-namespace qdebugenv { class CExtendableRenderer; } // namespace qdebugenv
+namespace corona::bootstrap::imrenderer { class CExtendableRenderer; } // namespace corona::bootstrap::imrenderer
 namespace corona::standalone
 {
   namespace gui::theme::qml { class CThemeWrapper; } // namespace gui::theme::qml
@@ -35,8 +35,8 @@ namespace corona::standalone
       [[nodiscard]] auto theme() const -> gui::theme::qml::CThemeWrapper const&;
       [[nodiscard]] auto theme_mut() -> gui::theme::qml::CThemeWrapper&;
 
-      [[nodiscard]] auto imgui() const -> qdebugenv::CExtendableRenderer const&;
-      [[nodiscard]] auto imgui_mut() -> qdebugenv::CExtendableRenderer&;
+      [[nodiscard]] auto imgui() const -> bootstrap::imrenderer::CExtendableRenderer const&;
+      [[nodiscard]] auto imgui_mut() -> bootstrap::imrenderer::CExtendableRenderer&;
 
      private:
       static auto load_plugins() -> void;

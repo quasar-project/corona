@@ -1,8 +1,8 @@
 #pragma once
 
-#include <qdebugenv/detail/export.h>
+#include "../detail/export.h"
 
-namespace qdebugenv
+namespace corona::bootstrap::imrenderer
 {
   class CRhiRenderer;
   class CRhiImmediateGuiCustomRenderer
@@ -12,4 +12,4 @@ namespace qdebugenv
     virtual auto sync(CRhiRenderer* renderer) -> void;
     virtual auto render() -> void;
   };
-} // namespace qdebugenv
+} // namespace corona::bootstrap::imrenderer

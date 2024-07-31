@@ -4,11 +4,11 @@ import QtQuick.Controls
 import QtQuick.Controls.Material
 import QtQuick.Layouts
 
-import io.qdebugenv.rendering as QDebugEnv_Rendering
 import io.corona.standalone.app as App
 import io.corona.standalone.theme as ThemeModule
 import io.corona.standalone.map as MapModule
 import io.corona.standalone.layouts as LayoutsModule
+import io.corona.rendering.immediate as RenderingModule
 
 ApplicationWindow {
     id: window_root
@@ -50,6 +50,6 @@ ApplicationWindow {
     }
 
     ThemeModule.CircularChanger { id: themeChanger; rootItem: root; theme: App.Theme; }
-    QDebugEnv_Rendering.ImmediateGUIRenderingFacility { id: imguiRenderer; shortcut: "\\"; opacity: 0 }
+    RenderingModule.ImmediateGUIRenderingFacility { id: imguiRenderer; shortcut: "\\"; opacity: 0 }
 }
 

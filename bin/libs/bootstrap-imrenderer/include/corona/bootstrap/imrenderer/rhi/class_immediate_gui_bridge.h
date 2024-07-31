@@ -1,11 +1,11 @@
 #pragma once
 
 #include <functional>
-#include <qdebugenv/rhi/class_renderer.h>
+#include "class_renderer.h"
 
-namespace qdebugenv
+namespace corona::bootstrap::imrenderer
 {
-  class QDE_API CImmediateGuiBridge
+  class CORONA_BOOTSTRAP_IMRENDERER_API CImmediateGuiBridge
   {
    public:
     using FrameFunction = std::function<void()>;
@@ -37,4 +37,4 @@ namespace qdebugenv
     CRhiRenderer::FrameRenderData f_;
     Qt::MouseButtons pressed_mouse_buttons_;
   };
-} // namespace qdebugenv
+} // namespace corona::bootstrap::imrenderer

@@ -60,14 +60,6 @@ if(WIN32)
   set(CORONA_OUTPUT_SET ${CORONA_RES_FILES})
 endif()
 
-qt6_add_shaders(${PROJECT_NAME} "imgui_shaders"
-  PREFIX "/"
-  BASE ${CMAKE_CURRENT_SOURCE_DIR}
-  FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/imgui.vert
-    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/imgui.frag
-)
-
 qt_add_qml_module(${CORONA_STANDALONE_NAME}
   URI "io.corona.standalone"
   VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
@@ -146,12 +138,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU
   target_compile_definitions(${CORONA_STANDALONE_NAME} PRIVATE -DBOOST_ASIO_HAS_STD_INVOKE_RESULT=1)
 endif()
 
-target_include_directories(${CORONA_STANDALONE_NAME}
-  PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/libs/qrhiimgui
-    ${CMAKE_CURRENT_SOURCE_DIR}/libs/qrhiimgui/imgui
-)
+target_include_directories(${CORONA_STANDALONE_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 if(WIN32 AND ${CMAKE_CXX_COMPILER_ID} MATCHES "GNU|Clang|Mingw|MINGW" AND NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
   message(STATUS "[${CORONA_STANDALONE_NAME}] adding -mwindows linker opt (${CMAKE_CXX_COMPILER_ID})")

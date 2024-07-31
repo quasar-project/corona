@@ -1,17 +1,17 @@
 #pragma once
 
 #include <qquickitem.h>
-#include <qdebugenv/detail/export.h>
-#include <qdebugenv/rhi/class_immediate_gui_custom_renderer.h>
+#include "detail/export.h"
+#include "rhi/class_immediate_gui_custom_renderer.h"
 
 class QQuickWindow;
 class QQmlApplicationEngine;
-namespace qdebugenv
+namespace corona::bootstrap::imrenderer
 {
   class CRhiRenderer;
   class CImmediateGuiBridge;
 
-  class QDE_API CGenericRenderer : public ::QQuickItem
+  class CORONA_BOOTSTRAP_IMRENDERER_API CGenericRenderer : public ::QQuickItem
   {
     Q_OBJECT
     Q_PROPERTY(QObject* graphicsInfo READ graphics_info WRITE set_graphics_info NOTIFY graphics_info_changed)
@@ -62,4 +62,4 @@ namespace qdebugenv
     struct impl;
     fl::traits::pimpl<impl> impl_;
   };
-} // namespace qdebugenv
+} // namespace corona::bootstrap::imrenderer

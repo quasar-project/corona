@@ -1,11 +1,11 @@
-#include <qdebugenv/rhi/class_renderer.h>
+#include <corona/bootstrap/imrenderer/rhi/class_renderer.h>
 
 #include <cassert>
 #include <qfile.h>
 #include <qevent.h>
 #include <qimage.h>
 #include <floppy/logging.h>
-#include <qdebugenv/vendored/imgui.h>
+#include <corona/vendored/imgui.h>
 
 namespace llog = ::floppy::log;
 namespace checks
@@ -25,7 +25,7 @@ namespace
   }
 } // namespace
 
-namespace qdebugenv
+namespace corona::bootstrap::imrenderer
 {
   CRhiRenderer::CRhiRenderer() = default;
   CRhiRenderer::~CRhiRenderer() {
@@ -301,4 +301,4 @@ namespace qdebugenv
     };
     this->textures_[id] = tex;
   }
-} // namespace qdebugenv
+} // namespace corona::bootstrap::imrenderer

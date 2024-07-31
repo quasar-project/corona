@@ -1,12 +1,12 @@
 #pragma once
 
-#include <qdebugenv/imgui/detail.h>
+#include <corona/imgui/detail.h>
 
-namespace qdebugenv::imgui
+namespace corona::imgui
 {
   using vec4 = ImVec4;
 
-  inline constexpr auto operator==(qdebugenv::imgui::vec4 const& lhs, qdebugenv::imgui::vec4 const& rhs) -> bool {
+  inline constexpr auto operator==(corona::imgui::vec4 const& lhs, corona::imgui::vec4 const& rhs) -> bool {
     return lhs.x == rhs.x and lhs.y == rhs.y and lhs.z == rhs.z and lhs.w == rhs.w;
   }
 
@@ -181,6 +181,6 @@ namespace qdebugenv::imgui
   static_assert(palette::vec4_from_hex("#7EA3CE") == palette::vec4_from_rgb(126, 163, 206), "HEX to RGB conversion failed");
 
   constexpr inline auto default_palette = palette(palette::flavor::dracula);
-} // namespace qdebugenv::imgui
+} // namespace corona::imgui
 
-using qdebugenv::imgui::operator==;
+using corona::imgui::operator==;

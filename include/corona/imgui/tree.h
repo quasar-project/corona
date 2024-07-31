@@ -1,9 +1,9 @@
 #pragma once
 
 #include <functional>
-#include <qdebugenv/imgui/detail.h>
+#include <corona/imgui/detail.h>
 
-namespace qdebugenv::imgui
+namespace corona::imgui
 {
   enum class tree_node_flags
   {
@@ -35,6 +35,6 @@ namespace qdebugenv::imgui
         content();
     }
   };
-} // namespace qdebugenv::imgui
+} // namespace corona::imgui
 
-using qdebugenv::imgui::operator|;
+using corona::imgui::operator|;

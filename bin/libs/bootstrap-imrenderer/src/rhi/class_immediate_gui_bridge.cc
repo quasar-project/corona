@@ -1,4 +1,4 @@
-#include <qdebugenv/rhi/class_immediate_gui_bridge.h>
+#include <corona/bootstrap/imrenderer/rhi/class_immediate_gui_bridge.h>
 
 #include <cassert>
 #include <qfile.h>
@@ -6,7 +6,7 @@
 #include <qevent.h>
 #include <qclipboard.h>
 #include <floppy/logging.h>
-#include <qdebugenv/vendored/imgui.h>
+#include <corona/vendored/imgui.h>
 
 namespace llog = ::floppy::log;
 
@@ -124,7 +124,7 @@ namespace
   }
 } // namespace
 
-namespace qdebugenv
+namespace corona::bootstrap::imrenderer
 {
   CImmediateGuiBridge::CImmediateGuiBridge()
     : ctx_(ImGui::CreateContext())
@@ -314,4 +314,4 @@ namespace qdebugenv
   auto CImmediateGuiBridge::swap_ctx() -> void {
     ImGui::SetCurrentContext(static_cast<ImGuiContext*>(this->ctx_));
   }
-} // namespace qdebugenv
+} // namespace corona::bootstrap::imrenderer

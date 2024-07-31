@@ -1,4 +1,4 @@
-#include <qdebugenv/class_generic_renderer.h>
+#include <corona/bootstrap/imrenderer/class_generic_renderer.h>
 
 #include <qguiapplication.h>
 #include <qquickwindow.h>
@@ -6,10 +6,10 @@
 #include <private/qquickgraphicsinfo_p.h>
 #include <magic_enum/magic_enum.hpp>
 #include <floppy/logging.h>
-#include <qdebugenv/rhi/class_renderer.h>
-#include <qdebugenv/rhi/class_immediate_gui_bridge.h>
-#include <qdebugenv/vendored/imgui.h>
-#include <qdebugenv/imgui/all.h>
+#include <corona/bootstrap/imrenderer/rhi/class_renderer.h>
+#include <corona/bootstrap/imrenderer/rhi/class_immediate_gui_bridge.h>
+#include <corona/vendored/imgui.h>
+#include <corona/imgui/all.h>
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
 # include <qsgrendernode.h>
@@ -25,7 +25,7 @@ namespace me = magic_enum;
 namespace llog = ::floppy::log;
 namespace
 {
-  using namespace ::qdebugenv;
+  using namespace ::corona::bootstrap::imrenderer;
   class CRhiImguiNode : public ::QSGRenderNode
   {
    public:
@@ -130,7 +130,7 @@ namespace
   };
 } // namespace
 
-namespace qdebugenv
+namespace corona::bootstrap::imrenderer
 {
   CRhiImmediateGuiCustomRenderer::~CRhiImmediateGuiCustomRenderer() = default;
   auto CRhiImmediateGuiCustomRenderer::sync([[maybe_unused]] CRhiRenderer* renderer) -> void {}
@@ -282,4 +282,4 @@ namespace qdebugenv
   auto CGenericRenderer::style_default() -> void {
     [[maybe_unused]] auto _ = imgui::style(imgui::default_palette, imgui::style::roundings());
   }
-} // namespace qdebugenv
+} // namespace corona::bootstrap::imrenderer

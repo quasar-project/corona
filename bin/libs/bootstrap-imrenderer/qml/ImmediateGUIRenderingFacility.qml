@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-import io.qdebugenv.rendering as M
+import io.corona.rendering.immediate as M
 
 Rectangle {
     required property string shortcut

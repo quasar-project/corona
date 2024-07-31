@@ -1,8 +1,8 @@
 #pragma once
 
-#include <qdebugenv/imgui/palette.h>
+#include <corona/imgui/palette.h>
 
-namespace qdebugenv::imgui
+namespace corona::imgui
 {
   struct text
   {
@@ -64,4 +64,4 @@ namespace qdebugenv::imgui
     }
   };
 
-} // namespace qdebugenv::imgui
+} // namespace corona::imgui
