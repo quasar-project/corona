@@ -29,6 +29,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # -- dependencies --
 add_subdirectory(extern/imgui)
+add_subdirectory(extern/imterm)
 find_package(floppy REQUIRED)
 find_package(reflect-cpp REQUIRED)
 find_package(magic_enum REQUIRED)
@@ -37,6 +38,7 @@ find_package(Python3 REQUIRED COMPONENTS Interpreter)
 find_package(Boost REQUIRED COMPONENTS system headers) # todo: remove
 find_package(Qt6 REQUIRED COMPONENTS Core Network)
 add_library(${PROJECT_NAMESPACE}imgui ALIAS imgui)
+add_library(${PROJECT_NAMESPACE}imterm ALIAS imterm)
 
 add_library(${PROJECT_NAME})
 add_library(${PROJECT_NAMESPACE}${PROJECT_NAME} ALIAS ${PROJECT_NAME})
@@ -65,8 +67,8 @@ message(STATUS "[${PROJECT_NAME}] linking with ${Boost_LIBRARIES}")
 target_link_libraries(${PROJECT_NAME}
   PUBLIC
     floppy::floppy
-    corona::imgui
   PRIVATE
+    corona::imgui
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     Boost::system

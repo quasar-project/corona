@@ -78,6 +78,6 @@ namespace corona::standalone::app
   auto Corona::dirs_mut() -> fl::filesystem::application_dirs& { return **this->impl_->app_dirs; }
   auto Corona::theme() const -> gui::theme::qml::CThemeWrapper const& { return *this->impl_->theme; }
   auto Corona::theme_mut() -> gui::theme::qml::CThemeWrapper& { return *this->impl_->theme; }
-  auto Corona::imgui() const -> qdebugenv::CExtendableRenderer const& { return *this->impl_->imgui.imgui; }
-  auto Corona::imgui_mut() -> qdebugenv::CExtendableRenderer& { return *this->impl_->imgui.imgui; }
+  auto Corona::imgui() const -> bootstrap::imrenderer::CExtendableRenderer const& { return *this->impl_->imgui.imgui; }
+  auto Corona::imgui_mut() -> bootstrap::imrenderer::CExtendableRenderer& { return *this->impl_->imgui.imgui; }
 } // namespace corona::standalone::app

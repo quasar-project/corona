@@ -1,20 +1,19 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.15)
 
 include_guard(GLOBAL)
 
-project(corona-bootstrap-geoservice
+project(corona-bootstrap-imrenderer
   VERSION 0.1.0
-  DESCRIPTION "Geoservice plugin submodule for Corona"
-  HOMEPAGE_URL "maybe-unused.github.io/qnx"
+  DESCRIPTION "ImGui Renderer submodule for Corona"
+  HOMEPAGE_URL "whs31.github.io/qdebugenv"
   LANGUAGES C CXX
 )
 set(PROJECT_NAMESPACE corona::)
-cmake_policy(SET CMP0100 NEW)
 
 include(CMakePrintHelpers)
 
-option(CBG_DEV "Enable development mode" OFF)
-option(CBG_BUILD_SHARED_LIBS "Build shared libraries" OFF)
+option(CBI_DEV "Enable development mode" OFF)
+option(CBI_BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
 if("${CMAKE_GENERATOR}" MATCHES "^Visual Studio")
   set(CMAKE_GENERATOR_PLATFORM "x64" CACHE STRING "" FORCE)
@@ -27,25 +26,22 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # -- dependencies --
 find_package(floppy REQUIRED)
 find_package(magic_enum REQUIRED)
-find_package(reflect-cpp REQUIRED)
 find_package(Qt6
   COMPONENTS
     Core
     Quick
-    Location
-    Positioning
-    Network
+    ShaderTools
   REQUIRED
 )
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-if(CBG_BUILD_SHARED_LIBS)
+if(CBI_BUILD_SHARED_LIBS)
   add_library(${PROJECT_NAME} SHARED)
 else()
   add_library(${PROJECT_NAME} STATIC)
 endif()
-add_library(corona::geoservice ALIAS ${PROJECT_NAME})
+add_library(corona::imrenderer ALIAS ${PROJECT_NAME})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
   CXX_STANDARD 23
@@ -63,50 +59,49 @@ cmake_print_properties(TARGETS ${PROJECT_NAME} PROPERTIES
 
 target_sources(${PROJECT_NAME}
   PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/bootstrap/geoservice/detail/export.h> $<INSTALL_INTERFACE:include/corona/bootstrap/geoservice/detail/export.h>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/bootstrap/geoservice/import.h> $<INSTALL_INTERFACE:include/corona/bootstrap/geoservice/import.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/bootstrap/imrenderer/rhi/class_immediate_gui_bridge.h> $<INSTALL_INTERFACE:include/corona/bootstrap/imrenderer/rhi/class_immediate_gui_bridge.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/bootstrap/imrenderer/rhi/class_renderer.h> $<INSTALL_INTERFACE:include/corona/bootstrap/imrenderer/rhi/class_renderer.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/bootstrap/imrenderer/class_generic_renderer.h> $<INSTALL_INTERFACE:include/corona/bootstrap/imrenderer/class_generic_renderer.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/bootstrap/imrenderer/class_extendable_renderer.h> $<INSTALL_INTERFACE:include/corona/bootstrap/imrenderer/class_extendable_renderer.h>
   PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/geoservice/import.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/geoservice/plugin.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/geoservice/class_config.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/geoservice/class_mapping_manager_engine.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/geoservice/class_geotilefetchermap.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/geoservice/class_geotiledreplymap.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/rhi/class_renderer.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/rhi/class_immediate_gui_bridge.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/class_generic_renderer.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/class_extendable_renderer.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdebugenv_qml.qrc
 )
 
 target_link_libraries(${PROJECT_NAME}
   PUBLIC
+    corona::corona
+    corona::imgui
+    corona::imterm
     floppy::floppy
     Qt::Core
     Qt::Gui
     Qt::Quick
-    Qt::Location
-    Qt::Positioning
-    Qt::Network
   PRIVATE
-    Qt::LocationPrivate
-    Qt::PositioningPrivate
+    Qt::GuiPrivate
+    Qt::QuickPrivate
     magic_enum::magic_enum
-    reflect-cpp::reflect-cpp
 )
 
-target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>$<INSTALL_INTERFACE:include> PRIVATE src)
-cmake_print_properties(TARGETS ${PROJECT_NAME} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES)
+target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>$<INSTALL_INTERFACE:include> PRIVATE src)
 
-if(CBG_BUILD_SHARED_LIBS)
-  message(STATUS "[${PROJECT_NAME}] adding shared export symbols: CBG_LIBRARY")
-  target_compile_definitions(${PROJECT_NAME} PUBLIC -DCBG_LIBRARY=1)
+if(CBI_BUILD_SHARED_LIBS)
+  message(STATUS "[${PROJECT_NAME}] adding shared export symbols: CBI_LIBRARY")
+  target_compile_definitions(${PROJECT_NAME} PUBLIC -DCBI_LIBRARY=1)
 else()
-  message(STATUS "[${PROJECT_NAME}] adding static export symbols: CBG_STATIC_LIBRARY")
-  target_compile_definitions(${PROJECT_NAME} PUBLIC -DCBG_STATIC_LIBRARY=1)
+  message(STATUS "[${PROJECT_NAME}] adding static export symbols: CBI_STATIC_LIBRARY")
+  target_compile_definitions(${PROJECT_NAME} PUBLIC -DCBI_STATIC_LIBRARY=1)
 endif()
 
 target_compile_definitions(${PROJECT_NAME}
   PUBLIC
-    -DCBG_TARGET_NAME="${PROJECT_NAME}"
-    -DCBG_PROJECT_VERSION_MAJOR=${PROJECT_VERSION_MAJOR}
-    -DCBG_PROJECT_VERSION_MINOR=${PROJECT_VERSION_MINOR}
-    -DCBG_PROJECT_VERSION_PATCH=${PROJECT_VERSION_PATCH}
+    -DCBI_TARGET_NAME="${PROJECT_NAME}"
+    -DCBI_PROJECT_VERSION_MAJOR=${PROJECT_VERSION_MAJOR}
+    -DCBI_PROJECT_VERSION_MINOR=${PROJECT_VERSION_MINOR}
+    -DCBI_PROJECT_VERSION_PATCH=${PROJECT_VERSION_PATCH}
 )
 
 if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
@@ -117,7 +112,19 @@ if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
   )
 endif()
 
-if(CBG_DEV)
+qt6_add_shaders(${PROJECT_NAME} "imgui_shaders"
+  PREFIX
+    "/"
+  BASE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+  FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/imgui.vert
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/imgui.frag
+  OUTPUT_TARGETS CBI_OUTPUT_TARGETS
+)
+message(STATUS "[${PROJECT_NAME}] shaders: ${QDE_OUTPUT_TARGETS}")
+
+if(CBI_DEV)
   add_subdirectory(bin)
 endif()
 
@@ -133,7 +140,7 @@ set(CONFIG_TARGETS_FILE "${PROJECT_NAME}-config-targets.cmake")
 set(CONFIG_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake")
 set(INSTALL_EXPORT_DESTINATION_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
 
-install(TARGETS ${PROJECT_NAME} ${QDE_OUTPUT_TARGETS}
+install(TARGETS ${PROJECT_NAME} ${CBI_OUTPUT_TARGETS}
   EXPORT ${PROJECT_NAME}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -141,9 +148,9 @@ install(TARGETS ${PROJECT_NAME} ${QDE_OUTPUT_TARGETS}
   INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
-install(DIRECTORY $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona> $<INSTALL_INTERFACE:include/corona> ; DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(DIRECTORY $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/qdebugenv> $<INSTALL_INTERFACE:include/qdebugenv> ; DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 export(
-  TARGETS ${PROJECT_NAME} ${QDE_OUTPUT_TARGETS}
+  TARGETS ${PROJECT_NAME} ${CBI_OUTPUT_TARGETS}
   NAMESPACE ${PROJECT_NAMESPACE}
   FILE "${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_TARGETS_FILE}"
 )
@@ -157,4 +164,4 @@ write_basic_package_version_file(${CONFIG_VERSION_FILE} COMPATIBILITY AnyNewerVe
 install(FILES ${PROJECT_CONFIG_FILE} ${CONFIG_VERSION_FILE} DESTINATION ${INSTALL_EXPORT_DESTINATION_DIR})
 
 message(STATUS "[${PROJECT_NAME}] configuring ${PROJECT_NAME} done!")
-unset(CBG_DEV CACHE)
+unset(TESTS CACHE)
