@@ -27,7 +27,13 @@ namespace corona::modules::qmlbind
     verbose
   };
 
-  template <auto Verbosity = verbosity::verbose>
+  #ifdef FL_DEBUG
+  # define __qmlbind_implicit_verbosity_level__ verbosity::verbose
+  #else // FL_DEBUG
+  # define __qmlbind_implicit_verbosity_level__ verbosity::quiet
+  #endif // FL_DEBUG
+
+  template <auto Verbosity = __qmlbind_implicit_verbosity_level__>
   requires std::is_same_v<decltype(Verbosity), verbosity>
   class module
   {
