@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <qurl.h>
+#include <qqml.h>
 #include <qqmlmoduleregistration.h>
 #include <fmt/color.h>
 #include "detail/export.h"
@@ -28,9 +29,9 @@ namespace corona::modules::qmlbind
   };
 
   #ifdef FL_DEBUG
-  # define __qmlbind_implicit_verbosity_level__ verbosity::verbose
+  # define __qmlbind_implicit_verbosity_level__ verbosity::verbose // NOLINT(*-reserved-identifier)
   #else // FL_DEBUG
-  # define __qmlbind_implicit_verbosity_level__ verbosity::quiet
+  # define __qmlbind_implicit_verbosity_level__ verbosity::quiet // NOLINT(*-reserved-identifier)
   #endif // FL_DEBUG
 
   template <auto Verbosity = __qmlbind_implicit_verbosity_level__>

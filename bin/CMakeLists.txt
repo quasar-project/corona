@@ -96,14 +96,13 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/class_logger.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/app.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/app_p.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/app.qml.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/class_dirs_wrapper.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/qml/qmlreg.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/class_reveal.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/class_theme.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/values.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/qml/class_theme_wrapper.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/terminal_commands.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/map/qml/qmlreg.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/map/class_map_view_manager.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/map/class_map_memento.cc
     ${CORONA_OUTPUT_SET}

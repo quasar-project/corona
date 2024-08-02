@@ -48,6 +48,7 @@ namespace corona::standalone::app
 
   auto Corona::run_scene(string_view path) -> int {
     Corona::load_plugins();
+    this->register_qml_types();
     llog::debug("Corona: preparing to run quick scene");
     auto const u = detail::qml_url(path);
     llog::trace("Corona: qml root url is set to `{}`", u.toString());

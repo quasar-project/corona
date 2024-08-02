@@ -11,7 +11,6 @@ namespace qml
     qmlRegisterModule("io.corona.standalone.theme", 1, 0);
     qmlRegisterType<corona::standalone::gui::theme::qml::CThemeWrapper>("io.corona.standalone.theme", 1, 0, "ThemeWrapper");
     qmlRegisterType<corona::standalone::gui::theme::CCircularReveal>("io.corona.standalone.theme", 1, 0, "CircularReveal");
-    qmlRegisterType(QUrl("qrc:/qml/theme/CircularChanger.qml"), "io.corona.standalone.theme", 1, 0, "CircularChanger");
     return true;
   }();
 } // namespace qml

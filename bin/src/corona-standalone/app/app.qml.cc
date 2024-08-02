@@ -1,11 +1,18 @@
-#include <qqml.h>
-#include <fmt/core.h>
-#include <corona/modules/qmlbind/qmlbind.h>
+#include <corona-standalone/app/app.hh>
 
-namespace qml
+#include <corona/modules/qmlbind/qmlbind.h>
+#include <corona-standalone/gui/theme/qml/class_theme_wrapper.hh>
+
+namespace corona::standalone::app
 {
-  [[maybe_unused]] volatile auto register_misc_ = []() { // NOLINT(*-identifier-naming)
-    namespace q = ::corona::modules::qmlbind;
+  auto Corona::register_qml_types() -> void {
+    namespace q = modules::qmlbind;
+
+    llog::debug("Corona: registering qml types");
+
+    q::module("io.corona.standalone.layouts")
+      .qml_file("qrc:/qml/layouts/ApplicationMenuBar.qml");
+
     q::module("io.corona.standalone.map")
       .qml_file("qrc:/qml/map/MapView.qml");
 
@@ -17,6 +24,9 @@ namespace qml
 
     q::module("io.corona.standalone.ui")
       .qml_file("qrc:/qml/ui/SimpleCheckableToolButton.qml");
-    return true;
-  }();
-} // namespace qml
+
+    q::module("io.corona.standalone.theme")
+      .qml_file("qrc:/qml/theme/CircularChanger.qml");
+  }
+} // namespace corona::standalone::app
+

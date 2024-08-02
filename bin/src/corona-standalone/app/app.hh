@@ -39,6 +39,7 @@ namespace corona::standalone
       [[nodiscard]] auto imgui_mut() -> modules::imgui_renderer::CExtendableRenderer&;
 
      private:
+      auto register_qml_types() -> void;
       static auto load_plugins() -> void;
 
       struct impl;
