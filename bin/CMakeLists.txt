@@ -69,6 +69,7 @@ qt_add_qml_module(${CORONA_STANDALONE_NAME}
     qml/map/MapStateMachine.qml
     qml/map/MapToolbarButton.qml
     qml/map/MapToolbar.qml
+    qml/map/CoordinateTooltip.qml
     qml/layouts/ApplicationMenuBar.qml
     qml/ui/SimpleCheckableToolButton.qml
   RESOURCES

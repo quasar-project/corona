@@ -101,10 +101,19 @@ Map {
     }
 
     MouseArea {
-        id: map_mouse_area
+        id: mapMouseArea
         hoverEnabled: true
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
+    }
+
+    MapModule.CoordinateTooltip {
+        anchors {
+            left: parent.left
+            bottom: parent.bottom
+        }
+        map: map
+        mouseArea: mapMouseArea
     }
 
     MapUI.StateMachine {

@@ -21,7 +21,8 @@ namespace corona::standalone::app
 
     q::module("io.corona.standalone.map")
       .singleton(this->impl_->map_view_manager.ptr_mut(), "MapManager")
-      .qml_file("qrc:/qml/map/MapView.qml");
+      .qml_file("qrc:/qml/map/MapView.qml")
+      .qml_file("qrc:/qml/map/CoordinateTooltip.qml");
 
     q::module("io.corona.standalone.map.ui")
       .qml_file("qrc:/qml/map/MapModeButton.qml")
