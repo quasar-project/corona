@@ -105,9 +105,14 @@ Map {
         hoverEnabled: true
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onPressed: (event) => {
+            if(event.button === Qt.RightButton)
+                mapContextMenu.popup(event.x, event.y)
+        }
     }
 
     MapModule.CoordinateTooltip {
+        id: coordinateTooltip
         anchors {
             left: parent.left
             bottom: parent.bottom
@@ -137,6 +142,29 @@ Map {
             bottom: parent.bottom
             right: parent.right
             margins: 12
+        }
+    }
+
+    Menu {
+        id: mapContextMenu
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+        Action {
+            id: zoomIn
+            text: "Увеличить"
+            onTriggered: map.zoomLevel = Math.round(map.zoomLevel + 1)
+        }
+
+        Action {
+            id: zoomOut
+            text: "Уменьшить"
+            onTriggered: map.zoomLevel = Math.round(map.zoomLevel - 1)
+        }
+
+        Action {
+            id: copyCoordinates
+            text: "Скопировать координаты"
+            //onTriggered:
         }
     }
 }
