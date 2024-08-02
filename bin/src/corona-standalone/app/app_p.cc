@@ -21,7 +21,7 @@ namespace corona::standalone::app
 
   ImGUIData::ImGUIData(CLogger& logger)
     : terminal_cmd(std::make_unique<gui::immediate::custom_command_struct>())
-    , terminal(std::make_unique<vendored::imterm::terminal<gui::immediate::terminal_commands>>(*this->terminal_cmd, "Debug console"))
+    , terminal(std::make_unique<modules::extern_::imterm::terminal<gui::immediate::terminal_commands>>(*this->terminal_cmd, "Debug console"))
   {
     this->terminal->get_terminal_helper()->set_pattern("[%X] (%n) [%^%l%$] %^%v%$");
     logger->sinks().push_back(this->terminal->get_terminal_helper());
@@ -61,8 +61,8 @@ namespace corona::standalone::app
 
   auto Corona::impl::configure_imgui(::QQmlApplicationEngine* engine) -> void {
     llog::trace("Corona: configuring imgui");
-    this->imgui.imgui = dynamic_cast<bootstrap::imrenderer::CExtendableRenderer*>(
-      bootstrap::imrenderer::CExtendableRenderer::from_engine(engine)
+    this->imgui.imgui = dynamic_cast<modules::imgui_renderer::CExtendableRenderer*>(
+      modules::imgui_renderer::CExtendableRenderer::from_engine(engine)
     );
     this->imgui.imgui->style_default();
     *this->imgui.imgui += [this](){ this->imgui.terminal->show(); };
