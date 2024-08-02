@@ -26,7 +26,6 @@ namespace corona::standalone::app
 
     this->impl_->emplace_themes();
     llog::debug("Corona: initialized {}", fl::source_location::current().function_name());
-    this->impl_->register_qml_singletons();
     llog::debug("Corona: initialization complete");
   }
 

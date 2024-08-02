@@ -45,7 +45,6 @@ namespace corona::standalone
 
       auto emplace_themes() -> void;
       auto configure_imgui(::QQmlApplicationEngine* engine) -> void;
-      auto register_qml_singletons() -> void;
 
       CLogger& logger; // NOLINT(*-avoid-const-or-ref-data-members)
       ImGUIData imgui;

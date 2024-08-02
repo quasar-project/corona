@@ -80,9 +80,25 @@ namespace corona::modules::qmlbind
       }();
       if constexpr(Verbosity == verbosity::verbose)
         fmt::println("qmlbind: \tregistering type {} (qobject)",
-          fmt::styled(component_name, fmt::fg(fmt::terminal_color::magenta) | fmt::emphasis::bold)
+          fmt::styled(component_name, fmt::fg(fmt::terminal_color::green) | fmt::emphasis::bold)
         );
       ::qmlRegisterType<T>(this->name_.c_str(), this->version_.major(), this->version_.minor(), component_name.c_str());
+      return *this;
+    }
+
+    template <std::derived_from<::QObject> T>
+    auto singleton(T* instance, option<std::string_view> name = none) -> module& {
+      auto const component_name = [&name]() -> std::string {
+        if(name)
+          return std::string(*name);
+        auto const meta_name = detail::strip_namespace(T::staticMetaObject.className());
+        return detail::strip_hungarian_prefix(meta_name);
+      }();
+      if constexpr(Verbosity == verbosity::verbose)
+        fmt::println("qmlbind: \tregistering type {} (singleton, cannot be shared)",
+          fmt::styled(component_name, fmt::fg(fmt::terminal_color::magenta) | fmt::emphasis::bold)
+        );
+      ::qmlRegisterSingletonInstance(this->name_.c_str(), this->version_.major(), this->version_.minor(), component_name.c_str(), instance);
       return *this;
     }
 

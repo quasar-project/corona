@@ -68,11 +68,4 @@ namespace corona::standalone::app
     *this->imgui.imgui += [this](){ this->imgui.terminal->show(); };
     llog::trace("Corona: imgui configured successfully");
   }
-
-  auto Corona::impl::register_qml_singletons() -> void {
-    llog::trace("Corona: registering QML singletons");
-    ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Directories", this->app_dirs.ptr_mut());
-    ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Theme", this->theme.ptr_mut());
-    ::qmlRegisterSingletonInstance("io.corona.standalone.map", 1, 0, "MapManager", this->map_view_manager.ptr_mut());
-  }
 } // namespace corona::standalone::app
