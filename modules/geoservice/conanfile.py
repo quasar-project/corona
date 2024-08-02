@@ -34,7 +34,7 @@ class CoronaBootstrapGeoserviceRecipe(ConanFile):
         return "20" 
 
     def requirements(self):
-        self.requires("floppy/[^1.2.4]", transitive_headers=True, transitive_libs=True)
+        self.requires("floppy/[^1.3.0]", transitive_headers=True, transitive_libs=True)
         self.requires("magic_enum/[^0.9.0]")
         self.requires("reflect-cpp/0.11.1")
 

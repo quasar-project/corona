@@ -7,7 +7,7 @@
 
 /* fwd */
 class QQuickWindow;
-namespace floppy::filesystem { class application_dirs; } // namespace floppy::filesystem
+namespace floppy { class application_dirs; } // namespace floppy
 namespace corona::modules::imgui_renderer { class CExtendableRenderer; } // namespace corona::modules::imgui_renderer
 namespace corona::standalone
 {
@@ -29,8 +29,8 @@ namespace corona::standalone
       [[nodiscard]] auto logger() const -> CLogger const&;
       [[nodiscard]] auto logger_mut() -> CLogger&;
 
-      [[nodiscard]] auto dirs() const -> fl::filesystem::application_dirs const&;
-      [[nodiscard]] auto dirs_mut() -> fl::filesystem::application_dirs&;
+      [[nodiscard]] auto dirs() const -> fl::application_dirs const&;
+      [[nodiscard]] auto dirs_mut() -> fl::application_dirs&;
 
       [[nodiscard]] auto theme() const -> gui::theme::qml::CThemeWrapper const&;
       [[nodiscard]] auto theme_mut() -> gui::theme::qml::CThemeWrapper&;
@@ -42,7 +42,7 @@ namespace corona::standalone
       static auto load_plugins() -> void;
 
       struct impl;
-      fl::traits::pimpl<struct impl> impl_;
+      fl::pimpl<struct impl> impl_;
     };
   } // namespace app
 } // namespace corona::standalone

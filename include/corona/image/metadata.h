@@ -15,7 +15,7 @@ namespace corona::image
 
   /// \brief Image metadata generic class.
   /// \details Provides functions to read metadata from different formats: EXIF, JSON, etc.
-  class Metadata : public fl::traits::formattable<Metadata, char>
+  class Metadata : public fl::formattable<Metadata, char>
   {
    public:
     /// \brief Exif decode options.
