@@ -87,6 +87,8 @@ qt_add_qml_module(${CORONA_STANDALONE_NAME}
     resources/icons/folder-media.svg
     resources/icons/folder-settings.svg
     resources/icons/layers.svg
+    resources/icons/zoom_in.svg
+    resources/icons/zoom_out.svg
   RESOURCE_PREFIX "/"
   NO_RESOURCE_TARGET_PATH
 )

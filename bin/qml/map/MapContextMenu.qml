@@ -33,12 +33,14 @@ Menu {
     Action {
         id: zoomIn
         text: "Увеличить"
+        icon.source: "qrc:/resources/icons/zoom_in.svg"
         onTriggered: map.zoomLevel = Math.round(map.zoomLevel + 1)
     }
 
     Action {
         id: zoomOut
         text: "Уменьшить"
+        icon.source: "qrc:/resources/icons/zoom_out.svg"
         onTriggered: map.zoomLevel = Math.round(map.zoomLevel - 1)
     }
 }
