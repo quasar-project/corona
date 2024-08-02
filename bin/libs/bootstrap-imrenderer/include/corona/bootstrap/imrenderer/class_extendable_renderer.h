@@ -4,10 +4,12 @@
 #include <functional>
 #include "detail/export.h"
 #include "class_generic_renderer.h"
-#include <corona/imgui/interface_drawable.h>
+#include <corona/modules/imgui_wrapper/drawable.h>
 
 namespace corona::bootstrap::imrenderer
 {
+  // todo: rm
+  using namespace modules;
   class CORONA_BOOTSTRAP_IMRENDERER_API CExtendableRenderer : public CGenericRenderer // NOLINT(*-special-member-functions)
   {
     Q_OBJECT

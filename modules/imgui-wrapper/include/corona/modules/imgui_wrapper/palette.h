@@ -95,7 +95,7 @@ namespace corona::modules::imgui
     {}
 
     [[nodiscard]] constexpr auto operator[](color const col) const -> vec4 const& {
-      return this->m_colors[static_cast<usize>(col)];
+      return this->colors_[static_cast<usize>(col)];
     }
 
     [[nodiscard]] constexpr auto retrieve(color const col) const -> vec4 const& {
@@ -123,7 +123,7 @@ namespace corona::modules::imgui
     explicit style(palette const& p, style::roundings const& r) noexcept {
       using enum palette::color;
 
-      auto& ref = sys::GetStyle();
+      auto& ref = extern_::imgui::GetStyle();
       ref.TabRounding = r.tab;
       ref.ScrollbarRounding = r.scrollbar;
       ref.WindowRounding = r.window;

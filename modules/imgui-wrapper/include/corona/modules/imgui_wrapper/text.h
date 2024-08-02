@@ -1,6 +1,7 @@
 #pragma once
 
 #include "detail/export.h"
+#include "palette.h"
 
 namespace corona::modules::imgui
 {

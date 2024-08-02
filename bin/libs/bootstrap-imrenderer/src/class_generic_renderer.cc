@@ -9,7 +9,12 @@
 #include <corona/bootstrap/imrenderer/rhi/class_renderer.h>
 #include <corona/bootstrap/imrenderer/rhi/class_immediate_gui_bridge.h>
 #include <corona/modules/extern/imgui/imgui.h>
-#include <corona/imgui/all.h>
+#include <corona/modules/imgui_wrapper/text.h>
+#include <corona/modules/imgui_wrapper/window.h>
+#include <corona/modules/imgui_wrapper/collapsing_header.h>
+
+// todo: rm
+using namespace corona::modules;
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
 # include <qsgrendernode.h>
@@ -162,21 +167,21 @@ namespace corona::bootstrap::imrenderer
     using enum imgui::palette::color;
 
     auto& io = ImGui::GetIO();
-    ImGui::Begin("Scenegraph metrics", &this->impl_->show_metrics);
-    if(this->impl_->graphics_info) {
-      auto const info = ::GraphicsInfo::from_graphics_info(*this->impl_->graphics_info);
-      imgui::debug_field(imgui::default_palette[green], "Backend", "{}", info.backend);
-      imgui::debug_field(imgui::default_palette[purple], "Version", "{}", info.version);
-      imgui::debug_field(imgui::default_palette[purple], "Profile", "{}", info.profile);
-      imgui::debug_field(imgui::default_palette[comment], "Renderable type", "{}", info.renderable_type);
-      imgui::debug_field(imgui::default_palette[comment], "Shader compilation type", "{}", info.shader_compilation_type);
-      imgui::debug_field(imgui::default_palette[comment], "Shader source type", "{}", info.shader_source_type);
-      imgui::debug_field(imgui::default_palette[purple], "Shader type", "{}", info.shader_type);
-    } else
-      imgui::text(imgui::default_palette[red], "No graphics info available");
-    imgui::separator();
-    imgui::debug_field(imgui::default_palette[comment], "Framerate", "{:.1f} FPS ({:.5f} ms/frame)", io.Framerate, 1'000.0F / io.Framerate);
-    ImGui::End();
+    imgui::window("Scenegraph metrics", &this->impl_->show_metrics) and [&, this]{
+        if(this->impl_->graphics_info) {
+          auto const info = ::GraphicsInfo::from_graphics_info(*this->impl_->graphics_info);
+          imgui::table_entry(imgui::default_palette[green], "Backend", "{}", info.backend);
+          imgui::table_entry(imgui::default_palette[purple], "Version", "{}", info.version);
+          imgui::table_entry(imgui::default_palette[purple], "Profile", "{}", info.profile);
+          imgui::table_entry(imgui::default_palette[comment], "Renderable type", "{}", info.renderable_type);
+          imgui::table_entry(imgui::default_palette[comment], "Shader compilation type", "{}", info.shader_compilation_type);
+          imgui::table_entry(imgui::default_palette[comment], "Shader source type", "{}", info.shader_source_type);
+          imgui::table_entry(imgui::default_palette[purple], "Shader type", "{}", info.shader_type);
+        } else
+          imgui::text(imgui::default_palette[red], "No graphics info available");
+        imgui::separator();
+        imgui::table_entry(imgui::default_palette[comment], "Framerate", "{:.1f} FPS ({:.5f} ms/frame)", io.Framerate, 1'000.0F / io.Framerate);
+      };
   }
 
   auto CGenericRenderer::create_custom_renderer() -> CRhiImmediateGuiCustomRenderer* {
