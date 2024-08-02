@@ -65,7 +65,12 @@ qt_add_qml_module(${CORONA_STANDALONE_NAME}
     qml/Main.qml
     qml/theme/CircularChanger.qml
     qml/map/MapView.qml
+    qml/map/MapModeButton.qml
+    qml/map/MapStateMachine.qml
+    qml/map/MapToolbarButton.qml
+    qml/map/MapToolbar.qml
     qml/layouts/ApplicationMenuBar.qml
+    qml/ui/SimpleCheckableToolButton.qml
   RESOURCES
     resources/icon.svg
     resources/icon.png
@@ -80,6 +85,7 @@ qt_add_qml_module(${CORONA_STANDALONE_NAME}
     resources/icons/folder.svg
     resources/icons/folder-media.svg
     resources/icons/folder-settings.svg
+    resources/icons/layers.svg
   RESOURCE_PREFIX "/"
   NO_RESOURCE_TARGET_PATH
 )
