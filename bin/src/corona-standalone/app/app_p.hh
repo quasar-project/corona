@@ -33,9 +33,9 @@ namespace corona::standalone
     {
       explicit ImGUIData(CLogger& logger);
 
-      modules::imgui_renderer::CExtendableRenderer* imgui{nullptr};
+      imgui_renderer::CExtendableRenderer* imgui{nullptr};
       std::unique_ptr<gui::immediate::custom_command_struct> terminal_cmd;
-      std::unique_ptr<modules::extern_::imterm::terminal<gui::immediate::terminal_commands>> terminal;
+      std::unique_ptr<extern_::imterm::terminal<gui::immediate::terminal_commands>> terminal;
     };
 
     struct Corona::impl

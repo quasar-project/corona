@@ -35,8 +35,8 @@ namespace corona::standalone
       [[nodiscard]] auto theme() const -> gui::theme::qml::CThemeWrapper const&;
       [[nodiscard]] auto theme_mut() -> gui::theme::qml::CThemeWrapper&;
 
-      [[nodiscard]] auto imgui() const -> modules::imgui_renderer::CExtendableRenderer const&;
-      [[nodiscard]] auto imgui_mut() -> modules::imgui_renderer::CExtendableRenderer&;
+      [[nodiscard]] auto imgui() const -> imgui_renderer::CExtendableRenderer const&;
+      [[nodiscard]] auto imgui_mut() -> imgui_renderer::CExtendableRenderer&;
 
      private:
       auto register_qml_types() -> void;

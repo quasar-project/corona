@@ -6,11 +6,11 @@
 
 namespace corona
 {
-  namespace bootstrap {} // namespace bootstrap
+  namespace modules {} // namespace modules
   namespace standalone
   {
-    using namespace ::floppy::types;
-    using namespace ::corona::bootstrap;
+    using namespace ::fl::types;
+    using namespace modules;
     namespace llog = ::floppy::log;
   } // namespace standalone
 } // namespace corona
