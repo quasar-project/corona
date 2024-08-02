@@ -8,7 +8,7 @@
 #include <qqmlapplicationengine.h>
 #include <magic_enum/magic_enum.hpp>
 #include <floppy/directories.h>
-#include <corona/bootstrap/geoservice/import.h>
+#include <corona/modules/geoservice/import.h>
 
 namespace me = magic_enum;
 namespace corona::standalone::app
@@ -68,7 +68,7 @@ namespace corona::standalone::app
 
   auto Corona::load_plugins() -> void {
     llog::debug("Corona: loading plugins");
-    if(not geoservice::import_plugin())
+    if(not modules::geoservice::import_plugin())
       fl::panic("Corona: failed to load geoservice plugin");
   }
 
@@ -78,6 +78,6 @@ namespace corona::standalone::app
   auto Corona::dirs_mut() -> fl::filesystem::application_dirs& { return **this->impl_->app_dirs; }
   auto Corona::theme() const -> gui::theme::qml::CThemeWrapper const& { return *this->impl_->theme; }
   auto Corona::theme_mut() -> gui::theme::qml::CThemeWrapper& { return *this->impl_->theme; }
-  auto Corona::imgui() const -> bootstrap::imrenderer::CExtendableRenderer const& { return *this->impl_->imgui.imgui; }
-  auto Corona::imgui_mut() -> bootstrap::imrenderer::CExtendableRenderer& { return *this->impl_->imgui.imgui; }
+  auto Corona::imgui() const -> modules::imgui_renderer::CExtendableRenderer const& { return *this->impl_->imgui.imgui; }
+  auto Corona::imgui_mut() -> modules::imgui_renderer::CExtendableRenderer& { return *this->impl_->imgui.imgui; }
 } // namespace corona::standalone::app
