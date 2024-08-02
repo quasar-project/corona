@@ -30,6 +30,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # -- dependencies --
 add_subdirectory(modules/extern/imgui)
 add_subdirectory(modules/extern/imterm)
+add_subdirectory(modules/imgui-wrapper)
 find_package(floppy REQUIRED)
 find_package(reflect-cpp REQUIRED)
 find_package(magic_enum REQUIRED)

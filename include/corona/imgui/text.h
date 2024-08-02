@@ -12,7 +12,7 @@ namespace corona::imgui
     };
 
     template <typename... Args>
-    inline text(fmt::string_view const format, Args&&... args) {
+    inline explicit text(fmt::string_view const format, Args&&... args) {
       sys::TextUnformatted(fmt::format(fmt::runtime(format), std::forward<Args>(args)...).c_str());
     }
 
@@ -63,5 +63,4 @@ namespace corona::imgui
       text(col, format, std::forward<Args>(args)...);
     }
   };
-
 } // namespace corona::imgui
