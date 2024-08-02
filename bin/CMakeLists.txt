@@ -65,6 +65,7 @@ qt_add_qml_module(${CORONA_STANDALONE_NAME}
     qml/Main.qml
     qml/theme/CircularChanger.qml
     qml/map/MapView.qml
+    qml/map/MapModeButton.qml
     qml/layouts/ApplicationMenuBar.qml
     qml/ui/SimpleCheckableToolButton.qml
   RESOURCES
