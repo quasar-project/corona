@@ -101,11 +101,28 @@ Map {
     }
 
     MouseArea {
-        id: map_mouse_area
+        id: mapMouseArea
         hoverEnabled: true
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onPressed: (event) => {
+            if(event.button === Qt.RightButton) {
+                mapContextMenu.mouseCoordinates = Qt.point(event.x, event.y)
+                mapContextMenu.popup(event.x, event.y)
+            }
+        }
     }
+
+    /// note: removed because it's not needed that much. menu works just fine
+    // MapModule.CoordinateTooltip {
+    //     id: coordinateTooltip
+    //     anchors {
+    //         left: parent.left
+    //         bottom: parent.bottom
+    //     }
+    //     map: map
+    //     mouseArea: mapMouseArea
+    // }
 
     MapUI.StateMachine {
         id: mapStateMachine
@@ -129,5 +146,10 @@ Map {
             right: parent.right
             margins: 12
         }
+    }
+
+    MapUI.MapContextMenu {
+        id: mapContextMenu
+        map: map
     }
 }

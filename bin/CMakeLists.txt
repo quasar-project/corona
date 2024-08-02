@@ -69,6 +69,7 @@ qt_add_qml_module(${CORONA_STANDALONE_NAME}
     qml/map/MapStateMachine.qml
     qml/map/MapToolbarButton.qml
     qml/map/MapToolbar.qml
+    qml/map/MapContextMenu.qml
     qml/layouts/ApplicationMenuBar.qml
     qml/ui/SimpleCheckableToolButton.qml
   RESOURCES
@@ -86,6 +87,8 @@ qt_add_qml_module(${CORONA_STANDALONE_NAME}
     resources/icons/folder-media.svg
     resources/icons/folder-settings.svg
     resources/icons/layers.svg
+    resources/icons/zoom_in.svg
+    resources/icons/zoom_out.svg
   RESOURCE_PREFIX "/"
   NO_RESOURCE_TARGET_PATH
 )
@@ -98,6 +101,7 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/app_p.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/app.qml.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/class_dirs_wrapper.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/class_qmlutils.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/class_reveal.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/class_theme.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/values.cc
