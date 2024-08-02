@@ -75,8 +75,8 @@ target_link_libraries(${PROJECT_NAME}
   PUBLIC
     corona::corona
     corona::extern_imgui
+    corona::extern_imterm
     corona::imgui_wrapper
-    corona::imterm
     floppy::floppy
     Qt::Core
     Qt::Gui

@@ -38,7 +38,6 @@ find_package(magic_enum REQUIRED)
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 find_package(Boost REQUIRED COMPONENTS system headers) # todo: remove
 find_package(Qt6 REQUIRED COMPONENTS Core Network)
-add_library(${PROJECT_NAMESPACE}imterm ALIAS imterm)
 
 add_library(${PROJECT_NAME})
 add_library(${PROJECT_NAMESPACE}${PROJECT_NAME} ALIAS ${PROJECT_NAME})
@@ -68,7 +67,6 @@ target_link_libraries(${PROJECT_NAME}
   PUBLIC
     floppy::floppy
   PRIVATE
-    corona::extern_imgui
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     Boost::system

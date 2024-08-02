@@ -26,7 +26,7 @@
 #include <spdlog/spdlog.h>
 #include <corona/modules/extern/imgui/imgui.h>
 #include <corona/modules/extern/imgui/imgui_internal.h>
-#include "misc.hpp"
+#include "misc.h"
 
 namespace ImTerm {
   namespace details {

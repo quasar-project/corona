@@ -111,7 +111,7 @@ target_link_libraries(${CORONA_STANDALONE_NAME}
     corona::geoservice
     corona::imrenderer
     corona::extern_imgui
-    corona::imterm
+    corona::extern_imterm
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     tomlplusplus::tomlplusplus

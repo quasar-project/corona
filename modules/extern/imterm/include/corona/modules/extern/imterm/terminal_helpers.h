@@ -21,7 +21,7 @@
 #include <set>
 #include <array>
 
-#include "terminal.hpp"
+#include "terminal.h"
 #include <spdlog/common.h>
 #include <spdlog/formatter.h>
 #include <spdlog/pattern_formatter.h>

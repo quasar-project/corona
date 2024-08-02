@@ -24,8 +24,7 @@
 #include <optional>
 #include <array>
 #include <corona/modules/extern/imgui/imgui.h>
-
-#include "misc.hpp"
+#include "misc.h"
 
 namespace ImTerm {
   // argument passed to commands

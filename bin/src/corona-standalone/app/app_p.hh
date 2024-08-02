@@ -3,7 +3,7 @@
 #include <corona-standalone/app/app.hh>
 #include <corona-standalone/utility/formatters.hh>
 
-#include <corona/vendored/imterm.h>
+#include <corona/modules/extern/imterm/imterm.h>
 #include <corona/bootstrap/imrenderer/class_extendable_renderer.h>
 #include <corona-standalone/app/class_dirs_wrapper.hh>
 #include <corona-standalone/app/class_user_interface_logger.hh>
@@ -35,7 +35,7 @@ namespace corona::standalone
 
       bootstrap::imrenderer::CExtendableRenderer* imgui{nullptr};
       std::unique_ptr<gui::immediate::custom_command_struct> terminal_cmd;
-      std::unique_ptr<vendored::imterm::terminal<gui::immediate::terminal_commands>> terminal;
+      std::unique_ptr<modules::extern_::imterm::terminal<gui::immediate::terminal_commands>> terminal;
     };
 
     struct Corona::impl

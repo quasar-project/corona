@@ -8,7 +8,7 @@ project(imgui
   HOMEPAGE_URL "https://github.com/ocornut/imgui"
   LANGUAGES C CXX
 )
-set(PROJECT_NAMESPACE ${PROJECT_NAME}::)
+set(PROJECT_NAMESPACE corona::)
 
 include(CMakePrintHelpers)
 

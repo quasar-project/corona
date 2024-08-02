@@ -21,7 +21,7 @@ namespace corona::standalone::app
 
   ImGUIData::ImGUIData(CLogger& logger)
     : terminal_cmd(std::make_unique<gui::immediate::custom_command_struct>())
-    , terminal(std::make_unique<vendored::imterm::terminal<gui::immediate::terminal_commands>>(*this->terminal_cmd, "Debug console"))
+    , terminal(std::make_unique<modules::extern_::imterm::terminal<gui::immediate::terminal_commands>>(*this->terminal_cmd, "Debug console"))
   {
     this->terminal->get_terminal_helper()->set_pattern("[%X] (%n) [%^%l%$] %^%v%$");
     logger->sinks().push_back(this->terminal->get_terminal_helper());

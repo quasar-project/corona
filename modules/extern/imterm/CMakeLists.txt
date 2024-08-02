@@ -6,7 +6,7 @@ project(imterm
   VERSION 0.1.0
   LANGUAGES C CXX
 )
-set(PROJECT_NAMESPACE ${PROJECT_NAME}::)
+set(PROJECT_NAMESPACE corona::)
 
 include(CMakePrintHelpers)
 
@@ -17,7 +17,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 find_package(spdlog REQUIRED)
 
 add_library(${PROJECT_NAME} INTERFACE)
-add_library(${PROJECT_NAMESPACE}${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+add_library(corona::extern_imterm ALIAS ${PROJECT_NAME})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
   CXX_STANDARD 17
@@ -33,12 +33,16 @@ cmake_print_properties(TARGETS ${PROJECT_NAME} PROPERTIES
   POSITION_INDEPENDENT_CODE
 )
 
-target_include_directories(${PROJECT_NAME} INTERFACE
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>
+target_include_directories(${PROJECT_NAME}
+  INTERFACE
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(${PROJECT_NAME} INTERFACE spdlog::spdlog)
+target_link_libraries(${PROJECT_NAME}
+  INTERFACE
+    spdlog::spdlog
+    corona::extern_imgui
+)
 
 message(STATUS "[${PROJECT_NAME}] installing ${PROJECT_NAME} in namespace ${PROJECT_NAMESPACE}")
 include(GNUInstallDirs)
@@ -60,7 +64,7 @@ install(TARGETS ${PROJECT_NAME}
   INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
-install(DIRECTORY $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/imterm> $<INSTALL_INTERFACE:include/imterm> ; DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(DIRECTORY $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona> $<INSTALL_INTERFACE:include/corona> ; DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 export(TARGETS ${PROJECT_NAME} NAMESPACE ${PROJECT_NAMESPACE} FILE "${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_TARGETS_FILE}")
 install(EXPORT ${PROJECT_NAME}
   DESTINATION ${INSTALL_EXPORT_DESTINATION_DIR}

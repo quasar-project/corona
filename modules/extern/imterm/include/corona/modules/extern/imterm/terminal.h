@@ -25,11 +25,10 @@
 #include <utility>
 #include <optional>
 #include <array>
-#include <corona/modules/extern/imgui/imgui.h>
 #include <fmt/format.h>
-
-#include "utils.hpp"
-#include "misc.hpp"
+#include <corona/modules/extern/imgui/imgui.h>
+#include "utils.h"
+#include "misc.h"
 
 namespace ImTerm {
 
@@ -472,7 +471,7 @@ namespace ImTerm {
   };
 }
 
-#include "terminal.tpp"
+#include "terminal.inc"
 
 
 #endif //IMTERM_TERMINAL_HPP
