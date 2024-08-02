@@ -26,7 +26,6 @@ namespace corona::standalone::app
 
     this->impl_->emplace_themes();
     llog::debug("Corona: initialized {}", fl::source_location::current().function_name());
-    this->impl_->register_qml_singletons();
     llog::debug("Corona: initialization complete");
   }
 
@@ -48,6 +47,7 @@ namespace corona::standalone::app
 
   auto Corona::run_scene(string_view path) -> int {
     Corona::load_plugins();
+    this->register_qml_types();
     llog::debug("Corona: preparing to run quick scene");
     auto const u = detail::qml_url(path);
     llog::trace("Corona: qml root url is set to `{}`", u.toString());
@@ -78,6 +78,6 @@ namespace corona::standalone::app
   auto Corona::dirs_mut() -> fl::application_dirs& { return **this->impl_->app_dirs; }
   auto Corona::theme() const -> gui::theme::qml::CThemeWrapper const& { return *this->impl_->theme; }
   auto Corona::theme_mut() -> gui::theme::qml::CThemeWrapper& { return *this->impl_->theme; }
-  auto Corona::imgui() const -> modules::imgui_renderer::CExtendableRenderer const& { return *this->impl_->imgui.imgui; }
-  auto Corona::imgui_mut() -> modules::imgui_renderer::CExtendableRenderer& { return *this->impl_->imgui.imgui; }
+  auto Corona::imgui() const -> imgui_renderer::CExtendableRenderer const& { return *this->impl_->imgui.imgui; }
+  auto Corona::imgui_mut() -> imgui_renderer::CExtendableRenderer& { return *this->impl_->imgui.imgui; }
 } // namespace corona::standalone::app
