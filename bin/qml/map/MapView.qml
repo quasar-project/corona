@@ -5,6 +5,8 @@ import QtPositioning
 import QtQuick.Layouts
 
 import io.corona.standalone.app as App
+import io.corona.standalone.ui as UI
+import io.corona.standalone.map.ui as MapUI
 import io.corona.standalone.theme as ThemeModule
 import io.corona.standalone.map as MapModule
 import io.corona.rendering.immediate as RenderingModule
@@ -48,6 +50,7 @@ Map {
         MapModule.MapManager.state.coordinate = map.center
         MapModule.MapManager.state.zoomLevel = map.zoomLevel
     }
+
 
     Behavior on center { CoordinateAnimation { duration: 250; easing.type: Easing.InOutQuad } }
     Behavior on zoomLevel { NumberAnimation { duration: 250; easing.type: Easing.InOutCubic } }
@@ -98,22 +101,55 @@ Map {
     }
 
     MouseArea {
-        id: map_mouse_area
+        id: mapMouseArea
         hoverEnabled: true
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onPressed: (event) => {
+            if(event.button === Qt.RightButton) {
+                mapContextMenu.mouseCoordinates = Qt.point(event.x, event.y)
+                mapContextMenu.popup(event.x, event.y)
+            }
+        }
     }
 
-    ComboBox {
-        id: mapModeChanger
+    /// note: removed because it's not needed that much. menu works just fine
+    // MapModule.CoordinateTooltip {
+    //     id: coordinateTooltip
+    //     anchors {
+    //         left: parent.left
+    //         bottom: parent.bottom
+    //     }
+    //     map: map
+    //     mouseArea: mapMouseArea
+    // }
+
+    MapUI.StateMachine {
+        id: mapStateMachine
+        rulerButton: mapToolbar.rulerButton
+        tileLoaderButton: mapToolbar.tileLoaderButton
+    }
+
+    MapUI.Toolbar {
+        id: mapToolbar
+        mapStateMachine: mapStateMachine
+        anchors {
+            top: parent.top
+            left: parent.left
+            margins: 15
+        }
+    }
+
+    MapUI.MapModeButton {
         anchors {
             bottom: parent.bottom
             right: parent.right
             margins: 12
         }
-        flat: true
-        model: ["Схема", "Спутник", "Гибрид", "Авто"]
-        onActivated: (idx) => MapModule.MapManager.mapMode = idx
-        Component.onCompleted: this.currentIndex = MapModule.MapManager.mapMode
+    }
+
+    MapUI.MapContextMenu {
+        id: mapContextMenu
+        map: map
     }
 }

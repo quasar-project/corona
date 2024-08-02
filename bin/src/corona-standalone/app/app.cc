@@ -8,7 +8,7 @@
 #include <qqmlapplicationengine.h>
 #include <magic_enum/magic_enum.hpp>
 #include <floppy/directories.h>
-#include <corona/bootstrap/geoservice/import.h>
+#include <corona/modules/geoservice/import.h>
 
 namespace me = magic_enum;
 namespace corona::standalone::app
@@ -26,7 +26,6 @@ namespace corona::standalone::app
 
     this->impl_->emplace_themes();
     llog::debug("Corona: initialized {}", fl::source_location::current().function_name());
-    this->impl_->register_qml_singletons();
     llog::debug("Corona: initialization complete");
   }
 
@@ -48,6 +47,7 @@ namespace corona::standalone::app
 
   auto Corona::run_scene(string_view path) -> int {
     Corona::load_plugins();
+    this->register_qml_types();
     llog::debug("Corona: preparing to run quick scene");
     auto const u = detail::qml_url(path);
     llog::trace("Corona: qml root url is set to `{}`", u.toString());
@@ -68,16 +68,16 @@ namespace corona::standalone::app
 
   auto Corona::load_plugins() -> void {
     llog::debug("Corona: loading plugins");
-    if(not geoservice::import_plugin())
+    if(not modules::geoservice::import_plugin())
       fl::panic("Corona: failed to load geoservice plugin");
   }
 
   auto Corona::logger() const -> CLogger const& { return this->impl_->logger; }
   auto Corona::logger_mut() -> CLogger& { return this->impl_->logger; }
-  auto Corona::dirs() const -> fl::filesystem::application_dirs const& { return **this->impl_->app_dirs; }
-  auto Corona::dirs_mut() -> fl::filesystem::application_dirs& { return **this->impl_->app_dirs; }
+  auto Corona::dirs() const -> fl::application_dirs const& { return **this->impl_->app_dirs; }
+  auto Corona::dirs_mut() -> fl::application_dirs& { return **this->impl_->app_dirs; }
   auto Corona::theme() const -> gui::theme::qml::CThemeWrapper const& { return *this->impl_->theme; }
   auto Corona::theme_mut() -> gui::theme::qml::CThemeWrapper& { return *this->impl_->theme; }
-  auto Corona::imgui() const -> bootstrap::imrenderer::CExtendableRenderer const& { return *this->impl_->imgui.imgui; }
-  auto Corona::imgui_mut() -> bootstrap::imrenderer::CExtendableRenderer& { return *this->impl_->imgui.imgui; }
+  auto Corona::imgui() const -> imgui_renderer::CExtendableRenderer const& { return *this->impl_->imgui.imgui; }
+  auto Corona::imgui_mut() -> imgui_renderer::CExtendableRenderer& { return *this->impl_->imgui.imgui; }
 } // namespace corona::standalone::app

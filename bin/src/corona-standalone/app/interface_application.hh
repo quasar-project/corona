@@ -16,7 +16,7 @@ namespace corona::standalone::app
 
   template <std::derived_from<QCoreApplication> T>
   class IApplication : public T, // NOLINT(*-special-member-functions)
-                       public fl::traits::pin<IApplication<T>>
+                       public fl::pin
   {
    public:
     explicit IApplication(int& argc, char** argv)

@@ -31,8 +31,6 @@ find_package(Qt6
     ShaderTools
   REQUIRED
 )
-add_subdirectory(libs/bootstrap-geoservice)
-add_subdirectory(libs/bootstrap-imrenderer)
 
 # -- executable --
 qt_add_executable(${CORONA_STANDALONE_NAME})
@@ -67,7 +65,13 @@ qt_add_qml_module(${CORONA_STANDALONE_NAME}
     qml/Main.qml
     qml/theme/CircularChanger.qml
     qml/map/MapView.qml
+    qml/map/MapModeButton.qml
+    qml/map/MapStateMachine.qml
+    qml/map/MapToolbarButton.qml
+    qml/map/MapToolbar.qml
+    qml/map/MapContextMenu.qml
     qml/layouts/ApplicationMenuBar.qml
+    qml/ui/SimpleCheckableToolButton.qml
   RESOURCES
     resources/icon.svg
     resources/icon.png
@@ -82,6 +86,9 @@ qt_add_qml_module(${CORONA_STANDALONE_NAME}
     resources/icons/folder.svg
     resources/icons/folder-media.svg
     resources/icons/folder-settings.svg
+    resources/icons/layers.svg
+    resources/icons/zoom_in.svg
+    resources/icons/zoom_out.svg
   RESOURCE_PREFIX "/"
   NO_RESOURCE_TARGET_PATH
 )
@@ -92,14 +99,14 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/class_logger.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/app.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/app_p.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/app.qml.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/class_dirs_wrapper.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/qml/qmlreg.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/app/class_qmlutils.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/class_reveal.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/class_theme.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/values.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/theme/qml/class_theme_wrapper.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/terminal_commands.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/map/qml/qmlreg.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/map/class_map_view_manager.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/map/class_map_memento.cc
     ${CORONA_OUTPUT_SET}
@@ -109,9 +116,10 @@ target_link_libraries(${CORONA_STANDALONE_NAME}
   PRIVATE
     corona::corona
     corona::geoservice
-    corona::imrenderer
-    corona::imgui
-    corona::imterm
+    corona::extern_imgui
+    corona::extern_imterm
+    corona::imgui_renderer
+    corona::qmlbind
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     tomlplusplus::tomlplusplus

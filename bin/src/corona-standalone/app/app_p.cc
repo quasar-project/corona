@@ -21,7 +21,7 @@ namespace corona::standalone::app
 
   ImGUIData::ImGUIData(CLogger& logger)
     : terminal_cmd(std::make_unique<gui::immediate::custom_command_struct>())
-    , terminal(std::make_unique<vendored::imterm::terminal<gui::immediate::terminal_commands>>(*this->terminal_cmd, "Debug console"))
+    , terminal(std::make_unique<extern_::imterm::terminal<gui::immediate::terminal_commands>>(*this->terminal_cmd, "Debug console"))
   {
     this->terminal->get_terminal_helper()->set_pattern("[%X] (%n) [%^%l%$] %^%v%$");
     logger->sinks().push_back(this->terminal->get_terminal_helper());
@@ -61,18 +61,11 @@ namespace corona::standalone::app
 
   auto Corona::impl::configure_imgui(::QQmlApplicationEngine* engine) -> void {
     llog::trace("Corona: configuring imgui");
-    this->imgui.imgui = dynamic_cast<bootstrap::imrenderer::CExtendableRenderer*>(
-      bootstrap::imrenderer::CExtendableRenderer::from_engine(engine)
+    this->imgui.imgui = dynamic_cast<imgui_renderer::CExtendableRenderer*>(
+      imgui_renderer::CExtendableRenderer::from_engine(engine)
     );
     this->imgui.imgui->style_default();
     *this->imgui.imgui += [this](){ this->imgui.terminal->show(); };
     llog::trace("Corona: imgui configured successfully");
-  }
-
-  auto Corona::impl::register_qml_singletons() -> void {
-    llog::trace("Corona: registering QML singletons");
-    ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Directories", this->app_dirs.ptr_mut());
-    ::qmlRegisterSingletonInstance("io.corona.standalone.app", 1, 0, "Theme", this->theme.ptr_mut());
-    ::qmlRegisterSingletonInstance("io.corona.standalone.map", 1, 0, "MapManager", this->map_view_manager.ptr_mut());
   }
 } // namespace corona::standalone::app

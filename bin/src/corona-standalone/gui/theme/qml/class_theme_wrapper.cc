@@ -1,26 +1,12 @@
 #include <corona-standalone/gui/theme/qml/class_theme_wrapper.hh>
 
-#include <qqml.h>
 #include <corona-standalone/app/meta.hh>
-#include <corona-standalone/gui/theme/class_reveal.hh>
-
-namespace qml
-{
-  [[maybe_unused]] volatile auto register_ = []() { // NOLINT(*-identifier-naming)
-    fmt::println("registering io.corona.standalone.theme qml types");
-    qmlRegisterModule("io.corona.standalone.theme", 1, 0);
-    qmlRegisterType<corona::standalone::gui::theme::qml::CThemeWrapper>("io.corona.standalone.theme", 1, 0, "ThemeWrapper");
-    qmlRegisterType<corona::standalone::gui::theme::CCircularReveal>("io.corona.standalone.theme", 1, 0, "CircularReveal");
-    qmlRegisterType(QUrl("qrc:/qml/theme/CircularChanger.qml"), "io.corona.standalone.theme", 1, 0, "CircularChanger");
-    return true;
-  }();
-} // namespace qml
 
 namespace corona::standalone::gui::theme::qml
 {
   CThemeWrapper::CThemeWrapper(::QObject* parent)
     : QObject(parent)
-    , theme_(fl::make_box<CTheme>(fl::filesystem::application_dirs(corona::standalone::app::meta::corona_meta)))
+    , theme_(fl::make_box<CTheme>(fl::application_dirs(corona::standalone::app::meta::corona_meta)))
   {
     this->update();
   }

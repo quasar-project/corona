@@ -1,10 +1,10 @@
 #include <corona-standalone/map/class_map_view_manager.hh>
 
-#include <corona/bootstrap/geoservice/class_config.h>
+#include <corona/modules/geoservice/class_config.h>
 
 namespace corona::standalone::map
 {
-  CMapViewManager::CMapViewManager(fl::filesystem::application_dirs const& dirs, ::QObject* parent)
+  CMapViewManager::CMapViewManager(fl::application_dirs const& dirs, ::QObject* parent)
     : ::QObject(parent)
     , state_config_(
         "map_state.conf.yml",
@@ -42,7 +42,7 @@ namespace corona::standalone::map
       return;
     }
     llog::debug("CMapViewManager: emplacing configuration file");
-    auto cfg = fl::configuration_file<fl::serialization::format::yaml, geoservice::ConfigData>(cfg_path, fl::saving_policy::explicit_);
+    auto cfg = fl::configuration_file<fl::serialization::format::yaml, modules::geoservice::ConfigData>(cfg_path, fl::saving_policy::explicit_);
     cfg.values_mut().views[0].offline_url = fmt::format("{}/street/{{z}}/{{x}}/{{y}}", cache_root.generic_string());
     cfg.values_mut().views[1].offline_url = fmt::format("{}/satellite/{{z}}/{{x}}/{{y}}", cache_root.generic_string());
     cfg.values_mut().views[2].offline_url = fmt::format("{}/hybrid/{{z}}/{{x}}/{{y}}", cache_root.generic_string());

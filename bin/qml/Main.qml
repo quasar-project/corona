@@ -37,9 +37,8 @@ ApplicationWindow {
         themeChanger: themeChanger
     }
 
-    Rectangle {
+    Item {
         id: root
-        color: App.Theme.palette.base0
         anchors.fill: parent
 
         MapModule.MapView {

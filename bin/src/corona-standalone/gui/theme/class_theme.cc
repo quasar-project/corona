@@ -20,13 +20,13 @@ namespace corona::standalone::gui::theme
   constexpr auto THEMES_SUBDIRECTORY = "themes"sv;
   constexpr auto DEFAULT_THEME_FILENAME = "default-autogen.toml"sv;
 
-  CTheme::CTheme(fl::filesystem::application_dirs const& location)
+  CTheme::CTheme(fl::application_dirs const& location)
     : cfg_(fl::configuration_file<fl::serialization::format::yaml, ThemeConfiguration>(
       "theme_config.yml",
-      location[floppy::filesystem::application_dirs::dir::config] / ROOT_SUBDIRECTORY,
+      location[fl::application_dirs::dir::config] / ROOT_SUBDIRECTORY,
       fl::saving_policy::autosave
     ))
-    , folder_(location[floppy::filesystem::application_dirs::dir::data] / THEMES_SUBDIRECTORY)
+    , folder_(location[fl::application_dirs::dir::data] / THEMES_SUBDIRECTORY)
   {
     if(not this->cfg_)
       llog::error("failed to load theme configuration");
