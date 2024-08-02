@@ -76,11 +76,6 @@ namespace corona::modules::imgui
     static auto dtor() noexcept -> void { extern_::imgui::EndChild(); }
   };
 
-  [[nodiscard]] inline auto operator|(window::flags const lhs, window::flags const rhs) -> window::flags {
-    return static_cast<window::flags>(static_cast<u32>(lhs) | static_cast<u32>(rhs));
-  }
-
-  [[nodiscard]] inline auto operator|(child_frame::flags const lhs, child_frame::flags const rhs) -> child_frame::flags {
-    return static_cast<child_frame::flags>(static_cast<u32>(lhs) | static_cast<u32>(rhs));
-  }
+  void consteval enum_flag(window::flags);
+  void consteval enum_flag(child_frame::flags);
 } // namespace corona::modules::imgui

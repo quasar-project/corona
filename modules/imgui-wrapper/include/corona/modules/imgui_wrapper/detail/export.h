@@ -6,6 +6,8 @@
 namespace corona::modules::imgui
 {
   using namespace fl::types;
+  using fl::operator|;
+  using fl::operator&;
 
   using vec2 = ImVec2;
   using vec4 = ImVec4;

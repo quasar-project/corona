@@ -37,7 +37,5 @@ namespace corona::modules::imgui
     static auto dtor() -> void {}
   };
 
-  [[nodiscard]] inline auto operator|(collapsing_header::flags const lhs, collapsing_header::flags const rhs) -> collapsing_header::flags {
-    return static_cast<collapsing_header::flags>(static_cast<u32>(lhs) | static_cast<u32>(rhs));
-  }
+  void consteval enum_flag(collapsing_header::flags);
 } // namespace corona::modules::imgui
