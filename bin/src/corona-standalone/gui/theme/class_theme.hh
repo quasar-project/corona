@@ -31,7 +31,7 @@ namespace corona::standalone::gui::theme
   class CTheme final
   {
    public:
-    explicit CTheme(fl::filesystem::application_dirs const& location);
+    explicit CTheme(fl::application_dirs const& location);
 
     [[nodiscard]] auto folder() const -> fs::path const&;
     [[nodiscard]] auto theme_name() const -> string_view;

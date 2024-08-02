@@ -11,7 +11,7 @@ namespace corona::standalone::app
   using std::shared_ptr;
   namespace fs = std::filesystem;
 
-  struct CLogger : public fl::traits::pin<CLogger> // NOLINT(*-special-member-functions) (reason: pinned)
+  struct CLogger : public fl::pin // NOLINT(*-special-member-functions) (reason: pinned)
   {
    public:
     enum class Target : char

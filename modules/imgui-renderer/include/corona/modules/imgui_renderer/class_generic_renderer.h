@@ -61,6 +61,6 @@ namespace corona::modules::imgui_renderer
     virtual auto touchEvent(::QTouchEvent* event) -> void override;
 
     struct impl;
-    fl::traits::pimpl<impl> impl_;
+    fl::pimpl<impl> impl_;
   };
 } // namespace corona::modules::imgui_renderer
