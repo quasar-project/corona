@@ -106,20 +106,23 @@ Map {
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onPressed: (event) => {
-            if(event.button === Qt.RightButton)
+            if(event.button === Qt.RightButton) {
+                mapContextMenu.mouseCoordinates = Qt.point(event.x, event.y)
                 mapContextMenu.popup(event.x, event.y)
+            }
         }
     }
 
-    MapModule.CoordinateTooltip {
-        id: coordinateTooltip
-        anchors {
-            left: parent.left
-            bottom: parent.bottom
-        }
-        map: map
-        mouseArea: mapMouseArea
-    }
+    /// note: removed because it's not needed that much. menu works just fine
+    // MapModule.CoordinateTooltip {
+    //     id: coordinateTooltip
+    //     anchors {
+    //         left: parent.left
+    //         bottom: parent.bottom
+    //     }
+    //     map: map
+    //     mouseArea: mapMouseArea
+    // }
 
     MapUI.StateMachine {
         id: mapStateMachine
@@ -146,8 +149,27 @@ Map {
     }
 
     Menu {
+       // required property Map map
+        property var mouseCoordinates: Qt.point(0, 0)
+
         id: mapContextMenu
         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+        MenuItem {
+            property var coordinates: map.toCoordinate(mapContextMenu.mouseCoordinates)
+            function formatCoordinates(lat, lon) {
+                return Number(Math.abs(lat)).toFixed(6) + "°" + (x > 0 ? "E" : "W") + ", " +
+                    Number(Math.abs(lon)).toFixed(6) + "°" + (y > 0 ? "N" : "S")
+            }
+
+            id: cursorCoordinates
+            text: formatCoordinates(this.coordinates.latitude, this.coordinates.longitude)
+            font.weight: Font.Bold
+
+            ToolTip.text: "Нажмите, чтобы скопировать координаты в буфер обмена"
+            ToolTip.delay: 300
+            ToolTip.visible: hovered
+        }
 
         Action {
             id: zoomIn
@@ -159,12 +181,6 @@ Map {
             id: zoomOut
             text: "Уменьшить"
             onTriggered: map.zoomLevel = Math.round(map.zoomLevel - 1)
-        }
-
-        Action {
-            id: copyCoordinates
-            text: "Скопировать координаты"
-            //onTriggered:
         }
     }
 }
