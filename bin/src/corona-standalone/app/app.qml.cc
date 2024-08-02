@@ -1,6 +1,7 @@
 #include <corona-standalone/app/app.hh>
 
 #include <corona/modules/qmlbind/qmlbind.h>
+#include <corona-standalone/gui/theme/class_reveal.hh>
 #include <corona-standalone/gui/theme/qml/class_theme_wrapper.hh>
 
 namespace corona::standalone::app
@@ -26,6 +27,8 @@ namespace corona::standalone::app
       .qml_file("qrc:/qml/ui/SimpleCheckableToolButton.qml");
 
     q::module("io.corona.standalone.theme")
+      .component<gui::theme::qml::CThemeWrapper>()
+      .component<gui::theme::CCircularReveal>()
       .qml_file("qrc:/qml/theme/CircularChanger.qml");
   }
 } // namespace corona::standalone::app

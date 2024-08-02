@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <qurl.h>
+#include <qobject.h>
 #include <qqml.h>
 #include <qqmlmoduleregistration.h>
 #include <fmt/color.h>
@@ -19,6 +20,21 @@ namespace corona::modules::qmlbind
       if(last_dot == std::string_view::npos)
         return error("failed to strip extension from url: {}", url);
       return std::string(url.substr(last_slash + 1, last_dot - last_slash - 1));
+    }
+
+    [[nodiscard]] auto strip_namespace(std::string_view name) -> std::string {
+      auto const last_colon = name.find_last_of(':');
+      if(last_colon == std::string_view::npos)
+        return std::string(name);
+      return std::string(name.substr(last_colon + 1));
+    }
+
+    [[nodiscard]] auto strip_hungarian_prefix(std::string_view name) -> std::string {
+      if(name.size() < 2)
+        return std::string(name);
+      if(name[0] == 'C' and std::isupper(name[1]))
+        return std::string(name.substr(1));
+      return std::string(name);
     }
   } // namespace detail
 
@@ -52,6 +68,22 @@ namespace corona::modules::qmlbind
           fmt::styled(this->version_.minor(), fmt::fg(fmt::terminal_color::cyan))
         );
       ::qmlRegisterModule(this->name_.c_str(), this->version_.major(), this->version_.minor());
+    }
+
+    template <std::derived_from<::QObject> T>
+    auto component(option<std::string_view> name = none) -> module& {
+      auto const component_name = [&name]() -> std::string {
+        if(name)
+          return std::string(*name);
+        auto const meta_name = detail::strip_namespace(T::staticMetaObject.className());
+        return detail::strip_hungarian_prefix(meta_name);
+      }();
+      if constexpr(Verbosity == verbosity::verbose)
+        fmt::println("qmlbind: \tregistering type {} (qobject)",
+          fmt::styled(component_name, fmt::fg(fmt::terminal_color::magenta) | fmt::emphasis::bold)
+        );
+      ::qmlRegisterType<T>(this->name_.c_str(), this->version_.major(), this->version_.minor(), component_name.c_str());
+      return *this;
     }
 
     auto qml_file(std::string_view url, option<std::string_view> name = none) -> module& {
