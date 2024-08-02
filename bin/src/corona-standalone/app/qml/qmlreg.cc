@@ -1,17 +1,22 @@
 #include <qqml.h>
 #include <fmt/core.h>
+#include <corona/modules/qmlbind/qmlbind.h>
 
 namespace qml
 {
   [[maybe_unused]] volatile auto register_misc_ = []() { // NOLINT(*-identifier-naming)
-    fmt::println("registering io.corona.standalone.map qml types");
-    ::qmlRegisterModule("io.corona.standalone.map", 1, 0);
-    ::qmlRegisterType(QUrl("qrc:/qml/map/MapView.qml"), "io.corona.standalone.map", 1, 0, "MapView");
-    ::qmlRegisterType(QUrl("qrc:/qml/map/MapModeButton.qml"), "io.corona.standalone.map.ui", 1, 0, "MapModeButton");
-    ::qmlRegisterType(QUrl("qrc:/qml/map/MapStateMachine.qml"), "io.corona.standalone.map.ui", 1, 0, "StateMachine");
-    ::qmlRegisterType(QUrl("qrc:/qml/map/MapToolbarButton.qml"), "io.corona.standalone.map.ui", 1, 0, "ToolbarButton");
-    ::qmlRegisterType(QUrl("qrc:/qml/map/MapToolbar.qml"), "io.corona.standalone.map.ui", 1, 0, "Toolbar");
-    ::qmlRegisterType(QUrl("qrc:/qml/ui/SimpleCheckableToolButton.qml"), "io.corona.standalone.ui", 1, 0, "SimpleCheckableToolButton");
+    namespace q = ::corona::modules::qmlbind;
+    q::module("io.corona.standalone.map")
+      .qml_file("qrc:/qml/map/MapView.qml");
+
+    q::module("io.corona.standalone.map.ui")
+      .qml_file("qrc:/qml/map/MapModeButton.qml")
+      .qml_file("qrc:/qml/map/MapStateMachine.qml", "StateMachine")
+      .qml_file("qrc:/qml/map/MapToolbarButton.qml", "ToolbarButton")
+      .qml_file("qrc:/qml/map/MapToolbar.qml", "Toolbar");
+
+    q::module("io.corona.standalone.ui")
+      .qml_file("qrc:/qml/ui/SimpleCheckableToolButton.qml");
     return true;
   }();
 } // namespace qml

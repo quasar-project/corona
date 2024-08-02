@@ -116,6 +116,7 @@ target_link_libraries(${CORONA_STANDALONE_NAME}
     corona::extern_imgui
     corona::extern_imterm
     corona::imgui_renderer
+    corona::qmlbind
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     tomlplusplus::tomlplusplus
