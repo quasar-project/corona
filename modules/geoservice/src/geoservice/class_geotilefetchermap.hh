@@ -3,9 +3,9 @@
 #include <qpointer.h>
 #include <qnetworkaccessmanager.h>
 #include <private/qgeotilefetcher_p.h>
-#include <corona/bootstrap/geoservice/class_config.h>
+#include <corona/modules/geoservice/class_config.h>
 
-namespace corona::bootstrap::geoservice
+namespace corona::modules::geoservice
 {
   class CGeoTileFetcherMap : public ::QGeoTileFetcher
   {
@@ -22,4 +22,4 @@ namespace corona::bootstrap::geoservice
     ::QPointer<::QNetworkAccessManager> network_manager_;
     CConfig* cfg_;
   };
-} // namespace corona::bootstrap::geoservice
+} // namespace corona::modules::geoservice

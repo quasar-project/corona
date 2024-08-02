@@ -63,8 +63,8 @@ cmake_print_properties(TARGETS ${PROJECT_NAME} PROPERTIES
 
 target_sources(${PROJECT_NAME}
   PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/bootstrap/geoservice/detail/export.h> $<INSTALL_INTERFACE:include/corona/bootstrap/geoservice/detail/export.h>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/bootstrap/geoservice/import.h> $<INSTALL_INTERFACE:include/corona/bootstrap/geoservice/import.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/modules/geoservice/detail/export.h> $<INSTALL_INTERFACE:include/corona/modules/geoservice/detail/export.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/modules/geoservice/import.h> $<INSTALL_INTERFACE:include/corona/modules/geoservice/import.h>
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/geoservice/import.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/geoservice/plugin.cc

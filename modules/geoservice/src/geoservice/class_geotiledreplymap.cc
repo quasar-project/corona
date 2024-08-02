@@ -2,7 +2,7 @@
 
 #include <qfile.h>
 
-namespace corona::bootstrap::geoservice
+namespace corona::modules::geoservice
 {
   using namespace Qt::Literals;
 
@@ -41,4 +41,4 @@ namespace corona::bootstrap::geoservice
     else
       this->setError(::QGeoTiledMapReply::CommunicationError, reply->errorString());
   }
-} // namespace corona::bootstrap::geoservice
+} // namespace corona::modules::geoservice

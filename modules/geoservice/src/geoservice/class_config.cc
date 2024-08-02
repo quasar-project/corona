@@ -1,4 +1,4 @@
-#include <corona/bootstrap/geoservice/class_config.h>
+#include <corona/modules/geoservice/class_config.h>
 
 #include <private/qgeomaptype_p.h>
 #include <private/qgeocameracapabilities_p.h>
@@ -16,12 +16,12 @@ namespace
   [[nodiscard]] [[maybe_unused]] auto as(From const& value) -> To = delete;
 
   template <>
-  [[nodiscard]] [[maybe_unused]] auto as(corona::bootstrap::geoservice::ConfigData::MapStyle const& value) -> ::QGeoMapType::MapStyle {
+  [[nodiscard]] [[maybe_unused]] auto as(corona::modules::geoservice::ConfigData::MapStyle const& value) -> ::QGeoMapType::MapStyle {
     return static_cast<::QGeoMapType::MapStyle>(value);
   }
 } // namespace
 
-namespace corona::bootstrap::geoservice
+namespace corona::modules::geoservice
 {
   CConfig::CConfig(std::filesystem::path folder)
     : folder_{std::move(folder)}
@@ -67,19 +67,19 @@ namespace corona::bootstrap::geoservice
       res.append(this->map_type(i));
     return res;
   }
-} // namespace corona::bootstrap::geoservice
+} // namespace corona::modules::geoservice
 
 
 namespace floppy::serialization
 {
-  template <> auto serialize<format::yaml>(corona::bootstrap::geoservice::ConfigData const& value) -> std::string try {
+  template <> auto serialize<format::yaml>(corona::modules::geoservice::ConfigData const& value) -> std::string try {
     return rfl::yaml::write(value);
   } catch(std::exception const& e) {
     throw serialization_error(format::yaml, e.what());
   }
 
-  template <> auto deserialize<format::yaml>(std::string const& value) -> corona::bootstrap::geoservice::ConfigData try {
-    return rfl::yaml::read<corona::bootstrap::geoservice::ConfigData>(value).value();
+  template <> auto deserialize<format::yaml>(std::string const& value) -> corona::modules::geoservice::ConfigData try {
+    return rfl::yaml::read<corona::modules::geoservice::ConfigData>(value).value();
   } catch(std::exception const& e) {
     throw serialization_error(format::yaml, e.what());
   }

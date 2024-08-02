@@ -14,7 +14,7 @@
 #include <geoservice/class_geotiledreplymap.hh>
 
 namespace llog = floppy::log;
-namespace corona::bootstrap::geoservice
+namespace corona::modules::geoservice
 {
   CGeoTileFetcherMap::CGeoTileFetcherMap(
     CConfig* cfg,
@@ -83,4 +83,4 @@ namespace corona::bootstrap::geoservice
     f.write(reply->mapImageData());
     f.close();
   }
-} // namespace corona::bootstrap::geoservice
+} // namespace corona::modules::geoservice

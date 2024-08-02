@@ -1,7 +1,7 @@
 #include <geoservice/plugin.hh>
 
 #include <floppy/logging.h>
-#include <corona/bootstrap/geoservice/detail/export.h>
+#include <corona/modules/geoservice/detail/export.h>
 #include <geoservice/class_mapping_manager_engine.hh>
 
 namespace llog = floppy::log;
@@ -26,7 +26,7 @@ auto QGeoServicePluginCGS::createMappingManagerEngine(
   QString* errorString
 ) const -> QGeoMappingManagerEngine* {
   llog::trace("geoservice::QGeoServicePluginCGS: creating mapping manager engine");
-  return new corona::bootstrap::geoservice::CGeoTiledMappingManagerEngineMap(parameters, error, errorString); // NOLINT(*-owning-memory)
+  return new corona::modules::geoservice::CGeoTiledMappingManagerEngineMap(parameters, error, errorString); // NOLINT(*-owning-memory)
 }
 
 QT_END_NAMESPACE

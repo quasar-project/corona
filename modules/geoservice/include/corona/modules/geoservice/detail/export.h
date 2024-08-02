@@ -15,7 +15,7 @@
 # define CORONA_BOOTSTRAP_GEOSERVICE_API
 #endif
 
-namespace corona::bootstrap::geoservice
+namespace corona::modules::geoservice
 {
   using namespace fl::types;
   using namespace fl::literals;
@@ -53,4 +53,4 @@ namespace corona::bootstrap::geoservice
       "maybe-unused"
     );
   } // namespace meta
-} // namespace corona::bootstrap::geoservice
+} // namespace corona::modules::geoservice

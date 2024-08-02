@@ -2,9 +2,9 @@
 
 #include <optional>
 #include <qvariantmap.h>
-#include <corona/bootstrap/geoservice/detail/export.h>
+#include <corona/modules/geoservice/detail/export.h>
 
-namespace corona::bootstrap::geoservice
+namespace corona::modules::geoservice
 {
   using namespace std::string_view_literals;
 
@@ -53,4 +53,4 @@ namespace corona::bootstrap::geoservice
       return none;
     }
   };
-} // namespace corona::bootstrap::geoservice
+} // namespace corona::modules::geoservice

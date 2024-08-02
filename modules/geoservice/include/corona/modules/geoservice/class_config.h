@@ -2,11 +2,11 @@
 
 #include <vector>
 #include <qlist.h>
-#include <corona/bootstrap/geoservice/detail/export.h>
 #include <floppy/configuration.h>
+#include "detail/export.h"
 
 class QGeoMapType;
-namespace corona::bootstrap::geoservice
+namespace corona::modules::geoservice
 {
   struct ConfigData final
   {
@@ -67,15 +67,15 @@ namespace corona::bootstrap::geoservice
       }
     };
   };
-} // namespace corona::bootstrap::geoservice
+} // namespace corona::modules::geoservice
 
 namespace floppy::serialization
 {
-  template <> auto serialize<format::yaml>(corona::bootstrap::geoservice::ConfigData const& value) -> std::string;
-  template <> auto deserialize<format::yaml>(std::string const& value) -> corona::bootstrap::geoservice::ConfigData;
+  template <> auto serialize<format::yaml>(corona::modules::geoservice::ConfigData const& value) -> std::string;
+  template <> auto deserialize<format::yaml>(std::string const& value) -> corona::modules::geoservice::ConfigData;
 } // namespace floppy::serialization
 
-namespace corona::bootstrap::geoservice
+namespace corona::modules::geoservice
 {
   class CConfig
   {
@@ -114,4 +114,4 @@ namespace corona::bootstrap::geoservice
     std::filesystem::path folder_;
     fl::configuration_file<fl::serialization::format::yaml, ConfigData> config_;
   };
-} // namespace corona::bootstrap::geoservice
+} // namespace corona::modules::geoservice

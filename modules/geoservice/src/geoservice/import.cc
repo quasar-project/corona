@@ -1,9 +1,9 @@
-#include <corona/bootstrap/geoservice/import.h>
+#include <corona/modules/geoservice/import.h>
 
 #include <qplugin.h>
 #include <qgeoserviceprovider.h>
 #include <floppy/logging.h>
-#include <corona/bootstrap/formatters.h>
+#include <corona/modules/formatters.h>
 
 namespace llog = floppy::log;
 
@@ -13,7 +13,7 @@ inline auto init_plugin() -> void {
   #endif // defined(QNX_STATIC_LIBRARY)
 }
 
-namespace corona::bootstrap::geoservice // NOLINT(*-concat-nested-namespaces)
+namespace corona::modules::geoservice // NOLINT(*-concat-nested-namespaces)
 {
   inline namespace imports
   {
@@ -35,4 +35,4 @@ namespace corona::bootstrap::geoservice // NOLINT(*-concat-nested-namespaces)
       return true;
     }
   } // namespace imports
-} // namespace corona::bootstrap::geoservice
+} // namespace corona::modules::geoservice

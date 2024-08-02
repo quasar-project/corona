@@ -31,7 +31,6 @@ find_package(Qt6
     ShaderTools
   REQUIRED
 )
-add_subdirectory(libs/bootstrap-geoservice)
 
 # -- executable --
 qt_add_executable(${CORONA_STANDALONE_NAME})

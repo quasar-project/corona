@@ -3,9 +3,9 @@
 #include <qgeoserviceprovider.h>
 #include <private/qgeotiledmappingmanagerengine_p.h>
 #include <private/qgeofiletilecache_p.h>
-#include <corona/bootstrap/geoservice/detail/export.h>
+#include <corona/modules/geoservice/detail/export.h>
 
-namespace corona::bootstrap::geoservice
+namespace corona::modules::geoservice
 {
   class CConfig;
   class CGeoTiledMappingManagerEngineMap : public ::QGeoTiledMappingManagerEngine
@@ -26,4 +26,4 @@ namespace corona::bootstrap::geoservice
    private:
     std::unique_ptr<CConfig> config_;
   };
-} // namespace corona::bootstrap::geoservice
+} // namespace corona::modules::geoservice

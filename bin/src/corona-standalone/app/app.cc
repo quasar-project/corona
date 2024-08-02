@@ -8,7 +8,7 @@
 #include <qqmlapplicationengine.h>
 #include <magic_enum/magic_enum.hpp>
 #include <floppy/directories.h>
-#include <corona/bootstrap/geoservice/import.h>
+#include <corona/modules/geoservice/import.h>
 
 namespace me = magic_enum;
 namespace corona::standalone::app
@@ -68,7 +68,7 @@ namespace corona::standalone::app
 
   auto Corona::load_plugins() -> void {
     llog::debug("Corona: loading plugins");
-    if(not geoservice::import_plugin())
+    if(not modules::geoservice::import_plugin())
       fl::panic("Corona: failed to load geoservice plugin");
   }
 

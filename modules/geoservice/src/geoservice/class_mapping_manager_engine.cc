@@ -5,8 +5,8 @@
 #include <private/qgeomaptype_p.h>
 #include <private/qgeotiledmap_p.h>
 #include <floppy/logging.h>
-#include <corona/bootstrap/formatters.h>
-#include <corona/bootstrap/geoservice/class_config.h>
+#include <corona/modules/formatters.h>
+#include <corona/modules/geoservice/class_config.h>
 #include <geoservice/parameters.hh>
 #include <geoservice/class_geotilefetchermap.hh>
 
@@ -17,7 +17,7 @@ namespace cfg
   auto constexpr cache_size = 512 * 1024 * 1024;
 } // namespace cfg
 
-namespace corona::bootstrap::geoservice
+namespace corona::modules::geoservice
 {
   CGeoTiledMappingManagerEngineMap::CGeoTiledMappingManagerEngineMap(
     ::QVariantMap const& parameters,
@@ -73,4 +73,4 @@ namespace corona::bootstrap::geoservice
     tile_cache->setMaxDiskUsage(cfg::cache_size);
     return tile_cache;
   }
-} // namespace corona::bootstrap::geoservice
+} // namespace corona::modules::geoservice

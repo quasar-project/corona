@@ -3,7 +3,7 @@
 #include <qnetworkreply.h>
 #include <private/qgeotiledmapreply_p.h>
 
-namespace corona::bootstrap::geoservice
+namespace corona::modules::geoservice
 {
   class CGeoTiledMapReply : public ::QGeoTiledMapReply
   {
@@ -21,4 +21,4 @@ namespace corona::bootstrap::geoservice
     void networkReplyFinished();
     void networkReplyError(::QNetworkReply::NetworkError error);
   };
-} // namespace corona::bootstrap::geoservice
+} // namespace corona::modules::geoservice
