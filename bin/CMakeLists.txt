@@ -110,7 +110,7 @@ target_link_libraries(${CORONA_STANDALONE_NAME}
     corona::corona
     corona::geoservice
     corona::imrenderer
-    corona::imgui
+    corona::extern_imgui
     corona::imterm
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum

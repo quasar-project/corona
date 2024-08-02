@@ -24,8 +24,8 @@
 #include <algorithm>
 #include <regex>
 #include <spdlog/spdlog.h>
-#include <corona/vendored/imgui.h>
-#include <corona/vendored/imgui_internal.h>
+#include <corona/modules/extern/imgui/imgui.h>
+#include <corona/modules/extern/imgui/imgui_internal.h>
 #include "misc.hpp"
 
 namespace ImTerm {

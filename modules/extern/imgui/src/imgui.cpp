@@ -1021,9 +1021,9 @@ CODE
 #define IMGUI_DEFINE_MATH_OPERATORS
 #endif
 
-#include "imgui/imgui.h"
+#include "corona/modules/extern/imgui/imgui.h"
 #ifndef IMGUI_DISABLE
-#include "imgui/imgui_internal.h"
+#include "corona/modules/extern/imgui/imgui_internal.h"
 
 // System includes
 #include <stdio.h>      // vsnprintf, sscanf, printf

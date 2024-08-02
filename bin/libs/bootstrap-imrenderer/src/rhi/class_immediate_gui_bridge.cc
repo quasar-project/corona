@@ -6,7 +6,7 @@
 #include <qevent.h>
 #include <qclipboard.h>
 #include <floppy/logging.h>
-#include <corona/vendored/imgui.h>
+#include <corona/modules/extern/imgui/imgui.h>
 
 namespace llog = ::floppy::log;
 

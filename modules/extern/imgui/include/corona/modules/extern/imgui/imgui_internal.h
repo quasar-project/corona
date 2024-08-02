@@ -4022,4 +4022,9 @@ extern const char*  ImGuiTestEngine_FindItemDebugLabel(ImGuiContext* ctx, ImGuiI
 #pragma warning (pop)
 #endif
 
+namespace corona::modules::extern_
+{
+  namespace imgui = ::ImGui;
+} // namespace corona::modules::extern_
+
 #endif // #ifndef IMGUI_DISABLE

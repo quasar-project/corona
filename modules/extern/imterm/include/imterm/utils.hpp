@@ -23,7 +23,7 @@
 #include <array>
 #include <optional>
 #include <array>
-#include <corona/vendored/imgui.h>
+#include <corona/modules/extern/imgui/imgui.h>
 
 #include "misc.hpp"
 

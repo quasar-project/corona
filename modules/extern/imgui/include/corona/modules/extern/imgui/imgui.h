@@ -3898,4 +3898,9 @@ namespace ImGui
 #endif
 #endif
 
+namespace corona::modules::extern_
+{
+  namespace imgui = ::ImGui;
+} // namespace corona::modules::extern_
+
 #endif // #ifndef IMGUI_DISABLE

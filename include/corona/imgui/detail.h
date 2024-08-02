@@ -1,9 +1,9 @@
 #pragma once
 
 #include <corona/detail/export.h>
-#include <corona/vendored/imgui.h>
+#include <corona/modules/extern/imgui/imgui.h>
 
 namespace corona::imgui
 {
-  namespace sys = vendored::imgui;
+  namespace sys = modules::extern_::imgui;
 } // namespace corona::imgui

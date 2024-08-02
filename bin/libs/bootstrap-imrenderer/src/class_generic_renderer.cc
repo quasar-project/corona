@@ -8,7 +8,7 @@
 #include <floppy/logging.h>
 #include <corona/bootstrap/imrenderer/rhi/class_renderer.h>
 #include <corona/bootstrap/imrenderer/rhi/class_immediate_gui_bridge.h>
-#include <corona/vendored/imgui.h>
+#include <corona/modules/extern/imgui/imgui.h>
 #include <corona/imgui/all.h>
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
