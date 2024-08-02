@@ -74,8 +74,8 @@ namespace corona::standalone::app
 
   auto Corona::logger() const -> CLogger const& { return this->impl_->logger; }
   auto Corona::logger_mut() -> CLogger& { return this->impl_->logger; }
-  auto Corona::dirs() const -> fl::filesystem::application_dirs const& { return **this->impl_->app_dirs; }
-  auto Corona::dirs_mut() -> fl::filesystem::application_dirs& { return **this->impl_->app_dirs; }
+  auto Corona::dirs() const -> fl::application_dirs const& { return **this->impl_->app_dirs; }
+  auto Corona::dirs_mut() -> fl::application_dirs& { return **this->impl_->app_dirs; }
   auto Corona::theme() const -> gui::theme::qml::CThemeWrapper const& { return *this->impl_->theme; }
   auto Corona::theme_mut() -> gui::theme::qml::CThemeWrapper& { return *this->impl_->theme; }
   auto Corona::imgui() const -> modules::imgui_renderer::CExtendableRenderer const& { return *this->impl_->imgui.imgui; }

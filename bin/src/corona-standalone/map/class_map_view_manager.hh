@@ -52,7 +52,7 @@ namespace corona::standalone::map
     Q_PROPERTY(MapMode mapMode READ mapMode WRITE setMapMode NOTIFY mapModeChanged FINAL)
 
    public:
-    explicit CMapViewManager(fl::filesystem::application_dirs const& dirs, ::QObject* parent = nullptr);
+    explicit CMapViewManager(fl::application_dirs const& dirs, ::QObject* parent = nullptr);
     virtual ~CMapViewManager() override = default;
 
     [[nodiscard]] auto configPath() const -> ::QString { return this->config_path_; } // NOLINT(*-identifier-naming)

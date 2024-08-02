@@ -6,9 +6,9 @@
 
 namespace corona::standalone::app
 {
-  class CUserInterfaceLogger : public fl::traits::singleton<CUserInterfaceLogger>
+  class CUserInterfaceLogger : public fl::singleton<CUserInterfaceLogger>
   {
-    friend class fl::traits::singleton<CUserInterfaceLogger>;
+    friend class fl::singleton<CUserInterfaceLogger>;
 
    public:
     [[nodiscard]] auto logger() const -> spdlog::logger& {

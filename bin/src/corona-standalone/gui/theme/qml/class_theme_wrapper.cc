@@ -20,7 +20,7 @@ namespace corona::standalone::gui::theme::qml
 {
   CThemeWrapper::CThemeWrapper(::QObject* parent)
     : QObject(parent)
-    , theme_(fl::make_box<CTheme>(fl::filesystem::application_dirs(corona::standalone::app::meta::corona_meta)))
+    , theme_(fl::make_box<CTheme>(fl::application_dirs(corona::standalone::app::meta::corona_meta)))
   {
     this->update();
   }

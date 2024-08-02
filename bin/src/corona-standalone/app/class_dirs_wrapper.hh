@@ -43,12 +43,12 @@ namespace corona::standalone::qml
     [[nodiscard]] auto state() const -> ::QString;
     [[nodiscard]] auto applicationDir() const -> ::QString;
 
-    [[nodiscard]] inline auto unwrap() const -> fl::filesystem::application_dirs const& { return this->dirs_; }
-    [[nodiscard]] inline auto unwrap_mut() -> fl::filesystem::application_dirs& { return this->dirs_; }
-    [[nodiscard]] inline auto operator*() const -> fl::filesystem::application_dirs const& { return this->dirs_; }
-    [[nodiscard]] inline auto operator*() -> fl::filesystem::application_dirs& { return this->dirs_; }
+    [[nodiscard]] inline auto unwrap() const -> fl::application_dirs const& { return this->dirs_; }
+    [[nodiscard]] inline auto unwrap_mut() -> fl::application_dirs& { return this->dirs_; }
+    [[nodiscard]] inline auto operator*() const -> fl::application_dirs const& { return this->dirs_; }
+    [[nodiscard]] inline auto operator*() -> fl::application_dirs& { return this->dirs_; }
 
    private:
-    fl::filesystem::application_dirs dirs_;
+    fl::application_dirs dirs_;
   };
 } // namespace corona::standalone::qml

@@ -4,7 +4,7 @@
 
 namespace corona::standalone::map
 {
-  CMapViewManager::CMapViewManager(fl::filesystem::application_dirs const& dirs, ::QObject* parent)
+  CMapViewManager::CMapViewManager(fl::application_dirs const& dirs, ::QObject* parent)
     : ::QObject(parent)
     , state_config_(
         "map_state.conf.yml",
