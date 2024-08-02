@@ -4,7 +4,7 @@
 #include <corona-standalone/utility/formatters.hh>
 
 #include <corona/modules/extern/imterm/imterm.h>
-#include <corona/bootstrap/imrenderer/class_extendable_renderer.h>
+#include <corona/modules/imgui_renderer/class_extendable_renderer.h>
 #include <corona-standalone/app/class_dirs_wrapper.hh>
 #include <corona-standalone/app/class_user_interface_logger.hh>
 #include <corona-standalone/map/class_map_view_manager.hh>
@@ -33,7 +33,7 @@ namespace corona::standalone
     {
       explicit ImGUIData(CLogger& logger);
 
-      bootstrap::imrenderer::CExtendableRenderer* imgui{nullptr};
+      modules::imgui_renderer::CExtendableRenderer* imgui{nullptr};
       std::unique_ptr<gui::immediate::custom_command_struct> terminal_cmd;
       std::unique_ptr<modules::extern_::imterm::terminal<gui::immediate::terminal_commands>> terminal;
     };

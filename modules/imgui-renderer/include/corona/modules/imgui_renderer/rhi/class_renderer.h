@@ -23,7 +23,7 @@
 
 class QEvent;
 
-namespace corona::bootstrap::imrenderer
+namespace corona::modules::imgui_renderer
 {
   class CORONA_BOOTSTRAP_IMRENDERER_API CRhiRenderer
   {
@@ -117,4 +117,4 @@ namespace corona::bootstrap::imrenderer
     std::unique_ptr<::QRhiSampler> nearest_sampler_;
     std::unordered_map<void*, Texture> textures_;
   };
-} // namespace corona::bootstrap::imrenderer
+} // namespace corona::modules::imgui_renderer

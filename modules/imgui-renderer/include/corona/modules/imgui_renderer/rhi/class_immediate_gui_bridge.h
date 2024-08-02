@@ -3,7 +3,7 @@
 #include <functional>
 #include "class_renderer.h"
 
-namespace corona::bootstrap::imrenderer
+namespace corona::modules::imgui_renderer
 {
   class CORONA_BOOTSTRAP_IMRENDERER_API CImmediateGuiBridge
   {
@@ -37,4 +37,4 @@ namespace corona::bootstrap::imrenderer
     CRhiRenderer::FrameRenderData f_;
     Qt::MouseButtons pressed_mouse_buttons_;
   };
-} // namespace corona::bootstrap::imrenderer
+} // namespace corona::modules::imgui_renderer

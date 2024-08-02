@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 
 include_guard(GLOBAL)
 
-project(corona-bootstrap-imrenderer
+project(imgui-renderer
   VERSION 0.1.0
   DESCRIPTION "ImGui Renderer submodule for Corona"
   HOMEPAGE_URL "whs31.github.io/qdebugenv"
@@ -41,7 +41,7 @@ if(CBI_BUILD_SHARED_LIBS)
 else()
   add_library(${PROJECT_NAME} STATIC)
 endif()
-add_library(corona::imrenderer ALIAS ${PROJECT_NAME})
+add_library(corona::imgui_renderer ALIAS ${PROJECT_NAME})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
   CXX_STANDARD 23
@@ -59,10 +59,10 @@ cmake_print_properties(TARGETS ${PROJECT_NAME} PROPERTIES
 
 target_sources(${PROJECT_NAME}
   PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/bootstrap/imrenderer/rhi/class_immediate_gui_bridge.h> $<INSTALL_INTERFACE:include/corona/bootstrap/imrenderer/rhi/class_immediate_gui_bridge.h>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/bootstrap/imrenderer/rhi/class_renderer.h> $<INSTALL_INTERFACE:include/corona/bootstrap/imrenderer/rhi/class_renderer.h>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/bootstrap/imrenderer/class_generic_renderer.h> $<INSTALL_INTERFACE:include/corona/bootstrap/imrenderer/class_generic_renderer.h>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/bootstrap/imrenderer/class_extendable_renderer.h> $<INSTALL_INTERFACE:include/corona/bootstrap/imrenderer/class_extendable_renderer.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/modules/imgui_renderer/rhi/class_immediate_gui_bridge.h> $<INSTALL_INTERFACE:include/corona/modules/imgui_renderer/rhi/class_immediate_gui_bridge.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/modules/imgui_renderer/rhi/class_renderer.h> $<INSTALL_INTERFACE:include/corona/modules/imgui_renderer/rhi/class_renderer.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/modules/imgui_renderer/class_generic_renderer.h> $<INSTALL_INTERFACE:include/corona/modules/imgui_renderer/class_generic_renderer.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/corona/modules/imgui_renderer/class_extendable_renderer.h> $<INSTALL_INTERFACE:include/corona/modules/imgui_renderer/class_extendable_renderer.h>
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/rhi/class_renderer.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/rhi/class_immediate_gui_bridge.cc

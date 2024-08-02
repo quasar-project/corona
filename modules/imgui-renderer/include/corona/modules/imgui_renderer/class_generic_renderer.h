@@ -6,7 +6,8 @@
 
 class QQuickWindow;
 class QQmlApplicationEngine;
-namespace corona::bootstrap::imrenderer
+
+namespace corona::modules::imgui_renderer
 {
   class CRhiRenderer;
   class CImmediateGuiBridge;
@@ -62,4 +63,4 @@ namespace corona::bootstrap::imrenderer
     struct impl;
     fl::traits::pimpl<impl> impl_;
   };
-} // namespace corona::bootstrap::imrenderer
+} // namespace corona::modules::imgui_renderer

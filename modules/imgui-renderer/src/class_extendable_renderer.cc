@@ -1,4 +1,4 @@
-#include <corona/bootstrap/imrenderer/class_extendable_renderer.h>
+#include <corona/modules/imgui_renderer/class_extendable_renderer.h>
 
 #include <qqmlregistration.h>
 
@@ -6,7 +6,7 @@
   Q_INIT_RESOURCE(qdebugenv_qml);
 }
 
-namespace corona::bootstrap::imrenderer
+namespace corona::modules::imgui_renderer
 {
   namespace qml
   {
@@ -31,4 +31,4 @@ namespace corona::bootstrap::imrenderer
     for(auto& drawable : this->drawables_)
       drawable->frame();
   }
-} // namespace corona::bootstrap::imrenderer
+} // namespace corona::modules::imgui_renderer

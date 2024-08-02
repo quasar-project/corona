@@ -15,7 +15,7 @@
 # define CORONA_BOOTSTRAP_IMRENDERER_API
 #endif
 
-namespace corona::bootstrap::imrenderer
+namespace corona::modules::imgui_renderer
 {
   using namespace fl::types;
   using namespace fl::literals;
@@ -55,4 +55,4 @@ namespace corona::bootstrap::imrenderer
 
     constexpr inline auto qml_namespace_rendering = "io.corona.rendering.immediate";
   } // namespace meta
-} // namespace corona::bootstrap::imrenderer
+} // namespace corona::modules::imgui_renderer

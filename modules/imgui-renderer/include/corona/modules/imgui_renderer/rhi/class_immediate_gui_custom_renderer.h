@@ -2,7 +2,7 @@
 
 #include "../detail/export.h"
 
-namespace corona::bootstrap::imrenderer
+namespace corona::modules::imgui_renderer
 {
   class CRhiRenderer;
   class CRhiImmediateGuiCustomRenderer
@@ -12,4 +12,4 @@ namespace corona::bootstrap::imrenderer
     virtual auto sync(CRhiRenderer* renderer) -> void;
     virtual auto render() -> void;
   };
-} // namespace corona::bootstrap::imrenderer
+} // namespace corona::modules::imgui_renderer

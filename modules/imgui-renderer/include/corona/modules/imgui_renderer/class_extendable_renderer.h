@@ -6,10 +6,8 @@
 #include "class_generic_renderer.h"
 #include <corona/modules/imgui_wrapper/drawable.h>
 
-namespace corona::bootstrap::imrenderer
+namespace corona::modules::imgui_renderer
 {
-  // todo: rm
-  using namespace modules;
   class CORONA_BOOTSTRAP_IMRENDERER_API CExtendableRenderer : public CGenericRenderer // NOLINT(*-special-member-functions)
   {
     Q_OBJECT
@@ -34,4 +32,4 @@ namespace corona::bootstrap::imrenderer
     std::vector<std::function<void()>> callbacks_;
     std::vector<imgui::IDrawable*> drawables_;
   };
-} // namespace corona::bootstrap::imrenderer
+} // namespace corona::modules::imgui_renderer

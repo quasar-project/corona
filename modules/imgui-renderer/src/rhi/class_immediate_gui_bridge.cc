@@ -1,4 +1,4 @@
-#include <corona/bootstrap/imrenderer/rhi/class_immediate_gui_bridge.h>
+#include <corona/modules/imgui_renderer/rhi/class_immediate_gui_bridge.h>
 
 #include <cassert>
 #include <qfile.h>
@@ -124,7 +124,7 @@ namespace
   }
 } // namespace
 
-namespace corona::bootstrap::imrenderer
+namespace corona::modules::imgui_renderer
 {
   CImmediateGuiBridge::CImmediateGuiBridge()
     : ctx_(ImGui::CreateContext())
@@ -314,4 +314,4 @@ namespace corona::bootstrap::imrenderer
   auto CImmediateGuiBridge::swap_ctx() -> void {
     ImGui::SetCurrentContext(static_cast<ImGuiContext*>(this->ctx_));
   }
-} // namespace corona::bootstrap::imrenderer
+} // namespace corona::modules::imgui_renderer

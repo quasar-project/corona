@@ -32,7 +32,6 @@ find_package(Qt6
   REQUIRED
 )
 add_subdirectory(libs/bootstrap-geoservice)
-add_subdirectory(libs/bootstrap-imrenderer)
 
 # -- executable --
 qt_add_executable(${CORONA_STANDALONE_NAME})
@@ -109,9 +108,9 @@ target_link_libraries(${CORONA_STANDALONE_NAME}
   PRIVATE
     corona::corona
     corona::geoservice
-    corona::imrenderer
     corona::extern_imgui
     corona::extern_imterm
+    corona::imgui_renderer
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
     tomlplusplus::tomlplusplus

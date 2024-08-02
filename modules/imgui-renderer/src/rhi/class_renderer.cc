@@ -1,4 +1,4 @@
-#include <corona/bootstrap/imrenderer/rhi/class_renderer.h>
+#include <corona/modules/imgui_renderer/rhi/class_renderer.h>
 
 #include <cassert>
 #include <qfile.h>
@@ -25,7 +25,7 @@ namespace
   }
 } // namespace
 
-namespace corona::bootstrap::imrenderer
+namespace corona::modules::imgui_renderer
 {
   CRhiRenderer::CRhiRenderer() = default;
   CRhiRenderer::~CRhiRenderer() {
@@ -301,4 +301,4 @@ namespace corona::bootstrap::imrenderer
     };
     this->textures_[id] = tex;
   }
-} // namespace corona::bootstrap::imrenderer
+} // namespace corona::modules::imgui_renderer
