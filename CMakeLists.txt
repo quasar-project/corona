@@ -38,7 +38,6 @@ find_package(reflect-cpp REQUIRED)
 find_package(magic_enum REQUIRED)
 #find_package(Protobuf REQUIRED)
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
-find_package(Boost REQUIRED COMPONENTS system headers) # todo: remove
 find_package(Qt6 REQUIRED COMPONENTS Core Network)
 
 add_library(${PROJECT_NAME})
@@ -71,8 +70,6 @@ target_link_libraries(${PROJECT_NAME}
   PRIVATE
     reflect-cpp::reflect-cpp
     magic_enum::magic_enum
-    Boost::system
-    Boost::headers
     Qt6::Core
     Qt6::Network
 )
