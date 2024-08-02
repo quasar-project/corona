@@ -15,6 +15,7 @@ RoundButton {
     checkable: true
     checked: false
     icon.source: this.iconPath
+    display: AbstractButton.IconOnly
 
     Material.background: changeOnCheck ? checked ? this.activeColor : this.baseColor : this.baseColor
     Material.foreground: changeOnCheck ? checked ? this.baseColor : this.foregroundColor : this.foregroundColor

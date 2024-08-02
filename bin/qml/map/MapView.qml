@@ -107,6 +107,22 @@ Map {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
     }
 
+    MapUI.StateMachine {
+        id: mapStateMachine
+        rulerButton: mapToolbar.rulerButton
+        tileLoaderButton: mapToolbar.tileLoaderButton
+    }
+
+    MapUI.Toolbar {
+        id: mapToolbar
+        mapStateMachine: mapStateMachine
+        anchors {
+            top: parent.top
+            left: parent.left
+            margins: 15
+        }
+    }
+
     MapUI.MapModeButton {
         anchors {
             bottom: parent.bottom
