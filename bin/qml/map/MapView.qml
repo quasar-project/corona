@@ -105,7 +105,7 @@ Map {
         hoverEnabled: true
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
-        onPressed: (event) => {
+        onClicked: (event) => {
             if(event.button === Qt.LeftButton) {
                 ruler.add(event.x, event.y)
             } else {
