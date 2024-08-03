@@ -73,7 +73,7 @@ MapItemGroup {
         visible: this.enabled
         coordinate: this.enabled ? polyline.path[polyline.path.length - 1] : QtPositioning.coordinate(0, 0)
         sourceItem: RoundButton {
-            opacity: hovered ? 1 : .5
+            opacity: hovered ? 1 : .2
             radius: 16
             width: 40
             height: 40
