@@ -70,6 +70,7 @@ qt_add_qml_module(${CORONA_STANDALONE_NAME}
     qml/map/MapToolbarButton.qml
     qml/map/MapToolbar.qml
     qml/map/MapContextMenu.qml
+    qml/map/MapRuler.qml
     qml/layouts/ApplicationMenuBar.qml
     qml/ui/SimpleCheckableToolButton.qml
   RESOURCES
@@ -109,7 +110,6 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/terminal_commands.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/map/class_map_view_manager.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/map/class_map_memento.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/map/class_map_ruler.cc
     ${CORONA_OUTPUT_SET}
 )
 
