@@ -68,6 +68,46 @@ MapItemGroup {
     }
 
     MapQuickItem {
+        function distance(path) {
+            if(path.length < 2)
+                return 0
+            let dist = 0
+            for(let i = 0; i < path.length - 1; i++)
+                dist += path[i].distanceTo(path[i + 1])
+            return dist
+        }
+
+        function formatMeters(meters) {
+            if(meters < 1000)
+                return meters.toFixed(0) + " м"
+            return (meters / 1000).toFixed(1) + " км"
+        }
+
+        id: distanceTooltip
+        enabled: polyline.path.length >= 2
+        visible: this.enabled
+        coordinate: this.enabled ? polyline.path[polyline.path.length - 1] : QtPositioning.coordinate(0, 0)
+        anchorPoint {
+            x: width / 2
+            y: height + 10
+        }
+        sourceItem: Rectangle {
+            width: distanceLabel.width + 16
+            height: 20
+            radius: 10
+            color: App.Theme.palette.yellow
+
+            Label {
+                id: distanceLabel
+                anchors.centerIn: parent
+                text: distanceTooltip.formatMeters(distanceTooltip.distance(polyline.path))
+                font.weight: Font.DemiBold
+                Material.foreground: App.Theme.palette.base2
+            }
+        }
+    }
+
+    MapQuickItem {
         id: clearButton
         enabled: polyline.path.length >= 2
         visible: this.enabled
