@@ -109,6 +109,7 @@ target_sources(${CORONA_STANDALONE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/gui/immediate/terminal_commands.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/map/class_map_view_manager.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/map/class_map_memento.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/corona-standalone/map/class_map_ruler.cc
     ${CORONA_OUTPUT_SET}
 )
 
