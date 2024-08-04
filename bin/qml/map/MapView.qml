@@ -105,8 +105,10 @@ Map {
         hoverEnabled: true
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
-        onPressed: (event) => {
-            if(event.button === Qt.RightButton) {
+        onClicked: (event) => {
+            if(event.button === Qt.LeftButton) {
+                ruler.add(event.x, event.y)
+            } else {
                 mapContextMenu.mouseCoordinates = Qt.point(event.x, event.y)
                 mapContextMenu.popup(event.x, event.y)
             }
@@ -123,6 +125,12 @@ Map {
     //     map: map
     //     mouseArea: mapMouseArea
     // }
+
+    MapModule.MapRuler {
+        id: ruler
+        map: map
+        active: mapStateMachine.state === "rulerActive"
+    }
 
     MapUI.StateMachine {
         id: mapStateMachine
