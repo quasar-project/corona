@@ -18,9 +18,19 @@
 /// \brief Corona library namespace.
 namespace corona
 {
-  using std::string;
-  using std::string_view;
-  using namespace fl::types;
+  inline namespace reexports
+  {
+    using std::vector;
+    using std::string;
+    using std::string_view;
+    using fl::formattable;
+    using fl::pin;
+    using fl::singleton;
+    template <typename T> using pimpl = fl::pimpl<T>;
+    using fl::box;
+    using fl::make_box;
+    using namespace fl::types;
+  } // namespace reexports
 
   /// \brief Namespace for project metadata.
   namespace meta
