@@ -26,6 +26,7 @@ namespace corona
     [[nodiscard]] static auto from_str(string_view str) -> result<Ipv4>;
     [[nodiscard]] static auto local_addresses() -> result<vector<Ipv4>>;
     [[nodiscard]] static auto local_address() -> result<Ipv4>;
+    [[nodiscard]] static auto local_address_cached() -> Ipv4;
 
    private:
     u32 m_;

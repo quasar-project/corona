@@ -58,4 +58,13 @@ namespace corona
         return interfaces.front();
       });
   }
+
+  auto Ipv4::local_address_cached() -> Ipv4 {
+    static auto const addr = Ipv4::local_address();
+    if(not addr) {
+      llog::error("Ipv4::local_address_cached: {}", addr.error());
+      return Ipv4(0);
+    }
+    return *addr;
+  }
 } // namespace corona
