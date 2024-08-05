@@ -2,6 +2,8 @@
 
 #include <corona/detail/export.h>
 
+class QHostAddress;
+class QString;
 namespace corona
 {
   class Ipv4 : public formattable<Ipv4, char>
@@ -17,6 +19,9 @@ namespace corona
     auto operator=(Ipv4 const&) -> Ipv4& = default;
     auto operator=(Ipv4&&) -> Ipv4& = default;
 
+    [[nodiscard]] auto to_qhostaddress() const -> ::QHostAddress;
+    [[nodiscard]] auto to_qstring() const -> ::QString;
+
     [[nodiscard]] virtual auto to_string() const -> string;
 
     [[nodiscard]] constexpr inline auto as_u32() const noexcept -> u32 {
@@ -27,6 +32,14 @@ namespace corona
     [[nodiscard]] static auto local_addresses() -> result<vector<Ipv4>>;
     [[nodiscard]] static auto local_address() -> result<Ipv4>;
     [[nodiscard]] static auto local_address_cached() -> Ipv4;
+
+    [[nodiscard]] static constexpr inline auto localhost() -> Ipv4 {
+      return Ipv4(0x7F000001);
+    }
+
+    [[nodiscard]] static constexpr inline auto any() -> Ipv4 {
+      return Ipv4(0x00000000);
+    }
 
    private:
     u32 m_;

@@ -9,6 +9,14 @@ namespace ranges = std::ranges;
 
 namespace corona
 {
+  auto Ipv4::to_qhostaddress() const -> ::QHostAddress {
+    return ::QHostAddress(this->as_u32());
+  }
+
+  auto Ipv4::to_qstring() const -> ::QString {
+    return this->to_qhostaddress().toString();
+  }
+
   auto Ipv4::to_string() const -> std::string {
     return fmt::format("{}.{}.{}.{}",
       this->as_u32() >> 24,
