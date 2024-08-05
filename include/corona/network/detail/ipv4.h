@@ -11,7 +11,7 @@ namespace corona
       : m_(m)
     {}
 
-    ~Ipv4() = default;
+    virtual ~Ipv4() = default;
     Ipv4(Ipv4 const&) = default;
     Ipv4(Ipv4&&) = default;
     auto operator=(Ipv4 const&) -> Ipv4& = default;

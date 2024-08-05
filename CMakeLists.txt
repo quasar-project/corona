@@ -62,6 +62,7 @@ target_sources(${PROJECT_NAME}
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/config.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/private/network/ipv4.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/private/network/addr.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/image/metadata.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/misc/geo.cc
 )
